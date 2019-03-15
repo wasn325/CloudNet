@@ -18,7 +18,7 @@
         <maven.compiler.target>1.8</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.build.targetEncoding>UTF-8</project.build.targetEncoding>
-        <service.version>2.1.14</service.version>
+        <service.version>2.1.14.3</service.version>
         <service.type>RELEASE</service.type>
         <!-- Dependencies -->
         <dependency.lombok.version>1.18.4</dependency.lombok.version>
@@ -30,13 +30,13 @@
         <dependency.bungeecord.version>1.8-1.12</dependency.bungeecord.version>
         <dependency.spigot.version>1.8.8</dependency.spigot.version>
         <dependency.vaultapi.version>1.6</dependency.vaultapi.version>
-        <dependency.typetools.version>0.5.0</dependency.typetools.version>
+        <dependency.typetools.version>0.6.0</dependency.typetools.version>
         <!-- test dependencies -->
         <test.junit.version>4.12</test.junit.version>
         <!-- Plugins -->
         <plugin.shade.version>3.2.1</plugin.shade.version>
         <plugin.javadoc.version>3.0.1</plugin.javadoc.version>
-        <plugin.jar.version>3.1.0</plugin.jar.version>
+        <plugin.jar.version>3.1.1</plugin.jar.version>
         <plugin.resources.version>3.1.0</plugin.resources.version>
         <plugin.antrun.version>1.8</plugin.antrun.version>
     </properties>

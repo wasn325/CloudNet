@@ -24,6 +24,7 @@ import de.dytanic.cloudnet.lib.utility.document.Document;
 import de.dytanic.cloudnetwrapper.CloudNetWrapper;
 import de.dytanic.cloudnetwrapper.network.packet.out.PacketOutAddServer;
 import de.dytanic.cloudnetwrapper.network.packet.out.PacketOutRemoveServer;
+import de.dytanic.cloudnetwrapper.screen.AbstractScreenService;
 import de.dytanic.cloudnetwrapper.server.process.ServerDispatcher;
 import de.dytanic.cloudnetwrapper.server.process.ServerProcess;
 import de.dytanic.cloudnetwrapper.util.FileUtility;
@@ -44,9 +45,9 @@ import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Properties;
 
-@EqualsAndHashCode
 @Getter
-public class GameServer implements ServerDispatcher {
+@EqualsAndHashCode(callSuper = false)
+public class GameServer extends AbstractScreenService implements ServerDispatcher {
 
     private ServerProcess serverProcess;
 
@@ -243,8 +244,8 @@ public class GameServer implements ServerDispatcher {
 
         FileUtility.copyFilesInDirectory(new File("local/global"), new File(path));
 
-        String motd = "Default Motd";
-        int maxPlayers = 0;
+        String motd;
+        int maxPlayers;
 
         if (!serverGroup.getServerType().equals(ServerGroupType.GLOWSTONE))
         {
@@ -543,7 +544,7 @@ public class GameServer implements ServerDispatcher {
                         .append(CloudNetWrapper.getInstance().getWrapperConfig().getWebPort())
                         .append("/cloudnet/api/v1/download").toString()
                         , dir.toString() + "/template.zip", CloudNetWrapper.getInstance().getSimpledUser(), template, serverGroup.getName(), custom);
-                System.out.println("Downloading template for " + this.serverProcess.getMeta().getServiceId().getGroup());
+                System.out.println("Downloading template for " + this.serverProcess.getMeta().getServiceId().getGroup() + " " + template.getName());
                 templateLoader.load();
                 templateLoader.unZip(dir.toString());
                 FileUtility.copyFilesInDirectory(new File(dir.toString()), new File(path));
@@ -554,7 +555,7 @@ public class GameServer implements ServerDispatcher {
                 {
                     Files.createDirectories(Paths.get(groupTemplates));
                     TemplateLoader templateLoader = new TemplateLoader(template.getUrl(), groupTemplates + "/template.zip");
-                    System.out.println("Downloading template for " + this.serverProcess.getMeta().getServiceId().getGroup());
+                    System.out.println("Downloading template for " + this.serverProcess.getMeta().getServiceId().getGroup() + " " + template.getName());
                     templateLoader.load();
                     templateLoader.unZip(groupTemplates);
                 }
@@ -574,7 +575,7 @@ public class GameServer implements ServerDispatcher {
                             .append(CloudNetWrapper.getInstance().getWrapperConfig().getWebPort())
                             .append("/cloudnet/api/v1/download").substring(0)
                             , groupTemplates + "/template.zip", CloudNetWrapper.getInstance().getSimpledUser(), template, serverGroup.getName(), custom);
-                    System.out.println("Downloading template for " + this.serverProcess.getMeta().getServiceId().getGroup());
+                    System.out.println("Downloading template for " + this.serverProcess.getMeta().getServiceId().getGroup() + " " + template.getName());
                     templateLoader.load();
                     templateLoader.unZip(groupTemplates);
                 }
@@ -594,7 +595,7 @@ public class GameServer implements ServerDispatcher {
                 Files.createDirectory(Paths.get(path + "/plugins"));
 
             TemplateLoader templateLoader = new TemplateLoader(serverProcess.getMeta().getUrl(), path + "/template.zip");
-            System.out.println("Downloading template for " + this.serverProcess.getMeta().getServiceId().getServerId());
+            System.out.println("Downloading template for " + this.serverProcess.getMeta().getServiceId().getServerId() + " " + serverProcess.getMeta().getUrl());
             templateLoader.load();
             templateLoader.unZip(path);
         } else
@@ -613,7 +614,7 @@ public class GameServer implements ServerDispatcher {
                 {
                     Files.createDirectories(Paths.get(groupTemplates));
                     TemplateLoader templateLoader = new TemplateLoader(template.getUrl(), groupTemplates + "/template.zip");
-                    System.out.println("Downloading template for " + this.serverProcess.getMeta().getServiceId().getGroup());
+                    System.out.println("Downloading template for " + this.serverProcess.getMeta().getServiceId().getGroup() + " " + template.getName());
                     templateLoader.load();
                     templateLoader.unZip(groupTemplates);
                 }
@@ -632,19 +633,16 @@ public class GameServer implements ServerDispatcher {
                             .append(CloudNetWrapper.getInstance().getWrapperConfig().getWebPort())
                             .append("/cloudnet/api/v1/download").substring(0)
                             , groupTemplates + "/template.zip", CloudNetWrapper.getInstance().getSimpledUser(), template, serverGroup.getName(), custom);
-                    System.out.println("Downloading template for " + this.serverProcess.getMeta().getServiceId().getGroup());
+                    System.out.println("Downloading template for " + this.serverProcess.getMeta().getServiceId().getGroup() + " " + template.getName());
                     templateLoader.load();
                     templateLoader.unZip(groupTemplates);
                 }
                 FileUtility.copyFilesInDirectory(new File(groupTemplates), new File(path));
             } else if (Files.exists(Paths.get("local/templates/" + serverGroup.getName() + NetworkUtils.SLASH_STRING + template.getName())))
             {
-
                 FileUtility.copyFilesInDirectory(new File("local/templates/" + serverGroup.getName() + NetworkUtils.SLASH_STRING + template.getName()), new File(path));
             } else
-            {
                 return false;
-            }
         }
         return true;
     }

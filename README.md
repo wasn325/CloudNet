@@ -1,4 +1,3 @@
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/799a64c742ba47a2818936fcf6a25800)](https://app.codacy.com/app/byRoadrunner/CloudNet?utm_source=github.com&utm_medium=referral&utm_content=CloudNetService/CloudNet&utm_campaign=badger)
 [![Build Status](https://ci.cloudnetservice.eu/buildStatus/icon?job=CloudNetService/CloudNet/master)](https://ci.cloudnetservice.eu/job/CloudNetService/job/CloudNet/master)
 [![star this repo](http://githubbadges.com/star.svg?user=CloudNetService&repo=CloudNet)](https://github.com/CloudNetService/CloudNet)
 [![fork this repo](http://githubbadges.com/fork.svg?user=CloudNetService&repo=CloudNet)](https://github.com/CloudNetService/CloudNet/fork)
@@ -46,3 +45,32 @@ Use of KVM virtualization or dedicated servers is recommended.
  
 ### Developer
 If you would like to contribute to this repository, feel free to fork the repo and then create a pull request to our current dev branch. 
+  
+Maven:
+```xml
+
+    <repositories>
+        <repository>
+            <id>cloudnet-repo</id>
+            <url>https://cloudnetservice.eu/repositories</url>
+        </repository>
+    </repositories>
+
+    <dependencies>
+        <!-- Spigot/BungeeCord -->
+        <dependency>
+            <groupId>de.dytanic.cloudnet</groupId>
+            <artifactId>cloudnet-api-bridge</artifactId>
+            <version>2.1.14</version>
+            <scope>provided</scope>
+        </dependency>
+         <!-- CloudNet Core -->
+        <dependency>
+            <groupId>de.dytanic.cloudnet</groupId>
+            <artifactId>cloudnet-core</artifactId>
+            <version>2.1.14</version>
+            <scope>provided</scope>
+        </dependency>
+     </dependencies>
+
+```
