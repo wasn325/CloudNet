@@ -113,7 +113,6 @@ public class MasterTemplateDeploy {
             StandardCharsets.UTF_8))) {
             String input;
             while ((input = bufferedReader.readLine()) != null) {
-                ;
             }
         }
         System.out.println("Successfully deploy template [" + template.getName() + ']');

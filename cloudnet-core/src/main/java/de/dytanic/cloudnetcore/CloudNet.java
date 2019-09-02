@@ -51,6 +51,7 @@ import de.dytanic.cloudnetcore.util.FileCopy;
 import de.dytanic.cloudnetcore.web.api.v1.*;
 import de.dytanic.cloudnetcore.web.log.WebsiteLog;
 import de.dytanic.cloudnetcore.wrapper.local.LocalCloudWrapper;
+import jline.console.ConsoleReader;
 import joptsimple.OptionSet;
 
 import java.io.IOException;
@@ -109,7 +110,9 @@ public final class CloudNet implements Executable, Runnable, Reloadable {
         this.arguments = args;
         this.defaultModuleManager = new DefaultModuleManager();
 
-        this.logger.getReader().addCompleter(commandManager);
+        try (ConsoleReader reader = this.logger.getReader()) {
+            reader.addCompleter(commandManager);
+        }
     }
 
     public static boolean isRUNNING() {
@@ -601,9 +604,7 @@ public final class CloudNet implements Executable, Runnable, Reloadable {
             }
         });
         if (user != null) {
-            if (user.getApiToken().equals(token)) {
-                return true;
-            }
+            return user.getApiToken().equals(token);
         }
         return false;
     }
@@ -616,9 +617,7 @@ public final class CloudNet implements Executable, Runnable, Reloadable {
             }
         });
         if (user != null) {
-            if (user.getHashedPassword().equals(DyHash.hashString(password))) {
-                return true;
-            }
+            return user.getHashedPassword().equals(DyHash.hashString(password));
         }
         return false;
     }

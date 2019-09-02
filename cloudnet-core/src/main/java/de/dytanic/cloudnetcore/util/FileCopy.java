@@ -16,7 +16,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 public final class FileCopy {
 
-    public static final void copyFileToDirectory(File file, File to) throws IOException {
+    public static void copyFileToDirectory(File file, File to) throws IOException {
         if (!to.exists()) {
             to.mkdirs();
         }
@@ -24,7 +24,7 @@ public final class FileCopy {
         Files.copy(file.toPath(), n.toPath(), StandardCopyOption.REPLACE_EXISTING);
     }
 
-    public static final void copyFilesInDirectory(File from, File to) throws IOException {
+    public static void copyFilesInDirectory(File from, File to) throws IOException {
         if (!to.exists()) {
             to.mkdirs();
         }
@@ -38,7 +38,7 @@ public final class FileCopy {
         }
     }
 
-    public static final void insertData(String paramString1, String paramString2) {
+    public static void insertData(String paramString1, String paramString2) {
         InputStream localInputStream = FileCopy.class.getClassLoader().getResourceAsStream(paramString1);
         try {
             Files.copy(localInputStream, Paths.get(paramString2));

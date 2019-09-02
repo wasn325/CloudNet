@@ -460,11 +460,6 @@ public class BungeeCord extends AbstractScreenService implements ServerDispatche
         CloudNetWrapper.getInstance().getProxys().remove(getServiceId().getServerId());
         CloudNetWrapper.getInstance().getNetworkConnection().sendPacket(new PacketOutRemoveProxy(proxyInfo));
         System.out.println("Proxy " + toString() + " was stopped");
-
-        try {
-            this.finalize();
-        } catch (Throwable throwable) {
-        }
         return true;
     }
 

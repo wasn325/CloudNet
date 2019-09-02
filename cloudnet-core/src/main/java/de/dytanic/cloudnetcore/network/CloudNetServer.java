@@ -16,7 +16,7 @@ import joptsimple.OptionSet;
 /**
  * Created by Tareko on 26.05.2017.
  */
-public final class CloudNetServer extends ChannelInitializer<Channel> implements AutoCloseable {
+public final class CloudNetServer extends ChannelInitializer<Channel> {
 
     private SslContext sslContext;
     private EventLoopGroup workerGroup = NetworkUtils.eventLoopGroup(), bossGroup = NetworkUtils.eventLoopGroup();
@@ -79,7 +79,6 @@ public final class CloudNetServer extends ChannelInitializer<Channel> implements
         return bossGroup;
     }
 
-    @Override
     public void close() {
         workerGroup.shutdownGracefully();
         bossGroup.shutdownGracefully();

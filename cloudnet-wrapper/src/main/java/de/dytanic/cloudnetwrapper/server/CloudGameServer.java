@@ -493,11 +493,6 @@ public class CloudGameServer extends AbstractScreenService implements ServerDisp
         CloudNetWrapper.getInstance().getCloudServers().remove(getServiceId().getServerId());
         CloudNetWrapper.getInstance().getNetworkConnection().sendPacket(new PacketOutRemoveCloudServer(serverInfo));
         System.out.println("Server " + toString() + " was stopped");
-
-        try {
-            this.finalize();
-        } catch (Throwable throwable) {
-        }
         return true;
     }
 
@@ -512,33 +507,12 @@ public class CloudGameServer extends AbstractScreenService implements ServerDisp
     }
 
     private void extractEntry(ZipFile zipFile, ZipEntry entry, String destDir) throws IOException {
-        File file = new File(destDir, entry.getName());
-        final byte[] BUFFER = new byte[0xFFFF];
-
+        final String path = entry.getName();
         if (entry.isDirectory()) {
-            file.mkdirs();
+            Files.createDirectories(Paths.get(destDir, path));
         } else {
-            new File(file.getParent()).mkdirs();
-
-            InputStream is = null;
-            OutputStream os = null;
-
-            try {
-                is = zipFile.getInputStream(entry);
-                os = new FileOutputStream(file);
-
-                int len;
-                while ((len = is.read(BUFFER)) != -1) {
-                    os.write(BUFFER, 0, len);
-                }
-            } finally {
-                if (os != null) {
-                    os.close();
-                }
-                if (is != null) {
-                    is.close();
-                }
-            }
+            Files.createDirectories(Paths.get(destDir));
+            Files.copy(zipFile.getInputStream(entry), Paths.get(destDir, path));
         }
     }
 

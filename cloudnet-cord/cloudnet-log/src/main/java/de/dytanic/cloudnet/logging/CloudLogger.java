@@ -216,7 +216,7 @@ public class CloudLogger extends Logger {
         }
     }
 
-    private class LoggingFormatter extends Formatter {
+    private static class LoggingFormatter extends Formatter {
 
         private final DateFormat format = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
 
@@ -224,9 +224,12 @@ public class CloudLogger extends Logger {
         public String format(LogRecord record) {
             StringBuilder builder = new StringBuilder();
             if (record.getThrown() != null) {
-                StringWriter writer = new StringWriter();
-                record.getThrown().printStackTrace(new PrintWriter(writer));
-                builder.append(writer).append('\n');
+                try (StringWriter writer = new StringWriter()) {
+                    record.getThrown().printStackTrace(new PrintWriter(writer));
+                    builder.append(writer).append('\n');
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
 
             return ConsoleReader.RESET_LINE + "[" + format.format(record.getMillis()) + "] " + record.getLevel()

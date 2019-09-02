@@ -21,7 +21,10 @@ import de.dytanic.cloudnet.lib.utility.Acceptable;
 import de.dytanic.cloudnet.lib.utility.CollectionWrapper;
 import de.dytanic.cloudnet.lib.utility.document.Document;
 
-import java.io.*;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
@@ -185,19 +188,7 @@ public class CloudFlareService {
     }
 
     private JsonObject toJsonInput(InputStream inputStream) {
-        StringBuilder stringBuilder = new StringBuilder();
-        String input;
-        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8));
-
-        try {
-            while ((input = bufferedReader.readLine()) != null) {
-                stringBuilder.append(input);
-            }
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return new JsonParser().parse(stringBuilder.substring(0)).getAsJsonObject();
+        return new JsonParser().parse(new InputStreamReader(inputStream, StandardCharsets.UTF_8)).getAsJsonObject();
     }
 
     public boolean shutdown(CloudFlareDatabase cloudFlareDatabase) {

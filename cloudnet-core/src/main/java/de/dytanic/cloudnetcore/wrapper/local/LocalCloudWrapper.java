@@ -34,7 +34,7 @@ import java.util.function.Consumer;
 /**
  * Created by Tareko on 01.10.2017.
  */
-public class LocalCloudWrapper implements Runnabled<OptionSet>, Closeable {
+public class LocalCloudWrapper implements Runnabled<OptionSet> {
 
     private static final String WRAPPER_URL = "https://ci.cloudnetservice.eu/job/CloudNetService/job/CloudNet/job/master/lastSuccessfulBuild/artifact/cloudnet-wrapper/target/CloudNet-Wrapper.jar";
 
@@ -291,7 +291,6 @@ public class LocalCloudWrapper implements Runnabled<OptionSet>, Closeable {
         }
     }
 
-    @Override
     public void close() throws IOException {
         this.enabled = false;
         if (this.process != null && this.process.isAlive()) {
@@ -314,8 +313,10 @@ public class LocalCloudWrapper implements Runnabled<OptionSet>, Closeable {
     }
 
     public void executeCommand(String command) throws IOException {
-        this.process.getOutputStream().write((command + '\n').getBytes(StandardCharsets.UTF_8));
-        this.process.getOutputStream().flush();
+        try (OutputStream output = this.process.getOutputStream()) {
+            output.write((command + '\n').getBytes(StandardCharsets.UTF_8));
+            output.flush();
+        }
     }
 
     public void restart() throws IOException {

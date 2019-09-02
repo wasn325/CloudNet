@@ -6,6 +6,7 @@ import de.dytanic.cloudnetwrapper.server.BungeeCord;
 import de.dytanic.cloudnetwrapper.server.CloudGameServer;
 import de.dytanic.cloudnetwrapper.server.GameServer;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 
@@ -37,9 +38,13 @@ public final class ReadConsoleLogHandler implements IWrapperHandler {
     }
 
     private synchronized void readConsoleLog(AbstractScreenService server) {
-        if (server.getInstance().isAlive() && server.getInstance().getInputStream() != null) {
-            readStream(server, server.getInstance().getInputStream());
-            readStream(server, server.getInstance().getErrorStream());
+        try (InputStream inputStream = server.getInstance().getInputStream()) {
+            if (server.getInstance().isAlive() && inputStream != null) {
+                readStream(server, inputStream);
+                readStream(server, server.getInstance().getErrorStream());
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 

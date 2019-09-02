@@ -11,6 +11,6 @@ public enum ServiceType {
     CAULDRON,
     FORGE,
     SPONGE,
-    CUSTOM;
+    CUSTOM
 
 }

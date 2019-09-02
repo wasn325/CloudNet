@@ -20,7 +20,7 @@ public class ModuleClassLoader extends URLClassLoader implements ModuleLoader {
      *
      * @param config the module configuration this class loader is meant for
      *
-     * @throws MalformedURLException when {@link ModuleConfig#file} does not
+     * @throws MalformedURLException when {@link ModuleConfig#getFile()} does not
      *                               resolve to a url
      */
     public ModuleClassLoader(ModuleConfig config) throws MalformedURLException {

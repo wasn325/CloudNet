@@ -16,7 +16,8 @@ import de.dytanic.cloudnet.lib.server.template.Template;
 import de.dytanic.cloudnet.lib.utility.document.Document;
 import de.dytanic.cloudnetwrapper.util.FileUtility;
 
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
@@ -198,33 +199,12 @@ public final class PacketInCreateTemplate extends PacketInHandler {
     }
 
     private void extractEntry(ZipFile zipFile, ZipEntry entry, String destDir) throws IOException {
-        File file = new File(destDir, entry.getName());
-        final byte[] BUFFER = new byte[0xFFFF];
-
+        final String path = entry.getName();
         if (entry.isDirectory()) {
-            file.mkdirs();
+            Files.createDirectories(Paths.get(destDir, path));
         } else {
-            new File(file.getParent()).mkdirs();
-
-            InputStream is = null;
-            OutputStream os = null;
-
-            try {
-                is = zipFile.getInputStream(entry);
-                os = new FileOutputStream(file);
-
-                int len;
-                while ((len = is.read(BUFFER)) != -1) {
-                    os.write(BUFFER, 0, len);
-                }
-            } finally {
-                if (os != null) {
-                    os.close();
-                }
-                if (is != null) {
-                    is.close();
-                }
-            }
+            Files.createDirectories(Paths.get(destDir));
+            Files.copy(zipFile.getInputStream(entry), Paths.get(destDir, path));
         }
     }
 

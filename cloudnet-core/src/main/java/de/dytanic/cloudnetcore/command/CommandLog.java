@@ -257,13 +257,16 @@ public final class CommandLog extends Command {
             connection.setDoInput(true);
             connection.setDoOutput(true);
             connection.connect();
-            OutputStream outputStream = connection.getOutputStream();
-            outputStream.write(builder.toString().getBytes(StandardCharsets.UTF_8));
-            outputStream.flush();
-            InputStream inputStream = connection.getInputStream();
-            JsonObject object = g.fromJson(new InputStreamReader(inputStream), JsonObject.class);
+            try (OutputStream outputStream = connection.getOutputStream()) {
+                outputStream.write(builder.toString().getBytes(StandardCharsets.UTF_8));
+                outputStream.flush();
+            }
+            JsonObject object;
+            try (InputStream inputStream = connection.getInputStream()) {
+                object = g.fromJson(new InputStreamReader(inputStream), JsonObject.class);
+            }
             int responseCode = connection.getResponseCode();
-            if (responseCode == 200) {
+            if (responseCode == 200 && object != null) {
                 sender.sendMessage("You can see the log at: " + String.format(url + "/%s", object.get("key").getAsString()));
                 connection.disconnect();
                 return true;
