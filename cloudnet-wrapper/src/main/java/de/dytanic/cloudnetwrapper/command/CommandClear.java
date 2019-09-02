@@ -7,7 +7,6 @@ package de.dytanic.cloudnetwrapper.command;
 import de.dytanic.cloudnet.command.Command;
 import de.dytanic.cloudnet.command.CommandSender;
 import de.dytanic.cloudnetwrapper.CloudNetWrapper;
-import jline.console.ConsoleReader;
 
 import java.io.IOException;
 
@@ -23,10 +22,11 @@ public class CommandClear extends Command {
     @Override
     public void onExecuteCommand(CommandSender sender, String[] args) {
         try {
-            try (ConsoleReader reader = CloudNetWrapper.getInstance().getCloudNetLogging().getReader()) {
-                reader.clearScreen();
-            }
+            // Can't close the reader, we need it later
+            //noinspection resource
+            CloudNetWrapper.getInstance().getCloudNetLogging().getReader().clearScreen();
         } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }

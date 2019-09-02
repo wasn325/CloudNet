@@ -229,7 +229,8 @@ public final class CloudNetWrapper implements Executable, ShutdownOnCentral {
         //Server Handlers
         {
             networkConnection.sendPacket(new PacketOutSetReadyWrapper(true));
-            IWrapperHandler iWrapperHandler = new StopTimeHandler(), readConsoleLogWrapperHandler = new ReadConsoleLogHandler();
+            IWrapperHandler iWrapperHandler = new StopTimeHandler();
+            IWrapperHandler readConsoleLogWrapperHandler = new ReadConsoleLogHandler();
 
             scheduler.runTaskRepeatSync(iWrapperHandler.toExecutor(), 0, iWrapperHandler.getTicks());
             scheduler.runTaskRepeatSync(readConsoleLogWrapperHandler.toExecutor(), 0, readConsoleLogWrapperHandler.getTicks());

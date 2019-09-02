@@ -51,7 +51,6 @@ import de.dytanic.cloudnetcore.util.FileCopy;
 import de.dytanic.cloudnetcore.web.api.v1.*;
 import de.dytanic.cloudnetcore.web.log.WebsiteLog;
 import de.dytanic.cloudnetcore.wrapper.local.LocalCloudWrapper;
-import jline.console.ConsoleReader;
 import joptsimple.OptionSet;
 
 import java.io.IOException;
@@ -110,9 +109,9 @@ public final class CloudNet implements Executable, Runnable, Reloadable {
         this.arguments = args;
         this.defaultModuleManager = new DefaultModuleManager();
 
-        try (ConsoleReader reader = this.logger.getReader()) {
-            reader.addCompleter(commandManager);
-        }
+        // Can't close the reader, we need it later when the user inputs commands
+        //noinspection resource
+        this.logger.getReader().addCompleter(commandManager);
     }
 
     public static boolean isRUNNING() {

@@ -9,7 +9,6 @@ import de.dytanic.cloudnet.lib.interfaces.Executable;
 import de.dytanic.cloudnetwrapper.screen.Screenable;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.OutputStream;
 
 public interface ServerDispatcher extends Executable, Screenable {
@@ -38,12 +37,9 @@ public interface ServerDispatcher extends Executable, Screenable {
 
     default boolean isAlive() {
         try {
-            if (getInstance() == null || !getInstance().isAlive()) {
-                return false;
-            }
-            try (InputStream inputStream = getInstance().getInputStream()) {
-                return inputStream.available() != -1;
-            }
+            // Can't close the resource as we need it for the next check later
+            //noinspection resource
+            return getInstance() != null && getInstance().isAlive() && getInstance().getInputStream().available() != -1;
         } catch (IOException e) {
             return false;
         }
