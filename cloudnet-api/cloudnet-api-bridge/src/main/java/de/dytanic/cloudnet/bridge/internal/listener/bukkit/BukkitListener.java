@@ -46,11 +46,8 @@ public final class BukkitListener implements Listener {
         for (final Player all : Bukkit.getOnlinePlayers()) {
             if (all.getUniqueId().equals(e.getUniqueId())) {
                 e.disallow(AsyncPlayerPreLoginEvent.Result.KICK_BANNED,
-                           ChatColor.translateAlternateColorCodes('&',
-                                                                  CloudAPI.getInstance()
-                                                                          .getCloudNetwork()
-                                                                          .getMessages()
-                                                                          .getString("server-kick-proxy-disallow")));
+                           ChatColor.translateAlternateColorCodes('&', CloudAPI.getInstance().getCloudNetwork().getMessages()
+                                                                               .getString("server-kick-proxy-disallow")));
                 return;
             }
         }
@@ -88,11 +85,8 @@ public final class BukkitListener implements Listener {
             this.kicks.remove(event.getPlayer().getUniqueId());
 
             event.disallow(PlayerLoginEvent.Result.KICK_BANNED,
-                           ChatColor.translateAlternateColorCodes('&',
-                                                                  CloudAPI.getInstance()
-                                                                          .getCloudNetwork()
-                                                                          .getMessages()
-                                                                          .getString("server-kick-proxy-disallow")));
+                           ChatColor.translateAlternateColorCodes('&', CloudAPI.getInstance().getCloudNetwork().getMessages()
+                                                                               .getString("server-kick-proxy-disallow")));
         }
     }
 
@@ -133,11 +127,8 @@ public final class BukkitListener implements Listener {
             if (CloudAPI.getInstance().getServerGroupData(CloudAPI.getInstance().getGroup()).isMaintenance()) {
                 if (!event.getPlayer().hasPermission("cloudnet.group.maintenance")) {
                     event.disallow(PlayerLoginEvent.Result.KICK_BANNED,
-                                   ChatColor.translateAlternateColorCodes('&',
-                                                                          CloudAPI.getInstance()
-                                                                                  .getCloudNetwork()
-                                                                                  .getMessages()
-                                                                                  .getString("server-group-maintenance-kick")));
+                                   ChatColor.translateAlternateColorCodes('&', CloudAPI.getInstance().getCloudNetwork().getMessages()
+                                                                                       .getString("server-group-maintenance-kick")));
                     return;
                 }
             }
@@ -169,11 +160,8 @@ public final class BukkitListener implements Listener {
                 if (!acceptLogin) {
                     CloudServer.getInstance().getCloudPlayers().remove(event.getPlayer().getUniqueId());
                     event.disallow(PlayerLoginEvent.Result.KICK_BANNED,
-                                   ChatColor.translateAlternateColorCodes('&',
-                                                                          CloudAPI.getInstance()
-                                                                                  .getCloudNetwork()
-                                                                                  .getMessages()
-                                                                                  .getString("joinpower-deny")));
+                                   ChatColor.translateAlternateColorCodes('&', CloudAPI.getInstance().getCloudNetwork().getMessages()
+                                                                                       .getString("joinpower-deny")));
                 }
             }
         }

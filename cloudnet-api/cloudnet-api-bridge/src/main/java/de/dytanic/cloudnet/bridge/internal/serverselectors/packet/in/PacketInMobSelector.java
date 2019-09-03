@@ -72,7 +72,9 @@ public class PacketInMobSelector extends PacketInHandlerDefault {
                                                                                                                                      .getInstance()
                                                                                                                                      .toLocation(
                                                                                                                                          key.getPosition()),
-                                                                                                                                 EntityType.valueOf(key.getType()));
+                                                                                                                                 EntityType
+                                                                                                                                     .valueOf(
+                                                                                                                                         key.getType()));
                             entity.setFireTicks(0);
                             final Object armorStand = ReflectionUtil.armorstandCreation(MobSelector.getInstance()
                                                                                                    .toLocation(key.getPosition()),
@@ -142,7 +144,9 @@ public class PacketInMobSelector extends PacketInHandlerDefault {
                                                                                                                                      .getInstance()
                                                                                                                                      .toLocation(
                                                                                                                                          key.getPosition()),
-                                                                                                                                 EntityType.valueOf(key.getType()));
+                                                                                                                                 EntityType
+                                                                                                                                     .valueOf(
+                                                                                                                                         key.getType()));
                             final Object armorStand = ReflectionUtil.armorstandCreation(MobSelector.getInstance()
                                                                                                    .toLocation(key.getPosition()),
                                                                                         entity,

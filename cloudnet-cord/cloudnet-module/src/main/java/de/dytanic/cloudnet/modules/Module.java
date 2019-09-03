@@ -71,16 +71,17 @@ public abstract class Module<E> extends EventKey {
         }
         final Module<?> module = (Module<?>) o;
         return Objects.equals(dataFolder, module.dataFolder) && Objects.equals(configFile, module.configFile) && Objects.equals(utilFile,
-                                                                                                                                module.utilFile) && Objects
-            .equals(moduleConfig, module.moduleConfig) && Objects.equals(classLoader, module.classLoader) && Objects.equals(configuration,
-                                                                                                                            module.configuration) && Objects
-            .equals(moduleLoader, module.moduleLoader);
+                                                                                                                                module.utilFile) &&
+               Objects.equals(moduleConfig, module.moduleConfig) && Objects.equals(classLoader, module.classLoader) && Objects.equals(
+            configuration,
+            module.configuration) && Objects.equals(moduleLoader, module.moduleLoader);
     }
 
     @Override
     public String toString() {
-        return "Module{" + "dataFolder=" + dataFolder + ", configFile=" + configFile + ", utilFile=" + utilFile + ", moduleConfig=" + moduleConfig + ", classLoader=" + classLoader + ", configuration=" + configuration + ", moduleLoader=" + moduleLoader + "} " + super
-            .toString();
+        return "Module{" + "dataFolder=" + dataFolder + ", configFile=" + configFile + ", utilFile=" + utilFile + ", moduleConfig=" +
+               moduleConfig + ", classLoader=" + classLoader + ", configuration=" + configuration + ", moduleLoader=" + moduleLoader +
+               "} " + super.toString();
     }
 
     /**

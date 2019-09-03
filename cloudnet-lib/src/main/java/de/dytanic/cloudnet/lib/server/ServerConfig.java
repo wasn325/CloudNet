@@ -7,10 +7,10 @@ import de.dytanic.cloudnet.lib.utility.document.Document;
  */
 public class ServerConfig {
 
+    private final long startup;
     private boolean hideServer;
     private String extra;
     private Document properties;
-    private final long startup;
 
     public ServerConfig(final boolean hideServer, final String extra, final Document properties, final long startup) {
         this.hideServer = hideServer;
@@ -21,7 +21,8 @@ public class ServerConfig {
 
     @Override
     public String toString() {
-        return "ServerConfig{" + "hideServer=" + hideServer + ", extra='" + extra + '\'' + ", properties=" + properties + ", startup=" + startup + '}';
+        return "ServerConfig{" + "hideServer=" + hideServer + ", extra='" + extra + '\'' + ", properties=" + properties + ", startup=" +
+               startup + '}';
     }
 
     public Document getProperties() {

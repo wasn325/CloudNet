@@ -18,6 +18,7 @@ public final class PacketDBInInsertDocument extends PacketInHandler {
     @Override
     public void handleInput(final Document data, final PacketSender packetSender) {
         CloudNet.getInstance().getDatabaseManager().getDatabase(data.getString("db")).insert(data.getObject("insert",
-                                                                                                            new TypeToken<Document[]>() {}.getType()));
+                                                                                                            new TypeToken<Document[]>() {}
+                                                                                                                .getType()));
     }
 }

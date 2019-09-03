@@ -47,12 +47,9 @@ import java.util.*;
 public final class MobSelector {
 
     private static MobSelector instance;
-
-    private Map<UUID, MobImpl> mobs;
-
-    private MobConfig mobConfig;
-
     private final Map<String, ServerInfo> servers = NetworkUtils.newConcurrentHashMap();
+    private Map<UUID, MobImpl> mobs;
+    private MobConfig mobConfig;
 
     public MobSelector(final MobConfig mobConfig) {
         instance = this;
@@ -90,13 +87,13 @@ public final class MobSelector {
             @Override
             public void run() {
                 NetworkUtils.addAll(servers,
-                                    MapWrapper.collectionCatcherHashMap(CloudAPI.getInstance().getServers(),
-                                                                        new Catcher<String, ServerInfo>() {
-                                                                            @Override
-                                                                            public String doCatch(final ServerInfo key) {
-                                                                                return key.getServiceId().getServerId();
-                                                                            }
-                                                                        }));
+                                    MapWrapper
+                                        .collectionCatcherHashMap(CloudAPI.getInstance().getServers(), new Catcher<String, ServerInfo>() {
+                                            @Override
+                                            public String doCatch(final ServerInfo key) {
+                                                return key.getServiceId().getServerId();
+                                            }
+                                        }));
                 Bukkit.getScheduler().runTaskAsynchronously(CloudServer.getInstance().getPlugin(), new Runnable() {
                     @Override
                     public void run() {
@@ -110,8 +107,8 @@ public final class MobSelector {
 
         if (ReflectionUtil.forName("org.bukkit.entity.ArmorStand") != null) {
             try {
-                Bukkit.getPluginManager().registerEvents((Listener) ReflectionUtil.forName(
-                    "de.dytanic.cloudnet.bridge.internal.listener.v18_112.ArmorStandListener").newInstance(),
+                Bukkit.getPluginManager().registerEvents((Listener) ReflectionUtil
+                                                             .forName("de.dytanic.cloudnet.bridge.internal.listener.v18_112.ArmorStandListener").newInstance(),
                                                          CloudServer.getInstance().getPlugin());
             } catch (final InstantiationException | IllegalAccessException e) {
                 e.printStackTrace();
@@ -140,10 +137,7 @@ public final class MobSelector {
 
                 for (final ServerInfo server : serverInfos) {
                     if (server.isOnline() && server.getServerState() == ServerState.LOBBY && !server.getServerConfig().isHideServer() &&
-                        !server.getServerConfig()
-                                                                                                                                   .getProperties()
-                                                                                                                                   .contains(
-                                                                                                                                       NetworkUtils.DEV_PROPERTY)) {
+                        !server.getServerConfig().getProperties().contains(NetworkUtils.DEV_PROPERTY)) {
                         while (mobConfig.getDefaultItemInventory().containsKey((index.getValue() + 1))) {
                             index.setValue(index.getValue() + 1);
                         }
@@ -181,13 +175,16 @@ public final class MobSelector {
 
                 armorStand.getClass().getMethod("setCustomName", String.class).invoke(armorStand,
                                                                                       ChatColor.translateAlternateColorCodes('&',
-                                                                                                                             serverMob.getDisplayMessage() + NetworkUtils.EMPTY_STRING)
+                                                                                                                             serverMob
+                                                                                                                                 .getDisplayMessage() +
+                                                                                                                             NetworkUtils.EMPTY_STRING)
                                                                                                .replace("%max_players%",
-                                                                                                        x.getSecond() + NetworkUtils.EMPTY_STRING)
-                                                                                               .replace("%group%",
-                                                                                                        serverMob.getTargetGroup())
-                                                                                               .replace("%group_online%",
-                                                                                                        x.getFirst() + NetworkUtils.EMPTY_STRING));
+                                                                                                        x.getSecond() +
+                                                                                                        NetworkUtils.EMPTY_STRING).replace(
+                                                                                          "%group%",
+                                                                                          serverMob.getTargetGroup()).replace(
+                                                                                          "%group_online%",
+                                                                                          x.getFirst() + NetworkUtils.EMPTY_STRING));
             } catch (final IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
                 e.printStackTrace();
             }
@@ -227,21 +224,24 @@ public final class MobSelector {
     }
 
     private String initPatterns(final String x, final ServerInfo serverInfo) {
-        return x.replace("%server%", serverInfo.getServiceId().getServerId())
-                .replace("%id%",
-                         serverInfo.getServiceId()
-                                   .getId() + NetworkUtils.EMPTY_STRING)
-                .replace("%host%", serverInfo.getHost())
-                .replace("%port%", serverInfo.getPort() + NetworkUtils.EMPTY_STRING)
-                .replace("%memory%", serverInfo.getMemory() + "MB")
-                .replace("%online_players%", serverInfo.getOnlineCount() + NetworkUtils.EMPTY_STRING)
-                .replace("%max_players%", serverInfo.getMaxPlayers() + NetworkUtils.EMPTY_STRING)
-                .replace("%motd%", ChatColor.translateAlternateColorCodes('&', serverInfo.getMotd()))
-                .replace("%state%", serverInfo.getServerState().name() + NetworkUtils.EMPTY_STRING)
-                .replace("%wrapper%", serverInfo.getServiceId().getWrapperId() + NetworkUtils.EMPTY_STRING)
-                .replace("%extra%", serverInfo.getServerConfig().getExtra())
-                .replace("%template%", serverInfo.getTemplate().getName())
-                .replace("%group%", serverInfo.getServiceId().getGroup());
+        return x.replace("%server%", serverInfo.getServiceId().getServerId()).replace("%id%",
+                                                                                      serverInfo.getServiceId().getId() +
+                                                                                      NetworkUtils.EMPTY_STRING).replace("%host%",
+                                                                                                                         serverInfo
+                                                                                                                             .getHost())
+                .replace("%port%", serverInfo.getPort() + NetworkUtils.EMPTY_STRING).replace("%memory%", serverInfo.getMemory() + "MB")
+                .replace("%online_players%", serverInfo.getOnlineCount() + NetworkUtils.EMPTY_STRING).replace("%max_players%",
+                                                                                                              serverInfo.getMaxPlayers() +
+                                                                                                              NetworkUtils.EMPTY_STRING)
+                .replace("%motd%", ChatColor.translateAlternateColorCodes('&', serverInfo.getMotd())).replace("%state%",
+                                                                                                              serverInfo.getServerState()
+                                                                                                                        .name() +
+                                                                                                              NetworkUtils.EMPTY_STRING)
+                .replace("%wrapper%", serverInfo.getServiceId().getWrapperId() + NetworkUtils.EMPTY_STRING).replace("%extra%",
+                                                                                                                    serverInfo
+                                                                                                                        .getServerConfig()
+                                                                                                                        .getExtra())
+                .replace("%template%", serverInfo.getTemplate().getName()).replace("%group%", serverInfo.getServiceId().getGroup());
     }
 
     @Deprecated
@@ -284,8 +284,11 @@ public final class MobSelector {
     }
 
     public Inventory create(final MobConfig mobConfig, final ServerMob mob) {
-        final Inventory inventory = Bukkit.createInventory(null, mobConfig.getInventorySize(), ChatColor.translateAlternateColorCodes('&',
-                                                                                            mob.getDisplay() + NetworkUtils.SPACE_STRING));
+        final Inventory inventory = Bukkit.createInventory(null,
+                                                           mobConfig.getInventorySize(),
+                                                           ChatColor.translateAlternateColorCodes('&',
+                                                                                                  mob.getDisplay() +
+                                                                                                  NetworkUtils.SPACE_STRING));
 
         for (final Map.Entry<Integer, MobItemLayout> mobItem : mobConfig.getDefaultItemInventory().entrySet()) {
             inventory.setItem(mobItem.getKey() - 1, transform(mobItem.getValue()));
@@ -321,7 +324,7 @@ public final class MobSelector {
             final Class<?> entityClazz = ReflectionUtil.reflectNMSClazz(".Entity");
             final Object object = nbt.newInstance();
 
-            final Object nmsEntity = entity.getClass().getMethod("getHandle", new Class[] {}).invoke(entity);
+            final Object nmsEntity = entity.getClass().getMethod("getHandle").invoke(entity);
             try {
                 entityClazz.getMethod("e", nbt).invoke(nmsEntity, object);
             } catch (final Exception ex) {
@@ -476,8 +479,8 @@ public final class MobSelector {
                         final List<ServerInfo> serverInfos = getServers(mobImpl.getMob().getTargetGroup());
 
                         for (final ServerInfo serverInfo : serverInfos) {
-                            if (serverInfo.getOnlineCount() < serverInfo.getMaxPlayers() && serverInfo.getServerState()
-                                                                                                      .equals(ServerState.LOBBY)) {
+                            if (serverInfo.getOnlineCount() < serverInfo.getMaxPlayers() &&
+                                serverInfo.getServerState().equals(ServerState.LOBBY)) {
                                 byteArrayDataOutput.writeUTF(serverInfo.getServiceId().getServerId());
                                 e.getPlayer().sendPluginMessage(CloudServer.getInstance().getPlugin(),
                                                                 "BungeeCord",
@@ -490,9 +493,7 @@ public final class MobSelector {
                     }
                 } else {
                     e.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&',
-                                                                                     CloudAPI.getInstance()
-                                                                                             .getCloudNetwork()
-                                                                                             .getMessages()
+                                                                                     CloudAPI.getInstance().getCloudNetwork().getMessages()
                                                                                              .getString("mob-selector-maintenance-message")));
                 }
             }
@@ -571,7 +572,9 @@ public final class MobSelector {
                                                                                                                                      .getInstance()
                                                                                                                                      .toLocation(
                                                                                                                                          key.getPosition()),
-                                                                                                                                 EntityType.valueOf(key.getType()));
+                                                                                                                                 EntityType
+                                                                                                                                     .valueOf(
+                                                                                                                                         key.getType()));
                             final Object armorStand = ReflectionUtil.armorstandCreation(MobSelector.getInstance()
                                                                                                    .toLocation(key.getPosition()),
                                                                                         entity,

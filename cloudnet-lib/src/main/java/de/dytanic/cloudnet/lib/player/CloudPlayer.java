@@ -63,14 +63,14 @@ public class CloudPlayer extends OfflinePlayer {
         }
         final CloudPlayer that = (CloudPlayer) o;
         return Objects.equals(playerConnection, that.playerConnection) && Objects.equals(proxy, that.proxy) && Objects.equals(server,
-                                                                                                                              that.server) && Objects
-            .equals(loginTimeStamp, that.loginTimeStamp) && Objects.equals(playerExecutor, that.playerExecutor);
+                                                                                                                              that.server) &&
+               Objects.equals(loginTimeStamp, that.loginTimeStamp) && Objects.equals(playerExecutor, that.playerExecutor);
     }
 
     @Override
     public String toString() {
-        return "CloudPlayer{" + "playerConnection=" + playerConnection + ", proxy='" + proxy + '\'' + ", server='" + server + '\'' + ", loginTimeStamp=" + loginTimeStamp + ", playerExecutor=" + playerExecutor + "} " + super
-            .toString();
+        return "CloudPlayer{" + "playerConnection=" + playerConnection + ", proxy='" + proxy + '\'' + ", server='" + server + '\'' +
+               ", loginTimeStamp=" + loginTimeStamp + ", playerExecutor=" + playerExecutor + "} " + super.toString();
     }
 
     public String getServer() {

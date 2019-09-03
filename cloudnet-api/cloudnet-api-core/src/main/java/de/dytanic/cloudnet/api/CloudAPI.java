@@ -45,6 +45,8 @@ import java.util.logging.Logger;
 
 public final class CloudAPI implements MetaObj {
 
+    private static final String[] PROCESS_PARAMETERS = {};
+    private static final String[] PROCESS_PRE_PARAMETERS = {};
     private static CloudAPI instance;
 
     private final Document config;
@@ -55,10 +57,9 @@ public final class CloudAPI implements MetaObj {
     private final int memory;
     private final Runnable shutdownTask;
     private final NetworkHandlerProvider networkHandlerProvider = new NetworkHandlerProvider();
-
+    private final DatabaseManager databaseManager = new DatabaseManager();
     //Init
     private CloudNetwork cloudNetwork = new CloudNetwork();
-    private final DatabaseManager databaseManager = new DatabaseManager();
     private ICloudService cloudService;
 
     /**
@@ -519,12 +520,9 @@ public final class CloudAPI implements MetaObj {
         final String rnd = NetworkUtils.randomString(10);
         networkConnection.sendPacket(new PacketOutCreateServerLog(rnd, serverId));
         final ConnectableAddress connectableAddress = cloudConfigLoader.loadConnnection();
-        return new StringBuilder(config.getBoolean("ssl") ? "https://" : "http://").append(connectableAddress.getHostName())
-                                                                                   .append(':')
-                                                                                   .append(cloudNetwork.getWebPort())
-                                                                                   .append("/cloudnet/log?server=")
-                                                                                   .append(rnd)
-                                                                                   .substring(0);
+        return new StringBuilder(config.getBoolean("ssl") ? "https://" : "http://").append(connectableAddress.getHostName()).append(':')
+                                                                                   .append(cloudNetwork.getWebPort()).append(
+                "/cloudnet/log?server=").append(rnd).substring(0);
     }
 
     /**
@@ -533,7 +531,7 @@ public final class CloudAPI implements MetaObj {
      * @param proxyGroup
      */
     public void startProxy(final ProxyGroup proxyGroup) {
-        startProxy(proxyGroup, proxyGroup.getMemory(), new String[] {});
+        startProxy(proxyGroup, proxyGroup.getMemory(), PROCESS_PARAMETERS);
     }
 
     /**
@@ -584,7 +582,7 @@ public final class CloudAPI implements MetaObj {
      * @param proxyGroup
      */
     public void startProxy(final WrapperInfo wrapperInfo, final ProxyGroup proxyGroup) {
-        startProxy(wrapperInfo, proxyGroup, proxyGroup.getMemory(), new String[] {});
+        startProxy(wrapperInfo, proxyGroup, proxyGroup.getMemory(), PROCESS_PARAMETERS);
     }
 
     /*=====================================================================================*/
@@ -692,10 +690,7 @@ public final class CloudAPI implements MetaObj {
                                 final int memory,
                                 final boolean priorityStop,
                                 final Properties properties) {
-        startGameServer(simpleServerGroup,
-                        serverConfig,
-                        memory,
-                        new String[] {},
+        startGameServer(simpleServerGroup, serverConfig, memory, PROCESS_PARAMETERS,
                         null,
                         null,
                         false,
@@ -812,10 +807,7 @@ public final class CloudAPI implements MetaObj {
                                 final boolean priorityStop,
                                 final Properties properties,
                                 final String serverId) {
-        startGameServer(simpleServerGroup,
-                        serverConfig,
-                        memory,
-                        new String[] {},
+        startGameServer(simpleServerGroup, serverConfig, memory, PROCESS_PARAMETERS,
                         null,
                         null,
                         false,
@@ -937,10 +929,7 @@ public final class CloudAPI implements MetaObj {
                                 final boolean priorityStop,
                                 final Properties properties,
                                 final Template template) {
-        startGameServer(simpleServerGroup,
-                        serverConfig,
-                        memory,
-                        new String[] {},
+        startGameServer(simpleServerGroup, serverConfig, memory, PROCESS_PARAMETERS,
                         template,
                         null,
                         false,
@@ -1003,10 +992,7 @@ public final class CloudAPI implements MetaObj {
                                 final Properties properties,
                                 final Template template,
                                 final String serverId) {
-        startGameServer(simpleServerGroup,
-                        serverConfig,
-                        memory,
-                        new String[] {},
+        startGameServer(simpleServerGroup, serverConfig, memory, PROCESS_PARAMETERS,
                         template,
                         null,
                         false,
@@ -1072,10 +1058,7 @@ public final class CloudAPI implements MetaObj {
                                 final boolean priorityStop,
                                 final Properties properties) {
         startGameServer(wrapperInfo,
-                        simpleServerGroup,
-                        serverConfig,
-                        memory,
-                        new String[] {},
+                        simpleServerGroup, serverConfig, memory, PROCESS_PARAMETERS,
                         null,
                         null,
                         false,
@@ -1154,10 +1137,7 @@ public final class CloudAPI implements MetaObj {
                                 final Properties properties,
                                 final Template template) {
         startGameServer(wrapperInfo,
-                        simpleServerGroup,
-                        serverConfig,
-                        memory,
-                        new String[] {},
+                        simpleServerGroup, serverConfig, memory, PROCESS_PARAMETERS,
                         template,
                         null,
                         false,
@@ -1243,10 +1223,7 @@ public final class CloudAPI implements MetaObj {
                                  final boolean priorityStop) {
         startCloudServer(wrapperInfo,
                          serverName,
-                         serverConfig,
-                         memory,
-                         priorityStop,
-                         new String[0],
+                         serverConfig, memory, priorityStop, PROCESS_PRE_PARAMETERS,
                          new ArrayList<>(),
                          new Properties(),
                          ServerGroupType.BUKKIT);
@@ -1300,10 +1277,7 @@ public final class CloudAPI implements MetaObj {
      */
     public void startCloudServer(final String serverName, final ServerConfig serverConfig, final int memory, final boolean priorityStop) {
         startCloudServer(serverName,
-                         serverConfig,
-                         memory,
-                         priorityStop,
-                         new String[0],
+                         serverConfig, memory, priorityStop, PROCESS_PRE_PARAMETERS,
                          new ArrayList<>(),
                          new Properties(),
                          ServerGroupType.BUKKIT);

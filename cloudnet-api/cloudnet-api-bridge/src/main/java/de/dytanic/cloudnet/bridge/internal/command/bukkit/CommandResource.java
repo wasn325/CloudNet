@@ -33,14 +33,13 @@ public final class CommandResource extends Command {
         final long max = Runtime.getRuntime().maxMemory() / 1048576L;
 
         sender.sendMessage(CloudAPI.getInstance().getPrefix() + NetworkUtils.SPACE_STRING);
-        sender.sendMessage(CloudAPI.getInstance().getPrefix() + "§7Server: §b" + CloudAPI.getInstance()
-                                                                                         .getServerId() + ':' + CloudAPI.getInstance()
-                                                                                                                        .getUniqueId());
+        sender.sendMessage(CloudAPI.getInstance().getPrefix() + "§7Server: §b" + CloudAPI.getInstance().getServerId() + ':' +
+                           CloudAPI.getInstance().getUniqueId());
         sender.sendMessage(CloudAPI.getInstance().getPrefix() + "§7State§8: §b" + CloudServer.getInstance().getServerState());
         sender.sendMessage(CloudAPI.getInstance().getPrefix() + "§7Template: §b" + CloudServer.getInstance().getTemplate().getName());
         sender.sendMessage(CloudAPI.getInstance().getPrefix() + "§7Memory: §b" + used + "§7/§b" + max + "MB");
-        sender.sendMessage(CloudAPI.getInstance().getPrefix() + "§7CPU-Usage internal: §b" + NetworkUtils.DECIMAL_FORMAT.format(NetworkUtils
-                                                                                                                                    .internalCpuUsage()));
+        sender.sendMessage(CloudAPI.getInstance().getPrefix() + "§7CPU-Usage internal: §b" +
+                           NetworkUtils.DECIMAL_FORMAT.format(NetworkUtils.internalCpuUsage()));
         sender.sendMessage(CloudAPI.getInstance().getPrefix() + NetworkUtils.SPACE_STRING);
         return false;
     }

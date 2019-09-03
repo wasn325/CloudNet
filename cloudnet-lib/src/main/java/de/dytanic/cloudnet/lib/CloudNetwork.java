@@ -42,17 +42,17 @@ public class CloudNetwork {
             return false;
         }
         final CloudNetwork that = (CloudNetwork) o;
-        return registeredPlayerCount == that.registeredPlayerCount && onlineCount == that.onlineCount && webPort == that.webPort && Objects.equals(
-            serverGroups,
-            that.serverGroups) && Objects.equals(proxyGroups, that.proxyGroups) && Objects.equals(wrappers,
-                                                                                                  that.wrappers) && Objects.equals(messages,
-                                                                                                                                   that.messages) && Objects
-            .equals(modules, that.modules);
+        return registeredPlayerCount == that.registeredPlayerCount && onlineCount == that.onlineCount && webPort == that.webPort &&
+               Objects.equals(serverGroups, that.serverGroups) && Objects.equals(proxyGroups, that.proxyGroups) && Objects.equals(wrappers,
+                                                                                                                                  that.wrappers) &&
+               Objects.equals(messages, that.messages) && Objects.equals(modules, that.modules);
     }
 
     @Override
     public String toString() {
-        return "CloudNetwork{" + "registeredPlayerCount=" + registeredPlayerCount + ", onlineCount=" + onlineCount + ", serverGroups=" + serverGroups + ", proxyGroups=" + proxyGroups + ", wrappers=" + wrappers + ", messages=" + messages + ", modules=" + modules + ", webPort=" + webPort + '}';
+        return "CloudNetwork{" + "registeredPlayerCount=" + registeredPlayerCount + ", onlineCount=" + onlineCount + ", serverGroups=" +
+               serverGroups + ", proxyGroups=" + proxyGroups + ", wrappers=" + wrappers + ", messages=" + messages + ", modules=" +
+               modules + ", webPort=" + webPort + '}';
     }
 
     public int getOnlineCount() {

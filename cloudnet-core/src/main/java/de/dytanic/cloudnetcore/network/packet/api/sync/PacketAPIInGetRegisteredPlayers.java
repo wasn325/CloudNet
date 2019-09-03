@@ -13,11 +13,8 @@ public final class PacketAPIInGetRegisteredPlayers extends PacketAPIIO {
 
     @Override
     public void handleInput(final Document data, final PacketSender packetSender) {
-        packetSender.sendPacket(getResult(new Document().append("players",
-                                                                CloudNet.getInstance()
-                                                                        .getDbHandlers()
-                                                                        .getPlayerDatabase()
-                                                                        .getRegisteredPlayers())));
+        packetSender.sendPacket(getResult(new Document().append("players", CloudNet.getInstance().getDbHandlers().getPlayerDatabase()
+                                                                                   .getRegisteredPlayers())));
     }
 
     @Override

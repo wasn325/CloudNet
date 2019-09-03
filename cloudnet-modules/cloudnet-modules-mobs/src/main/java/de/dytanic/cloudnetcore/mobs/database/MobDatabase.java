@@ -43,7 +43,8 @@ public class MobDatabase extends DatabaseUsable {
     public Map<UUID, ServerMob> loadAll() {
         boolean injectable = false;
         final Map<UUID, ServerMob> mobMap = database.getDocument("server_selector_mobs").getObject("mobs",
-                                                                                                   new TypeToken<Map<UUID, ServerMob>>() {}.getType());
+                                                                                                   new TypeToken<Map<UUID, ServerMob>>() {}
+                                                                                                       .getType());
 
         for (final ServerMob serverMob : mobMap.values()) {
             if (serverMob.getItemId() == null) {

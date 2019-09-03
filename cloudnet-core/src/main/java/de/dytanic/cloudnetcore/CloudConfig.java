@@ -110,10 +110,8 @@ public class CloudConfig {
         configuration.set("general.cloudGameServer-wrapperList", Collections.singletonList("Wrapper-1"));
 
         configuration.set("general.haste.server",
-                          Arrays.asList("https://hastebin.com",
-                                        "https://hasteb.in",
-                                        "https://haste.llamacloud.io",
-                                        "https://paste.dsyn.ga"));
+                          Arrays
+                              .asList("https://hastebin.com", "https://hasteb.in", "https://haste.llamacloud.io", "https://paste.dsyn.ga"));
 
         configuration.set("server.hostaddress", hostName);
         configuration.set("server.ports", Collections.singletonList(1410));
@@ -150,8 +148,8 @@ public class CloudConfig {
             }
         }
         new Document("wrapper", Collections.singletonList(new WrapperMeta("Wrapper-1", hostName, "admin"))).append("proxyGroups",
-                                                                                                                   Collections.singletonList(
-                                                                                                                       new BungeeGroup()))
+                                                                                                                   Collections
+                                                                                                                       .singletonList(new BungeeGroup()))
                                                                                                            .saveAsConfig(servicePath);
 
         new Document("group", new LobbyGroup()).saveAsConfig(Paths.get("groups/Lobby.json"));
@@ -171,9 +169,9 @@ public class CloudConfig {
 
     public CloudConfig load() throws Exception {
 
-        try (final InputStream inputStream = Files.newInputStream(configPath); final InputStreamReader inputStreamReader = new InputStreamReader(
-            inputStream,
-            StandardCharsets.UTF_8)) {
+        try (final InputStream inputStream = Files
+            .newInputStream(configPath); final InputStreamReader inputStreamReader = new InputStreamReader(inputStream,
+                                                                                                           StandardCharsets.UTF_8)) {
             final Configuration configuration = CONFIGURATION_PROVIDER.load(inputStreamReader);
             this.config = configuration;
 

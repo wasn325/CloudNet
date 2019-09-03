@@ -58,7 +58,11 @@ public final class ReflectionUtil {
     public static Object armorstandCreation(final Location location, final Entity entity, final ServerMob serverMob) {
         try {
             final Object armorstand = entity.getWorld().spawnEntity(entity.getLocation().clone().add(0,
-                                                                         ((LivingEntity) entity).getEyeHeight() - (entity instanceof Wither ? 0.15 : 0.3),
+                                                                                                     ((LivingEntity) entity)
+                                                                                                         .getEyeHeight() -
+                                                                                                     (entity instanceof Wither
+                                                                                                      ? 0.15
+                                                                                                      : 0.3),
                                                                                                      0), EntityType.valueOf("ARMOR_STAND"));
 
             armorstand.getClass().getMethod("setVisible", boolean.class).invoke(armorstand, false);

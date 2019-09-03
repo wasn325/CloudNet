@@ -91,15 +91,14 @@ public class MasterTemplateDeploy {
             ex.printStackTrace();
         }
         final HttpURLConnection urlConnection = (HttpURLConnection) new URL(
-            (ssl ? "https" : "http") + "://" + connectableAddress.getHostName() + ':' + connectableAddress
-            .getPort() + "/cloudnet/api/v1/deployment").openConnection();
+            (ssl ? "https" : "http") + "://" + connectableAddress.getHostName() + ':' + connectableAddress.getPort() +
+            "/cloudnet/api/v1/deployment").openConnection();
         urlConnection.setRequestMethod("POST");
         urlConnection.setRequestProperty("-Xcloudnet-user", simpledUser.getUserName());
         urlConnection.setRequestProperty("-Xcloudnet-token", simpledUser.getApiToken());
         urlConnection.setRequestProperty("-Xmessage", customName != null ? "custom" : "template");
-        urlConnection.setRequestProperty("-Xvalue", customName != null ? customName : new Document("template", template.getName()).append(
-            "group",
-            group).convertToJsonString());
+        urlConnection.setRequestProperty("-Xvalue", customName != null ? customName : new Document("template", template.getName())
+            .append("group", group).convertToJsonString());
         urlConnection.setUseCaches(false);
         urlConnection.setDoOutput(true);
         urlConnection.connect();
@@ -110,9 +109,9 @@ public class MasterTemplateDeploy {
             outputStream.flush();
         }
 
-        try (final InputStream inputStream = urlConnection.getInputStream(); final BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(
-            inputStream,
-            StandardCharsets.UTF_8))) {
+        try (final InputStream inputStream = urlConnection
+            .getInputStream(); final BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream,
+                                                                                                              StandardCharsets.UTF_8))) {
             String input;
             while ((input = bufferedReader.readLine()) != null) {
             }

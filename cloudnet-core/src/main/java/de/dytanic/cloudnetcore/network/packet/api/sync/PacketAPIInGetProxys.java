@@ -26,20 +26,20 @@ public class PacketAPIInGetProxys extends PacketAPIIO {
         if (data.contains("group")) {
             final Collection<ProxyInfo> proxyInfos = CollectionWrapper.transform(CloudNet.getInstance().getProxys(data.getString("group")),
                                                                                  new Catcher<ProxyInfo, ProxyServer>() {
-                                                                               @Override
-                                                                               public ProxyInfo doCatch(final ProxyServer key) {
-                                                                                   return key.getProxyInfo();
-                                                                               }
-                                                                           });
+                                                                                     @Override
+                                                                                     public ProxyInfo doCatch(final ProxyServer key) {
+                                                                                         return key.getProxyInfo();
+                                                                                     }
+                                                                                 });
             packetSender.sendPacket(getResult(new Document("proxyInfos", proxyInfos)));
         } else {
             final Collection<ProxyInfo> proxyInfos = CollectionWrapper.transform(CloudNet.getInstance().getProxys().values(),
                                                                                  new Catcher<ProxyInfo, ProxyServer>() {
-                                                                               @Override
-                                                                               public ProxyInfo doCatch(final ProxyServer key) {
-                                                                                   return key.getProxyInfo();
-                                                                               }
-                                                                           });
+                                                                                     @Override
+                                                                                     public ProxyInfo doCatch(final ProxyServer key) {
+                                                                                         return key.getProxyInfo();
+                                                                                     }
+                                                                                 });
             packetSender.sendPacket(getResult(new Document("proxyInfos", proxyInfos)));
         }
     }

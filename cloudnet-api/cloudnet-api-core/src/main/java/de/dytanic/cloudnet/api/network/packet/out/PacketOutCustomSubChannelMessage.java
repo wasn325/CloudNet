@@ -18,8 +18,7 @@ public class PacketOutCustomSubChannelMessage extends Packet {
                                             final String channel,
                                             final String message,
                                             final Document value) {
-        super(PacketRC.SERVER_HANDLE + 8, new Document("defaultType", defaultType).append("channel", channel)
-                                                                                  .append("message", message)
+        super(PacketRC.SERVER_HANDLE + 8, new Document("defaultType", defaultType).append("channel", channel).append("message", message)
                                                                                   .append("value", value));
     }
 
@@ -28,10 +27,8 @@ public class PacketOutCustomSubChannelMessage extends Packet {
                                             final String channel,
                                             final String message,
                                             final Document value) {
-        super(PacketRC.SERVER_HANDLE + 8, new Document("defaultType", defaultType).append("serverId", serverId)
-                                                                                  .append("channel", channel)
-                                                                                  .append("message", message)
-                                                                                  .append("value", value));
+        super(PacketRC.SERVER_HANDLE + 8, new Document("defaultType", defaultType).append("serverId", serverId).append("channel", channel)
+                                                                                  .append("message", message).append("value", value));
     }
 
 }

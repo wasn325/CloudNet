@@ -20,12 +20,12 @@ public class ServerInfo {
     private final boolean online;
     private final List<String> players;
     private final int memory;
-    private String motd;
     private final int onlineCount;
     private final int maxPlayers;
-    private ServerState serverState;
     private final ServerConfig serverConfig;
     private final Template template;
+    private String motd;
+    private ServerState serverState;
 
     public ServerInfo(final ServiceId serviceId,
                       final String host,
@@ -55,7 +55,9 @@ public class ServerInfo {
 
     @Override
     public String toString() {
-        return "ServerInfo{" + "serviceId=" + serviceId + ", host='" + host + '\'' + ", port=" + port + ", online=" + online + ", players=" + players + ", memory=" + memory + ", motd='" + motd + '\'' + ", onlineCount=" + onlineCount + ", maxPlayers=" + maxPlayers + ", serverState=" + serverState + ", serverConfig=" + serverConfig + ", template=" + template + '}';
+        return "ServerInfo{" + "serviceId=" + serviceId + ", host='" + host + '\'' + ", port=" + port + ", online=" + online +
+               ", players=" + players + ", memory=" + memory + ", motd='" + motd + '\'' + ", onlineCount=" + onlineCount + ", maxPlayers=" +
+               maxPlayers + ", serverState=" + serverState + ", serverConfig=" + serverConfig + ", template=" + template + '}';
     }
 
     public ServiceId getServiceId() {

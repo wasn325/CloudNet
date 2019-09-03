@@ -12,10 +12,12 @@ import de.dytanic.cloudnet.lib.server.template.Template;
 import de.dytanic.cloudnet.lib.server.template.TemplateResource;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 
 public class DefaultServerGroup extends ServerGroup {
+
+    private static final String[] PROCESS_PRE_PARAMETERS = {};
 
     public DefaultServerGroup(final String name,
                               final Collection<String> wrapper,
@@ -41,7 +43,7 @@ public class DefaultServerGroup extends ServerGroup {
               percentForNewServerAutomatically,
               serverType,
               groupMode,
-              Arrays.asList(new Template("default", TemplateResource.LOCAL, null, new String[] {}, new ArrayList<>())),
+              Collections.singletonList(new Template("default", TemplateResource.LOCAL, null, PROCESS_PRE_PARAMETERS, new ArrayList<>())),
               advancedServerConfig);
     }
 }

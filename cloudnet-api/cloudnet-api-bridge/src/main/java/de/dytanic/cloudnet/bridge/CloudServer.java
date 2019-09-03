@@ -63,24 +63,15 @@ public class CloudServer implements ICloudService {
     private final BukkitBootstrap bukkitBootstrap;
 
     private final Map<UUID, CloudPlayer> cloudPlayers = NetworkUtils.newConcurrentHashMap();
-
+    private final String hostAdress;
+    private final int port;
+    private final Template template;
+    private final int memory;
     /*=================================================*/
     private int maxPlayers;
-
     private String motd;
-
-    private final String hostAdress;
-
-    private final int port;
-
     private ServerState serverState;
-
     private ServerConfig serverConfig;
-
-    private final Template template;
-
-    private final int memory;
-
     private boolean allowAutoStart = true;
     /*=================================================*/
 
@@ -195,15 +186,6 @@ public class CloudServer implements ICloudService {
     }
 
     /**
-     * Set the serverState INGAME, LOBBY, OFFLINE for switching Signs or your API thinks
-     *
-     * @param serverState
-     */
-    public void setServerState(final ServerState serverState) {
-        this.serverState = serverState;
-    }
-
-    /**
      * You can disable the Autostart funtction from this server
      *
      * @param allowAutoStart
@@ -262,6 +244,15 @@ public class CloudServer implements ICloudService {
         return serverConfig;
     }
 
+    /**
+     * Sets the serverConfig in a new default style
+     *
+     * @param serverConfig
+     */
+    public void setServerConfig(final ServerConfig serverConfig) {
+        this.serverConfig = serverConfig;
+    }
+
     public void setServerStateAndUpdate(final ServerState serverStateAndUpdate) {
         this.serverState = serverStateAndUpdate;
         update();
@@ -277,12 +268,12 @@ public class CloudServer implements ICloudService {
     }
 
     /**
-     * Sets the serverConfig in a new default style
+     * Set the serverState INGAME, LOBBY, OFFLINE for switching Signs or your API thinks
      *
-     * @param serverConfig
+     * @param serverState
      */
-    public void setServerConfig(final ServerConfig serverConfig) {
-        this.serverConfig = serverConfig;
+    public void setServerState(final ServerState serverState) {
+        this.serverState = serverState;
     }
 
     /**
@@ -408,10 +399,13 @@ public class CloudServer implements ICloudService {
         }
 
         final PermissionGroup playerPermissionGroup =
-            playerPermissionGroupFunction != null ? playerPermissionGroupFunction.apply(player) : getCloudPlayers()
-            .get(player.getUniqueId())
-            .getPermissionEntity()
-            .getHighestPermissionGroup(CloudAPI.getInstance().getPermissionPool());
+            playerPermissionGroupFunction != null ? playerPermissionGroupFunction.apply(player) : getCloudPlayers().get(player
+                                                                                                                            .getUniqueId())
+                                                                                                                   .getPermissionEntity()
+                                                                                                                   .getHighestPermissionGroup(
+                                                                                                                       CloudAPI
+                                                                                                                           .getInstance()
+                                                                                                                           .getPermissionPool());
 
         initScoreboard(player);
 
@@ -422,13 +416,13 @@ public class CloudServer implements ICloudService {
                 addTeamEntry(player, all, playerPermissionGroup);
             }
 
-            PermissionGroup targetPermissionGroup = allOtherPlayerPermissionGroupFunction != null ? allOtherPlayerPermissionGroupFunction.apply(
-                all) : null;
+            PermissionGroup targetPermissionGroup =
+                allOtherPlayerPermissionGroupFunction != null ? allOtherPlayerPermissionGroupFunction.apply(all) : null;
 
             if (targetPermissionGroup == null) {
-                targetPermissionGroup = getCachedPlayer(all.getUniqueId()).getPermissionEntity()
-                                                                          .getHighestPermissionGroup(CloudAPI.getInstance()
-                                                                                                             .getPermissionPool());
+                targetPermissionGroup = getCachedPlayer(all.getUniqueId()).getPermissionEntity().getHighestPermissionGroup(CloudAPI
+                                                                                                                               .getInstance()
+                                                                                                                               .getPermissionPool());
             }
 
             if (targetPermissionGroup != null) {
@@ -457,11 +451,12 @@ public class CloudServer implements ICloudService {
         String teamName = permissionGroup.getTagId() + permissionGroup.getName();
         if (teamName.length() > 16) {
             teamName = teamName.substring(0, 16);
-            CloudAPI.getInstance()
-                    .dispatchConsoleMessage("In order to prevent issues, the name (+ tagID) of the group " + permissionGroup.getName() + " was temporarily shortened to 16 characters!");
+            CloudAPI.getInstance().dispatchConsoleMessage(
+                "In order to prevent issues, the name (+ tagID) of the group " + permissionGroup.getName() +
+                " was temporarily shortened to 16 characters!");
             CloudAPI.getInstance().dispatchConsoleMessage("Please fix this issue by changing the name of the group in your perms.yml");
-            Bukkit.broadcast("In order to prevent issues, the name (+ tagID) of the group " + permissionGroup.getName() + " was temporarily shortened to 16 characters!",
-                             "cloudnet.notify");
+            Bukkit.broadcast("In order to prevent issues, the name (+ tagID) of the group " + permissionGroup.getName() +
+                             " was temporarily shortened to 16 characters!", "cloudnet.notify");
             Bukkit.broadcast("Please fix this issue by changing the name of the group in your perms.yml", "cloudnet.notify");
         }
         Team team = all.getScoreboard().getTeam(teamName);
@@ -471,20 +466,22 @@ public class CloudServer implements ICloudService {
 
         if (permissionGroup.getPrefix().length() > 16) {
             permissionGroup.setPrefix(permissionGroup.getPrefix().substring(0, 16));
-            CloudAPI.getInstance()
-                    .dispatchConsoleMessage("In order to prevent issues, the prefix of the group " + permissionGroup.getName() + " was temporarily shortened to 16 characters!");
+            CloudAPI.getInstance().dispatchConsoleMessage(
+                "In order to prevent issues, the prefix of the group " + permissionGroup.getName() +
+                " was temporarily shortened to 16 characters!");
             CloudAPI.getInstance().dispatchConsoleMessage("Please fix this issue by changing the prefix in your perms.yml");
-            Bukkit.broadcast("In order to prevent issues, the prefix of the group " + permissionGroup.getName() + " was temporarily shortened to 16 characters!",
-                             "cloudnet.notify");
+            Bukkit.broadcast("In order to prevent issues, the prefix of the group " + permissionGroup.getName() +
+                             " was temporarily shortened to 16 characters!", "cloudnet.notify");
             Bukkit.broadcast("Please fix this issue by changing the prefix in your perms.yml", "cloudnet.notify");
         }
         if (permissionGroup.getSuffix().length() > 16) {
             permissionGroup.setSuffix(permissionGroup.getSuffix().substring(0, 16));
-            CloudAPI.getInstance()
-                    .dispatchConsoleMessage("In order to prevent issues, the suffix of the group " + permissionGroup.getName() + " was temporarily shortened to 16 characters!");
+            CloudAPI.getInstance().dispatchConsoleMessage(
+                "In order to prevent issues, the suffix of the group " + permissionGroup.getName() +
+                " was temporarily shortened to 16 characters!");
             CloudAPI.getInstance().dispatchConsoleMessage("Please fix this issue by changing the suffix in your perms.yml");
-            Bukkit.broadcast("In order to prevent issues, the suffix of the group " + permissionGroup.getName() + " was temporarily shortened to 16 characters!",
-                             "cloudnet.notify");
+            Bukkit.broadcast("In order to prevent issues, the suffix of the group " + permissionGroup.getName() +
+                             " was temporarily shortened to 16 characters!", "cloudnet.notify");
             Bukkit.broadcast("Please fix this issue by changing the suffix in your perms.yml", "cloudnet.notify");
         }
 
@@ -495,8 +492,7 @@ public class CloudServer implements ICloudService {
                 setColor.invoke(team, ChatColor.getByChar(permissionGroup.getColor().replaceAll("&", "").replaceAll("§", "")));
             } else {
                 setColor.invoke(team, ChatColor.getByChar(ChatColor.getLastColors(permissionGroup.getPrefix().replace('&', '§'))
-                                                                   .replaceAll("&", "")
-                                                                   .replaceAll("§", "")));
+                                                                   .replaceAll("&", "").replaceAll("§", "")));
             }
         } catch (final NoSuchMethodException ignored) {
         } catch (final IllegalAccessException | InvocationTargetException e) {

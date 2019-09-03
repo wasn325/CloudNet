@@ -43,12 +43,12 @@ public final class Wrapper implements INetworkComponent {
     private final java.util.Map<String, CloudServer> cloudServers = NetworkUtils.newConcurrentHashMap();
     // Group, ServiceId
     private final java.util.Map<String, Quad<Integer, Integer, ServiceId, Template>> waitingServices = NetworkUtils.newConcurrentHashMap();
+    private final WrapperMeta networkInfo;
+    private final String serverId;
     private Channel channel;
     private WrapperInfo wrapperInfo;
-    private final WrapperMeta networkInfo;
     private boolean ready;
     private double cpuUsage = -1;
-    private final String serverId;
     private int maxMemory;
 
     public Wrapper(final WrapperMeta networkInfo) {

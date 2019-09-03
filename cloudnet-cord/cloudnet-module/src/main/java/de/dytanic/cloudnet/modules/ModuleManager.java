@@ -49,6 +49,10 @@ public class ModuleManager {
         return detect(directory);
     }
 
+    public Collection<ModuleConfig> detect(final File directory) {
+        return moduleDetector.detectAvailable(directory);
+    }
+
     public ModuleManager loadModules() throws Exception {
         return loadModules(directory);
     }
@@ -70,10 +74,6 @@ public class ModuleManager {
         return this;
     }
 
-    public Collection<ModuleConfig> detect(final File directory) {
-        return moduleDetector.detectAvailable(directory);
-    }
-
     public ModuleManager loadInternalModules(final Set<ModuleConfig> modules) throws Exception {
         return loadInternalModules(modules, this.directory);
     }
@@ -91,16 +91,16 @@ public class ModuleManager {
 
     public ModuleManager enableModules() {
         for (final Module module : modules) {
-            System.out.println("Enabling module \"" + module.getModuleConfig().getName() + "\" version: " + module.getModuleConfig()
-                                                                                                                  .getVersion() + "...");
+            System.out.println(
+                "Enabling module \"" + module.getModuleConfig().getName() + "\" version: " + module.getModuleConfig().getVersion() + "...");
             module.onBootstrap();
         }
         return this;
     }
 
     public ModuleManager disableModule(final Module module) {
-        System.out.println("Disabling module \"" + module.getModuleConfig().getName() + "\" version: " + module.getModuleConfig()
-                                                                                                               .getVersion() + "...");
+        System.out.println(
+            "Disabling module \"" + module.getModuleConfig().getName() + "\" version: " + module.getModuleConfig().getVersion() + "...");
         module.onShutdown();
         modules.remove(module);
         return this;
@@ -109,8 +109,9 @@ public class ModuleManager {
     public ModuleManager disableModules() {
         while (!modules.isEmpty()) {
             final Module module = (Module) ((Queue) modules).poll();
-            System.out.println("Disabling module \"" + module.getModuleConfig().getName() + "\" version: " + module.getModuleConfig()
-                                                                                                                   .getVersion() + "...");
+            System.out.println(
+                "Disabling module \"" + module.getModuleConfig().getName() + "\" version: " + module.getModuleConfig().getVersion() +
+                "...");
             module.onShutdown();
         }
         return this;

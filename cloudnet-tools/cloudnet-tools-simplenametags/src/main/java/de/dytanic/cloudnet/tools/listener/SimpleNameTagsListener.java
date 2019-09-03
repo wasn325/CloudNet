@@ -25,11 +25,8 @@ public class SimpleNameTagsListener implements Listener {
 
     @EventHandler
     public void handleUpdate(final BukkitPlayerUpdateEvent e) {
-        if (Bukkit.getPlayer(e.getCloudPlayer().getUniqueId()) != null && e.getCloudPlayer().getServer() != null && e.getCloudPlayer()
-                                                                                                                     .getServer()
-                                                                                                                     .equalsIgnoreCase(
-                                                                                                                         CloudAPI.getInstance()
-                                                                                                                                 .getServerId())) {
+        if (Bukkit.getPlayer(e.getCloudPlayer().getUniqueId()) != null && e.getCloudPlayer().getServer() != null &&
+            e.getCloudPlayer().getServer().equalsIgnoreCase(CloudAPI.getInstance().getServerId())) {
             de.dytanic.cloudnet.bridge.CloudServer.getInstance().updateNameTags(Bukkit.getPlayer(e.getCloudPlayer().getUniqueId()));
         }
     }

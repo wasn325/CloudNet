@@ -28,6 +28,7 @@ import java.util.List;
  */
 public class SetupProxyGroup {
 
+    private static final String[] PROCESS_PRE_PARAMETERS = {};
     private final String name;
 
     public SetupProxyGroup(final CommandSender commandSender, final String name) {
@@ -68,10 +69,10 @@ public class SetupProxyGroup {
                 final ProxyGroup proxyGroup = new ProxyGroup(name,
                                                              wrappers,
                                                              new Template("default",
-                                                                    TemplateResource.valueOf(data.getString("template")),
-                                                                    null,
-                                                                    new String[0],
-                                                                    new ArrayList<>()),
+                                                                          TemplateResource.valueOf(data.getString("template")),
+                                                                          null,
+                                                                          PROCESS_PRE_PARAMETERS,
+                                                                          new ArrayList<>()),
                                                              ProxyVersion.BUNGEECORD,
                                                              data.getInt("startport"),
                                                              data.getInt("startup"),
@@ -104,8 +105,9 @@ public class SetupProxyGroup {
                                                                  new Catcher<Boolean, String>() {
                                                                      @Override
                                                                      public Boolean doCatch(final String key) {
-                                                                         return NetworkUtils.checkIsNumber(key) && Integer.parseInt(key) > 128 && Integer
-                                                                             .parseInt(key) < 70000;
+                                                                         return NetworkUtils.checkIsNumber(key) &&
+                                                                                Integer.parseInt(key) > 128 &&
+                                                                                Integer.parseInt(key) < 70000;
                                                                      }
                                                                  })).request(new SetupRequest("startup",
                                                                                               "How many proxys should always be online?",
@@ -119,10 +121,10 @@ public class SetupProxyGroup {
                                                                                                                                   @Override
                                                                                                                                   public Boolean doCatch(
                                                                                                                                       final String key) {
-                                                                                                                                      return key
-                                                                                                                                          .equalsIgnoreCase(
-                                                                                                                                              "STATIC") || key
-                                                                                                                                          .equalsIgnoreCase(
+                                                                                                                                      return
+                                                                                                                                          key.equalsIgnoreCase(
+                                                                                                                                              "STATIC") ||
+                                                                                                                                          key.equalsIgnoreCase(
                                                                                                                                               "DYNAMIC");
                                                                                                                                   }
                                                                                                                               })).request(
@@ -142,16 +144,14 @@ public class SetupProxyGroup {
                                                           new Catcher<Boolean, String>() {
                                                               @Override
                                                               public Boolean doCatch(final String key) {
-                                                                  final java.util.List<String> wrappers = (List<String>) CollectionWrapper.toCollection(
-                                                                      key,
-                                                                      ",");
+                                                                  final java.util.List<String> wrappers = (List<String>) CollectionWrapper
+                                                                      .toCollection(key, ",");
                                                                   if (wrappers.isEmpty()) {
                                                                       return false;
                                                                   }
                                                                   for (short i = 0; i < wrappers.size(); i++) {
-                                                                      if (!CloudNet.getInstance()
-                                                                                   .getWrappers()
-                                                                                   .containsKey(wrappers.get(i))) {
+                                                                      if (!CloudNet.getInstance().getWrappers().containsKey(wrappers
+                                                                                                                                .get(i))) {
                                                                           wrappers.remove(wrappers.get(i));
                                                                       }
                                                                   }

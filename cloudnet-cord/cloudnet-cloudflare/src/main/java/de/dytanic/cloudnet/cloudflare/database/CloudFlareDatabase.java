@@ -71,12 +71,11 @@ public class CloudFlareDatabase extends DatabaseUsable {
         for (final String key : document.keys()) {
             if (!key.equalsIgnoreCase(Database.UNIQUE_NAME_KEY)) {
                 final MultiValue<PostResponse, String> value = document.getObject(key,
-                                                                                  new TypeToken<MultiValue<PostResponse, String>>() {}.getType());
+                                                                                  new TypeToken<MultiValue<PostResponse, String>>() {}
+                                                                                      .getType());
 
-                if (value != null && value.getSecond().equalsIgnoreCase(wrapper) && value.getFirst()
-                                                                                         .getCloudFlareConfig()
-                                                                                         .getDomainName()
-                                                                                         .equalsIgnoreCase(cloudFlareConfig.getDomainName())) {
+                if (value != null && value.getSecond().equalsIgnoreCase(wrapper) &&
+                    value.getFirst().getCloudFlareConfig().getDomainName().equalsIgnoreCase(cloudFlareConfig.getDomainName())) {
                     return true;
                 }
             }
@@ -131,7 +130,7 @@ public class CloudFlareDatabase extends DatabaseUsable {
         if (document.contains("requests")) {
             final Map<String, MultiValue<PostResponse, String>> responses = document.getObject("requests",
                                                                                                new TypeToken<Map<String, MultiValue<PostResponse, String>>>() {}
-                                                                                             .getType());
+                                                                                                   .getType());
             document.append("requests", Collections.EMPTY_MAP);
             database.insert(document);
             return responses;

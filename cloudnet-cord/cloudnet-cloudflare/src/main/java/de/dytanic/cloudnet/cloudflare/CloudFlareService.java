@@ -91,8 +91,7 @@ public class CloudFlareService {
                     for (final String wrapper : proxyGroup.getWrapper()) {
                         if (!cloudFlareDatabase.contains(cloudFlareConfig, wrapper)) {
                             final String host = wrapperInfoMap.get(wrapper).getHostName();
-                            final DNSRecord dnsRecord = new DefaultDNSRecord(DNSType.A,
-                                                                       wrapper + '.' + cloudFlareConfig.getDomainName(),
+                            final DNSRecord dnsRecord = new DefaultDNSRecord(DNSType.A, wrapper + '.' + cloudFlareConfig.getDomainName(),
                                                                              host,
                                                                              new Document().obj());
                             if (!ipARecords.containsKey(wrapper)) {
@@ -118,8 +117,8 @@ public class CloudFlareService {
 
         try {
             final HttpURLConnection delete = (HttpURLConnection) new URL(
-                PREFIX_URL + "zones/" + postResponse.getCloudFlareConfig().getZoneId() + "/dns_records/" + postResponse
-                .getId()).openConnection();
+                PREFIX_URL + "zones/" + postResponse.getCloudFlareConfig().getZoneId() + "/dns_records/" + postResponse.getId())
+                .openConnection();
 
             delete.setRequestMethod("DELETE");
             delete.setRequestProperty("X-Auth-Email", postResponse.getCloudFlareConfig().getEmail());
@@ -228,9 +227,8 @@ public class CloudFlareService {
                     final SRVRecord srvRecord;
                     if (cloudFlareProxyGroup.getSub().startsWith("@")) {
                         srvRecord = new SRVRecord("_minecraft._tcp." + cloudFlareConfig.getDomainName(),
-                                                  "SRV 1 1 " + proxyServer.getPort() + ' ' + proxyServer.getServiceId()
-                                                                                                        .getWrapperId() + '.' + cloudFlareConfig
-                                                      .getDomainName(),
+                                                  "SRV 1 1 " + proxyServer.getPort() + ' ' + proxyServer.getServiceId().getWrapperId() +
+                                                  '.' + cloudFlareConfig.getDomainName(),
                                                   "_minecraft",
                                                   "_tcp",
                                                   cloudFlareConfig.getDomainName(),
@@ -240,9 +238,8 @@ public class CloudFlareService {
                                                   proxyServer.getServiceId().getWrapperId() + '.' + cloudFlareConfig.getDomainName());
                     } else {
                         srvRecord = new SRVRecord("_minecraft._tcp." + cloudFlareConfig.getDomainName(),
-                                                  "SRV 1 1 " + proxyServer.getPort() + ' ' + proxyServer.getServiceId()
-                                                                                                        .getWrapperId() + '.' + cloudFlareConfig
-                                                      .getDomainName(),
+                                                  "SRV 1 1 " + proxyServer.getPort() + ' ' + proxyServer.getServiceId().getWrapperId() +
+                                                  '.' + cloudFlareConfig.getDomainName(),
                                                   "_minecraft",
                                                   "_tcp",
                                                   cloudFlareProxyGroup.getSub(),
@@ -283,14 +280,16 @@ public class CloudFlareService {
 
         final Collection<MultiValue<PostResponse, String>> postResponses = CollectionWrapper.filterMany(bungeeSRVRecords.values(),
                                                                                                         new Acceptable<MultiValue<PostResponse, String>>() {
-                                                                                                      @Override
-                                                                                                      public boolean isAccepted(final MultiValue<PostResponse, String> postResponseStringMultiValue) {
-                                                                                                          return postResponseStringMultiValue
-                                                                                                              .getSecond()
-                                                                                                              .equalsIgnoreCase(proxyServer.getServiceId()
-                                                                                                                                           .getServerId());
-                                                                                                      }
-                                                                                                  });
+                                                                                                            @Override
+                                                                                                            public boolean isAccepted(final MultiValue<PostResponse, String> postResponseStringMultiValue) {
+                                                                                                                return postResponseStringMultiValue
+                                                                                                                    .getSecond()
+                                                                                                                    .equalsIgnoreCase(
+                                                                                                                        proxyServer
+                                                                                                                            .getServiceId()
+                                                                                                                            .getServerId());
+                                                                                                            }
+                                                                                                        });
 
         //MultiValue<PostResponse, String> postResponse = bungeeSRVRecords.get(proxyServer.getServiceId().getServerId());
             /*

@@ -76,9 +76,8 @@ public class CloudNetClientAuth extends SimpleChannelInboundHandler<Packet> impl
 
     @Override
     protected void channelRead0(final ChannelHandlerContext channelHandlerContext, final Packet packet) throws Exception {
-        CloudNet.getLogger().debug("Receiving Packet [" + CloudNet.getInstance()
-                                                                  .getPacketManager()
-                                                                  .packetId(packet) + "] on " + getChannel().remoteAddress().toString());
+        CloudNet.getLogger().debug("Receiving Packet [" + CloudNet.getInstance().getPacketManager().packetId(packet) + "] on " +
+                                   getChannel().remoteAddress().toString());
         if (CloudNet.getInstance().getPacketManager().packetId(packet) == (PacketRC.INTERNAL - 1)) {
             CloudNet.getInstance().getPacketManager().dispatchPacket(packet, this);
         }

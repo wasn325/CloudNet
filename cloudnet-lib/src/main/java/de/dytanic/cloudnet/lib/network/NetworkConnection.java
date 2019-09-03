@@ -27,8 +27,8 @@ public final class NetworkConnection implements PacketSender {
 
     private final PacketManager packetManager = new PacketManager();
     private final EventLoopGroup eventLoopGroup = NetworkUtils.eventLoopGroup(4);
-    private Channel channel;
     private final ConnectableAddress connectableAddress;
+    private Channel channel;
     private long connectionTrys;
     private Runnable task;
     private SslContext sslContext;
@@ -92,24 +92,24 @@ public final class NetworkConnection implements PacketSender {
                 sslContext = SslContextBuilder.forClient().trustManager(InsecureTrustManagerFactory.INSTANCE).build();
             }
 
-            final Bootstrap bootstrap = new Bootstrap().option(ChannelOption.AUTO_READ, true)
-                                                       .group(eventLoopGroup)
+            final Bootstrap bootstrap = new Bootstrap().option(ChannelOption.AUTO_READ, true).group(eventLoopGroup)
                                                        .handler(new ChannelInitializer<Channel>() {
 
-                                                     @Override
-                                                     protected void initChannel(final Channel channel) throws Exception {
+                                                           @Override
+                                                           protected void initChannel(final Channel channel) throws Exception {
 
-                                                         if (sslContext != null) {
-                                                             channel.pipeline().addLast(sslContext.newHandler(channel.alloc(),
-                                                                                                              connectableAddress.getHostName(),
-                                                                                                              connectableAddress.getPort()));
-                                                         }
+                                                               if (sslContext != null) {
+                                                                   channel.pipeline().addLast(sslContext.newHandler(channel.alloc(),
+                                                                                                                    connectableAddress
+                                                                                                                        .getHostName(),
+                                                                                                                    connectableAddress
+                                                                                                                        .getPort()));
+                                                               }
 
-                                                         NetworkUtils.initChannel(channel).pipeline().addLast(default_handler);
+                                                               NetworkUtils.initChannel(channel).pipeline().addLast(default_handler);
 
-                                                     }
-                                                 })
-                                                       .channel(NetworkUtils.socketChannel());
+                                                           }
+                                                       }).channel(NetworkUtils.socketChannel());
             this.channel = bootstrap.connect(connectableAddress.getHostName(), connectableAddress.getPort()).sync().channel().writeAndFlush(
                 new PacketOutAuth(auth)).syncUninterruptibly().channel();
 

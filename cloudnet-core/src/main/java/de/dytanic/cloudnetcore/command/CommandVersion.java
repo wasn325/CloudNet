@@ -18,7 +18,7 @@ public final class CommandVersion extends Command {
 
     @Override
     public void onExecuteCommand(final CommandSender sender, final String[] args) {
-        sender.sendMessage("CloudNet " + NetworkUtils.class.getPackage().getSpecificationVersion() + " #" + NetworkUtils.class.getPackage()
-                                                                                                                              .getImplementationVersion() + " by Dytanic");
+        sender.sendMessage("CloudNet " + NetworkUtils.class.getPackage().getSpecificationVersion() + " #" +
+                           NetworkUtils.class.getPackage().getImplementationVersion() + " by Dytanic");
     }
 }

@@ -74,19 +74,19 @@ public class PermissionGroup {
             return false;
         }
         final PermissionGroup that = (PermissionGroup) o;
-        return tagId == that.tagId && joinPower == that.joinPower && defaultGroup == that.defaultGroup && Objects.equals(name,
-                                                                                                                         that.name) && Objects
-            .equals(color, that.color) && Objects.equals(prefix, that.prefix) && Objects.equals(suffix, that.suffix) && Objects.equals(
-            display,
-            that.display) && Objects.equals(permissions, that.permissions) && Objects.equals(serverGroupPermissions,
-                                                                                             that.serverGroupPermissions) && Objects.equals(
-            options,
-            that.options) && Objects.equals(implementGroups, that.implementGroups);
+        return tagId == that.tagId && joinPower == that.joinPower && defaultGroup == that.defaultGroup && Objects.equals(name, that.name) &&
+               Objects.equals(color, that.color) && Objects.equals(prefix, that.prefix) && Objects.equals(suffix, that.suffix) &&
+               Objects.equals(display, that.display) && Objects.equals(permissions, that.permissions) && Objects.equals(
+            serverGroupPermissions,
+            that.serverGroupPermissions) && Objects.equals(options, that.options) && Objects.equals(implementGroups, that.implementGroups);
     }
 
     @Override
     public String toString() {
-        return "PermissionGroup{" + "name='" + name + '\'' + ", color='" + color + '\'' + ", prefix='" + prefix + '\'' + ", suffix='" + suffix + '\'' + ", display='" + display + '\'' + ", tagId=" + tagId + ", joinPower=" + joinPower + ", defaultGroup=" + defaultGroup + ", permissions=" + permissions + ", serverGroupPermissions=" + serverGroupPermissions + ", options=" + options + ", implementGroups=" + implementGroups + '}';
+        return "PermissionGroup{" + "name='" + name + '\'' + ", color='" + color + '\'' + ", prefix='" + prefix + '\'' + ", suffix='" +
+               suffix + '\'' + ", display='" + display + '\'' + ", tagId=" + tagId + ", joinPower=" + joinPower + ", defaultGroup=" +
+               defaultGroup + ", permissions=" + permissions + ", serverGroupPermissions=" + serverGroupPermissions + ", options=" +
+               options + ", implementGroups=" + implementGroups + '}';
     }
 
     public String getName() {

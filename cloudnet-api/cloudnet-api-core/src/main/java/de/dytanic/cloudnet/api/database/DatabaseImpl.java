@@ -22,8 +22,8 @@ import java.util.concurrent.FutureTask;
  */
 public class DatabaseImpl implements Database {
 
-    private Map<String, Document> docs = NetworkUtils.newConcurrentHashMap();
     private final String name;
+    private Map<String, Document> docs = NetworkUtils.newConcurrentHashMap();
 
     public DatabaseImpl(final String name) {
         this.name = name;
@@ -33,7 +33,7 @@ public class DatabaseImpl implements Database {
     public Database loadDocuments() {
         final Result result = CloudAPI.getInstance().getNetworkConnection().getPacketManager().sendQuery(new PacketDBOutGetDocument(name),
                                                                                                          CloudAPI.getInstance()
-                                                                                                           .getNetworkConnection());
+                                                                                                                 .getNetworkConnection());
         this.docs = result.getResult().getObject("docs", new TypeToken<Map<String, Document>>() {}.getType());
         return this;
     }
@@ -48,7 +48,7 @@ public class DatabaseImpl implements Database {
         final Result result = CloudAPI.getInstance().getNetworkConnection().getPacketManager().sendQuery(new PacketDBOutGetDocument(name,
                                                                                                                                     this.name),
                                                                                                          CloudAPI.getInstance()
-                                                                                                           .getNetworkConnection());
+                                                                                                                 .getNetworkConnection());
         final Document document = result.getResult().getDocument("result");
 
         this.docs.put(document.getString(Database.UNIQUE_NAME_KEY), document);
@@ -89,7 +89,7 @@ public class DatabaseImpl implements Database {
         final Result result = CloudAPI.getInstance().getNetworkConnection().getPacketManager().sendQuery(new PacketDBOutExistsDocument(name,
                                                                                                                                        this.name),
                                                                                                          CloudAPI.getInstance()
-                                                                                                           .getNetworkConnection());
+                                                                                                                 .getNetworkConnection());
         return result.getResult().getBoolean("exists");
     }
 
@@ -97,7 +97,7 @@ public class DatabaseImpl implements Database {
     public int size() {
         final Result result = CloudAPI.getInstance().getNetworkConnection().getPacketManager().sendQuery(new PacketDBOutGetSize(name),
                                                                                                          CloudAPI.getInstance()
-                                                                                                           .getNetworkConnection());
+                                                                                                                 .getNetworkConnection());
         return result.getResult().getInt("size");
     }
 
@@ -106,7 +106,7 @@ public class DatabaseImpl implements Database {
         final Result result = CloudAPI.getInstance().getNetworkConnection().getPacketManager().sendQuery(new PacketDBOutExistsDocument(name,
                                                                                                                                        this.name),
                                                                                                          CloudAPI.getInstance()
-                                                                                                           .getNetworkConnection());
+                                                                                                                 .getNetworkConnection());
         return result.getResult().getBoolean("exists");
     }
 

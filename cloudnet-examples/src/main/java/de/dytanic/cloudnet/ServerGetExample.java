@@ -13,25 +13,22 @@ import org.bukkit.event.EventHandler;
  */
 public class ServerGetExample {
 
-    @EventHandler
-    public void handle(ProxiedServerAddEvent e) {
-        if (e.getServerInfo().getServerConfig().getProperties().contains("myUUID") && e.getServerInfo()
-                                                                                       .getServerConfig()
-                                                                                       .getProperties()
-                                                                                       .getString("myUUID")
-                                                                                       .equals("test")) {
-            ServerInfo serverInfo = e.getServerInfo();
+
+    public void handle(final ProxiedServerAddEvent e) {
+        if (e.getServerInfo().getServerConfig().getProperties().contains("myUUID") &&
+            e.getServerInfo().getServerConfig().getProperties().getString("myUUID").equals("test")) {
+            final ServerInfo serverInfo = e.getServerInfo();
             /* ... */
         }
 
         if (e.getServerInfo().getServiceId().getServerId().equals("Lobby-1")) {
-            ServerInfo serverInfo = e.getServerInfo();
+            final ServerInfo serverInfo = e.getServerInfo();
             /* ... */
         }
     }
 
     @EventHandler
-    public void handle(BukkitServerAddEvent e) {
+    public void handle(final BukkitServerAddEvent e) {
         /* - // - */
     }
 

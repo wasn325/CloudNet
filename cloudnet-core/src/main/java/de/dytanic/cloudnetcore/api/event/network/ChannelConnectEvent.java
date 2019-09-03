@@ -13,9 +13,8 @@ import io.netty.channel.Channel;
  */
 public class ChannelConnectEvent extends Event implements Cancelable {
 
-    private boolean cancelled;
-
     private final Channel channel;
+    private boolean cancelled;
 
     public ChannelConnectEvent(final boolean cancelled, final Channel channel) {
         this.cancelled = cancelled;

@@ -29,8 +29,8 @@ public class Template {
 
     @Override
     public String toString() {
-        return "Template{" + "name='" + name + '\'' + ", backend=" + backend + ", url='" + url + '\'' + ", processPreParameters=" + Arrays.toString(
-            processPreParameters) + ", installablePlugins=" + installablePlugins + '}';
+        return "Template{" + "name='" + name + '\'' + ", backend=" + backend + ", url='" + url + '\'' + ", processPreParameters=" +
+               Arrays.toString(processPreParameters) + ", installablePlugins=" + installablePlugins + '}';
     }
 
     public String getUrl() {

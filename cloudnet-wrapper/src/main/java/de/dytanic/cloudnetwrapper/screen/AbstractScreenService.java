@@ -31,9 +31,10 @@ public abstract class AbstractScreenService implements Screenable {
     }
 
     private void sendScreenLine0(final String text) {
-        CloudNetWrapper.getInstance()
-                       .getNetworkConnection()
-                       .sendPacket(new PacketOutSendScreenLine(Collections.singletonList(new ScreenInfo(getServiceId(), text))));
+        CloudNetWrapper.getInstance().getNetworkConnection().sendPacket(new PacketOutSendScreenLine(Collections
+                                                                                                        .singletonList(new ScreenInfo(
+                                                                                                            getServiceId(),
+                                                                                                            text))));
     }
 
     public void enableScreenSystem() {

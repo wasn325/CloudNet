@@ -41,8 +41,8 @@ public final class CommandCmd extends Command {
                 for (final MinecraftServer minecraftServer : wrapper.getServers().values()) {
                     if (minecraftServer.getServiceId().getServerId().equalsIgnoreCase(args[0])) {
                         minecraftServer.getWrapper().writeServerCommand(command, minecraftServer.getServerInfo());
-                        sender.sendMessage("Sending command to " + minecraftServer.getServiceId()
-                                                                                  .getServerId() + " with [\"" + command + "\"]");
+                        sender.sendMessage(
+                            "Sending command to " + minecraftServer.getServiceId().getServerId() + " with [\"" + command + "\"]");
                         return;
                     }
                 }
@@ -50,8 +50,8 @@ public final class CommandCmd extends Command {
                 for (final ProxyServer minecraftServer : wrapper.getProxys().values()) {
                     if (minecraftServer.getServiceId().getServerId().equalsIgnoreCase(args[0])) {
                         minecraftServer.getWrapper().writeProxyCommand(command, minecraftServer.getProxyInfo());
-                        sender.sendMessage("Sending command to " + minecraftServer.getServiceId()
-                                                                                  .getServerId() + " with [\"" + command + "\"]");
+                        sender.sendMessage(
+                            "Sending command to " + minecraftServer.getServiceId().getServerId() + " with [\"" + command + "\"]");
                         return;
                     }
                 }

@@ -37,7 +37,8 @@ public class PacketInStartCloudServer extends PacketInHandler {
         } else {
             CloudNet.getInstance().startCloudServer(CloudNet.getInstance().getWrappers().get(((WrapperInfo) data.getObject("wrapperInfo",
                                                                                                                            new TypeToken<WrapperInfo>() {}
-                                                                                                                               .getType())).getServerId()),
+                                                                                                                               .getType()))
+                                                                                                 .getServerId()),
                                                     data.getString("serverName"),
                                                     data.getObject("serverConfig", new TypeToken<ServerConfig>() {}.getType()),
                                                     data.getInt("memory"),

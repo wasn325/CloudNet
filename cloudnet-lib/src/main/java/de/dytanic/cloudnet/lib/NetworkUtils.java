@@ -91,7 +91,9 @@ public final class NetworkUtils {
     }
 
     public static Class<? extends ServerSocketChannel> serverSocketChannel() {
-        return EPOLL ? EpollServerSocketChannel.class : KQueue.isAvailable() ? KQueueServerSocketChannel.class : NioServerSocketChannel.class;
+        return EPOLL
+               ? EpollServerSocketChannel.class
+               : KQueue.isAvailable() ? KQueueServerSocketChannel.class : NioServerSocketChannel.class;
     }
 
     public static EventLoopGroup eventLoopGroup() {
@@ -108,10 +110,10 @@ public final class NetworkUtils {
     }
 
     public static EventLoopGroup eventLoopGroup(final int threads, final ThreadFactory threadFactory) {
-        return EPOLL ? new EpollEventLoopGroup(threads, threadFactory) : KQueue.isAvailable() ? new KQueueEventLoopGroup(threads,
-                                                                                                                         threadFactory) : new NioEventLoopGroup(
-            threads,
-            threadFactory);
+        return EPOLL ? new EpollEventLoopGroup(threads, threadFactory) : KQueue.isAvailable()
+                                                                         ? new KQueueEventLoopGroup(threads,
+                                                                                                    threadFactory)
+                                                                         : new NioEventLoopGroup(threads, threadFactory);
     }
 
     public static <T> void addAll(final Collection<T> key, final Collection<T> value) {
@@ -239,8 +241,8 @@ public final class NetworkUtils {
 
     public static void header() {
         System.out.println(NetworkUtils.SPACE_STRING);
-        System.out.println("██████ █      ██████ █   █ █████ ██    █ █████ █████ [" + NetworkUtils.class.getPackage()
-                                                                                                        .getImplementationVersion() + ']');
+        System.out.println(
+            "██████ █      ██████ █   █ █████ ██    █ █████ █████ [" + NetworkUtils.class.getPackage().getImplementationVersion() + ']');
         System.out.println("█R     █E     █Z   █ █S  █ █Y  █ █M█   █ █       █");
         System.out.println("█      █      █    █ █   █ █   █ █  █  █ ████    █");
         System.out.println("█D     █Y     █T   █ █A  █ █N  █ █   █I█ █C      █");
@@ -251,10 +253,11 @@ public final class NetworkUtils {
     private static void headerOut0() {
         System.out.println();
         System.out.println("«» The Cloud Network Environment Technology 2");
-        System.out.println("«» Support https://discord.gg/5NUhKuR      [" + NetworkUtils.class.getPackage()
-                                                                                              .getSpecificationVersion() + ']');
-        System.out.println("«» Java " + System.getProperty("java.version") + " @" + System.getProperty("user.name") + NetworkUtils.SPACE_STRING + System
-            .getProperty("os.name") + NetworkUtils.SPACE_STRING);
+        System.out.println(
+            "«» Support https://discord.gg/5NUhKuR      [" + NetworkUtils.class.getPackage().getSpecificationVersion() + ']');
+        System.out.println(
+            "«» Java " + System.getProperty("java.version") + " @" + System.getProperty("user.name") + NetworkUtils.SPACE_STRING +
+            System.getProperty("os.name") + NetworkUtils.SPACE_STRING);
         System.out.println(NetworkUtils.SPACE_STRING);
     }
 

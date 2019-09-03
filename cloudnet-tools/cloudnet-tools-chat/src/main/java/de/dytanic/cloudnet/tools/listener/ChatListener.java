@@ -23,41 +23,49 @@ public final class ChatListener implements Listener {
 
     @EventHandler
     public void handle(final AsyncPlayerChatEvent e) {
-        final PermissionGroup permissionGroup = permissionService ? CloudServer.getInstance()
-                                                                               .getCachedPlayer(e.getPlayer().getUniqueId())
-                                                                               .getPermissionEntity()
-                                                                               .getHighestPermissionGroup(CloudAPI.getInstance()
-                                                                                                            .getPermissionPool()) : null;
+        final PermissionGroup permissionGroup = permissionService
+                                                ? CloudServer.getInstance().getCachedPlayer(e.getPlayer().getUniqueId())
+                                                             .getPermissionEntity().getHighestPermissionGroup(CloudAPI.getInstance()
+                                                                                                                      .getPermissionPool())
+                                                : null;
 
         if (permissionGroup == null) {
             return;
         }
 
-        e.setFormat(ChatColor.translateAlternateColorCodes('&',
-                                                           ChatPlugin.getPlugin(ChatPlugin.class)
-                                                                     .getConfig()
-                                                                     .getString("format")
-                                                                     .replace("%display%",
-                                                                              ChatColor.translateAlternateColorCodes('&',
-                                                                                                                     permissionGroup.getDisplay()))
-                                                                     .replace("%prefix%",
-                                                                              ChatColor.translateAlternateColorCodes('&',
-                                                                                                                     permissionGroup.getPrefix()))
+        e.setFormat(ChatColor
+                        .translateAlternateColorCodes('&', ChatPlugin.getPlugin(ChatPlugin.class).getConfig().getString("format").replace(
+                            "%display%",
+                            ChatColor.translateAlternateColorCodes('&', permissionGroup.getDisplay())).replace("%prefix%",
+                                                                                                               ChatColor
+                                                                                                                   .translateAlternateColorCodes(
+                                                                                                                       '&',
+                                                                                                                       permissionGroup
+                                                                                                                           .getPrefix()))
                                                                      .replace("%suffix%",
                                                                               ChatColor.translateAlternateColorCodes('&',
-                                                                                                                     permissionGroup.getSuffix()))
+                                                                                                                     permissionGroup
+                                                                                                                         .getSuffix()))
                                                                      .replace("%group%", permissionGroup.getName())
-                                                                     .replace("%player%", e.getPlayer().getName())
-                                                                     .replace("%message%",
-                                                                              e.getPlayer().hasPermission("cloudnet.chat.color") ? ChatColor
-                                                                                  .translateAlternateColorCodes('&',
-                                                                                                                e.getMessage()
-                                                                                                                 .replace("%",
-                                                                                                                          "%%")) : ChatColor
-                                                                                  .stripColor(ChatColor.translateAlternateColorCodes('&',
-                                                                                                                                     e.getMessage()
-                                                                                                                                      .replace(
-                                                                                                                                          "%",
-                                                                                                                                          "%%"))))));
+                                                                     .replace("%player%", e.getPlayer().getName()).replace("%message%",
+                                                                                                                           e.getPlayer()
+                                                                                                                            .hasPermission(
+                                                                                                                                "cloudnet.chat.color")
+                                                                                                                           ? ChatColor
+                                                                                                                               .translateAlternateColorCodes(
+                                                                                                                                   '&',
+                                                                                                                                   e.getMessage()
+                                                                                                                                    .replace(
+                                                                                                                                        "%",
+                                                                                                                                        "%%"))
+                                                                                                                           : ChatColor
+                                                                                                                               .stripColor(
+                                                                                                                                   ChatColor
+                                                                                                                                       .translateAlternateColorCodes(
+                                                                                                                                           '&',
+                                                                                                                                           e.getMessage()
+                                                                                                                                            .replace(
+                                                                                                                                                "%",
+                                                                                                                                                "%%"))))));
     }
 }

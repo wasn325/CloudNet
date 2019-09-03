@@ -54,10 +54,9 @@ public final class ServiceId {
             return false;
         }
         final ServiceId serviceId = (ServiceId) o;
-        return id == serviceId.id && Objects.equals(group, serviceId.group) && Objects.equals(uniqueId,
-                                                                                              serviceId.uniqueId) && Objects.equals(
-            wrapperId,
-            serviceId.wrapperId) && Objects.equals(serverId, serviceId.serverId) && Objects.equals(gameId, serviceId.gameId);
+        return id == serviceId.id && Objects.equals(group, serviceId.group) && Objects.equals(uniqueId, serviceId.uniqueId) &&
+               Objects.equals(wrapperId, serviceId.wrapperId) && Objects.equals(serverId, serviceId.serverId) && Objects.equals(gameId,
+                                                                                                                                serviceId.gameId);
     }
 
     @Override

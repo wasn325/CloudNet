@@ -183,12 +183,8 @@ public final class CloudNetWrapper implements Executable, ShutdownOnCentral {
         processQueueThread.setDaemon(true);
         processQueueThread.start();
 
-        commandManager.registerCommand(new CommandHelp())
-                      .registerCommand(new CommandClear())
-                      .registerCommand(new CommandVersion())
-                      .registerCommand(new CommandClearCache())
-                      .registerCommand(new CommandStop())
-                      .registerCommand(new CommandReload());
+        commandManager.registerCommand(new CommandHelp()).registerCommand(new CommandClear()).registerCommand(new CommandVersion())
+                      .registerCommand(new CommandClearCache()).registerCommand(new CommandStop()).registerCommand(new CommandReload());
 
         networkConnection.getPacketManager().registerHandler(PacketRC.CN_CORE, PacketInWrapperInfo.class);
         networkConnection.getPacketManager().registerHandler(PacketRC.CN_CORE + 1, PacketInStartProxy.class);
@@ -208,9 +204,8 @@ public final class CloudNetWrapper implements Executable, ShutdownOnCentral {
 
         networkConnection.getPacketManager().registerHandler(PacketRC.TEST + 1, PacketInTestResult.class);
 
-        System.out.println("Trying to connect " + networkConnection.getConnectableAddress()
-                                                                   .getHostName() + ':' + networkConnection.getConnectableAddress()
-                                                                                                           .getPort());
+        System.out.println("Trying to connect " + networkConnection.getConnectableAddress().getHostName() + ':' +
+                           networkConnection.getConnectableAddress().getPort());
         while (networkConnection.getConnectionTrys() < 5 && networkConnection.getChannel() == null) {
             networkConnection.tryConnect(optionSet.has("ssl"), new NetDispatcher(networkConnection, false), auth);
             if (networkConnection.getChannel() != null) {
@@ -326,7 +321,14 @@ public final class CloudNetWrapper implements Executable, ShutdownOnCentral {
 
         FileUtility.deleteDirectory(new File("temp"));
 
-        System.out.println("\n    _  _     _______   _                       _          \n" + "  _| || |_  |__   __| | |                     | |         \n" + " |_  __  _|    | |    | |__     __ _   _ __   | | __  ___ \n" + "  _| || |_     | |    | '_ \\   / _` | | '_ \\  | |/ / / __|\n" + " |_  __  _|    | |    | | | | | (_| | | | | | |   <  \\__ \\\n" + "   |_||_|      |_|    |_| |_|  \\__,_| |_| |_| |_|\\_\\ |___/\n" + "                                                          \n" + "                                                          ");
+        System.out.println("\n    _  _     _______   _                       _          \n" +
+                           "  _| || |_  |__   __| | |                     | |         \n" +
+                           " |_  __  _|    | |    | |__     __ _   _ __   | | __  ___ \n" +
+                           "  _| || |_     | |    | '_ \\   / _` | | '_ \\  | |/ / / __|\n" +
+                           " |_  __  _|    | |    | | | | | (_| | | | | | |   <  \\__ \\\n" +
+                           "   |_||_|      |_|    |_| |_|  \\__,_| |_| |_| |_|\\_\\ |___/\n" +
+                           "                                                          \n" +
+                           "                                                          ");
         RUNNING = false;
         System.exit(0);
         return true;

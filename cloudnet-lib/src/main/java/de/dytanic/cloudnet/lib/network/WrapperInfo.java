@@ -34,7 +34,9 @@ public class WrapperInfo {
 
     @Override
     public String toString() {
-        return "WrapperInfo{" + "serverId='" + serverId + '\'' + ", hostName='" + hostName + '\'' + ", version='" + version + '\'' + ", ready=" + ready + ", availableProcessors=" + availableProcessors + ", startPort=" + startPort + ", process_queue_size=" + process_queue_size + ", memory=" + memory + '}';
+        return "WrapperInfo{" + "serverId='" + serverId + '\'' + ", hostName='" + hostName + '\'' + ", version='" + version + '\'' +
+               ", ready=" + ready + ", availableProcessors=" + availableProcessors + ", startPort=" + startPort + ", process_queue_size=" +
+               process_queue_size + ", memory=" + memory + '}';
     }
 
     public String getServerId() {

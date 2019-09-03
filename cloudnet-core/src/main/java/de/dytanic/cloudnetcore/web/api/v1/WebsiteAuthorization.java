@@ -41,21 +41,18 @@ public class WebsiteAuthorization extends MethodWebHandlerAdapter {
         fullHttpResponse.headers().set("Access-Control-Allow-Origin", "*");
 
         final Document dataDocument = new Document("success", false).append("reason", new ArrayList<>()).append("response", new Document());
-        if (!httpRequest.headers().contains("-Xcloudnet-user") || (!httpRequest.headers()
-                                                                               .contains("-Xcloudnet-token") && !httpRequest.headers()
-                                                                                                                            .contains(
-                                                                                                                                "-Xcloudnet-password"))) {
+        if (!httpRequest.headers().contains("-Xcloudnet-user") ||
+            (!httpRequest.headers().contains("-Xcloudnet-token") && !httpRequest.headers().contains("-Xcloudnet-password"))) {
             dataDocument.append("reason", Arrays.asList("-Xcloudnet-user, -Xcloudnet-token or -Xmessage not found!"));
             fullHttpResponse.content().writeBytes(dataDocument.convertToJsonString().getBytes(StandardCharsets.UTF_8));
             return fullHttpResponse;
         }
 
-        if (httpRequest.headers().contains("-Xcloudnet-token") ? !CloudNet.getInstance().authorization(httpRequest.headers()
-                                                                                                                  .get("-Xcloudnet-user"),
-                                                                                                       httpRequest.headers()
-                                                                                                                  .get("-Xcloudnet-token")) : !CloudNet
-            .getInstance()
-            .authorizationPassword(httpRequest.headers().get("-Xcloudnet-user"), httpRequest.headers().get("-Xcloudnet-password"))) {
+        if (httpRequest.headers().contains("-Xcloudnet-token")
+            ? !CloudNet.getInstance().authorization(httpRequest.headers().get("-Xcloudnet-user"),
+                                                    httpRequest.headers().get("-Xcloudnet-token"))
+            : !CloudNet.getInstance().authorizationPassword(httpRequest.headers().get("-Xcloudnet-user"),
+                                                            httpRequest.headers().get("-Xcloudnet-password"))) {
             dataDocument.append("reason", Arrays.asList("failed authorization!"));
             fullHttpResponse.content().writeBytes(dataDocument.convertToJsonString().getBytes(StandardCharsets.UTF_8));
             return fullHttpResponse;

@@ -37,10 +37,10 @@ public class PlayerDatabase extends DatabaseUsable {
                                                               System.currentTimeMillis(),
                                                               playerConnection,
                                                               new PermissionEntity(playerConnection.getUniqueId(),
-                                                                             new HashMap<>(),
-                                                                             null,
-                                                                             null,
-                                                                             new LinkedList<>()));
+                                                                                   new HashMap<>(),
+                                                                                   null,
+                                                                                   null,
+                                                                                   new LinkedList<>()));
         database.insert(new DatabaseDocument(playerConnection.getUniqueId().toString()).append("offlinePlayer", offlinePlayer));
         return offlinePlayer;
     }

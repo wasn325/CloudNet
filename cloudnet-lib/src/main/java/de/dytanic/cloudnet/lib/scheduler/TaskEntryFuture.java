@@ -10,8 +10,8 @@ import java.util.concurrent.TimeoutException;
  */
 public class TaskEntryFuture<T> implements Future<T> {
 
-    protected volatile boolean waits;
     private final TaskEntry<T> entry;
+    protected volatile boolean waits;
 
     public TaskEntryFuture(final TaskEntry<T> entry, final boolean waits) {
         this.entry = entry;

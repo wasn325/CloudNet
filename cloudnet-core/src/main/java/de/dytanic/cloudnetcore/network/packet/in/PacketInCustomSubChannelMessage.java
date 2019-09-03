@@ -44,7 +44,8 @@ public class PacketInCustomSubChannelMessage extends PacketInHandler {
                                                                    new ChannelFilter() {
                                                                        @Override
                                                                        public boolean accept(final INetworkComponent networkComponent) {
-                                                                           return networkComponent instanceof MinecraftServer || networkComponent instanceof CloudServer;
+                                                                           return networkComponent instanceof MinecraftServer ||
+                                                                                  networkComponent instanceof CloudServer;
                                                                        }
                                                                    });
             }

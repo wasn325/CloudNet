@@ -51,9 +51,8 @@ public class CloudGameServer extends AbstractScreenService implements ServerDisp
 
     public CloudGameServer(final CloudServerMeta cloudServerMeta) {
         this.cloudServerMeta = cloudServerMeta;
-        this.path = CloudNetWrapper.getInstance()
-                                   .getWrapperConfig()
-                                   .getDevServicePath() + NetworkUtils.SLASH_STRING + cloudServerMeta.getServiceId().getServerId();
+        this.path = CloudNetWrapper.getInstance().getWrapperConfig().getDevServicePath() + NetworkUtils.SLASH_STRING +
+                    cloudServerMeta.getServiceId().getServerId();
         this.dir = Paths.get(path);
     }
 
@@ -76,15 +75,14 @@ public class CloudGameServer extends AbstractScreenService implements ServerDisp
             return false;
         }
         final CloudGameServer that = (CloudGameServer) o;
-        return Objects.equals(cloudServerMeta, that.cloudServerMeta) && Objects.equals(dir, that.dir) && Objects.equals(path,
-                                                                                                                        that.path) && Objects
-            .equals(serverInfo, that.serverInfo) && Objects.equals(instance, that.instance);
+        return Objects.equals(cloudServerMeta, that.cloudServerMeta) && Objects.equals(dir, that.dir) && Objects.equals(path, that.path) &&
+               Objects.equals(serverInfo, that.serverInfo) && Objects.equals(instance, that.instance);
     }
 
     @Override
     public String toString() {
-        return '[' + cloudServerMeta.getServiceId()
-                                    .getServerId() + "/port=" + cloudServerMeta.getPort() + "/memory=" + cloudServerMeta.getMemory() + ']';
+        return '[' + cloudServerMeta.getServiceId().getServerId() + "/port=" + cloudServerMeta.getPort() + "/memory=" +
+               cloudServerMeta.getMemory() + ']';
     }
 
     public CloudServerMeta getCloudServerMeta() {
@@ -129,23 +127,20 @@ public class CloudGameServer extends AbstractScreenService implements ServerDisp
                 }
                 break;
                 case MASTER: {
-                    if (!Files.exists(Paths.get("local/cache/web_plugins/" + url.getName() + ".jar")) && CloudNetWrapper.getInstance()
-                                                                                                                        .getSimpledUser() != null) {
+                    if (!Files.exists(Paths.get("local/cache/web_plugins/" + url.getName() + ".jar")) &&
+                        CloudNetWrapper.getInstance().getSimpledUser() != null) {
                         try {
                             final URLConnection urlConnection = new java.net.URL(new StringBuilder(CloudNetWrapper.getInstance()
-                                                                                                                  .getOptionSet()
-                                                                                                                  .has("ssl")
-                                                                                                   ? "https://"
-                                                                                                   : "http://")
-                                                                               .append(CloudNetWrapper.getInstance()
-                                                                                                      .getWrapperConfig()
-                                                                                                      .getCloudnetHost())
-                                                                               .append(':')
-                                                                               .append(CloudNetWrapper.getInstance()
-                                                                                                      .getWrapperConfig()
-                                                                                                      .getWebPort())
-                                                                               .append("/cloudnet/api/v1/download")
-                                                                               .substring(0)).openConnection();
+                                                                                                                  .getOptionSet().has("ssl")
+                                                                                                   ? "https://" : "http://").append(
+                                CloudNetWrapper.getInstance().getWrapperConfig().getCloudnetHost()).append(':').append(CloudNetWrapper
+                                                                                                                           .getInstance()
+                                                                                                                           .getWrapperConfig()
+                                                                                                                           .getWebPort())
+                                                                                                                            .append(
+                                                                                                                                "/cloudnet/api/v1/download")
+                                                                                                                            .substring(0))
+                                .openConnection();
                             urlConnection.setRequestProperty("User-Agent",
                                                              "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.95 Safari/537.11");
 
@@ -173,20 +168,13 @@ public class CloudGameServer extends AbstractScreenService implements ServerDisp
         Files.createDirectories(this.dir);
 
         //Template
-        final MasterTemplateLoader templateLoader = new MasterTemplateLoader(new StringBuilder(CloudNetWrapper.getInstance()
-                                                                                                              .getOptionSet()
+        final MasterTemplateLoader templateLoader = new MasterTemplateLoader(new StringBuilder(CloudNetWrapper.getInstance().getOptionSet()
                                                                                                               .has("ssl")
-                                                                                               ? "https://"
-                                                                                               : "http://")
-                                                                           .append(CloudNetWrapper.getInstance()
-                                                                                                  .getWrapperConfig()
-                                                                                                  .getCloudnetHost())
-                                                                           .append(':')
-                                                                           .append(CloudNetWrapper.getInstance()
-                                                                                                  .getWrapperConfig()
-                                                                                                  .getWebPort())
-                                                                           .append("/cloudnet/api/v1/download")
-                                                                           .toString(),
+                                                                                               ? "https://" : "http://").append(
+            CloudNetWrapper.getInstance().getWrapperConfig().getCloudnetHost()).append(':').append(CloudNetWrapper.getInstance()
+                                                                                                                  .getWrapperConfig()
+                                                                                                                  .getWebPort()).append(
+            "/cloudnet/api/v1/download").toString(),
                                                                              dir.toString() + "/template.zip",
                                                                              CloudNetWrapper.getInstance().getSimpledUser(),
                                                                              null,
@@ -202,7 +190,8 @@ public class CloudGameServer extends AbstractScreenService implements ServerDisp
             try {
                 System.out.println("Downloading cauldron.zip...");
                 final File file = new File(path + "/cauldron.zip");
-                final URLConnection connection = new URL("https://yivesmirror.com/files/cauldron/cauldron-1.7.10-2.1403.1.54.zip").openConnection();
+                final URLConnection connection = new URL("https://yivesmirror.com/files/cauldron/cauldron-1.7.10-2.1403.1.54.zip")
+                    .openConnection();
                 connection.setUseCaches(false);
                 connection.setRequestProperty("User-Agent",
                                               "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.95 Safari/537.11");
@@ -239,7 +228,8 @@ public class CloudGameServer extends AbstractScreenService implements ServerDisp
             final Path path = Paths.get(this.path + "/glowstone.jar");
             if (!Files.exists(path)) {
                 try {
-                    final URLConnection connection = new URL("https://yivesmirror.com/grab/glowstone/Glowstone-latest.jar").openConnection();
+                    final URLConnection connection = new URL("https://yivesmirror.com/grab/glowstone/Glowstone-latest.jar")
+                        .openConnection();
                     connection.setUseCaches(false);
                     connection.setRequestProperty("User-Agent",
                                                   "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.95 Safari/537.11");
@@ -345,7 +335,9 @@ public class CloudGameServer extends AbstractScreenService implements ServerDisp
                     path + "/server.properties")))) {
                     properties.load(inputStreamReader);
                 }
-                System.err.println("Filled empty server.properties (or missing \"max-players\" entry) of server [" + this.cloudServerMeta.getServiceId() + "], please fix this error in the server.properties");
+                System.err.println(
+                    "Filled empty server.properties (or missing \"max-players\" entry) of server [" + this.cloudServerMeta.getServiceId() +
+                    "], please fix this error in the server.properties");
             }
 
             final Enumeration enumeration = this.cloudServerMeta.getServerProperties().keys();
@@ -404,19 +396,17 @@ public class CloudGameServer extends AbstractScreenService implements ServerDisp
                                          this.cloudServerMeta.getServerConfig(),
                                          cloudServerMeta.getTemplate());
 
-        new Document().append("serviceId", cloudServerMeta.getServiceId())
-                      .append("cloudProcess", cloudServerMeta)
-                      .append("serverInfo",
-                              serverInfo)
-                      .append("ssl", CloudNetWrapper.getInstance().getOptionSet().has("ssl"))
-                      .append("memory", cloudServerMeta.getMemory())
+        new Document().append("serviceId", cloudServerMeta.getServiceId()).append("cloudProcess", cloudServerMeta).append("serverInfo",
+                                                                                                                          serverInfo)
+                      .append("ssl", CloudNetWrapper.getInstance().getOptionSet().has("ssl")).append("memory", cloudServerMeta.getMemory())
                       .saveAsConfig(Paths.get(path + "/CLOUD/config.json"));
 
         new Document().append("connection",
                               new ConnectableAddress(CloudNetWrapper.getInstance().getWrapperConfig().getCloudnetHost(),
                                                      CloudNetWrapper.getInstance().getWrapperConfig().getCloudnetPort())).saveAsConfig(Paths
                                                                                                                                            .get(
-                                                                                                                                               path + "/CLOUD/connection.json"));
+                                                                                                                                               path +
+                                                                                                                                               "/CLOUD/connection.json"));
 
         Files.deleteIfExists(Paths.get(path + "/plugins/CloudNetAPI.jar"));
         FileUtility.insertData("files/CloudNetAPI.jar", path + "/plugins/CloudNetAPI.jar");
@@ -428,8 +418,8 @@ public class CloudGameServer extends AbstractScreenService implements ServerDisp
         }
 
         commandBuilder.append(
-            "-XX:+UseG1GC -XX:MaxGCPauseMillis=50 -XX:MaxPermSize=256M -XX:-UseAdaptiveSizePolicy -XX:CompileThreshold=100 -Dio.netty.leakDetectionLevel=DISABLED -Dfile.encoding=UTF-8 -Dio.netty.maxDirectMemory=0 -Dcom.mojang.eula.agree=true -Dio.netty.recycler.maxCapacity=0 -Dio.netty.recycler.maxCapacity.default=0 -Djline.terminal=jline.UnsupportedTerminal -Xmx" + cloudServerMeta
-                .getMemory() + "M -jar ");
+            "-XX:+UseG1GC -XX:MaxGCPauseMillis=50 -XX:MaxPermSize=256M -XX:-UseAdaptiveSizePolicy -XX:CompileThreshold=100 -Dio.netty.leakDetectionLevel=DISABLED -Dfile.encoding=UTF-8 -Dio.netty.maxDirectMemory=0 -Dcom.mojang.eula.agree=true -Dio.netty.recycler.maxCapacity=0 -Dio.netty.recycler.maxCapacity.default=0 -Djline.terminal=jline.UnsupportedTerminal -Xmx" +
+            cloudServerMeta.getMemory() + "M -jar ");
 
         switch (cloudServerMeta.getServerGroupType()) {
             case CAULDRON:
@@ -448,8 +438,9 @@ public class CloudGameServer extends AbstractScreenService implements ServerDisp
 
         CloudNetWrapper.getInstance().getCloudServers().put(this.cloudServerMeta.getServiceId().getServerId(), this);
         CloudNetWrapper.getInstance().getNetworkConnection().sendPacket(new PacketOutAddCloudServer(this.serverInfo, cloudServerMeta));
-        System.out.println("CloudServer " + toString() + " [" + (cloudServerMeta.isPriorityStop() ? "priority stop: true" : "priority stop: false") + "] start [" + (System
-            .currentTimeMillis() - startupTime) + " milliseconds]");
+        System.out.println(
+            "CloudServer " + toString() + " [" + (cloudServerMeta.isPriorityStop() ? "priority stop: true" : "priority stop: false") +
+            "] start [" + (System.currentTimeMillis() - startupTime) + " milliseconds]");
         this.instance = Runtime.getRuntime().exec(commandBuilder.toString().split(NetworkUtils.SPACE_STRING), null, new File(path));
 
         return true;
@@ -482,14 +473,13 @@ public class CloudGameServer extends AbstractScreenService implements ServerDisp
         if (CloudNetWrapper.getInstance().isCanDeployed()) {
             final MasterTemplateDeploy masterTemplateDeploy = new MasterTemplateDeploy(path,
                                                                                        new ConnectableAddress(CloudNetWrapper.getInstance()
-                                                                                                                       .getWrapperConfig()
-                                                                                                                       .getCloudnetHost(),
-                                                                                                        CloudNetWrapper.getInstance()
-                                                                                                                       .getWrapperConfig()
-                                                                                                                       .getWebPort()),
+                                                                                                                             .getWrapperConfig()
+                                                                                                                             .getCloudnetHost(),
+                                                                                                              CloudNetWrapper.getInstance()
+                                                                                                                             .getWrapperConfig()
+                                                                                                                             .getWebPort()),
                                                                                        CloudNetWrapper.getInstance().getSimpledUser(),
-                                                                                       CloudNetWrapper.getInstance()
-                                                                                                      .getOptionSet()
+                                                                                       CloudNetWrapper.getInstance().getOptionSet()
                                                                                                       .has("ssl"),
                                                                                        cloudServerMeta.getTemplate(),
                                                                                        null,

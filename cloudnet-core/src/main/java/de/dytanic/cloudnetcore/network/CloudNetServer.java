@@ -18,9 +18,9 @@ import joptsimple.OptionSet;
  */
 public final class CloudNetServer extends ChannelInitializer<Channel> {
 
-    private SslContext sslContext;
     private final EventLoopGroup workerGroup = NetworkUtils.eventLoopGroup();
     private final EventLoopGroup bossGroup = NetworkUtils.eventLoopGroup();
+    private SslContext sslContext;
 
     public CloudNetServer(final OptionSet optionSet, final ConnectableAddress connectableAddress) {
         try {
@@ -32,36 +32,41 @@ public final class CloudNetServer extends ChannelInitializer<Channel> {
 
             final ServerBootstrap serverBootstrap = new ServerBootstrap().group(bossGroup, workerGroup)
 
-                                                                         .option(ChannelOption.ALLOCATOR, ByteBufAllocator.DEFAULT)
-                                                                         .option(ChannelOption.AUTO_READ,
-                                                                           true)
+                                                                         .option(ChannelOption.ALLOCATOR, ByteBufAllocator.DEFAULT).option(
+                    ChannelOption.AUTO_READ,
+                    true)
 
                                                                          .channel(NetworkUtils.serverSocketChannel())
 
                                                                          .childOption(ChannelOption.IP_TOS, 24)
                                                                          .childOption(ChannelOption.ALLOCATOR, ByteBufAllocator.DEFAULT)
-                                                                         .childOption(ChannelOption.TCP_NODELAY, true)
-                                                                         .childOption(ChannelOption.AUTO_READ, true)
-                                                                         .childOption(ChannelOption.SO_KEEPALIVE, true)
-                                                                         .childHandler(this);
+                                                                         .childOption(ChannelOption.TCP_NODELAY, true).childOption(
+                    ChannelOption.AUTO_READ,
+                    true).childOption(ChannelOption.SO_KEEPALIVE, true).childHandler(this);
 
             CloudNet.getLogger().debug("Using " + (Epoll.isAvailable() ? "Epoll native transport" : "NIO transport"));
             CloudNet.getLogger().debug("Try to bind to " + connectableAddress.getHostName() + ':' + connectableAddress.getPort() + "...");
 
             final ChannelFuture channelFuture = serverBootstrap.bind(connectableAddress.getHostName(), connectableAddress.getPort())
-                                                               .addListener(
-                new ChannelFutureListener() {
-                    @Override
-                    public void operationComplete(final ChannelFuture channelFuture) throws Exception {
-                        if (channelFuture.isSuccess()) {
-                            System.out.println("CloudNet is listening @" + connectableAddress.getHostName() + ':' + connectableAddress.getPort());
-                            CloudNet.getInstance().getCloudServers().add(CloudNetServer.this);
+                                                               .addListener(new ChannelFutureListener() {
+                                                                   @Override
+                                                                   public void operationComplete(final ChannelFuture channelFuture) throws
+                                                                       Exception {
+                                                                       if (channelFuture.isSuccess()) {
+                                                                           System.out.println("CloudNet is listening @" +
+                                                                                              connectableAddress.getHostName() + ':' +
+                                                                                              connectableAddress.getPort());
+                                                                           CloudNet.getInstance().getCloudServers()
+                                                                                   .add(CloudNetServer.this);
 
-                        } else {
-                            System.out.println("Failed to bind @" + connectableAddress.getHostName() + ':' + connectableAddress.getPort());
-                        }
-                    }
-                }).addListener(ChannelFutureListener.CLOSE_ON_FAILURE).addListener(ChannelFutureListener.FIRE_EXCEPTION_ON_FAILURE);
+                                                                       } else {
+                                                                           System.out.println(
+                                                                               "Failed to bind @" + connectableAddress.getHostName() + ':' +
+                                                                               connectableAddress.getPort());
+                                                                       }
+                                                                   }
+                                                               }).addListener(ChannelFutureListener.CLOSE_ON_FAILURE).addListener(
+                    ChannelFutureListener.FIRE_EXCEPTION_ON_FAILURE);
 
             channelFuture.sync().channel().closeFuture();
         } catch (final Exception ex) {

@@ -20,10 +20,9 @@ public class CloudPriorityGroupStartupHandler implements ICloudHandler {
     public void onHandle(final CloudNet cloudNet) {
         for (final ServerGroup group : CloudNet.getInstance().getServerGroups().values()) {
             final double onlineCount = CloudNet.getInstance().getOnlineCount(group.getName());
-            if (group.getPriorityService().getGroup().getOnlineServers() == 0 || group.getPriorityService()
-                                                                                      .getGlobal()
-                                                                                      .getOnlineCount() == 0 || group.getGroupMode() == ServerGroupMode.STATIC || group
-                .isMaintenance()) {
+            if (group.getPriorityService().getGroup().getOnlineServers() == 0 ||
+                group.getPriorityService().getGlobal().getOnlineCount() == 0 || group.getGroupMode() == ServerGroupMode.STATIC ||
+                group.isMaintenance()) {
                 continue;
             }
 

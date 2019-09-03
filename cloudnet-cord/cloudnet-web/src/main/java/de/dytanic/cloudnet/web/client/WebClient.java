@@ -120,8 +120,7 @@ public class WebClient {
     public void update(final String version) {
         try {
             final HttpURLConnection httpURLConnection = (HttpURLConnection) new URL(
-                DEFAULT_URL + "update/" + (getEnvironment() ? "CloudNet-Master.jar" : "CloudNet-Wrapper.jar"))
-                .openConnection();
+                DEFAULT_URL + "update/" + (getEnvironment() ? "CloudNet-Master.jar" : "CloudNet-Wrapper.jar")).openConnection();
             httpURLConnection.setRequestProperty("User-Agent",
                                                  "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.95 Safari/537.11");
             httpURLConnection.setUseCaches(false);
@@ -133,20 +132,13 @@ public class WebClient {
 
                 final boolean windows = System.getProperty("os.name").toLowerCase().contains("windows");
                 final Path path = windows ? Paths.get(
-                    "CloudNet-" + (getEnvironment() ? "Master" : "Wrapper") + "-Update#" + version + '-' + NetworkUtils.RANDOM
-                    .nextLong() + ".jar") : Paths.get(WebClient.class.getProtectionDomain()
-                                                                     .getCodeSource()
-                                                                     .getLocation()
-                                                                     .toURI()
-                                                                     .getPath());
+                    "CloudNet-" + (getEnvironment() ? "Master" : "Wrapper") + "-Update#" + version + '-' + NetworkUtils.RANDOM.nextLong() +
+                    ".jar") : Paths.get(WebClient.class.getProtectionDomain().getCodeSource().getLocation().toURI().getPath());
                 Files.copy(inputStream, path, StandardCopyOption.REPLACE_EXISTING);
                 if (windows) {
-                    System.out.println("You are using windows, please replace the file [" + Paths.get(WebClient.class.getProtectionDomain()
-                                                                                                                     .getCodeSource()
-                                                                                                                     .getLocation()
-                                                                                                                     .toURI()
-                                                                                                                     .getPath())
-                                                                                                 .getFileName() + "] with the new file [" + path + ']');
+                    System.out.println("You are using windows, please replace the file [" +
+                                       Paths.get(WebClient.class.getProtectionDomain().getCodeSource().getLocation().toURI().getPath())
+                                            .getFileName() + "] with the new file [" + path + ']');
                 }
 
             } catch (final URISyntaxException e) {
@@ -180,8 +172,8 @@ public class WebClient {
      */
     public void updateLocalCloudWrapper(final Path outputPath) {
         try {
-            final HttpURLConnection httpURLConnection = (HttpURLConnection) new URL(
-                DEFAULT_URL + "update/CloudNet-Wrapper.jar").openConnection();
+            final HttpURLConnection httpURLConnection = (HttpURLConnection) new URL(DEFAULT_URL + "update/CloudNet-Wrapper.jar")
+                .openConnection();
             httpURLConnection.setRequestProperty("User-Agent",
                                                  "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.95 Safari/537.11");
             httpURLConnection.setUseCaches(false);

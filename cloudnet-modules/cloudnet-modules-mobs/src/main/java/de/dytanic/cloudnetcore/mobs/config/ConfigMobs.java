@@ -44,57 +44,57 @@ public class ConfigMobs implements ILoader<MobConfig> {
                                                                                                            "BLACK_STAINED_GLASS_PANE",
                                                                                                            15,
                                                                                                            NetworkUtils.SPACE_STRING,
-                                                                                                           Collections.singletonList(
-                                                                                                               NetworkUtils.SPACE_STRING))),
+                                                                                                           Collections
+                                                                                                               .singletonList(NetworkUtils.SPACE_STRING))),
                                                                             new Return<>(2,
                                                                                          new MobItemLayout(160,
                                                                                                            "BLACK_STAINED_GLASS_PANE",
                                                                                                            15,
                                                                                                            NetworkUtils.SPACE_STRING,
-                                                                                                           Collections.singletonList(
-                                                                                                               NetworkUtils.SPACE_STRING))),
+                                                                                                           Collections
+                                                                                                               .singletonList(NetworkUtils.SPACE_STRING))),
                                                                             new Return<>(3,
                                                                                          new MobItemLayout(160,
                                                                                                            "BLACK_STAINED_GLASS_PANE",
                                                                                                            15,
                                                                                                            NetworkUtils.SPACE_STRING,
-                                                                                                           Collections.singletonList(
-                                                                                                               NetworkUtils.SPACE_STRING))),
+                                                                                                           Collections
+                                                                                                               .singletonList(NetworkUtils.SPACE_STRING))),
                                                                             new Return<>(5,
                                                                                          new MobItemLayout(160,
                                                                                                            "BLACK_STAINED_GLASS_PANE",
                                                                                                            15,
                                                                                                            NetworkUtils.SPACE_STRING,
-                                                                                                           Collections.singletonList(
-                                                                                                               NetworkUtils.SPACE_STRING))),
+                                                                                                           Collections
+                                                                                                               .singletonList(NetworkUtils.SPACE_STRING))),
                                                                             new Return<>(6,
                                                                                          new MobItemLayout(160,
                                                                                                            "BLACK_STAINED_GLASS_PANE",
                                                                                                            15,
                                                                                                            NetworkUtils.SPACE_STRING,
-                                                                                                           Collections.singletonList(
-                                                                                                               NetworkUtils.SPACE_STRING))),
+                                                                                                           Collections
+                                                                                                               .singletonList(NetworkUtils.SPACE_STRING))),
                                                                             new Return<>(7,
                                                                                          new MobItemLayout(160,
                                                                                                            "BLACK_STAINED_GLASS_PANE",
                                                                                                            15,
                                                                                                            NetworkUtils.SPACE_STRING,
-                                                                                                           Collections.singletonList(
-                                                                                                               NetworkUtils.SPACE_STRING))),
+                                                                                                           Collections
+                                                                                                               .singletonList(NetworkUtils.SPACE_STRING))),
                                                                             new Return<>(8,
                                                                                          new MobItemLayout(160,
                                                                                                            "BLACK_STAINED_GLASS_PANE",
                                                                                                            15,
                                                                                                            NetworkUtils.SPACE_STRING,
-                                                                                                           Collections.singletonList(
-                                                                                                               NetworkUtils.SPACE_STRING))),
+                                                                                                           Collections
+                                                                                                               .singletonList(NetworkUtils.SPACE_STRING))),
                                                                             new Return<>(9,
                                                                                          new MobItemLayout(160,
                                                                                                            "BLACK_STAINED_GLASS_PANE",
                                                                                                            15,
                                                                                                            NetworkUtils.SPACE_STRING,
-                                                                                                           Collections.singletonList(
-                                                                                                               NetworkUtils.SPACE_STRING))))))
+                                                                                                           Collections
+                                                                                                               .singletonList(NetworkUtils.SPACE_STRING))))))
                           .saveAsConfig(path);
         }
     }

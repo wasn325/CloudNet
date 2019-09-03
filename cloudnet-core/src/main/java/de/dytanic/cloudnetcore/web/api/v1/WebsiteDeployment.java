@@ -50,23 +50,19 @@ public class WebsiteDeployment extends MethodWebHandlerAdapter {
                                                                               HttpResponseStatus.UNAUTHORIZED);
 
         final Document dataDocument = new Document("success", false).append("reason", new ArrayList<>()).append("response", new Document());
-        if (!httpRequest.headers().contains("-Xcloudnet-user") || (!httpRequest.headers()
-                                                                               .contains("-Xcloudnet-token") && !httpRequest.headers()
-                                                                                                                            .contains(
-                                                                                                                                "-Xcloudnet-password")) || !httpRequest
-            .headers()
-            .contains("-Xmessage")) {
+        if (!httpRequest.headers().contains("-Xcloudnet-user") ||
+            (!httpRequest.headers().contains("-Xcloudnet-token") && !httpRequest.headers().contains("-Xcloudnet-password")) ||
+            !httpRequest.headers().contains("-Xmessage")) {
             dataDocument.append("reason", Arrays.asList("-Xcloudnet-user, -Xcloudnet-token or -Xmessage not found!"));
             fullHttpResponse.content().writeBytes(dataDocument.convertToJsonString().getBytes(StandardCharsets.UTF_8));
             return fullHttpResponse;
         }
 
-        if (httpRequest.headers().contains("-Xcloudnet-token") ? !CloudNet.getInstance().authorization(httpRequest.headers()
-                                                                                                                  .get("-Xcloudnet-user"),
-                                                                                                       httpRequest.headers()
-                                                                                                                  .get("-Xcloudnet-token")) : !CloudNet
-            .getInstance()
-            .authorizationPassword(httpRequest.headers().get("-Xcloudnet-user"), httpRequest.headers().get("-Xcloudnet-password"))) {
+        if (httpRequest.headers().contains("-Xcloudnet-token")
+            ? !CloudNet.getInstance().authorization(httpRequest.headers().get("-Xcloudnet-user"),
+                                                    httpRequest.headers().get("-Xcloudnet-token"))
+            : !CloudNet.getInstance().authorizationPassword(httpRequest.headers().get("-Xcloudnet-user"),
+                                                            httpRequest.headers().get("-Xcloudnet-password"))) {
             dataDocument.append("reason", Arrays.asList("failed authorization!"));
             fullHttpResponse.content().writeBytes(dataDocument.convertToJsonString().getBytes(StandardCharsets.UTF_8));
             return fullHttpResponse;
@@ -91,8 +87,8 @@ public class WebsiteDeployment extends MethodWebHandlerAdapter {
                 final Document document = Document.load(httpRequest.headers().get("-Xvalue"));
                 if (document.contains("template") && document.contains("group")) {
                     final File file = new File(
-                        "local/templates/" + document.getString("group") + NetworkUtils.SLASH_STRING + document.getString(
-                        "template") + NetworkUtils.SLASH_STRING + document.getString("template") + ".zip");
+                        "local/templates/" + document.getString("group") + NetworkUtils.SLASH_STRING + document.getString("template") +
+                        NetworkUtils.SLASH_STRING + document.getString("template") + ".zip");
 
                     file.getParentFile().mkdirs();
                     file.createNewFile();
@@ -109,8 +105,9 @@ public class WebsiteDeployment extends MethodWebHandlerAdapter {
                         extractEntry(zipFile, zipEntry, stringBuilder.toString());
                     }
                     file.delete();
-                    System.out.println("Template deployed [\"" + document.getString("template") + "\"] for the group [\"" + document.getString(
-                        "group") + "\"]");
+                    System.out.println(
+                        "Template deployed [\"" + document.getString("template") + "\"] for the group [\"" + document.getString("group") +
+                        "\"]");
                 }
             }
             break;

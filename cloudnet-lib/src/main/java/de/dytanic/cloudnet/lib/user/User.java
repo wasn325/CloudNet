@@ -57,15 +57,16 @@ public class User implements Nameable {
             return false;
         }
         final User user = (User) o;
-        return Objects.equals(name, user.name) && Objects.equals(uniqueId, user.uniqueId) && Objects.equals(apiToken,
-                                                                                                            user.apiToken) && Objects.equals(
-            hashedPassword,
-            user.hashedPassword) && Objects.equals(permissions, user.permissions) && Objects.equals(metaData, user.metaData);
+        return Objects.equals(name, user.name) && Objects.equals(uniqueId, user.uniqueId) && Objects.equals(apiToken, user.apiToken) &&
+               Objects.equals(hashedPassword, user.hashedPassword) && Objects.equals(permissions, user.permissions) && Objects.equals(
+            metaData,
+            user.metaData);
     }
 
     @Override
     public String toString() {
-        return "User{" + "name='" + name + '\'' + ", uniqueId=" + uniqueId + ", apiToken='" + apiToken + '\'' + ", hashedPassword='" + hashedPassword + '\'' + ", permissions=" + permissions + ", metaData=" + metaData + '}';
+        return "User{" + "name='" + name + '\'' + ", uniqueId=" + uniqueId + ", apiToken='" + apiToken + '\'' + ", hashedPassword='" +
+               hashedPassword + '\'' + ", permissions=" + permissions + ", metaData=" + metaData + '}';
     }
 
     public String getApiToken() {

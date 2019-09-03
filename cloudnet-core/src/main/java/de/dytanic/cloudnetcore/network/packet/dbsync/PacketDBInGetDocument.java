@@ -22,9 +22,7 @@ public class PacketDBInGetDocument extends PacketAPIIO {
     @Override
     public void handleInput(final Document data, final PacketSender packetSender) {
         if (!data.contains("name")) {
-            final Map<String, Document> docs = ((DatabaseImpl) CloudNet.getInstance()
-                                                                       .getDatabaseManager()
-                                                                       .getDatabase(data.getString("db"))
+            final Map<String, Document> docs = ((DatabaseImpl) CloudNet.getInstance().getDatabaseManager().getDatabase(data.getString("db"))
                                                                        .loadDocuments()).getDocuments();
             packetSender.sendPacket(getResult(new Document("docs", docs)));
         } else {

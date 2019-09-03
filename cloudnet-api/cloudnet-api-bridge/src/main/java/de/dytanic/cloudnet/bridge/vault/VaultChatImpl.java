@@ -29,12 +29,9 @@ public class VaultChatImpl extends Chat {
     @Override
     public String getPlayerPrefix(final String s, final String s1) {
         final OfflinePlayer offlinePlayer = getPlayer(s1);
-        return offlinePlayer.getPermissionEntity().getPrefix() != null ? offlinePlayer.getPermissionEntity()
-                                                                                      .getPrefix() : offlinePlayer.getPermissionEntity()
-                                                                                                                  .getHighestPermissionGroup(
-                                                                                                                      CloudAPI.getInstance()
-                                                                                                                              .getPermissionPool())
-                                                                                                                  .getPrefix();
+        return offlinePlayer.getPermissionEntity().getPrefix() != null
+               ? offlinePlayer.getPermissionEntity().getPrefix()
+               : offlinePlayer.getPermissionEntity().getHighestPermissionGroup(CloudAPI.getInstance().getPermissionPool()).getPrefix();
     }
 
     @Override
@@ -47,12 +44,9 @@ public class VaultChatImpl extends Chat {
     @Override
     public String getPlayerSuffix(final String s, final String s1) {
         final OfflinePlayer offlinePlayer = getPlayer(s1);
-        return offlinePlayer.getPermissionEntity().getSuffix() != null ? offlinePlayer.getPermissionEntity()
-                                                                                      .getSuffix() : offlinePlayer.getPermissionEntity()
-                                                                                                                  .getHighestPermissionGroup(
-                                                                                                                      CloudAPI.getInstance()
-                                                                                                                              .getPermissionPool())
-                                                                                                                  .getSuffix();
+        return offlinePlayer.getPermissionEntity().getSuffix() != null
+               ? offlinePlayer.getPermissionEntity().getSuffix()
+               : offlinePlayer.getPermissionEntity().getHighestPermissionGroup(CloudAPI.getInstance().getPermissionPool()).getSuffix();
     }
 
     @Override

@@ -118,7 +118,7 @@ public final class CommandInfo extends Command {
                                        "DynamicFixMaxHeapSize: " + group.getDynamicMemory() + "MB",
                                        "MinOnlineServers: " + group.getMinOnlineServers(),
                                        "MaxOnlineServers: " + group.getMaxOnlineServers(),
-                                       "Wrappers: " + Arrays.toString(group.getWrapper().toArray(new String[0])),
+                                       "Wrappers: " + Arrays.toString(group.getWrapper().toArray()),
                                        "Templates: " +
                                        Arrays.toString(CollectionWrapper.transform(group.getTemplates(), new Catcher<String, Template>() {
                                            @Override

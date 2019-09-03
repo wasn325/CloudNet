@@ -13,8 +13,12 @@ import de.dytanic.cloudnet.lib.server.template.TemplateResource;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 
 public final class LobbyGroup extends ServerGroup {
+
+    private static final String[] PROCESS_PRE_PARAMETERS = {};
+
     public LobbyGroup() {
         super("Lobby",
               Arrays.asList("Wrapper-1"),
@@ -32,7 +36,7 @@ public final class LobbyGroup extends ServerGroup {
               50,
               ServerGroupType.BUKKIT,
               ServerGroupMode.LOBBY,
-              Arrays.asList(new Template("default", TemplateResource.LOCAL, null, new String[] {}, new ArrayList<>())),
+              Collections.singletonList(new Template("default", TemplateResource.LOCAL, null, PROCESS_PRE_PARAMETERS, new ArrayList<>())),
               new AdvancedServerConfig(true, true, true, true));
     }
 }

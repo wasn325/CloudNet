@@ -19,10 +19,10 @@ import java.util.concurrent.CountDownLatch;
 public final class PaperBuilder {
 
     private static final Gson gson = new Gson();
-    private static Process exec;
     private static final String apiProjectUrl = "https://papermc.io/api/v1/paper";
     private static final String apiProjectVersionDownload = "https://papermc.io/api/v1/paper/%s/%s/download";
     private static final String API_PROJECT_VERSION_URL = "https://papermc.io/api/v1/paper/%s";
+    private static Process exec;
 
     /**
      * Start the process of choice the paper version And build after choice
@@ -81,9 +81,8 @@ public final class PaperBuilder {
         final PaperMCProjectVersion paperMCProjectVersion = gson.fromJson(new InputStreamReader(connection.getInputStream()),
                                                                           PaperMCProjectVersion.class);
 
-        connection = new URL(String.format(apiProjectVersionDownload,
-                                           version,
-                                           paperMCProjectVersion.getBuilds().getLatest())).openConnection();
+        connection = new URL(String.format(apiProjectVersionDownload, version, paperMCProjectVersion.getBuilds().getLatest()))
+            .openConnection();
         connection.setRequestProperty("User-Agent",
                                       "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.95 Safari/537.11");
         connection.connect();
@@ -131,8 +130,8 @@ public final class PaperBuilder {
         exec = Runtime.getRuntime().exec("java -jar paperclip.jar", null, buildFolder);
         printProcessOutputToConsole(exec);
 
-        Files.copy(new FileInputStream(Objects.requireNonNull(buildFolder.listFiles(pathname -> pathname.getName()
-                                                                                                        .startsWith("paperclip")))[0]),
+        Files.copy(new FileInputStream(Objects.requireNonNull(buildFolder
+                                                                  .listFiles(pathname -> pathname.getName().startsWith("paperclip")))[0]),
                    Paths.get("local/spigot.jar"),
                    StandardCopyOption.REPLACE_EXISTING);
     }

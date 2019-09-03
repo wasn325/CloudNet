@@ -171,8 +171,8 @@ public class CloudNetWrapperConfig {
     }
 
     public void save() {
-        try (final OutputStream outputStream = Files.newOutputStream(path); final OutputStreamWriter outputStreamWriter = new OutputStreamWriter(
-            outputStream)) {
+        try (final OutputStream outputStream = Files
+            .newOutputStream(path); final OutputStreamWriter outputStreamWriter = new OutputStreamWriter(outputStream)) {
             ConfigurationProvider.getProvider(YamlConfiguration.class).save(configuration, outputStreamWriter);
         } catch (final IOException e) {
             e.printStackTrace();

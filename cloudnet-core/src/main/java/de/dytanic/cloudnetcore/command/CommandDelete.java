@@ -57,14 +57,9 @@ public final class CommandDelete extends Command {
                 } else if (args[0].equalsIgnoreCase("wrapper")) {
                     if (CloudNet.getInstance().getWrappers().containsKey(args[1])) {
                         final Wrapper wrapper = CloudNet.getInstance().getWrappers().get(args[1]);
-                        CloudNet.getInstance()
-                                .getConfig()
-                                .getWrappers()
-                                .stream()
-                                .filter(wrapperMeta -> wrapperMeta.getId()
-                                                                  .equals(wrapper.getName()))
-                                .findFirst()
-                                .ifPresent(CloudNet.getInstance().getConfig()::deleteWrapper);
+                        CloudNet.getInstance().getConfig().getWrappers().stream().filter(wrapperMeta -> wrapperMeta.getId().equals(wrapper
+                                                                                                                                       .getName()))
+                                .findFirst().ifPresent(CloudNet.getInstance().getConfig()::deleteWrapper);
                         sender.sendMessage("The wrapper was successfully deleted");
                     } else {
                         sender.sendMessage("The wrapper doesn't exist");

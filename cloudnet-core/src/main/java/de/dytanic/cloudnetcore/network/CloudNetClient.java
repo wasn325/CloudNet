@@ -30,23 +30,24 @@ import java.util.UUID;
  */
 public class CloudNetClient extends SimpleChannelInboundHandler {
 
-    private Channel channel;
     private final INetworkComponent networkComponent;
+    private Channel channel;
 
     public CloudNetClient(final INetworkComponent iNetworkComponent, final Channel channel) {
         this.networkComponent = iNetworkComponent;
         this.networkComponent.setChannel(channel);
         this.channel = channel;
 
-        System.out.println("Channel connected [" + channel.remoteAddress()
-                                                          .toString() + "/serverId=" + networkComponent.getServerId() + ']');
+        System.out.println(
+            "Channel connected [" + channel.remoteAddress().toString() + "/serverId=" + networkComponent.getServerId() + ']');
 
         if (networkComponent instanceof Wrapper) {
             StatisticManager.getInstance().wrapperConnections();
             System.out.println("Wrapper [" + networkComponent.getServerId() + "] is connected.");
             CloudNet.getInstance().getEventManager().callEvent(new WrapperChannelInitEvent((Wrapper) networkComponent, channel));
             CloudNet.getInstance().getDbHandlers().getWrapperSessionDatabase().addSession(new WrapperSession(UUID.randomUUID(),
-                                                                                                             ((Wrapper) networkComponent).getNetworkInfo(),
+                                                                                                             ((Wrapper) networkComponent)
+                                                                                                                 .getNetworkInfo(),
                                                                                                              System.currentTimeMillis()));
             ((Wrapper) networkComponent).updateWrapper();
         }
@@ -86,8 +87,8 @@ public class CloudNetClient extends SimpleChannelInboundHandler {
     @Override
     public void channelInactive(final ChannelHandlerContext ctx) throws Exception {
         if ((!channel.isActive() || !channel.isOpen() || !channel.isWritable())) {
-            System.out.println("Channel disconnected [" + channel.remoteAddress()
-                                                                 .toString() + "/serverId=" + networkComponent.getServerId() + ']');
+            System.out.println(
+                "Channel disconnected [" + channel.remoteAddress().toString() + "/serverId=" + networkComponent.getServerId() + ']');
             ctx.close().syncUninterruptibly();
             if (networkComponent instanceof MinecraftServer) {
                 ((MinecraftServer) networkComponent).setChannelLostTime(System.currentTimeMillis());
@@ -135,13 +136,9 @@ public class CloudNetClient extends SimpleChannelInboundHandler {
         }
 
         final Packet packet = (Packet) obj;
-        CloudNet.getLogger().debug("Receiving Packet (id=" + CloudNet.getInstance()
-                                                                     .getPacketManager()
-                                                                     .packetId(packet) + ";dataLength=" + CloudNet.getInstance()
-                                                                                                                  .getPacketManager()
-                                                                                                                  .packetData(packet)
-                                                                                                                  .size() + ") by " + getNetworkComponent()
-            .getServerId());
+        CloudNet.getLogger().debug("Receiving Packet (id=" + CloudNet.getInstance().getPacketManager().packetId(packet) + ";dataLength=" +
+                                   CloudNet.getInstance().getPacketManager().packetData(packet).size() + ") by " +
+                                   getNetworkComponent().getServerId());
         CloudNet.getInstance().getPacketManager().dispatchPacket(packet, networkComponent);
     }
 

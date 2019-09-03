@@ -109,9 +109,7 @@ public final class BukkitBootstrap extends JavaPlugin implements Runnable {
                     Bukkit.getPluginManager().callEvent(new BukkitCloudServerInitEvent(CloudServer.getInstance()));
                     CloudServer.getInstance().update();
 
-                    if (CloudAPI.getInstance()
-                                .getServerGroupData(CloudAPI.getInstance().getGroup())
-                                .getAdvancedServerConfig()
+                    if (CloudAPI.getInstance().getServerGroupData(CloudAPI.getInstance().getGroup()).getAdvancedServerConfig()
                                 .isDisableAutoSavingForWorlds()) {
                         for (final World world : Bukkit.getWorlds()) {
                             world.setAutoSave(false);
@@ -125,11 +123,12 @@ public final class BukkitBootstrap extends JavaPlugin implements Runnable {
                         public void run() {
                             try {
                                 final ServerListPingEvent serverListPingEvent = new ServerListPingEvent(new InetSocketAddress("127.0.0.1",
-                                                                                                                              53345).getAddress(),
+                                                                                                                              53345)
+                                                                                                            .getAddress(),
                                                                                                         CloudServer.getInstance().getMotd(),
                                                                                                         Bukkit.getOnlinePlayers().size(),
                                                                                                         CloudServer.getInstance()
-                                                                                                             .getMaxPlayers());
+                                                                                                                   .getMaxPlayers());
                                 Bukkit.getPluginManager().callEvent(serverListPingEvent);
                                 if (!serverListPingEvent.getMotd().equalsIgnoreCase(CloudServer.getInstance().getMotd()) ||
                                     serverListPingEvent.getMaxPlayers() != CloudServer.getInstance().getMaxPlayers()) {

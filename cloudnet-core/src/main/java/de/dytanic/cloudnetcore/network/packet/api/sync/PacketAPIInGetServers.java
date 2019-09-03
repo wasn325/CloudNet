@@ -30,21 +30,21 @@ public class PacketAPIInGetServers extends PacketAPIIO {
             final Collection<ServerInfo> proxyInfos = CollectionWrapper.transform(CloudNet.getInstance()
                                                                                           .getServers(data.getString("group")),
                                                                                   new Catcher<ServerInfo, MinecraftServer>() {
-                                                                                @Override
-                                                                                public ServerInfo doCatch(final MinecraftServer key) {
-                                                                                    return key.getServerInfo();
-                                                                                }
-                                                                            });
+                                                                                      @Override
+                                                                                      public ServerInfo doCatch(final MinecraftServer key) {
+                                                                                          return key.getServerInfo();
+                                                                                      }
+                                                                                  });
 
             packetSender.sendPacket(getResult(new Document("serverInfos", proxyInfos)));
         } else {
             final Collection<ServerInfo> proxyInfos = CollectionWrapper.transform(CloudNet.getInstance().getServers().values(),
                                                                                   new Catcher<ServerInfo, MinecraftServer>() {
-                                                                                @Override
-                                                                                public ServerInfo doCatch(final MinecraftServer key) {
-                                                                                    return key.getServerInfo();
-                                                                                }
-                                                                            });
+                                                                                      @Override
+                                                                                      public ServerInfo doCatch(final MinecraftServer key) {
+                                                                                          return key.getServerInfo();
+                                                                                      }
+                                                                                  });
 
             packetSender.sendPacket(getResult(new Document("serverInfos", proxyInfos)));
         }

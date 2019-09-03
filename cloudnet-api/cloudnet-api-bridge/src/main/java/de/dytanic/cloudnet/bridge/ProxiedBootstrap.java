@@ -74,10 +74,8 @@ public class ProxiedBootstrap extends Plugin {
                     getProxy().getPluginManager().registerCommand(ProxiedBootstrap.this, new CommandPermissions());
                 }
 
-                if (CloudProxy.getInstance().getProxyGroup() != null && CloudProxy.getInstance()
-                                                                                  .getProxyGroup()
-                                                                                  .getProxyConfig()
-                                                                                  .getCustomPayloadFixer()) {
+                if (CloudProxy.getInstance().getProxyGroup() != null &&
+                    CloudProxy.getInstance().getProxyGroup().getProxyConfig().getCustomPayloadFixer()) {
                     getProxy().registerChannel("MC|BSign");
                     getProxy().registerChannel("MC|BEdit");
                 }

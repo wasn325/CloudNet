@@ -46,8 +46,8 @@ public class ConfigPermissions {
                                                                    true,
                                                                    new HashMap<>(),
                                                                    MapWrapper.valueableHashMap(new Return<>("Lobby",
-                                                                                                      Arrays.asList(
-                                                                                                          "test.permission.for.group.Lobby"))),
+                                                                                                            Arrays.asList(
+                                                                                                                "test.permission.for.group.Lobby"))),
                                                                    new HashMap<>(),
                                                                    new ArrayList<>());
                 write(member, configuration);
@@ -62,8 +62,8 @@ public class ConfigPermissions {
                                                                   false,
                                                                   MapWrapper.valueableHashMap(new Return<>("*", true)),
                                                                   MapWrapper.valueableHashMap(new Return<>("Lobby",
-                                                                                                     Arrays.asList(
-                                                                                                         "test.permission.for.group.Lobby"))),
+                                                                                                           Arrays.asList(
+                                                                                                               "test.permission.for.group.Lobby"))),
                                                                   new HashMap<>(),
                                                                   new ArrayList<>());
                 write(admin, configuration);
@@ -73,11 +73,11 @@ public class ConfigPermissions {
                                                                               new TypeToken<Collection<PermissionGroup>>() {}.getType());
                 final Map<String, PermissionGroup> maps = MapWrapper.collectionCatcherHashMap(groups,
                                                                                               new Catcher<String, PermissionGroup>() {
-                    @Override
-                    public String doCatch(final PermissionGroup key) {
-                        return key.getName();
-                    }
-                });
+                                                                                                  @Override
+                                                                                                  public String doCatch(final PermissionGroup key) {
+                                                                                                      return key.getName();
+                                                                                                  }
+                                                                                              });
 
                 configuration.set("enabled", document.getBoolean("enabled"));
 
@@ -89,9 +89,9 @@ public class ConfigPermissions {
 
             }
 
-            try (final OutputStream outputStream = Files.newOutputStream(path); final OutputStreamWriter outputStreamWriter = new OutputStreamWriter(
-                outputStream,
-                StandardCharsets.UTF_8)) {
+            try (final OutputStream outputStream = Files
+                .newOutputStream(path); final OutputStreamWriter outputStreamWriter = new OutputStreamWriter(outputStream,
+                                                                                                             StandardCharsets.UTF_8)) {
                 ConfigurationProvider.getProvider(YamlConfiguration.class).save(configuration, outputStreamWriter);
             }
         }

@@ -25,6 +25,8 @@ import java.util.function.Consumer;
 
 public final class CommandCreate extends Command {
 
+    public static final String[] PROCESS_PRE_PARAMETERS = {};
+
     public CommandCreate() {
         super("create", "cloudnet.command.create", "start");
 
@@ -45,10 +47,12 @@ public final class CommandCreate extends Command {
 
                 CloudNet.getInstance().getDbHandlers().getCommandDispatcherDatabase().appendCommand(args[1],
                                                                                                     builder.substring(0, (builder.substring(
-                                                                                                        0)
-                                                                                                                                 .endsWith(
-                                                                                                                                     " ") ? builder
-                                                                                                        .length() - 1 : builder.length())));
+                                                                                                        0).endsWith(" ")
+                                                                                                                          ?
+                                                                                                                          builder.length() -
+                                                                                                                          1
+                                                                                                                          : builder
+                                                                                                                              .length())));
                 sender.sendMessage("A dispatcher was created \"" + args[1] + "\": \"" + builder.substring(0) + '"');
                 return;
             }
@@ -165,10 +169,7 @@ public final class CommandCreate extends Command {
                     if (CloudNet.getInstance().getServerGroups().containsKey(args[2])) {
                         if (args[3].equalsIgnoreCase("LOCAL")) {
                             final ServerGroup serverGroup = CloudNet.getInstance().getServerGroups().get(args[2]);
-                            serverGroup.getTemplates().add(new Template(args[1],
-                                                                        TemplateResource.LOCAL,
-                                                                        null,
-                                                                        new String[] {},
+                            serverGroup.getTemplates().add(new Template(args[1], TemplateResource.LOCAL, null, PROCESS_PRE_PARAMETERS,
                                                                         Arrays.asList()));
                             CloudNet.getInstance().getConfig().createGroup(serverGroup);
 
@@ -199,10 +200,7 @@ public final class CommandCreate extends Command {
                         }
                         if (args[3].equalsIgnoreCase("MASTER")) {
                             final ServerGroup serverGroup = CloudNet.getInstance().getServerGroups().get(args[2]);
-                            serverGroup.getTemplates().add(new Template(args[1],
-                                                                        TemplateResource.MASTER,
-                                                                        null,
-                                                                        new String[] {},
+                            serverGroup.getTemplates().add(new Template(args[1], TemplateResource.MASTER, null, PROCESS_PRE_PARAMETERS,
                                                                         Arrays.asList()));
                             CloudNet.getInstance().getConfig().createGroup(serverGroup);
 

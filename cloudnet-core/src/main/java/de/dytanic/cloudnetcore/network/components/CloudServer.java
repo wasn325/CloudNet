@@ -121,8 +121,9 @@ public class CloudServer implements INetworkComponent {
         }
         final CloudServer that = (CloudServer) o;
         return Objects.equals(serviceId, that.serviceId) && Objects.equals(cloudServerMeta, that.cloudServerMeta) && Objects.equals(wrapper,
-                                                                                                                                    that.wrapper) && serverGroupType == that.serverGroupType && Objects
-            .equals(serverInfo, that.serverInfo) && Objects.equals(lastServerInfo, that.lastServerInfo) && Objects.equals(channel,
-                                                                                                                          that.channel);
+                                                                                                                                    that.wrapper) &&
+               serverGroupType == that.serverGroupType && Objects.equals(serverInfo, that.serverInfo) && Objects.equals(lastServerInfo,
+                                                                                                                        that.lastServerInfo) &&
+               Objects.equals(channel, that.channel);
     }
 }

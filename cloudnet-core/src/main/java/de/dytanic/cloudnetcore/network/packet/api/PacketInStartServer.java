@@ -35,7 +35,8 @@ public class PacketInStartServer extends PacketInHandler {
                                                            data.getObject("processParameters", new TypeToken<String[]>() {}.getType()),
                                                            data.getBoolean("onlinemode"),
                                                            data.getObject("plugins",
-                                                                          new TypeToken<Collection<ServerInstallablePlugin>>() {}.getType()),
+                                                                          new TypeToken<Collection<ServerInstallablePlugin>>() {}
+                                                                              .getType()),
                                                            data.getString("customServer"),
                                                            data.getObject("properties", new TypeToken<Properties>() {}.getType()));
                 } else {
@@ -53,13 +54,15 @@ public class PacketInStartServer extends PacketInHandler {
                                                                                   new TypeToken<String[]>() {}.getType()),
                                                                    data.getBoolean("onlinemode"),
                                                                    data.getObject("plugins",
-                                                                                  new TypeToken<Collection<ServerInstallablePlugin>>() {}.getType()),
+                                                                                  new TypeToken<Collection<ServerInstallablePlugin>>() {}
+                                                                                      .getType()),
                                                                    data.getString("customServer"),
                                                                    data.getObject("properties", new TypeToken<Properties>() {}.getType()));
                         } else {
                             CloudNet.getInstance().startGameServer(CloudNet.getInstance().getServerGroups().get(data.getString("group")),
                                                                    (ServerConfig) data.getObject("serverConfig",
-                                                                                                 new TypeToken<ServerConfig>() {}.getType()),
+                                                                                                 new TypeToken<ServerConfig>() {}
+                                                                                                     .getType()),
                                                                    data.getObject("template", new TypeToken<Template>() {}.getType()),
                                                                    data.getInt("memory"),
                                                                    data.getBoolean("priorityStop"),
@@ -68,7 +71,8 @@ public class PacketInStartServer extends PacketInHandler {
                                                                                   new TypeToken<String[]>() {}.getType()),
                                                                    data.getBoolean("onlinemode"),
                                                                    data.getObject("plugins",
-                                                                                  new TypeToken<Collection<ServerInstallablePlugin>>() {}.getType()),
+                                                                                  new TypeToken<Collection<ServerInstallablePlugin>>() {}
+                                                                                      .getType()),
                                                                    data.getString("customServer"),
                                                                    data.getObject("properties", new TypeToken<Properties>() {}.getType()));
                         }
@@ -85,7 +89,8 @@ public class PacketInStartServer extends PacketInHandler {
                                                                                   new TypeToken<String[]>() {}.getType()),
                                                                    data.getBoolean("onlinemode"),
                                                                    data.getObject("plugins",
-                                                                                  new TypeToken<Collection<ServerInstallablePlugin>>() {}.getType()),
+                                                                                  new TypeToken<Collection<ServerInstallablePlugin>>() {}
+                                                                                      .getType()),
                                                                    data.getString("customServer"),
                                                                    data.getObject("properties", new TypeToken<Properties>() {}.getType()));
                         } else {
@@ -99,7 +104,8 @@ public class PacketInStartServer extends PacketInHandler {
                                                                                   new TypeToken<String[]>() {}.getType()),
                                                                    data.getBoolean("onlinemode"),
                                                                    data.getObject("plugins",
-                                                                                  new TypeToken<Collection<ServerInstallablePlugin>>() {}.getType()),
+                                                                                  new TypeToken<Collection<ServerInstallablePlugin>>() {}
+                                                                                      .getType()),
                                                                    data.getString("customServer"),
                                                                    data.getObject("properties", new TypeToken<Properties>() {}.getType()));
                         }

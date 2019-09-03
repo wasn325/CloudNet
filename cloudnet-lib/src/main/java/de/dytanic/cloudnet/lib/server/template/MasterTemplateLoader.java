@@ -77,10 +77,8 @@ public class MasterTemplateLoader {
             urlConnection.setRequestProperty("-Xcloudnet-user", simpledUser.getUserName());
             urlConnection.setRequestProperty("-Xcloudnet-token", simpledUser.getApiToken());
             urlConnection.setRequestProperty("-Xmessage", customName != null ? "custom" : "template");
-            urlConnection.setRequestProperty("-Xvalue", customName != null ? customName : new Document("template",
-                                                                                                       template.getName()).append("group",
-                                                                                                                                  group)
-                                                                                                                          .convertToJsonString());
+            urlConnection.setRequestProperty("-Xvalue", customName != null ? customName : new Document("template", template.getName())
+                .append("group", group).convertToJsonString());
             urlConnection.setUseCaches(false);
             urlConnection.connect();
 

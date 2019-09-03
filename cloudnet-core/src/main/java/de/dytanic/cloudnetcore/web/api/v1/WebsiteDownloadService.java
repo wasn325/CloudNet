@@ -47,23 +47,19 @@ public class WebsiteDownloadService extends MethodWebHandlerAdapter {
         fullHttpResponse.headers().set("Content-Type", "application/json");
 
         final Document dataDocument = new Document("success", false).append("reason", new ArrayList<>()).append("response", new Document());
-        if (!httpRequest.headers().contains("-Xcloudnet-user") || (!httpRequest.headers()
-                                                                               .contains("-Xcloudnet-token") && !httpRequest.headers()
-                                                                                                                            .contains(
-                                                                                                                                "-Xcloudnet-password")) || !httpRequest
-            .headers()
-            .contains("-Xmessage") || !httpRequest.headers().contains("-Xvalue")) {
+        if (!httpRequest.headers().contains("-Xcloudnet-user") ||
+            (!httpRequest.headers().contains("-Xcloudnet-token") && !httpRequest.headers().contains("-Xcloudnet-password")) ||
+            !httpRequest.headers().contains("-Xmessage") || !httpRequest.headers().contains("-Xvalue")) {
             dataDocument.append("reason", Arrays.asList("-Xcloudnet-user, -Xcloudnet-token or -Xmessage not found!"));
             fullHttpResponse.content().writeBytes(dataDocument.convertToJsonString().getBytes(StandardCharsets.UTF_8));
             return fullHttpResponse;
         }
 
-        if (httpRequest.headers().contains("-Xcloudnet-token") ? !CloudNet.getInstance().authorization(httpRequest.headers()
-                                                                                                                  .get("-Xcloudnet-user"),
-                                                                                                       httpRequest.headers()
-                                                                                                                  .get("-Xcloudnet-token")) : !CloudNet
-            .getInstance()
-            .authorizationPassword(httpRequest.headers().get("-Xcloudnet-user"), httpRequest.headers().get("-Xcloudnet-password"))) {
+        if (httpRequest.headers().contains("-Xcloudnet-token")
+            ? !CloudNet.getInstance().authorization(httpRequest.headers().get("-Xcloudnet-user"),
+                                                    httpRequest.headers().get("-Xcloudnet-token"))
+            : !CloudNet.getInstance().authorizationPassword(httpRequest.headers().get("-Xcloudnet-user"),
+                                                            httpRequest.headers().get("-Xcloudnet-password"))) {
             dataDocument.append("reason", Arrays.asList("failed authorization!"));
             fullHttpResponse.content().writeBytes(dataDocument.toBytesAsUTF_8());
             return fullHttpResponse;
@@ -90,8 +86,8 @@ public class WebsiteDownloadService extends MethodWebHandlerAdapter {
             case "template": {
                 fullHttpResponse.setStatus(HttpResponseStatus.OK);
                 final Document document = Document.load(httpRequest.headers().get("-Xvalue"));
-                if (document.contains("template") && document.contains("group") && Files.exists(Paths.get("local/templates/" + document.getString(
-                    "group") + NetworkUtils.SLASH_STRING + document.getString("template")))) {
+                if (document.contains("template") && document.contains("group") && Files.exists(Paths.get(
+                    "local/templates/" + document.getString("group") + NetworkUtils.SLASH_STRING + document.getString("template")))) {
                     final String x = "local/templates/" + document.getString("group") + NetworkUtils.SLASH_STRING + document.getString(
                         "template");
 

@@ -37,11 +37,10 @@ import java.util.function.Consumer;
 public class LocalCloudWrapper implements Runnabled<OptionSet> {
 
     private static final String WRAPPER_URL = "https://ci.cloudnetservice.eu/job/CloudNetService/job/CloudNet/job/master/lastSuccessfulBuild/artifact/cloudnet-wrapper/target/CloudNet-Wrapper.jar";
-
-    private Process process;
-    private Thread consoleThread;
     private final StringBuffer stringBuffer = new StringBuffer();
     private final byte[] buffer = new byte[1024];
+    private Process process;
+    private Thread consoleThread;
     private boolean shutdown;
     private boolean enabled;
     private boolean showConsoleOutput = !Boolean.getBoolean("cloudnet.localwrapper.disableConsole");
@@ -138,20 +137,13 @@ public class LocalCloudWrapper implements Runnabled<OptionSet> {
             }
 
             final User finalUser = user;
-            final WrapperMeta wrapperMeta = CloudNet.getInstance()
-                                                    .getConfig()
-                                                    .getWrappers()
-                                                    .stream()
-                                                    .filter(meta -> meta.getId()
-                                                                        .equals("Wrapper-1"))
-                                                    .findFirst()
-                                                    .orElseGet(() -> {
-                                                        final WrapperMeta newMeta = new WrapperMeta("Wrapper-1",
-                                                                                                    address.getHostName(),
-                                                                                                    finalUser.getName());
-                                                  CloudNet.getInstance().getConfig().createWrapper(newMeta);
-                                                  return newMeta;
-                                              });
+            final WrapperMeta wrapperMeta = CloudNet.getInstance().getConfig().getWrappers().stream().filter(meta -> meta.getId()
+                                                                                                                         .equals("Wrapper-1"))
+                                                    .findFirst().orElseGet(() -> {
+                    final WrapperMeta newMeta = new WrapperMeta("Wrapper-1", address.getHostName(), finalUser.getName());
+                    CloudNet.getInstance().getConfig().createWrapper(newMeta);
+                    return newMeta;
+                });
 
             final long memory = ((NetworkUtils.systemMemory() / 1048576) - 2048);
             if (memory < 1024) {

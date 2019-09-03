@@ -90,12 +90,9 @@ public class WebServer {
             sslContext = SslContextBuilder.forServer(ssc.key(), ssc.cert()).build();
         }
 
-        serverBootstrap = new ServerBootstrap().group(acceptorGroup, workerGroup)
-                                               .childOption(ChannelOption.IP_TOS, 24)
-                                               .childOption(ChannelOption.TCP_NODELAY,
-                                                            true)
-                                               .childOption(ChannelOption.AUTO_READ, true)
-                                               .channel(NetworkUtils.serverSocketChannel())
+        serverBootstrap = new ServerBootstrap().group(acceptorGroup, workerGroup).childOption(ChannelOption.IP_TOS, 24).childOption(
+            ChannelOption.TCP_NODELAY,
+            true).childOption(ChannelOption.AUTO_READ, true).channel(NetworkUtils.serverSocketChannel())
                                                .childHandler(new ChannelInitializer<Channel>() {
                                                    @Override
                                                    protected void initChannel(final Channel channel) {

@@ -20,6 +20,7 @@ import java.util.Properties;
  */
 public class CloudServerMeta {
 
+    private static final String[] PROCESS_PRE_PARAMETERS = {};
     private final ServiceId serviceId;
 
     private final int memory;
@@ -62,7 +63,7 @@ public class CloudServerMeta {
         this.templateName = templateName;
         this.serverProperties = properties;
         this.serverGroupType = serverGroupType;
-        this.template = new Template(templateName, TemplateResource.MASTER, null, new String[0], new ArrayList<>());
+        this.template = new Template(templateName, TemplateResource.MASTER, null, PROCESS_PRE_PARAMETERS, new ArrayList<>());
     }
 
     public Template getTemplate() {

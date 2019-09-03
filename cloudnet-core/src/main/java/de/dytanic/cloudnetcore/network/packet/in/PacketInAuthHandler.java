@@ -48,8 +48,10 @@ public final class PacketInAuthHandler extends PacketInAuthReader {
                         return;
                     } else {
                         client.getChannel().writeAndFlush(new PacketOutAuthResult(new AuthLoginResult(false))).syncUninterruptibly();
-                        CloudNet.getLogger()
-                                .info("Authentication failed [" + (wrapperKey != null ? "Invalid WrapperKey or Wrapper is already connected!" : "WrapperKey not found, please copy a wrapper key to this instance") + ']');
+                        CloudNet.getLogger().info("Authentication failed [" + (wrapperKey != null
+                                                                               ? "Invalid WrapperKey or Wrapper is already connected!"
+                                                                               : "WrapperKey not found, please copy a wrapper key to this instance") +
+                                                  ']');
                     }
                 } else {
                     client.getChannel().writeAndFlush(new PacketOutAuthResult(new AuthLoginResult(false))).syncUninterruptibly();

@@ -28,13 +28,9 @@ public interface INetworkComponent extends PacketSender, ChannelUser {
     String getServerId();
 
     default void sendPacket(final Packet packet) {
-        CloudNet.getLogger().debug("Sending Packet " + packet.getClass().getSimpleName() + " (id=" + CloudNet.getInstance()
-                                                                                                             .getPacketManager()
-                                                                                                             .packetId(packet) + ";dataLength=" + CloudNet
-            .getInstance()
-            .getPacketManager()
-            .packetData(packet)
-            .size() + ") to " + getServerId());
+        CloudNet.getLogger().debug(
+            "Sending Packet " + packet.getClass().getSimpleName() + " (id=" + CloudNet.getInstance().getPacketManager().packetId(packet) +
+            ";dataLength=" + CloudNet.getInstance().getPacketManager().packetData(packet).size() + ") to " + getServerId());
 
         if (getChannel() == null) {
             return;
@@ -61,13 +57,9 @@ public interface INetworkComponent extends PacketSender, ChannelUser {
         if (getChannel() == null) {
             return;
         }
-        CloudNet.getLogger().debug("Sending Packet " + packet.getClass().getSimpleName() + " (id=" + CloudNet.getInstance()
-                                                                                                             .getPacketManager()
-                                                                                                             .packetId(packet) + ";dataLength=" + CloudNet
-            .getInstance()
-            .getPacketManager()
-            .packetData(packet)
-            .size() + ") to " + getServerId());
+        CloudNet.getLogger().debug(
+            "Sending Packet " + packet.getClass().getSimpleName() + " (id=" + CloudNet.getInstance().getPacketManager().packetId(packet) +
+            ";dataLength=" + CloudNet.getInstance().getPacketManager().packetData(packet).size() + ") to " + getServerId());
         getChannel().writeAndFlush(packet).syncUninterruptibly();
     }
 

@@ -15,10 +15,8 @@ import java.util.Map;
 public class PermissionPool {
 
     public static final Type TYPE = new TypeToken<PermissionPool>() {}.getType();
-
-    private boolean available = true;
-
     private final java.util.Map<String, PermissionGroup> groups = new HashMap<>();
+    private boolean available = true;
 
     public PermissionEntity getNewPermissionEntity(final PlayerConnection playerWhereAmI) {
         return new PermissionEntity(playerWhereAmI.getUniqueId(),

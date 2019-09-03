@@ -53,18 +53,13 @@ public final class CommandLog extends Command {
                 final MinecraftServer minecraftServer = CloudNet.getInstance().getServer(args[0]);
                 final String rndm = NetworkUtils.randomString(10);
                 CloudNet.getInstance().getServerLogManager().append(rndm, minecraftServer.getServerId());
-                final List<String> hasteServer = CloudNet.getInstance()
-                                                         .getConfig()
-                                                         .getHasteServer()
-                                                         .stream()
-                                                         .filter(this::checkUrl)
-                                                         .collect(
-                    Collectors.toList());
+                final List<String> hasteServer = CloudNet.getInstance().getConfig().getHasteServer().stream().filter(this::checkUrl)
+                                                         .collect(Collectors.toList());
                 sendMinecraftServerPaste(sender, rndm, hasteServer, minecraftServer);
                 final String x = new StringBuilder("http://").append(CloudNet.getInstance().getConfig().getWebServerConfig().getAddress())
-                                                             .append(
-                    ':').append(CloudNet.getInstance().getConfig().getWebServerConfig().getPort()).append("/cloudnet/log?server=").append(
-                    rndm).substring(0);
+                                                             .append(':').append(CloudNet.getInstance().getConfig().getWebServerConfig()
+                                                                                         .getPort()).append("/cloudnet/log?server=").append(
+                        rndm).substring(0);
                 sender.sendMessage("You can see the log at: " + x);
 
                 sender.sendMessage("The log is dynamic and will be deleted in 10 minutes");
@@ -72,18 +67,13 @@ public final class CommandLog extends Command {
                 final ProxyServer proxyServer = CloudNet.getInstance().getProxy(args[0]);
                 final String rndm = NetworkUtils.randomString(10);
                 CloudNet.getInstance().getServerLogManager().append(rndm, proxyServer.getServerId());
-                final List<String> hasteServer = CloudNet.getInstance()
-                                                         .getConfig()
-                                                         .getHasteServer()
-                                                         .stream()
-                                                         .filter(this::checkUrl)
-                                                         .collect(
-                    Collectors.toList());
+                final List<String> hasteServer = CloudNet.getInstance().getConfig().getHasteServer().stream().filter(this::checkUrl)
+                                                         .collect(Collectors.toList());
                 sendProxyServerPaste(sender, rndm, hasteServer, proxyServer);
                 final String x = new StringBuilder("http://").append(CloudNet.getInstance().getConfig().getWebServerConfig().getAddress())
-                                                             .append(
-                    ':').append(CloudNet.getInstance().getConfig().getWebServerConfig().getPort()).append("/cloudnet/log?server=").append(
-                    rndm).substring(0);
+                                                             .append(':').append(CloudNet.getInstance().getConfig().getWebServerConfig()
+                                                                                         .getPort()).append("/cloudnet/log?server=").append(
+                        rndm).substring(0);
                 sender.sendMessage("You can see the log at: " + x);
             } else {
                 sender.sendMessage("The server/proxy doesn't exist!");
@@ -145,9 +135,8 @@ public final class CommandLog extends Command {
                                        System.getProperty("os.arch"),
                                        System.getProperty("os.version"))).append('\n');
             paste.append(String.format("Memory Used: %d Mb",
-                                       ((NetworkUtils.system().getTotalPhysicalMemorySize() - NetworkUtils.system()
-                                                                                                          .getFreePhysicalMemorySize()) / 1024L) / 1024L))
-                 .append('\n');
+                                       ((NetworkUtils.system().getTotalPhysicalMemorySize() -
+                                         NetworkUtils.system().getFreePhysicalMemorySize()) / 1024L) / 1024L)).append('\n');
             paste.append(String.format("Memory Free: %d Mb", (NetworkUtils.system().getFreePhysicalMemorySize() / 1024L) / 1024L)).append(
                 '\n');
             paste.append(String.format("Memory Max: %d Mb", (NetworkUtils.system().getTotalPhysicalMemorySize() / 1024L) / 1024L)).append(
@@ -169,11 +158,8 @@ public final class CommandLog extends Command {
             paste.append(g.toJson(minecraftServer.getGroup(), TypeToken.get(ServerGroup.class).getType())).append('\n');
             paste.append("-----END GROUP INFO-----").append('\n');
             paste.append("-----BEGIN LOG INFO-----").append('\n');
-            CloudNet.getInstance()
-                    .getServerLogManager()
-                    .getScreenInfos()
-                    .getS(random)
-                    .forEach(screenInfo -> paste.append(screenInfo.getLine()).append('\n'));
+            CloudNet.getInstance().getServerLogManager().getScreenInfos().getS(random).forEach(screenInfo -> paste
+                .append(screenInfo.getLine()).append('\n'));
             paste.append("-----END LOG INFO-----").append('\n');
             for (final String s : url) {
                 if (postTo(sender, s, paste)) {
@@ -208,9 +194,8 @@ public final class CommandLog extends Command {
                                        System.getProperty("os.arch"),
                                        System.getProperty("os.version"))).append('\n');
             paste.append(String.format("Memory Used: %d Mb",
-                                       ((NetworkUtils.system().getTotalPhysicalMemorySize() - NetworkUtils.system()
-                                                                                                          .getFreePhysicalMemorySize()) / 1024L) / 1024L))
-                 .append('\n');
+                                       ((NetworkUtils.system().getTotalPhysicalMemorySize() -
+                                         NetworkUtils.system().getFreePhysicalMemorySize()) / 1024L) / 1024L)).append('\n');
             paste.append(String.format("Memory Free: %d Mb", (NetworkUtils.system().getFreePhysicalMemorySize() / 1024L) / 1024L)).append(
                 '\n');
             paste.append(String.format("Memory Max: %d Mb", (NetworkUtils.system().getTotalPhysicalMemorySize() / 1024L) / 1024L)).append(
@@ -221,18 +206,11 @@ public final class CommandLog extends Command {
             paste.append(String.format("CloudNet Version: %s # %s",
                                        NetworkUtils.class.getPackage().getSpecificationVersion(),
                                        NetworkUtils.class.getPackage().getImplementationVersion())).append('\n');
-            paste.append(String.format("Backend: %s", CloudNet.getInstance()
-                                                              .getProxyGroup(proxyServer.getProxyInfo()
-                                                                                        .getServiceId()
-                                                                                        .getGroup())
-                                                              .getTemplate()
-                                                              .getBackend()
-                                                              .name())).append('\n');
-            paste.append(String.format("GroupMode: %s", CloudNet.getInstance()
-                                                                .getProxyGroup(proxyServer.getProxyInfo()
-                                                                                          .getServiceId()
-                                                                                          .getGroup())
-                                                                .getProxyGroupMode()
+            paste.append(String.format("Backend: %s", CloudNet.getInstance().getProxyGroup(proxyServer.getProxyInfo().getServiceId()
+                                                                                                      .getGroup()).getTemplate()
+                                                              .getBackend().name())).append('\n');
+            paste.append(String.format("GroupMode: %s", CloudNet.getInstance().getProxyGroup(proxyServer.getProxyInfo().getServiceId()
+                                                                                                        .getGroup()).getProxyGroupMode()
                                                                 .name())).append('\n');
             paste.append(String.format("Server: %s", proxyServer.getServerId())).append('\n');
             paste.append("-----END CLOUDNET INFO-----").append('\n');
@@ -244,11 +222,8 @@ public final class CommandLog extends Command {
                                   TypeToken.get(ProxyGroup.class).getType())).append('\n');
             paste.append("-----END GROUP INFO-----").append('\n');
             paste.append("-----BEGIN LOG INFO-----").append('\n');
-            CloudNet.getInstance()
-                    .getServerLogManager()
-                    .getScreenInfos()
-                    .getS(random)
-                    .forEach(screenInfo -> paste.append(screenInfo.getLine()).append('\n'));
+            CloudNet.getInstance().getServerLogManager().getScreenInfos().getS(random).forEach(screenInfo -> paste
+                .append(screenInfo.getLine()).append('\n'));
             paste.append("-----END LOG INFO-----").append('\n');
             for (final String s : url) {
                 if (postTo(sender, s, paste)) {

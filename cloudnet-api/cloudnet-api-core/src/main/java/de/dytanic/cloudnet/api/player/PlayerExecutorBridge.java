@@ -28,12 +28,8 @@ public class PlayerExecutorBridge extends PlayerExecutor {
             return;
         }
 
-        CloudAPI.getInstance().sendCustomSubProxyMessage(CHANNEL_NAME, "sendPlayer", new Document("uniqueId",
-                                                                                                  cloudPlayer.getUniqueId()).append("name",
-                                                                                                                                    cloudPlayer
-                                                                                                                                        .getName())
-                                                                                                                            .append("server",
-                                                                                                                                    server));
+        CloudAPI.getInstance().sendCustomSubProxyMessage(CHANNEL_NAME, "sendPlayer", new Document("uniqueId", cloudPlayer.getUniqueId())
+            .append("name", cloudPlayer.getName()).append("server", server));
     }
 
     @Override
@@ -42,12 +38,8 @@ public class PlayerExecutorBridge extends PlayerExecutor {
             return;
         }
 
-        CloudAPI.getInstance().sendCustomSubProxyMessage(CHANNEL_NAME, "kickPlayer", new Document("uniqueId",
-                                                                                                  cloudPlayer.getUniqueId()).append("name",
-                                                                                                                                    cloudPlayer
-                                                                                                                                        .getName())
-                                                                                                                            .append("reason",
-                                                                                                                                    reason));
+        CloudAPI.getInstance().sendCustomSubProxyMessage(CHANNEL_NAME, "kickPlayer", new Document("uniqueId", cloudPlayer.getUniqueId())
+            .append("name", cloudPlayer.getName()).append("reason", reason));
     }
 
     @Override
@@ -56,10 +48,8 @@ public class PlayerExecutorBridge extends PlayerExecutor {
             return;
         }
 
-        CloudAPI.getInstance().sendCustomSubProxyMessage(CHANNEL_NAME, "sendMessage", new Document("message", message).append("name",
-                                                                                                                              cloudPlayer.getName())
-                                                                                                                      .append("uniqueId",
-                                                                                                                              cloudPlayer.getUniqueId()));
+        CloudAPI.getInstance().sendCustomSubProxyMessage(CHANNEL_NAME, "sendMessage", new Document("message", message)
+            .append("name", cloudPlayer.getName()).append("uniqueId", cloudPlayer.getUniqueId()));
     }
 
     @Override
@@ -80,17 +70,7 @@ public class PlayerExecutorBridge extends PlayerExecutor {
                           final int fadeIn,
                           final int stay,
                           final int fadeOut) {
-        CloudAPI.getInstance().sendCustomSubProxyMessage(CHANNEL_NAME, "sendTitle", new Document("uniqueId",
-                                                                                                 cloudPlayer.getUniqueId()).append("title",
-                                                                                                                                   title)
-                                                                                                                           .append(
-                                                                                                                               "subTitle",
-                                                                                                                               subTitle)
-                                                                                                                           .append("stay",
-                                                                                                                                   stay)
-                                                                                                                           .append("fadeIn",
-                                                                                                                                   fadeIn)
-                                                                                                                           .append("fadeOut",
-                                                                                                                                   fadeOut));
+        CloudAPI.getInstance().sendCustomSubProxyMessage(CHANNEL_NAME, "sendTitle", new Document("uniqueId", cloudPlayer.getUniqueId())
+            .append("title", title).append("subTitle", subTitle).append("stay", stay).append("fadeIn", fadeIn).append("fadeOut", fadeOut));
     }
 }

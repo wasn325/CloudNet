@@ -20,6 +20,7 @@ import java.util.Collections;
 public class ServerGroup implements Nameable {
 
     public static final Type TYPE = new TypeToken<ServerGroup>() {}.getType();
+    private static final String[] PROCESS_PRE_PARAMETERS = {};
 
     protected String name;
     protected Collection<String> wrapper;
@@ -73,7 +74,7 @@ public class ServerGroup implements Nameable {
         this.serverType = serverType;
         this.groupMode = groupMode;
         this.advancedServerConfig = advancedServerConfig;
-        this.globalTemplate = new Template("globaltemplate", TemplateResource.LOCAL, null, new String[] {}, new ArrayList<>());
+        this.globalTemplate = new Template("globaltemplate", TemplateResource.LOCAL, null, PROCESS_PRE_PARAMETERS, new ArrayList<>());
         this.templates = templates;
 
         this.settings = new WrappedMap();
@@ -87,7 +88,7 @@ public class ServerGroup implements Nameable {
         this.templates = new ArrayList<>(Collections.singletonList(new Template("default",
                                                                                 TemplateResource.LOCAL,
                                                                                 null,
-                                                                                new String[] {},
+                                                                                PROCESS_PRE_PARAMETERS,
                                                                                 new ArrayList<>())));
     }
 

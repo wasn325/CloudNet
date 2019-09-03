@@ -35,10 +35,9 @@ public class PacketOutStartProxy extends Packet {
                                final String url,
                                final Collection<ServerInstallablePlugin> plugins,
                                final Document document) {
-        super(PacketRC.SERVER_HANDLE + 6, new Document("group", proxyGroup.getName()).append("wrapper", wrapper)
-                                                                                     .append("memory", memory)
-                                                                                     .append("url", url)
-                                                                                     .append("processParameters", paramters)
+        super(PacketRC.SERVER_HANDLE + 6, new Document("group", proxyGroup.getName()).append("wrapper", wrapper).append("memory", memory)
+                                                                                     .append("url", url).append("processParameters",
+                                                                                                                paramters)
                                                                                      .append("plugins", plugins)
                                                                                      .append("properties", document));
     }

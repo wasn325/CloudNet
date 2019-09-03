@@ -14,6 +14,8 @@ import java.util.zip.ZipOutputStream;
  */
 public final class ZipConverter {
 
+    public static final byte[] EMPTY_BYTE_ARRAY = new byte[0];
+
     private ZipConverter() {
     }
 
@@ -55,7 +57,7 @@ public final class ZipConverter {
 
     public static byte[] convert(final Path... directories) {
         if (directories == null) {
-            return new byte[0];
+            return EMPTY_BYTE_ARRAY;
         }
 
         try (final ByteArrayOutputStream byteBuffer = new ByteArrayOutputStream(); final ZipOutputStream zipOutputStream = new ZipOutputStream(

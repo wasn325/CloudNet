@@ -32,10 +32,8 @@ public class PacketInAddServer extends PacketInHandler {
         final ServerProcessMeta serverProcessMeta = data.getObject("serverProcess", new TypeToken<ServerProcessMeta>() {}.getType());
         final MinecraftServer minecraftServer = new MinecraftServer(serverProcessMeta,
                                                                     cn,
-                                                                    CloudNet.getInstance()
-                                                                            .getServerGroups()
-                                                                            .get(nullServerInfo.getServiceId()
-                                                                                               .getGroup()),
+                                                                    CloudNet.getInstance().getServerGroups()
+                                                                            .get(nullServerInfo.getServiceId().getGroup()),
                                                                     nullServerInfo);
         cn.getServers().put(nullServerInfo.getServiceId().getServerId(), minecraftServer);
         cn.getWaitingServices().remove(minecraftServer.getServerId());

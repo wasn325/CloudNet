@@ -19,8 +19,8 @@ public class CloudStartupHandler implements ICloudHandler {
     public void onHandle(final CloudNet cloudNet) {
         for (final ServerGroup serverGroup : cloudNet.getServerGroups().values()) {
             final Collection<String> servers = cloudNet.getServersAndWaitings(serverGroup.getName());
-            if (servers.size() < serverGroup.getMinOnlineServers() && (serverGroup.getMaxOnlineServers() == -1 || serverGroup.getMaxOnlineServers() > servers
-                .size())) {
+            if (servers.size() < serverGroup.getMinOnlineServers() &&
+                (serverGroup.getMaxOnlineServers() == -1 || serverGroup.getMaxOnlineServers() > servers.size())) {
                 cloudNet.startGameServer(serverGroup);
             }
         }

@@ -45,8 +45,7 @@ public class ConfigCloudFlare extends ConfigAbstract implements ILoader<Collecti
             old.delete();
         }
 
-        return Document.loadDocument(path).getObject("configurations", new TypeToken<Collection<CloudFlareConfig>>() {}
-                                                                                                   .getType());
+        return Document.loadDocument(path).getObject("configurations", new TypeToken<Collection<CloudFlareConfig>>() {}.getType());
     }
 
 }

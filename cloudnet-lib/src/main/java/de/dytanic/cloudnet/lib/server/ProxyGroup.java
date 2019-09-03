@@ -52,7 +52,9 @@ public class ProxyGroup implements Nameable {
 
     @Override
     public String toString() {
-        return "ProxyGroup{" + "name='" + name + '\'' + ", wrapper=" + wrapper + ", template=" + template + ", proxyVersion=" + proxyVersion + ", startPort=" + startPort + ", startup=" + startup + ", memory=" + memory + ", proxyConfig=" + proxyConfig + ", proxyGroupMode=" + proxyGroupMode + ", settings=" + settings + '}';
+        return "ProxyGroup{" + "name='" + name + '\'' + ", wrapper=" + wrapper + ", template=" + template + ", proxyVersion=" +
+               proxyVersion + ", startPort=" + startPort + ", startup=" + startup + ", memory=" + memory + ", proxyConfig=" + proxyConfig +
+               ", proxyGroupMode=" + proxyGroupMode + ", settings=" + settings + '}';
     }
 
     @Override

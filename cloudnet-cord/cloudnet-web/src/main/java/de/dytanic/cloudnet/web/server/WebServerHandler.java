@@ -69,10 +69,8 @@ final class WebServerHandler extends ChannelInboundHandlerAdapter {
                 } else {
                     final String[] array = path.replaceFirst(NetworkUtils.SLASH_STRING, NetworkUtils.EMPTY_STRING)
                                                .split(NetworkUtils.SLASH_STRING);
-                    final String[] pathArray = webHandler.getPath()
-                                                         .replaceFirst(NetworkUtils.SLASH_STRING, NetworkUtils.EMPTY_STRING)
-                                                         .split(
-                        NetworkUtils.SLASH_STRING);
+                    final String[] pathArray = webHandler.getPath().replaceFirst(NetworkUtils.SLASH_STRING, NetworkUtils.EMPTY_STRING)
+                                                         .split(NetworkUtils.SLASH_STRING);
                     final WrappedMap wrappedMap = new WrappedMap();
                     for (short i = 0; i < array.length; i++) {
                         if (pathArray[i].startsWith("{") && pathArray[i].endsWith("}")) {

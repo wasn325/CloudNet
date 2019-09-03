@@ -21,18 +21,15 @@ public final class PlayerInitListener implements IEventListener<PlayerInitEvent>
     public void onCall(final PlayerInitEvent event) {
 
         if (event.getCloudPlayer().getPermissionEntity() == null) {
-            event.getCloudPlayer().setPermissionEntity(PermissionModule.getInstance()
-                                                                       .getPermissionPool()
+            event.getCloudPlayer().setPermissionEntity(PermissionModule.getInstance().getPermissionPool()
                                                                        .getNewPermissionEntity(event.getCloudPlayer()));
         }
 
         final Collection<GroupEntityData> groupEntiys = new LinkedList<>();
         for (final GroupEntityData groupEntityData : event.getCloudPlayer().getPermissionEntity().getGroups()) {
-            if (!PermissionModule.getInstance()
-                                 .getPermissionPool()
-                                 .getGroups()
-                                 .containsKey(groupEntityData.getGroup()) || (System.currentTimeMillis() > groupEntityData.getTimeout() && groupEntityData
-                .getTimeout() != -1 && groupEntityData.getTimeout() != 0)) {
+            if (!PermissionModule.getInstance().getPermissionPool().getGroups().containsKey(groupEntityData.getGroup()) ||
+                (System.currentTimeMillis() > groupEntityData.getTimeout() && groupEntityData.getTimeout() != -1 &&
+                 groupEntityData.getTimeout() != 0)) {
                 groupEntiys.add(groupEntityData);
             }
         }
@@ -44,8 +41,8 @@ public final class PlayerInitListener implements IEventListener<PlayerInitEvent>
         if (event.getCloudPlayer().getPermissionEntity().getGroups().isEmpty()) {
             event.getCloudPlayer().getPermissionEntity().getGroups().add(new GroupEntityData(PermissionModule.getInstance()
                                                                                                              .getPermissionPool()
-                                                                                                             .getDefaultGroup()
-                                                                                                             .getName(), 0L));
+                                                                                                             .getDefaultGroup().getName(),
+                                                                                             0L));
         }
     }
 }

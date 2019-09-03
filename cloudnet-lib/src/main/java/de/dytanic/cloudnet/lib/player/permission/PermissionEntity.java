@@ -108,10 +108,10 @@ public class PermissionEntity {
 
     private boolean hasWildcardPermission(final String permission) {
         for (final Map.Entry<String, Boolean> entry : getPermissions().entrySet()) {
-            if (entry.getKey().endsWith("*") && entry.getKey().length() > 1 && permission.startsWith(entry.getKey()
-                                                                                                          .substring(0,
-                                                                                                                     entry.getKey()
-                                                                                                                          .length() - 1))) {
+            if (entry.getKey().endsWith("*") && entry.getKey().length() > 1 && permission.startsWith(entry.getKey().substring(0,
+                                                                                                                              entry.getKey()
+                                                                                                                                   .length() -
+                                                                                                                              1))) {
                 return entry.getValue();
             }
         }
@@ -121,10 +121,10 @@ public class PermissionEntity {
 
     private boolean hasWildcardPermission(final PermissionGroup permissionGroup, final String permission, final String group) {
         for (final Map.Entry<String, Boolean> entry : permissionGroup.getPermissions().entrySet()) {
-            if (entry.getKey().endsWith("*") && entry.getKey().length() > 1 && permission.startsWith(entry.getKey()
-                                                                                                          .substring(0,
-                                                                                                                     entry.getKey()
-                                                                                                                          .length() - 1))) {
+            if (entry.getKey().endsWith("*") && entry.getKey().length() > 1 && permission.startsWith(entry.getKey().substring(0,
+                                                                                                                              entry.getKey()
+                                                                                                                                   .length() -
+                                                                                                                              1))) {
                 return entry.getValue();
             }
         }
@@ -141,11 +141,8 @@ public class PermissionEntity {
     }
 
     private boolean checkAccess(final PermissionGroup permissionGroup, final String permission, final String group) {
-        if ((permissionGroup.getPermissions().containsKey("*") && !permissionGroup.getPermissions()
-                                                                                  .get("*")) || (permissionGroup.getPermissions()
-                                                                                                                .containsKey(permission) && !permissionGroup
-            .getPermissions()
-            .get(permission))) {
+        if ((permissionGroup.getPermissions().containsKey("*") && !permissionGroup.getPermissions().get("*")) ||
+            (permissionGroup.getPermissions().containsKey(permission) && !permissionGroup.getPermissions().get(permission))) {
             return false;
         }
 
@@ -159,9 +156,8 @@ public class PermissionEntity {
 
         if (group != null) {
             if (permissionGroup.getServerGroupPermissions().containsKey(group)) {
-                return permissionGroup.getServerGroupPermissions()
-                                      .get(group)
-                                      .contains(permission) || permissionGroup.getServerGroupPermissions().get(group).contains("*");
+                return permissionGroup.getServerGroupPermissions().get(group).contains(permission) ||
+                       permissionGroup.getServerGroupPermissions().get(group).contains("*");
             }
         }
 
@@ -177,10 +173,9 @@ public class PermissionEntity {
     }
 
     public PermissionGroup getHighestPermissionGroup(final PermissionPool permissionPool) {
-        return this.getGroups()
-                   .stream()
-                   .map(groupEntityData -> permissionPool.getGroups().get(groupEntityData.getGroup()))
-                   .min(Comparator.comparingInt(PermissionGroup::getTagId))
+        return this.getGroups().stream().map(groupEntityData -> permissionPool.getGroups().get(groupEntityData.getGroup())).min(Comparator
+                                                                                                                                    .comparingInt(
+                                                                                                                                        PermissionGroup::getTagId))
                    .orElse(null);
     }
 

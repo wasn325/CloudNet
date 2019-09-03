@@ -15,6 +15,8 @@ import java.util.Optional;
  */
 public class VaultPermissionImpl extends Permission {
 
+    public static final String[] EMPTY_STRING_ARRAY = new String[0];
+
     @Override
     public String getName() {
         return "CloudNet-Permission";
@@ -97,10 +99,8 @@ public class VaultPermissionImpl extends Permission {
         final OfflinePlayer offlinePlayer = getPlayer(player);
         final PermissionEntity permissionEntity = offlinePlayer.getPermissionEntity();
 
-        final Optional<GroupEntityData> groupEntityData = permissionEntity.getGroups()
-                                                                          .stream()
-                                                                          .filter(ged -> ged.getGroup()
-                                                                                            .equalsIgnoreCase(group))
+        final Optional<GroupEntityData> groupEntityData = permissionEntity.getGroups().stream().filter(ged -> ged.getGroup()
+                                                                                                                 .equalsIgnoreCase(group))
                                                                           .findFirst();
         groupEntityData.ifPresent(entityData -> permissionEntity.getGroups().remove(entityData));
 
@@ -138,7 +138,7 @@ public class VaultPermissionImpl extends Permission {
 
     @Override
     public String[] getGroups() {
-        return CloudAPI.getInstance().getPermissionPool().getGroups().keySet().toArray(new String[0]);
+        return CloudAPI.getInstance().getPermissionPool().getGroups().keySet().toArray(EMPTY_STRING_ARRAY);
     }
 
     @Override

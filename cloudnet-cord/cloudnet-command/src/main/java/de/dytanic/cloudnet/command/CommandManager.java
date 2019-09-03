@@ -16,6 +16,7 @@ import java.util.*;
  */
 public final class CommandManager implements Completer {
 
+    private static final String[] EMPTY_ARGS = new String[0];
     private final Map<String, Command> commands = NetworkUtils.newConcurrentHashMap();
     private final ConsoleCommandSender consoleSender = new ConsoleCommandSender();
 
@@ -121,7 +122,7 @@ public final class CommandManager implements Completer {
                 }
 
                 if (b.equals(NetworkUtils.EMPTY_STRING)) {
-                    this.commands.get(a[0].toLowerCase()).onExecuteCommand(sender, new String[0]);
+                    this.commands.get(a[0].toLowerCase()).onExecuteCommand(sender, EMPTY_ARGS);
                 } else {
                     final String[] c = b.split(" ");
                     this.commands.get(a[0].toLowerCase()).onExecuteCommand(sender, c);

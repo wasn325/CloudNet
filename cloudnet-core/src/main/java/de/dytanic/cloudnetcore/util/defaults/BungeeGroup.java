@@ -12,14 +12,16 @@ import de.dytanic.cloudnet.lib.server.template.TemplateResource;
 import de.dytanic.cloudnet.lib.server.version.ProxyVersion;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Collections;
 
 public class BungeeGroup extends ProxyGroup {
 
+    private static final String[] PROCESS_PRE_PARAMETERS = {};
+
     public BungeeGroup() {
         super("Bungee",
-              Arrays.asList("Wrapper-1"),
-              new Template("default", TemplateResource.LOCAL, null, new String[] {}, new ArrayList<>()),
+              Collections.singletonList("Wrapper-1"),
+              new Template("default", TemplateResource.LOCAL, null, PROCESS_PRE_PARAMETERS, new ArrayList<>()),
               ProxyVersion.BUNGEECORD,
               25565,
               1,

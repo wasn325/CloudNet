@@ -66,13 +66,14 @@ public class SetupRequest implements Nameable {
         }
         final SetupRequest that = (SetupRequest) o;
         return Objects.equals(name, that.name) && Objects.equals(question, that.question) && Objects.equals(inValidMessage,
-                                                                                                            that.inValidMessage) && responseType == that.responseType && Objects
-            .equals(validater, that.validater);
+                                                                                                            that.inValidMessage) &&
+               responseType == that.responseType && Objects.equals(validater, that.validater);
     }
 
     @Override
     public String toString() {
-        return "SetupRequest{" + "name='" + name + '\'' + ", question='" + question + '\'' + ", inValidMessage='" + inValidMessage + '\'' + ", responseType=" + responseType + ", validater=" + validater + '}';
+        return "SetupRequest{" + "name='" + name + '\'' + ", question='" + question + '\'' + ", inValidMessage='" + inValidMessage + '\'' +
+               ", responseType=" + responseType + ", validater=" + validater + '}';
     }
 
     @Override

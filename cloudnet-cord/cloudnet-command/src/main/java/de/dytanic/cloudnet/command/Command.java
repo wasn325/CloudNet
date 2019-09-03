@@ -14,13 +14,11 @@ import java.util.HashSet;
  */
 public abstract class Command implements CommandExecutor, Nameable {
 
+    private final Collection<CommandArgument> commandArguments = new HashSet<>();
     protected String name;
     protected String permission;
     protected String[] aliases;
-
     protected String description = "Default command description";
-
-    private final Collection<CommandArgument> commandArguments = new HashSet<>();
 
     /**
      * Constructs a new command with a name, a needed permission and variable aliases.

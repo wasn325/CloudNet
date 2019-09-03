@@ -197,8 +197,8 @@ public class TaskScheduler {
 
     private void checkEnougthThreads() {
         final Worker worker = hasFreeWorker();
-        if (getCurrentThreadSize() < maxThreads || (dynamicWorkerCount && maxThreads > 1 && taskEntries.size() > getCurrentThreadSize() && taskEntries
-            .size() <= (getMaxThreads() * 2)) && worker == null) {
+        if (getCurrentThreadSize() < maxThreads || (dynamicWorkerCount && maxThreads > 1 && taskEntries.size() > getCurrentThreadSize() &&
+                                                    taskEntries.size() <= (getMaxThreads() * 2)) && worker == null) {
             newWorker();
         }
     }
@@ -510,6 +510,29 @@ public class TaskScheduler {
         this.logger = logger;
     }
 
+    private static final class VoidTaskEntry extends TaskEntry<Void> {
+
+        public VoidTaskEntry(final Callable<Void> pTask, final Callback<Void> pComplete, final long pDelay, final long pRepeat) {
+            super(pTask, pComplete, pDelay, pRepeat);
+        }
+
+
+        public VoidTaskEntry(final Runnable ptask, final Callback<Void> pComplete, final long pDelay, final long pRepeat) {
+            super(new Callable<Void>() {
+
+                @Override
+                public Void call() throws Exception {
+
+                    if (ptask != null) {
+                        ptask.run();
+                    }
+
+                    return null;
+                }
+            }, pComplete, pDelay, pRepeat);
+        }
+    }
+
     public class Worker extends Thread {
 
         volatile TaskEntry<?> taskEntry;
@@ -607,29 +630,6 @@ public class TaskScheduler {
             return taskEntry;
         }
 
-    }
-
-    private final class VoidTaskEntry extends TaskEntry<Void> {
-
-        public VoidTaskEntry(final Callable<Void> pTask, final Callback<Void> pComplete, final long pDelay, final long pRepeat) {
-            super(pTask, pComplete, pDelay, pRepeat);
-        }
-
-
-        public VoidTaskEntry(final Runnable ptask, final Callback<Void> pComplete, final long pDelay, final long pRepeat) {
-            super(new Callable<Void>() {
-
-                @Override
-                public Void call() throws Exception {
-
-                    if (ptask != null) {
-                        ptask.run();
-                    }
-
-                    return null;
-                }
-            }, pComplete, pDelay, pRepeat);
-        }
     }
 
 }

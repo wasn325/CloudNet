@@ -21,6 +21,8 @@ import java.util.HashSet;
  */
 public final class CommandCopy extends Command {
 
+    private static final String[] PROCESS_PRE_PARAMETERS = {};
+
     public CommandCopy() {
         super("copy", "cloudnet.command.copy");
 
@@ -55,8 +57,7 @@ public final class CommandCopy extends Command {
                         if (template == null) {
                             template = new Template(args[1],
                                                     minecraftServer.getProcessMeta().getTemplate().getBackend(),
-                                                    minecraftServer.getProcessMeta().getTemplate().getUrl(),
-                                                    new String[0],
+                                                    minecraftServer.getProcessMeta().getTemplate().getUrl(), PROCESS_PRE_PARAMETERS,
                                                     new HashSet<>());
                             serverGroup.getTemplates().add(template);
                             CloudNet.getInstance().getConfig().createGroup(serverGroup);
@@ -66,9 +67,9 @@ public final class CommandCopy extends Command {
                             }
                         }
                         minecraftServer.getWrapper().copyServer(minecraftServer.getServerInfo());
-                        sender.sendMessage("Creating Template \"" + template.getName() + "\" for " + serverGroup.getName() + " and copying server " + minecraftServer
-                            .getServiceId()
-                            .getServerId() + "...");
+                        sender.sendMessage(
+                            "Creating Template \"" + template.getName() + "\" for " + serverGroup.getName() + " and copying server " +
+                            minecraftServer.getServiceId().getServerId() + "...");
                     } else {
                         sender.sendMessage("The group doesn't exist");
                     }

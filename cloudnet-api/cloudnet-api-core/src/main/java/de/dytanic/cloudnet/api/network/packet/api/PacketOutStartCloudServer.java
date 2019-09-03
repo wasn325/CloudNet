@@ -28,14 +28,10 @@ public class PacketOutStartCloudServer extends Packet {
                                      final Collection<ServerInstallablePlugin> plugins,
                                      final Properties properties,
                                      final ServerGroupType serverGroupType) {
-        super(PacketRC.SERVER_HANDLE + 9, new Document("serverName", serverName).append("serverConfig", serverConfig)
-                                                                                .append("memory",
-                                                                                        memory)
-                                                                                .append("priorityStop",
-                                                                                        priorityStop)
-                                                                                .append("processPreParameters", processPreParameters)
-                                                                                .append("plugins", plugins)
-                                                                                .append("properties", properties)
+        super(PacketRC.SERVER_HANDLE + 9, new Document("serverName", serverName).append("serverConfig", serverConfig).append("memory",
+                                                                                                                             memory).append(
+            "priorityStop",
+            priorityStop).append("processPreParameters", processPreParameters).append("plugins", plugins).append("properties", properties)
                                                                                 .append("serverGroupType", serverGroupType));
     }
 
@@ -48,14 +44,12 @@ public class PacketOutStartCloudServer extends Packet {
                                      final Collection<ServerInstallablePlugin> plugins,
                                      final Properties properties,
                                      final ServerGroupType serverGroupType) {
-        super(PacketRC.SERVER_HANDLE + 9, new Document("serverName", serverName).append("wrapperInfo", wrapperInfo)
-                                                                                .append("serverConfig",
-                                                                                        serverConfig)
-                                                                                .append("memory", memory)
-                                                                                .append("priorityStop", priorityStop)
-                                                                                .append("processPreParameters", processPreParameters)
-                                                                                .append("plugins", plugins)
-                                                                                .append("properties", properties)
+        super(PacketRC.SERVER_HANDLE + 9, new Document("serverName", serverName).append("wrapperInfo", wrapperInfo).append("serverConfig",
+                                                                                                                           serverConfig)
+                                                                                .append("memory", memory).append("priorityStop",
+                                                                                                                 priorityStop).append(
+                "processPreParameters",
+                processPreParameters).append("plugins", plugins).append("properties", properties)
                                                                                 .append("serverGroupType", serverGroupType));
     }
 }
