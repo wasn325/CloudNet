@@ -9,7 +9,11 @@ public class ScheduledTaskAsync extends ScheduledTask {
 
     protected Scheduler scheduler;
 
-    public ScheduledTaskAsync(long taskId, Runnable runnable, int delay, int repeatDelay, Scheduler scheduler) {
+    public ScheduledTaskAsync(final long taskId,
+                              final Runnable runnable,
+                              final int delay,
+                              final int repeatDelay,
+                              final Scheduler scheduler) {
         super(taskId, runnable, delay, repeatDelay);
         this.scheduler = scheduler;
     }

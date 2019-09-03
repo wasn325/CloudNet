@@ -11,9 +11,9 @@ import de.dytanic.cloudnet.lib.server.info.ProxyInfo;
  */
 public class ProxiedProxyInfoUpdateEvent extends ProxiedCloudEvent {
 
-    private ProxyInfo proxyInfo;
+    private final ProxyInfo proxyInfo;
 
-    public ProxiedProxyInfoUpdateEvent(ProxyInfo proxyInfo) {
+    public ProxiedProxyInfoUpdateEvent(final ProxyInfo proxyInfo) {
         this.proxyInfo = proxyInfo;
     }
 

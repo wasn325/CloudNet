@@ -17,9 +17,9 @@ import java.util.Collection;
 public class CloudPriorityGroupStartupHandler implements ICloudHandler {
 
     @Override
-    public void onHandle(CloudNet cloudNet) {
-        for (ServerGroup group : CloudNet.getInstance().getServerGroups().values()) {
-            double onlineCount = CloudNet.getInstance().getOnlineCount(group.getName());
+    public void onHandle(final CloudNet cloudNet) {
+        for (final ServerGroup group : CloudNet.getInstance().getServerGroups().values()) {
+            final double onlineCount = CloudNet.getInstance().getOnlineCount(group.getName());
             if (group.getPriorityService().getGroup().getOnlineServers() == 0 || group.getPriorityService()
                                                                                       .getGlobal()
                                                                                       .getOnlineCount() == 0 || group.getGroupMode() == ServerGroupMode.STATIC || group
@@ -27,12 +27,12 @@ public class CloudPriorityGroupStartupHandler implements ICloudHandler {
                 continue;
             }
 
-            double priority = (group.getPriorityService().getGroup().getOnlineServers() / ((double) group.getPriorityService()
-                                                                                                         .getGroup()
-                                                                                                         .getOnlineCount())) * (onlineCount == 0 ? 1.0D : (onlineCount));
-            Collection<String> servers = CloudNet.getInstance().getServersAndWaitings(group.getName());
+            final double priority = (group.getPriorityService().getGroup().getOnlineServers() /
+                                     ((double) group.getPriorityService().getGroup().getOnlineCount())) *
+                                    (onlineCount == 0 ? 1.0D : (onlineCount));
+            final Collection<String> servers = CloudNet.getInstance().getServersAndWaitings(group.getName());
 
-            if (servers.size() == 0 && servers.size() < (priority <= 1 ? 1 : priority)) {
+            if (servers.isEmpty() && servers.size() < (priority <= 1 ? 1 : priority)) {
                 CloudNet.getInstance().startGameServer(group);
                 continue;
             }

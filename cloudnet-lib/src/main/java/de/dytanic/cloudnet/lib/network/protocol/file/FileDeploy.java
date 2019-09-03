@@ -5,7 +5,7 @@
 package de.dytanic.cloudnet.lib.network.protocol.file;
 
 import de.dytanic.cloudnet.lib.network.protocol.ProtocolBuffer;
-import de.dytanic.cloudnet.lib.network.protocol.ProtocolStream;
+import de.dytanic.cloudnet.lib.network.protocol.packet.Packet;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -14,13 +14,13 @@ import java.io.IOException;
 /**
  * Created by Tareko on 09.09.2017.
  */
-public class FileDeploy extends ProtocolStream {
+public class FileDeploy extends Packet {
 
     protected String dest;
 
     protected byte[] bytes;
 
-    public FileDeploy(String dest, byte[] bytes) {
+    public FileDeploy(final String dest, final byte[] bytes) {
         this.dest = dest;
         this.bytes = bytes;
     }
@@ -29,14 +29,14 @@ public class FileDeploy extends ProtocolStream {
     }
 
     @Override
-    public void write(ProtocolBuffer out) throws Exception {
+    public void write(final ProtocolBuffer out) throws Exception {
         out.writeString(dest);
         out.writeVarInt(bytes.length);
         out.writeBytes(bytes);
     }
 
     @Override
-    public void read(ProtocolBuffer in) throws Exception {
+    public void read(final ProtocolBuffer in) throws Exception {
         if (in.readableBytes() != 0) {
             this.dest = in.readString();
             this.bytes = in.readBytes(in.readVarInt()).array();
@@ -46,16 +46,16 @@ public class FileDeploy extends ProtocolStream {
 
     public void toWrite() {
         try {
-            File file = new File(dest);
+            final File file = new File(dest);
             file.getParentFile().mkdirs();
             file.createNewFile();
 
-            try (FileOutputStream fileOutputStream = new FileOutputStream(file)) {
+            try (final FileOutputStream fileOutputStream = new FileOutputStream(file)) {
                 fileOutputStream.write(bytes);
                 fileOutputStream.flush();
             }
 
-        } catch (IOException e) {
+        } catch (final IOException e) {
             e.printStackTrace();
         }
     }

@@ -9,11 +9,11 @@ package de.dytanic.cloudnet.lib.proxylayout;
  */
 public class ServerFallback {
 
-    private String group;
+    private final String group;
 
-    private String permission;
+    private final String permission;
 
-    public ServerFallback(String group, String permission) {
+    public ServerFallback(final String group, final String permission) {
         this.group = group;
         this.permission = permission;
     }

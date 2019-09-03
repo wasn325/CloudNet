@@ -8,7 +8,7 @@ public abstract class Event {
     /**
      * Whether this event will be called asynchronous
      */
-    protected boolean asynchronous = false;
+    protected boolean asynchronous;
 
     public boolean isAsynchronous() {
         return asynchronous;

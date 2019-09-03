@@ -18,12 +18,12 @@ import de.dytanic.cloudnet.lib.utility.threading.Runnabled;
 public class PacketInLoginPlayer extends PacketInHandlerDefault {
 
     @Override
-    public void handleInput(Document data, PacketSender packetSender) {
+    public void handleInput(final Document data, final PacketSender packetSender) {
         if (CloudAPI.getInstance() != null) {
-            CloudPlayer cloudPlayer = data.getObject("player", CloudPlayer.TYPE);
+            final CloudPlayer cloudPlayer = data.getObject("player", CloudPlayer.TYPE);
             CloudAPI.getInstance().getNetworkHandlerProvider().iterator(new Runnabled<NetworkHandler>() {
                 @Override
-                public void run(NetworkHandler obj) {
+                public void run(final NetworkHandler obj) {
                     obj.onPlayerLoginNetwork(cloudPlayer);
                 }
             });

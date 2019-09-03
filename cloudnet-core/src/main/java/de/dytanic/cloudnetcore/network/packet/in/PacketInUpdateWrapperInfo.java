@@ -15,12 +15,12 @@ import de.dytanic.cloudnetcore.network.components.Wrapper;
 public final class PacketInUpdateWrapperInfo extends PacketInHandler {
 
     @Override
-    public void handleInput(Document data, PacketSender packetSender) {
+    public void handleInput(final Document data, final PacketSender packetSender) {
         if (!(packetSender instanceof Wrapper)) {
             return;
         }
 
-        WrapperInfo wrapperInfo = data.getObject("wrapperInfo", new TypeToken<WrapperInfo>() {}.getType());
+        final WrapperInfo wrapperInfo = data.getObject("wrapperInfo", new TypeToken<WrapperInfo>() {}.getType());
 
         if (((Wrapper) packetSender).getWrapperInfo() != null) {
             ((Wrapper) packetSender).setWrapperInfo(wrapperInfo);

@@ -15,14 +15,14 @@ public class PacketInCopyDirectory extends PacketInHandler {
     }
 
     @Override
-    public void handleInput(Document data, PacketSender packetSender) {
+    public void handleInput(final Document data, final PacketSender packetSender) {
         if (!data.contains("serverInfo") || !data.contains("directory")) {
             return;
         }
 
-        ServerInfo info = data.getObject("serverInfo", ServerInfo.TYPE);
+        final ServerInfo info = data.getObject("serverInfo", ServerInfo.TYPE);
 
-        Wrapper wrapper = CloudNet.getInstance().getWrappers().get(info.getServiceId().getWrapperId());
+        final Wrapper wrapper = CloudNet.getInstance().getWrappers().get(info.getServiceId().getWrapperId());
 
         if (wrapper != null && wrapper.getChannel() != null) {
             wrapper.sendPacket(new Packet(PacketRC.CN_CORE + 14, data));

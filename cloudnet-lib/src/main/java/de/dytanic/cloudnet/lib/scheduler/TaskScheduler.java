@@ -28,7 +28,7 @@ public class TaskScheduler {
 
     protected final long threadLiveMillis;
 
-    protected int maxThreads = 0;
+    protected int maxThreads;
 
     protected Logger logger;
 
@@ -42,41 +42,41 @@ public class TaskScheduler {
     }
 
 
-    public TaskScheduler(int maxThreads) {
+    public TaskScheduler(final int maxThreads) {
         this(maxThreads, (Logger) null);
     }
 
 
-    public TaskScheduler(int maxThreads, Logger logger) {
+    public TaskScheduler(final int maxThreads, final Logger logger) {
         this(maxThreads, null, logger);
     }
 
 
-    public TaskScheduler(int maxThreads, Collection<TaskEntry<?>> entries, Logger logger) {
+    public TaskScheduler(final int maxThreads, final Collection<TaskEntry<?>> entries, final Logger logger) {
         this(maxThreads, entries, logger, 10);
     }
 
 
-    public TaskScheduler(int maxThreads, Collection<TaskEntry<?>> entries, Logger logger, long sleepThreadSwitch) {
+    public TaskScheduler(final int maxThreads, final Collection<TaskEntry<?>> entries, final Logger logger, final long sleepThreadSwitch) {
         this(maxThreads, entries, logger, sleepThreadSwitch, false);
     }
 
 
-    public TaskScheduler(int maxThreads,
-                         Collection<TaskEntry<?>> entries,
-                         Logger logger,
-                         long sleepThreadSwitch,
-                         boolean dynamicThreadCount) {
+    public TaskScheduler(final int maxThreads,
+                         final Collection<TaskEntry<?>> entries,
+                         final Logger logger,
+                         final long sleepThreadSwitch,
+                         final boolean dynamicThreadCount) {
         this(maxThreads, entries, logger, sleepThreadSwitch, dynamicThreadCount, 10000L);
     }
 
 
-    public TaskScheduler(int maxThreads,
-                         Collection<TaskEntry<?>> entries,
-                         Logger logger,
-                         long sleepThreadSwitch,
-                         boolean dynamicThreadCount,
-                         long threadLiveMillis) {
+    public TaskScheduler(final int maxThreads,
+                         final Collection<TaskEntry<?>> entries,
+                         final Logger logger,
+                         final long sleepThreadSwitch,
+                         final boolean dynamicThreadCount,
+                         final long threadLiveMillis) {
 
         this.sleepThreadSwitch = sleepThreadSwitch;
         this.dynamicWorkerCount = dynamicThreadCount;
@@ -91,70 +91,73 @@ public class TaskScheduler {
     }
 
 
-    public TaskScheduler(long sleepThreadSwitch) {
+    public TaskScheduler(final long sleepThreadSwitch) {
         this(Runtime.getRuntime().availableProcessors(), sleepThreadSwitch);
     }
 
 
-    public TaskScheduler(int maxThreads, long sleepThreadSwitch) {
+    public TaskScheduler(final int maxThreads, final long sleepThreadSwitch) {
         this(maxThreads, (Logger) null, sleepThreadSwitch);
     }
 
 
-    public TaskScheduler(int maxThreads, Logger logger, long sleepThreadSwitch) {
+    public TaskScheduler(final int maxThreads, final Logger logger, final long sleepThreadSwitch) {
         this(maxThreads, null, logger, sleepThreadSwitch);
     }
 
 
-    public TaskScheduler(Logger logger) {
+    public TaskScheduler(final Logger logger) {
         this(Runtime.getRuntime().availableProcessors(), logger);
     }
 
 
-    public TaskScheduler(Logger logger, long sleepThreadSwitch) {
+    public TaskScheduler(final Logger logger, final long sleepThreadSwitch) {
         this(Runtime.getRuntime().availableProcessors(), logger, sleepThreadSwitch);
     }
 
 
-    public TaskScheduler(Collection<TaskEntry<?>> entries) {
+    public TaskScheduler(final Collection<TaskEntry<?>> entries) {
         this(Runtime.getRuntime().availableProcessors(), entries);
     }
 
 
-    public TaskScheduler(int maxThreads, Collection<TaskEntry<?>> entries) {
+    public TaskScheduler(final int maxThreads, final Collection<TaskEntry<?>> entries) {
         this(maxThreads, entries, null);
     }
 
 
-    public TaskScheduler(Collection<TaskEntry<?>> entries, long sleepThreadSwtich) {
+    public TaskScheduler(final Collection<TaskEntry<?>> entries, final long sleepThreadSwtich) {
         this(Runtime.getRuntime().availableProcessors(), entries, sleepThreadSwtich);
     }
 
 
-    public TaskScheduler(int maxThreads, Collection<TaskEntry<?>> entries, long sleepThreadSwitch) {
+    public TaskScheduler(final int maxThreads, final Collection<TaskEntry<?>> entries, final long sleepThreadSwitch) {
         this(maxThreads, entries, null, sleepThreadSwitch);
     }
 
 
-    public TaskScheduler(Collection<TaskEntry<?>> entries, Logger logger) {
+    public TaskScheduler(final Collection<TaskEntry<?>> entries, final Logger logger) {
         this(Runtime.getRuntime().availableProcessors(), entries, logger);
     }
 
 
-    public TaskScheduler(Collection<TaskEntry<?>> entries, Logger logger, long sleepThreadSwtich) {
+    public TaskScheduler(final Collection<TaskEntry<?>> entries, final Logger logger, final long sleepThreadSwtich) {
         this(Runtime.getRuntime().availableProcessors(), entries, logger, sleepThreadSwtich);
     }
 
 
-    public TaskScheduler(int maxThreads, boolean dynamicWorkerCount) {
-        this(maxThreads, (Logger) null, dynamicWorkerCount);
+    public TaskScheduler(final int maxThreads, final boolean dynamicWorkerCount) {
+        this(maxThreads, null, dynamicWorkerCount);
     }
 
-    public TaskScheduler(int maxThreads, Logger logger, boolean dynamicWorkerCount) {
+    public TaskScheduler(final int maxThreads, final Logger logger, final boolean dynamicWorkerCount) {
         this(maxThreads, null, logger, 10, dynamicWorkerCount);
     }
 
-    public TaskScheduler(int maxThreads, Collection<TaskEntry<?>> entries, Logger logger, boolean dynamicWorkerCount) {
+    public TaskScheduler(final int maxThreads,
+                         final Collection<TaskEntry<?>> entries,
+                         final Logger logger,
+                         final boolean dynamicWorkerCount) {
         this(maxThreads, entries, logger, 10, dynamicWorkerCount);
     }
 
@@ -166,34 +169,34 @@ public class TaskScheduler {
         return RUNTIME_SCHEDULER;
     }
 
-    public TaskEntryFuture<Void> schedule(Runnable runnable) {
+    public TaskEntryFuture<Void> schedule(final Runnable runnable) {
         return schedule(runnable, (Callback<Void>) null);
     }
 
-    public TaskEntryFuture<Void> schedule(Runnable runnable, Callback<Void> callback) {
+    public TaskEntryFuture<Void> schedule(final Runnable runnable, final Callback<Void> callback) {
         return schedule(runnable, callback, 0);
     }
 
-    public TaskEntryFuture<Void> schedule(Runnable runnable, Callback<Void> callback, long delay) {
+    public TaskEntryFuture<Void> schedule(final Runnable runnable, final Callback<Void> callback, final long delay) {
         return schedule(runnable, callback, delay, 0);
     }
 
-    public TaskEntryFuture<Void> schedule(Runnable runnable, Callback<Void> callback, long delay, long repeats) {
+    public TaskEntryFuture<Void> schedule(final Runnable runnable, final Callback<Void> callback, final long delay, final long repeats) {
         return schedule(new VoidTaskEntry(runnable, callback, delay, repeats));
     }
 
-    public <V> TaskEntryFuture<V> schedule(TaskEntry<V> taskEntry) {
+    public <V> TaskEntryFuture<V> schedule(final TaskEntry<V> taskEntry) {
         return offerEntry(taskEntry);
     }
 
-    private <V> TaskEntryFuture<V> offerEntry(TaskEntry<V> entry) {
+    private <V> TaskEntryFuture<V> offerEntry(final TaskEntry<V> entry) {
         this.taskEntries.offer(entry);
         checkEnougthThreads();
         return entry.drop();
     }
 
     private void checkEnougthThreads() {
-        Worker worker = hasFreeWorker();
+        final Worker worker = hasFreeWorker();
         if (getCurrentThreadSize() < maxThreads || (dynamicWorkerCount && maxThreads > 1 && taskEntries.size() > getCurrentThreadSize() && taskEntries
             .size() <= (getMaxThreads() * 2)) && worker == null) {
             newWorker();
@@ -201,7 +204,7 @@ public class TaskScheduler {
     }
 
     private Worker hasFreeWorker() {
-        for (Worker worker : workers) {
+        for (final Worker worker : workers) {
             if (worker.isFreeWorker()) {
                 return worker;
             }
@@ -219,69 +222,81 @@ public class TaskScheduler {
     }
 
     protected void newWorker() {
-        Worker worker = new Worker();
+        final Worker worker = new Worker();
         workers.add(worker);
 
         worker.start();
     }
 
-    public TaskEntryFuture<Void> schedule(Runnable runnable, Date timeout) {
+    public TaskEntryFuture<Void> schedule(final Runnable runnable, final Date timeout) {
         return schedule(runnable, timeout.getTime() - System.currentTimeMillis());
     }
 
-    public TaskEntryFuture<Void> schedule(Runnable runnable, long delay) {
+    public TaskEntryFuture<Void> schedule(final Runnable runnable, final long delay) {
         return schedule(runnable, (Callback<Void>) null, delay);
     }
 
-    public TaskEntryFuture<Void> schedule(Runnable runnable, LocalDate localDate, LocalTime localTime) {
+    public TaskEntryFuture<Void> schedule(final Runnable runnable, final LocalDate localDate, final LocalTime localTime) {
         return schedule(runnable, null, localDate, localTime);
     }
 
-    public TaskEntryFuture<Void> schedule(Runnable runnable, Callback<Void> callback, LocalDate localDate, LocalTime localTime) {
+    public TaskEntryFuture<Void> schedule(final Runnable runnable,
+                                          final Callback<Void> callback,
+                                          final LocalDate localDate,
+                                          final LocalTime localTime) {
         return schedule(runnable, callback, localDate, localTime, 0);
     }
 
-    public TaskEntryFuture<Void> schedule(Runnable runnable,
-                                          Callback<Void> callback,
-                                          LocalDate localDate,
-                                          LocalTime localTime,
-                                          long repeats) {
+    public TaskEntryFuture<Void> schedule(final Runnable runnable,
+                                          final Callback<Void> callback,
+                                          final LocalDate localDate,
+                                          final LocalTime localTime,
+                                          final long repeats) {
         return schedule(runnable, callback, LocalDateTime.of(localDate, localTime), repeats);
     }
 
-    public TaskEntryFuture<Void> schedule(Runnable runnable, Callback<Void> callback, LocalDateTime localDateTime, long repeats) {
+    public TaskEntryFuture<Void> schedule(final Runnable runnable,
+                                          final Callback<Void> callback,
+                                          final LocalDateTime localDateTime,
+                                          final long repeats) {
         return schedule(runnable, callback, localDateTime.atZone(ZoneId.systemDefault()), repeats);
     }
 
-    public TaskEntryFuture<Void> schedule(Runnable runnable, Callback<Void> callback, ZonedDateTime zonedDateTime, long repeats) {
+    public TaskEntryFuture<Void> schedule(final Runnable runnable,
+                                          final Callback<Void> callback,
+                                          final ZonedDateTime zonedDateTime,
+                                          final long repeats) {
         return schedule(runnable, callback, zonedDateTime.toInstant(), repeats);
     }
 
-    public TaskEntryFuture<Void> schedule(Runnable runnable, Callback<Void> callback, Instant instant, long repeats) {
+    public TaskEntryFuture<Void> schedule(final Runnable runnable,
+                                          final Callback<Void> callback,
+                                          final Instant instant,
+                                          final long repeats) {
         return schedule(runnable, callback, instant.toEpochMilli() - System.currentTimeMillis(), repeats);
     }
 
-    public TaskEntryFuture<Void> schedule(Runnable runnable, LocalDateTime localDateTime) {
+    public TaskEntryFuture<Void> schedule(final Runnable runnable, final LocalDateTime localDateTime) {
         return schedule(runnable, null, localDateTime);
     }
 
-    public TaskEntryFuture<Void> schedule(Runnable runnable, Callback<Void> callback, LocalDateTime localDateTime) {
+    public TaskEntryFuture<Void> schedule(final Runnable runnable, final Callback<Void> callback, final LocalDateTime localDateTime) {
         return schedule(runnable, callback, localDateTime, 0);
     }
 
-    public TaskEntryFuture<Void> schedule(Runnable runnable, ZonedDateTime zonedDateTime) {
+    public TaskEntryFuture<Void> schedule(final Runnable runnable, final ZonedDateTime zonedDateTime) {
         return schedule(runnable, null, zonedDateTime);
     }
 
-    public TaskEntryFuture<Void> schedule(Runnable runnable, Callback<Void> callback, ZonedDateTime zonedDateTime) {
+    public TaskEntryFuture<Void> schedule(final Runnable runnable, final Callback<Void> callback, final ZonedDateTime zonedDateTime) {
         return schedule(runnable, callback, zonedDateTime, 0);
     }
 
-    public TaskEntryFuture<Void> schedule(Runnable runnable, Instant instant) {
+    public TaskEntryFuture<Void> schedule(final Runnable runnable, final Instant instant) {
         return schedule(runnable, null, instant);
     }
 
-    public TaskEntryFuture<Void> schedule(Runnable runnable, Callback<Void> callback, Instant instant) {
+    public TaskEntryFuture<Void> schedule(final Runnable runnable, final Callback<Void> callback, final Instant instant) {
         return schedule(runnable, callback, instant, 0);
     }
 
@@ -289,103 +304,122 @@ public class TaskScheduler {
 
     /*= --------------------------------------------------------------------------------------- =*/
 
-    public TaskEntryFuture<Void> schedule(Runnable runnable, Callback<Void> callback, Date timeout) {
+    public TaskEntryFuture<Void> schedule(final Runnable runnable, final Callback<Void> callback, final Date timeout) {
         return schedule(runnable, callback, timeout.getTime() - System.currentTimeMillis());
     }
 
-    public TaskEntryFuture<Void> schedule(Runnable runnable, long delay, TimeUnit timeUnit) {
+    public TaskEntryFuture<Void> schedule(final Runnable runnable, final long delay, final TimeUnit timeUnit) {
         return schedule(runnable, (Callback<Void>) null, timeUnit.toMillis(delay));
     }
 
-    public TaskEntryFuture<Void> schedule(Runnable runnable, Callback<Void> callback, long delay, TimeUnit timeUnit) {
+    public TaskEntryFuture<Void> schedule(final Runnable runnable,
+                                          final Callback<Void> callback,
+                                          final long delay,
+                                          final TimeUnit timeUnit) {
         return schedule(runnable, (Callback<Void>) null, timeUnit.toMillis(delay));
     }
 
-    public TaskEntryFuture<Void> schedule(Runnable runnable, Date timeout, long repeats) {
+    public TaskEntryFuture<Void> schedule(final Runnable runnable, final Date timeout, final long repeats) {
         return schedule(runnable, timeout.getTime() - System.currentTimeMillis(), repeats);
     }
 
-    public TaskEntryFuture<Void> schedule(Runnable runnable, long delay, long repeats) {
+    public TaskEntryFuture<Void> schedule(final Runnable runnable, final long delay, final long repeats) {
         return schedule(runnable, null, delay, repeats);
     }
 
-    public TaskEntryFuture<Void> schedule(Runnable runnable, long delay, TimeUnit timeUnit, long repeats) {
+    public TaskEntryFuture<Void> schedule(final Runnable runnable, final long delay, final TimeUnit timeUnit, final long repeats) {
         return schedule(runnable, null, timeUnit.toMillis(delay), repeats);
     }
 
-    public TaskEntryFuture<Void> schedule(Runnable runnable, Callback<Void> callback, Date timeout, long repeats) {
+    public TaskEntryFuture<Void> schedule(final Runnable runnable, final Callback<Void> callback, final Date timeout, final long repeats) {
         return schedule(runnable, callback, timeout.getTime() - System.currentTimeMillis(), repeats);
     }
 
-    public TaskEntryFuture<Void> schedule(Runnable runnable, Callback<Void> callback, long delay, TimeUnit timeUnit, long repeats) {
+    public TaskEntryFuture<Void> schedule(final Runnable runnable,
+                                          final Callback<Void> callback,
+                                          final long delay,
+                                          final TimeUnit timeUnit,
+                                          final long repeats) {
         return schedule(runnable, callback, timeUnit.toMillis(delay), repeats);
     }
 
-    public <V> TaskEntryFuture<V> schedule(Callable<V> callable) {
+    public <V> TaskEntryFuture<V> schedule(final Callable<V> callable) {
         return schedule(callable, (Callback<V>) null);
     }
 
-    public <V> TaskEntryFuture<V> schedule(Callable<V> callable, Callback<V> callback) {
+    public <V> TaskEntryFuture<V> schedule(final Callable<V> callable, final Callback<V> callback) {
         return schedule(callable, callback, 0);
     }
 
-    public <V> TaskEntryFuture<V> schedule(Callable<V> callable, Callback<V> callback, long delay) {
+    public <V> TaskEntryFuture<V> schedule(final Callable<V> callable, final Callback<V> callback, final long delay) {
         return schedule(callable, callback, delay, 0);
     }
 
-    public <V> TaskEntryFuture<V> schedule(Callable<V> callable, Callback<V> callback, long delay, long repeats) {
+    public <V> TaskEntryFuture<V> schedule(final Callable<V> callable, final Callback<V> callback, final long delay, final long repeats) {
         return schedule(new TaskEntry<>(callable, callback, delay, repeats));
     }
 
-    public <V> TaskEntryFuture<V> schedule(Callable<V> callable, LocalDate localDate, LocalTime localTime) {
+    public <V> TaskEntryFuture<V> schedule(final Callable<V> callable, final LocalDate localDate, final LocalTime localTime) {
         return schedule(callable, null, localDate, localTime);
     }
 
-    public <V> TaskEntryFuture<V> schedule(Callable<V> callable, Callback<V> callback, LocalDate localDate, LocalTime localTime) {
+    public <V> TaskEntryFuture<V> schedule(final Callable<V> callable,
+                                           final Callback<V> callback,
+                                           final LocalDate localDate,
+                                           final LocalTime localTime) {
         return schedule(callable, callback, localDate, localTime, 0);
     }
 
-    public <V> TaskEntryFuture<V> schedule(Callable<V> callable,
-                                           Callback<V> callback,
-                                           LocalDate localDate,
-                                           LocalTime localTime,
-                                           long repeats) {
+    public <V> TaskEntryFuture<V> schedule(final Callable<V> callable,
+                                           final Callback<V> callback,
+                                           final LocalDate localDate,
+                                           final LocalTime localTime,
+                                           final long repeats) {
         return schedule(callable, callback, LocalDateTime.of(localDate, localTime), repeats);
     }
 
-    public <V> TaskEntryFuture<V> schedule(Callable<V> callable, Callback<V> callback, LocalDateTime localDateTime, long repeats) {
+    public <V> TaskEntryFuture<V> schedule(final Callable<V> callable,
+                                           final Callback<V> callback,
+                                           final LocalDateTime localDateTime,
+                                           final long repeats) {
         return schedule(callable, callback, localDateTime.atZone(ZoneId.systemDefault()), 0);
     }
 
-    public <V> TaskEntryFuture<V> schedule(Callable<V> callable, Callback<V> callback, ZonedDateTime zonedDateTime, long repeats) {
+    public <V> TaskEntryFuture<V> schedule(final Callable<V> callable,
+                                           final Callback<V> callback,
+                                           final ZonedDateTime zonedDateTime,
+                                           final long repeats) {
         return schedule(callable, callback, zonedDateTime.toInstant(), 0);
     }
 
-    public <V> TaskEntryFuture<V> schedule(Callable<V> callable, Callback<V> callback, Instant instant, long repeats) {
+    public <V> TaskEntryFuture<V> schedule(final Callable<V> callable,
+                                           final Callback<V> callback,
+                                           final Instant instant,
+                                           final long repeats) {
         return schedule(callable, callback, instant.toEpochMilli(), 0);
     }
 
-    public <V> TaskEntryFuture<V> schedule(Callable<V> callable, LocalDateTime localDateTime) {
+    public <V> TaskEntryFuture<V> schedule(final Callable<V> callable, final LocalDateTime localDateTime) {
         return schedule(callable, null, localDateTime);
     }
 
-    public <V> TaskEntryFuture<V> schedule(Callable<V> callable, Callback<V> callback, LocalDateTime localDateTime) {
+    public <V> TaskEntryFuture<V> schedule(final Callable<V> callable, final Callback<V> callback, final LocalDateTime localDateTime) {
         return schedule(callable, callback, localDateTime, 0);
     }
 
-    public <V> TaskEntryFuture<V> schedule(Callable<V> callable, ZonedDateTime zonedDateTime) {
+    public <V> TaskEntryFuture<V> schedule(final Callable<V> callable, final ZonedDateTime zonedDateTime) {
         return schedule(callable, null, zonedDateTime);
     }
 
-    public <V> TaskEntryFuture<V> schedule(Callable<V> callable, Callback<V> callback, ZonedDateTime zonedDateTime) {
+    public <V> TaskEntryFuture<V> schedule(final Callable<V> callable, final Callback<V> callback, final ZonedDateTime zonedDateTime) {
         return schedule(callable, callback, zonedDateTime, 0);
     }
 
-    public <V> TaskEntryFuture<V> schedule(Callable<V> callable, Instant instant) {
+    public <V> TaskEntryFuture<V> schedule(final Callable<V> callable, final Instant instant) {
         return schedule(callable, null, instant);
     }
 
-    public <V> TaskEntryFuture<V> schedule(Callable<V> callable, Callback<V> callback, Instant instant) {
+    public <V> TaskEntryFuture<V> schedule(final Callable<V> callable, final Callback<V> callback, final Instant instant) {
         return schedule(callable, callback, instant, 0);
     }
 
@@ -393,26 +427,33 @@ public class TaskScheduler {
 
     /* =============================== */
 
-    public <V> TaskEntryFuture<V> schedule(Callable<V> callable, long delay) {
+    public <V> TaskEntryFuture<V> schedule(final Callable<V> callable, final long delay) {
         return schedule(callable, null, delay);
     }
 
-    public <V> TaskEntryFuture<V> schedule(Callable<V> callable, long delay, TimeUnit timeUnit) {
+    public <V> TaskEntryFuture<V> schedule(final Callable<V> callable, final long delay, final TimeUnit timeUnit) {
         return schedule(callable, null, timeUnit.toMillis(delay));
     }
 
-    public <V> TaskEntryFuture<V> schedule(Callable<V> callable, Callback<V> callback, long delay, TimeUnit timeUnit) {
+    public <V> TaskEntryFuture<V> schedule(final Callable<V> callable,
+                                           final Callback<V> callback,
+                                           final long delay,
+                                           final TimeUnit timeUnit) {
         return schedule(callable, callback, timeUnit.toMillis(delay));
     }
 
-    public <V> TaskEntryFuture<V> schedule(Callable<V> callable, Callback<V> callback, long delay, TimeUnit timeUnit, long repeats) {
+    public <V> TaskEntryFuture<V> schedule(final Callable<V> callable,
+                                           final Callback<V> callback,
+                                           final long delay,
+                                           final TimeUnit timeUnit,
+                                           final long repeats) {
         return schedule(callable, callback, timeUnit.toMillis(delay), repeats);
     }
 
-    public <V> Collection<TaskEntryFuture<V>> schedule(Collection<TaskEntry<V>> threadEntries) {
+    public <V> Collection<TaskEntryFuture<V>> schedule(final Collection<TaskEntry<V>> threadEntries) {
 
-        Collection<TaskEntryFuture<V>> TaskEntryFutures = new ArrayList<TaskEntryFuture<V>>();
-        for (TaskEntry<V> entry : threadEntries) {
+        final Collection<TaskEntryFuture<V>> TaskEntryFutures = new ArrayList<TaskEntryFuture<V>>();
+        for (final TaskEntry<V> entry : threadEntries) {
             TaskEntryFutures.add(offerEntry(entry));
         }
 
@@ -422,16 +463,16 @@ public class TaskScheduler {
     @SuppressWarnings("deprecation")
     public Collection<TaskEntry<?>> shutdown() {
 
-        for (Worker worker : workers) {
+        for (final Worker worker : workers) {
             try {
                 worker.interrupt();
                 worker.stop();
-            } catch (ThreadDeath th) {
+            } catch (final ThreadDeath th) {
                 workers.remove(worker);
             }
         }
 
-        Collection<TaskEntry<?>> entries = new ArrayList<>(taskEntries);
+        final Collection<TaskEntry<?>> entries = new ArrayList<>(taskEntries);
 
         taskEntries.clear();
         workers.clear();
@@ -440,7 +481,7 @@ public class TaskScheduler {
         return entries;
     }
 
-    public TaskScheduler chargeThreadLimit(short threads) {
+    public TaskScheduler chargeThreadLimit(final short threads) {
         this.maxThreads += threads;
         return this;
     }
@@ -465,13 +506,13 @@ public class TaskScheduler {
 
     /* =================================== */
 
-    public void setLogger(Logger logger) {
+    public void setLogger(final Logger logger) {
         this.logger = logger;
     }
 
     public class Worker extends Thread {
 
-        volatile TaskEntry<?> taskEntry = null;
+        volatile TaskEntry<?> taskEntry;
 
         private long liveTimeStamp = System.currentTimeMillis();
 
@@ -506,7 +547,7 @@ public class TaskScheduler {
 
                 if (taskEntry.delayTimeOut != 0 && System.currentTimeMillis() < taskEntry.delayTimeOut) {
                     if (maxThreads != 1) {
-                        long difference = taskEntry.delayTimeOut - System.currentTimeMillis();
+                        final long difference = taskEntry.delayTimeOut - System.currentTimeMillis();
 
                         if (difference > sleepThreadSwitch) {
                             sleepUninterruptedly(sleepThreadSwitch - 1);
@@ -525,7 +566,7 @@ public class TaskScheduler {
 
                 try {
                     taskEntry.invoke();
-                } catch (Exception e) {
+                } catch (final Exception e) {
                     logger.log(Level.SEVERE, "Error on handling Task on Thread [" + getName() + ']', e);
                 }
 
@@ -535,14 +576,14 @@ public class TaskScheduler {
             }
         }
 
-        private synchronized void sleepUninterruptedly(long millis) {
+        private synchronized void sleepUninterruptedly(final long millis) {
             try {
                 Thread.sleep(millis);
-            } catch (InterruptedException ignored) {
+            } catch (final InterruptedException ignored) {
             }
         }
 
-        private void offerEntry(TaskEntry<?> entry) {
+        private void offerEntry(final TaskEntry<?> entry) {
             taskEntries.offer(taskEntry);
             taskEntry = null;
         }
@@ -570,12 +611,12 @@ public class TaskScheduler {
 
     private final class VoidTaskEntry extends TaskEntry<Void> {
 
-        public VoidTaskEntry(Callable<Void> pTask, Callback<Void> pComplete, long pDelay, long pRepeat) {
+        public VoidTaskEntry(final Callable<Void> pTask, final Callback<Void> pComplete, final long pDelay, final long pRepeat) {
             super(pTask, pComplete, pDelay, pRepeat);
         }
 
 
-        public VoidTaskEntry(Runnable ptask, Callback<Void> pComplete, long pDelay, long pRepeat) {
+        public VoidTaskEntry(final Runnable ptask, final Callback<Void> pComplete, final long pDelay, final long pRepeat) {
             super(new Callable<Void>() {
 
                 @Override

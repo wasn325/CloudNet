@@ -17,8 +17,8 @@ import de.dytanic.cloudnetwrapper.CloudNetWrapper;
 public class PacketInStartCloudServer extends PacketInHandler {
 
     @Override
-    public void handleInput(Document data, PacketSender packetSender) {
-        CloudServerMeta cloudServerMeta = data.getObject("cloudServerMeta", new TypeToken<CloudServerMeta>() {}.getType());
+    public void handleInput(final Document data, final PacketSender packetSender) {
+        final CloudServerMeta cloudServerMeta = data.getObject("cloudServerMeta", new TypeToken<CloudServerMeta>() {}.getType());
 
         if (!data.contains("async")) {
             System.out.println("Cloud game server process is now in queue [" + cloudServerMeta.getServiceId() + ']');

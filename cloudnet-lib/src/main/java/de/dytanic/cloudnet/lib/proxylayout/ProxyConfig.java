@@ -35,19 +35,19 @@ public class ProxyConfig {
 
     private DynamicFallback dynamicFallback;
 
-    public ProxyConfig(boolean enabled,
-                       boolean maintenance,
-                       List<Motd> motdsLayouts,
-                       Motd maintenanceMotdLayout,
-                       String maintenaceProtocol,
-                       int maxPlayers,
-                       boolean fastConnect,
-                       Boolean customPayloadFixer,
-                       AutoSlot autoSlot,
-                       TabList tabList,
-                       String[] playerInfo,
-                       Collection<String> whitelist,
-                       DynamicFallback dynamicFallback) {
+    public ProxyConfig(final boolean enabled,
+                       final boolean maintenance,
+                       final List<Motd> motdsLayouts,
+                       final Motd maintenanceMotdLayout,
+                       final String maintenaceProtocol,
+                       final int maxPlayers,
+                       final boolean fastConnect,
+                       final Boolean customPayloadFixer,
+                       final AutoSlot autoSlot,
+                       final TabList tabList,
+                       final String[] playerInfo,
+                       final Collection<String> whitelist,
+                       final DynamicFallback dynamicFallback) {
         this.enabled = enabled;
         this.maintenance = maintenance;
         this.motdsLayouts = motdsLayouts;
@@ -67,7 +67,7 @@ public class ProxyConfig {
         return maxPlayers;
     }
 
-    public void setMaxPlayers(int maxPlayers) {
+    public void setMaxPlayers(final int maxPlayers) {
         this.maxPlayers = maxPlayers;
     }
 
@@ -75,7 +75,7 @@ public class ProxyConfig {
         return autoSlot;
     }
 
-    public void setAutoSlot(AutoSlot autoSlot) {
+    public void setAutoSlot(final AutoSlot autoSlot) {
         this.autoSlot = autoSlot;
     }
 
@@ -83,7 +83,7 @@ public class ProxyConfig {
         return customPayloadFixer;
     }
 
-    public void setCustomPayloadFixer(Boolean customPayloadFixer) {
+    public void setCustomPayloadFixer(final Boolean customPayloadFixer) {
         this.customPayloadFixer = customPayloadFixer;
     }
 
@@ -91,7 +91,7 @@ public class ProxyConfig {
         return whitelist;
     }
 
-    public void setWhitelist(Collection<String> whitelist) {
+    public void setWhitelist(final Collection<String> whitelist) {
         this.whitelist = whitelist;
     }
 
@@ -99,7 +99,7 @@ public class ProxyConfig {
         return dynamicFallback;
     }
 
-    public void setDynamicFallback(DynamicFallback dynamicFallback) {
+    public void setDynamicFallback(final DynamicFallback dynamicFallback) {
         this.dynamicFallback = dynamicFallback;
     }
 
@@ -107,7 +107,7 @@ public class ProxyConfig {
         return motdsLayouts;
     }
 
-    public void setMotdsLayouts(List<Motd> motdsLayouts) {
+    public void setMotdsLayouts(final List<Motd> motdsLayouts) {
         this.motdsLayouts = motdsLayouts;
     }
 
@@ -115,7 +115,7 @@ public class ProxyConfig {
         return maintenanceMotdLayout;
     }
 
-    public void setMaintenanceMotdLayout(Motd maintenanceMotdLayout) {
+    public void setMaintenanceMotdLayout(final Motd maintenanceMotdLayout) {
         this.maintenanceMotdLayout = maintenanceMotdLayout;
     }
 
@@ -123,7 +123,7 @@ public class ProxyConfig {
         return maintenaceProtocol;
     }
 
-    public void setMaintenaceProtocol(String maintenaceProtocol) {
+    public void setMaintenaceProtocol(final String maintenaceProtocol) {
         this.maintenaceProtocol = maintenaceProtocol;
     }
 
@@ -131,7 +131,7 @@ public class ProxyConfig {
         return playerInfo;
     }
 
-    public void setPlayerInfo(String[] playerInfo) {
+    public void setPlayerInfo(final String[] playerInfo) {
         this.playerInfo = playerInfo;
     }
 
@@ -139,7 +139,7 @@ public class ProxyConfig {
         return tabList;
     }
 
-    public void setTabList(TabList tabList) {
+    public void setTabList(final TabList tabList) {
         this.tabList = tabList;
     }
 
@@ -147,7 +147,7 @@ public class ProxyConfig {
         return maintenance;
     }
 
-    public void setMaintenance(boolean maintenance) {
+    public void setMaintenance(final boolean maintenance) {
         this.maintenance = maintenance;
     }
 
@@ -155,7 +155,7 @@ public class ProxyConfig {
         return enabled;
     }
 
-    public void setEnabled(boolean enabled) {
+    public void setEnabled(final boolean enabled) {
         this.enabled = enabled;
     }
 
@@ -163,7 +163,7 @@ public class ProxyConfig {
         return fastConnect;
     }
 
-    public void setFastConnect(boolean fastConnect) {
+    public void setFastConnect(final boolean fastConnect) {
         this.fastConnect = fastConnect;
     }
 }

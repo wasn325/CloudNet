@@ -15,14 +15,14 @@ import java.util.concurrent.CopyOnWriteArrayList;
  */
 public class NetworkHandlerProvider {
 
-    private Collection<NetworkHandler> handlers = new CopyOnWriteArrayList<>();
+    private final Collection<NetworkHandler> handlers = new CopyOnWriteArrayList<>();
 
     /**
      * Registerd a network Handler
      *
      * @param networkHandler
      */
-    public void registerHandler(NetworkHandler networkHandler) {
+    public void registerHandler(final NetworkHandler networkHandler) {
         this.handlers.add(networkHandler);
     }
 
@@ -31,7 +31,7 @@ public class NetworkHandlerProvider {
      *
      * @param handlerTask
      */
-    public void iterator(Runnabled<NetworkHandler> handlerTask) {
+    public void iterator(final Runnabled<NetworkHandler> handlerTask) {
         CollectionWrapper.iterator(handlers, handlerTask);
     }
 

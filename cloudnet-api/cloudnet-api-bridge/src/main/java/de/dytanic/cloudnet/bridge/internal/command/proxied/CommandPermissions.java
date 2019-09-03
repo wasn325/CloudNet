@@ -13,7 +13,6 @@ import de.dytanic.cloudnet.lib.player.permission.GroupEntityData;
 import de.dytanic.cloudnet.lib.player.permission.PermissionGroup;
 import de.dytanic.cloudnet.lib.player.permission.PermissionPool;
 import de.dytanic.cloudnet.lib.utility.CollectionWrapper;
-import de.dytanic.cloudnet.lib.utility.threading.Runnabled;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.plugin.Command;
 import net.md_5.bungee.api.plugin.TabExecutor;
@@ -34,17 +33,17 @@ public final class CommandPermissions extends Command implements TabExecutor {
     }
 
     @Override
-    public void execute(CommandSender sender, String[] args) {
+    public void execute(final CommandSender sender, final String[] args) {
         CloudAPI.getInstance().getLogger().finest(String.format("%s executed %s with arguments %s", sender, this, Arrays.toString(args)));
-        PermissionPool permissionPool = CloudAPI.getInstance().getPermissionPool();
+        final PermissionPool permissionPool = CloudAPI.getInstance().getPermissionPool();
         if (args.length > 0) {
             if (args[0].equalsIgnoreCase("group")) {
                 if (args.length == 1) {
                     sender.sendMessage(NetworkUtils.SPACE_STRING);
                     sender.sendMessage("The following permission groups are registered:");
-                    ArrayList<PermissionGroup> permissionGroups = new ArrayList<>(permissionPool.getGroups().values());
+                    final ArrayList<PermissionGroup> permissionGroups = new ArrayList<>(permissionPool.getGroups().values());
                     permissionGroups.sort(Comparator.comparingInt(PermissionGroup::getTagId));
-                    for (PermissionGroup permissionGroup : permissionGroups) {
+                    for (final PermissionGroup permissionGroup : permissionGroups) {
                         sender.sendMessage(permissionGroup.getName() + " [" + permissionGroup.getJoinPower() + "] implements " + permissionGroup
                             .getImplementGroups());
                     }
@@ -54,19 +53,19 @@ public final class CommandPermissions extends Command implements TabExecutor {
                 if (args.length == 2) {
                     if (permissionPool.getGroups().containsKey(args[1])) {
                         sender.sendMessage(NetworkUtils.SPACE_STRING);
-                        PermissionGroup permissionGroup = permissionPool.getGroups().get(args[1]);
+                        final PermissionGroup permissionGroup = permissionPool.getGroups().get(args[1]);
                         sender.sendMessage("Name: " + permissionGroup.getName());
                         sender.sendMessage("Implementations: " + permissionGroup.getImplementGroups());
                         sender.sendMessage("TagId: " + permissionGroup.getTagId());
                         sender.sendMessage("JoinPower: " + permissionGroup.getJoinPower());
-                        for (Map.Entry<String, Boolean> x : permissionGroup.getPermissions().entrySet()) {
+                        for (final Map.Entry<String, Boolean> x : permissionGroup.getPermissions().entrySet()) {
                             sender.sendMessage("- " + x.getKey() + ':' + x.getValue());
                         }
                         sender.sendMessage(NetworkUtils.SPACE_STRING);
                         sender.sendMessage("Permissions for groups:");
-                        for (Map.Entry<String, List<String>> x : permissionGroup.getServerGroupPermissions().entrySet()) {
+                        for (final Map.Entry<String, List<String>> x : permissionGroup.getServerGroupPermissions().entrySet()) {
                             sender.sendMessage(x.getKey() + ':');
-                            CollectionWrapper.iterator(x.getValue(), (Runnabled<String>) obj -> sender.sendMessage("- " + obj));
+                            CollectionWrapper.iterator(x.getValue(), obj -> sender.sendMessage("- " + obj));
                         }
                         sender.sendMessage(NetworkUtils.SPACE_STRING);
                     } else {
@@ -77,7 +76,7 @@ public final class CommandPermissions extends Command implements TabExecutor {
                 if (args.length == 4) {
                     if (args[2].equalsIgnoreCase("setDisplay")) {
                         if (permissionPool.getGroups().containsKey(args[1])) {
-                            PermissionGroup permissionGroup = permissionPool.getGroups().get(args[1]);
+                            final PermissionGroup permissionGroup = permissionPool.getGroups().get(args[1]);
                             permissionGroup.setDisplay(args[3].replace("_", NetworkUtils.SPACE_STRING));
                             CloudAPI.getInstance().updatePermissionGroup(permissionGroup);
                             sender.sendMessage("You set the display name of the permission group " + permissionGroup.getName() + " to \"" + permissionGroup
@@ -89,7 +88,7 @@ public final class CommandPermissions extends Command implements TabExecutor {
 
                     if (args[2].equalsIgnoreCase("setPrefix")) {
                         if (permissionPool.getGroups().containsKey(args[1])) {
-                            PermissionGroup permissionGroup = permissionPool.getGroups().get(args[1]);
+                            final PermissionGroup permissionGroup = permissionPool.getGroups().get(args[1]);
                             permissionGroup.setPrefix(args[3].replace("_", NetworkUtils.SPACE_STRING));
                             CloudAPI.getInstance().updatePermissionGroup(permissionGroup);
                             sender.sendMessage("You set the prefix of the permission group " + permissionGroup.getName() + " to \"" + permissionGroup
@@ -101,7 +100,7 @@ public final class CommandPermissions extends Command implements TabExecutor {
 
                     if (args[2].equalsIgnoreCase("setSuffix")) {
                         if (permissionPool.getGroups().containsKey(args[1])) {
-                            PermissionGroup permissionGroup = permissionPool.getGroups().get(args[1]);
+                            final PermissionGroup permissionGroup = permissionPool.getGroups().get(args[1]);
                             permissionGroup.setSuffix(args[3].replace("_", NetworkUtils.SPACE_STRING));
                             CloudAPI.getInstance().updatePermissionGroup(permissionGroup);
                             sender.sendMessage("You set the suffix of the permission group " + permissionGroup.getName() + " the suffix \"" + permissionGroup
@@ -113,7 +112,7 @@ public final class CommandPermissions extends Command implements TabExecutor {
 
                     if (args[2].equalsIgnoreCase("setDefault")) {
                         if (permissionPool.getGroups().containsKey(args[1])) {
-                            PermissionGroup permissionGroup = permissionPool.getGroups().get(args[1]);
+                            final PermissionGroup permissionGroup = permissionPool.getGroups().get(args[1]);
                             permissionGroup.setDefaultGroup(args[3].equalsIgnoreCase("true"));
                             CloudAPI.getInstance().updatePermissionGroup(permissionGroup);
                             sender.sendMessage("You set the default group attribute of the permission group" + permissionGroup.getName() + " to \"" + permissionGroup
@@ -125,7 +124,7 @@ public final class CommandPermissions extends Command implements TabExecutor {
 
                     if (args[2].equalsIgnoreCase("setJoinPower")) {
                         if (permissionPool.getGroups().containsKey(args[1]) && NetworkUtils.checkIsNumber(args[3])) {
-                            PermissionGroup permissionGroup = permissionPool.getGroups().get(args[1]);
+                            final PermissionGroup permissionGroup = permissionPool.getGroups().get(args[1]);
                             permissionGroup.setJoinPower(Integer.parseInt(args[3]));
                             CloudAPI.getInstance().updatePermissionGroup(permissionGroup);
                             sender.sendMessage("You set the needed join power of the permission group " + permissionGroup.getName() + " to \"" + permissionGroup
@@ -136,7 +135,7 @@ public final class CommandPermissions extends Command implements TabExecutor {
                     }
                     if (args[2].equalsIgnoreCase("setColor")) {
                         if (permissionPool.getGroups().containsKey(args[1])) {
-                            PermissionGroup permissionGroup = permissionPool.getGroups().get(args[1]);
+                            final PermissionGroup permissionGroup = permissionPool.getGroups().get(args[1]);
                             permissionGroup.setColor(args[3]);
                             CloudAPI.getInstance().updatePermissionGroup(permissionGroup);
                             sender.sendMessage("You set the needed color of the permission group " + permissionGroup.getName() + " to \"" + permissionGroup
@@ -148,7 +147,7 @@ public final class CommandPermissions extends Command implements TabExecutor {
 
                     if (args[2].equalsIgnoreCase("setTagId")) {
                         if (permissionPool.getGroups().containsKey(args[1]) && NetworkUtils.checkIsNumber(args[3])) {
-                            PermissionGroup permissionGroup = permissionPool.getGroups().get(args[1]);
+                            final PermissionGroup permissionGroup = permissionPool.getGroups().get(args[1]);
                             permissionGroup.setTagId(Integer.parseInt(args[3]));
                             CloudAPI.getInstance().updatePermissionGroup(permissionGroup);
                             sender.sendMessage("You set the tagID of the the permission group " + permissionGroup.getName() + " to \"" + permissionGroup
@@ -163,13 +162,13 @@ public final class CommandPermissions extends Command implements TabExecutor {
                 if (args.length == 5) {
                     if (args[2].equalsIgnoreCase("add") && args[3].equalsIgnoreCase("permission")) {
                         if (permissionPool.getGroups().containsKey(args[1]) || args[1].equals("*")) {
-                            String permission = args[4].replaceFirst("-", NetworkUtils.EMPTY_STRING);
-                            boolean value = !args[4].startsWith("-");
+                            final String permission = args[4].replaceFirst("-", NetworkUtils.EMPTY_STRING);
+                            final boolean value = !args[4].startsWith("-");
 
-                            Consumer<PermissionGroup> consumer = new Consumer<PermissionGroup>() {
+                            final Consumer<PermissionGroup> consumer = new Consumer<PermissionGroup>() {
 
                                 @Override
-                                public void accept(PermissionGroup permissionGroup) {
+                                public void accept(final PermissionGroup permissionGroup) {
                                     if (!permissionIsSet(permissionGroup.getPermissions(), permission, value)) {
                                         permissionGroup.getPermissions().put(permission, value);
                                         CloudAPI.getInstance().updatePermissionGroup(permissionGroup);
@@ -184,11 +183,11 @@ public final class CommandPermissions extends Command implements TabExecutor {
                             };
 
                             if (args[1].equals("*")) {
-                                for (PermissionGroup permissionGroup : permissionPool.getGroups().values()) {
+                                for (final PermissionGroup permissionGroup : permissionPool.getGroups().values()) {
                                     consumer.accept(permissionGroup);
                                 }
                             } else {
-                                PermissionGroup permissionGroup = permissionPool.getGroups().get(args[1]);
+                                final PermissionGroup permissionGroup = permissionPool.getGroups().get(args[1]);
                                 consumer.accept(permissionGroup);
                             }
 
@@ -199,9 +198,9 @@ public final class CommandPermissions extends Command implements TabExecutor {
 
                     if (args[2].equalsIgnoreCase("remove") && args[3].equalsIgnoreCase("permission")) {
                         if (permissionPool.getGroups().containsKey(args[1]) || args[1].equals("*")) {
-                            Consumer<PermissionGroup> consumer = new Consumer<PermissionGroup>() {
+                            final Consumer<PermissionGroup> consumer = new Consumer<PermissionGroup>() {
                                 @Override
-                                public void accept(PermissionGroup permissionGroup) {
+                                public void accept(final PermissionGroup permissionGroup) {
                                     permissionGroup.getPermissions().remove(args[4]);
                                     CloudAPI.getInstance().updatePermissionGroup(permissionGroup);
                                     sender.sendMessage("You removed the permission " + args[4] + " for the permission group \"" + permissionGroup
@@ -210,11 +209,11 @@ public final class CommandPermissions extends Command implements TabExecutor {
                             };
 
                             if (args[1].equals("*")) {
-                                for (PermissionGroup permissionGroup : permissionPool.getGroups().values()) {
+                                for (final PermissionGroup permissionGroup : permissionPool.getGroups().values()) {
                                     consumer.accept(permissionGroup);
                                 }
                             } else {
-                                PermissionGroup permissionGroup = permissionPool.getGroups().get(args[1]);
+                                final PermissionGroup permissionGroup = permissionPool.getGroups().get(args[1]);
                                 consumer.accept(permissionGroup);
                             }
                         } else {
@@ -226,9 +225,9 @@ public final class CommandPermissions extends Command implements TabExecutor {
                 if (args.length == 6) {
                     if (args[2].equalsIgnoreCase("add") && args[3].equalsIgnoreCase("permission")) {
                         if (permissionPool.getGroups().containsKey(args[1]) || args[1].equals("*")) {
-                            Consumer<PermissionGroup> consumer = new Consumer<PermissionGroup>() {
+                            final Consumer<PermissionGroup> consumer = new Consumer<PermissionGroup>() {
                                 @Override
-                                public void accept(PermissionGroup permissionGroup) {
+                                public void accept(final PermissionGroup permissionGroup) {
                                     if (!permissionGroup.getServerGroupPermissions().containsKey(args[5])) {
                                         permissionGroup.getServerGroupPermissions().put(args[5], new ArrayList<>());
                                     }
@@ -243,11 +242,11 @@ public final class CommandPermissions extends Command implements TabExecutor {
                             };
 
                             if (args[1].equals("*")) {
-                                for (PermissionGroup permissionGroup : permissionPool.getGroups().values()) {
+                                for (final PermissionGroup permissionGroup : permissionPool.getGroups().values()) {
                                     consumer.accept(permissionGroup);
                                 }
                             } else {
-                                PermissionGroup permissionGroup = permissionPool.getGroups().get(args[1]);
+                                final PermissionGroup permissionGroup = permissionPool.getGroups().get(args[1]);
                                 consumer.accept(permissionGroup);
                             }
 
@@ -258,9 +257,9 @@ public final class CommandPermissions extends Command implements TabExecutor {
 
                     if (args[2].equalsIgnoreCase("remove") && args[3].equalsIgnoreCase("permission")) {
                         if (permissionPool.getGroups().containsKey(args[1]) || args[1].equals("*")) {
-                            Consumer<PermissionGroup> consumer = new Consumer<PermissionGroup>() {
+                            final Consumer<PermissionGroup> consumer = new Consumer<PermissionGroup>() {
                                 @Override
-                                public void accept(PermissionGroup permissionGroup) {
+                                public void accept(final PermissionGroup permissionGroup) {
                                     if (!permissionGroup.getServerGroupPermissions().containsKey(args[5])) {
                                         permissionGroup.getServerGroupPermissions().put(args[5], new ArrayList<>());
                                     }
@@ -274,11 +273,11 @@ public final class CommandPermissions extends Command implements TabExecutor {
                             };
 
                             if (args[1].equals("*")) {
-                                for (PermissionGroup permissionGroup : permissionPool.getGroups().values()) {
+                                for (final PermissionGroup permissionGroup : permissionPool.getGroups().values()) {
                                     consumer.accept(permissionGroup);
                                 }
                             } else {
-                                PermissionGroup permissionGroup = permissionPool.getGroups().get(args[1]);
+                                final PermissionGroup permissionGroup = permissionPool.getGroups().get(args[1]);
                                 consumer.accept(permissionGroup);
                             }
 
@@ -292,13 +291,13 @@ public final class CommandPermissions extends Command implements TabExecutor {
             }
             if (args[0].equalsIgnoreCase("user")) {
                 if (args.length == 2) {
-                    UUID uniqueId = CloudAPI.getInstance().getPlayerUniqueId(args[1]);
+                    final UUID uniqueId = CloudAPI.getInstance().getPlayerUniqueId(args[1]);
                     if (uniqueId != null) {
-                        OfflinePlayer offlinePlayer = CloudAPI.getInstance().getOfflinePlayer(uniqueId);
+                        final OfflinePlayer offlinePlayer = CloudAPI.getInstance().getOfflinePlayer(uniqueId);
                         if (offlinePlayer != null && offlinePlayer.getPermissionEntity() != null) {
-                            StringBuilder stringBuilder = new StringBuilder();
-                            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yyyy-HH:mm:ss");
-                            for (GroupEntityData groupEntityData : offlinePlayer.getPermissionEntity().getGroups()) {
+                            final StringBuilder stringBuilder = new StringBuilder();
+                            final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yyyy-HH:mm:ss");
+                            for (final GroupEntityData groupEntityData : offlinePlayer.getPermissionEntity().getGroups()) {
                                 stringBuilder.append(groupEntityData.getGroup() + '@' + (groupEntityData.getTimeout() == 0 || groupEntityData
                                     .getTimeout() == -1 ? "LIFETIME" : simpleDateFormat.format(groupEntityData.getTimeout())) + NetworkUtils.SPACE_STRING);
                             }
@@ -306,9 +305,9 @@ public final class CommandPermissions extends Command implements TabExecutor {
                             sender.sendMessage("Player " + offlinePlayer.getName() + ": " + offlinePlayer.getUniqueId());
                             sender.sendMessage("Groups: " + stringBuilder.substring(0));
 
-                            for (Map.Entry<String, Boolean> booleanEntry : offlinePlayer.getPermissionEntity()
-                                                                                        .getPermissions()
-                                                                                        .entrySet()) {
+                            for (final Map.Entry<String, Boolean> booleanEntry : offlinePlayer.getPermissionEntity()
+                                                                                              .getPermissions()
+                                                                                              .entrySet()) {
                                 sender.sendMessage("- " + booleanEntry.getKey() + " [" + booleanEntry.getValue() + ']');
                             }
 
@@ -325,15 +324,15 @@ public final class CommandPermissions extends Command implements TabExecutor {
                 //UTILS
 
                 if (args.length == 5) {
-                    UUID uniqueId = CloudAPI.getInstance().getPlayerUniqueId(args[1]);
+                    final UUID uniqueId = CloudAPI.getInstance().getPlayerUniqueId(args[1]);
                     if (uniqueId != null) {
-                        OfflinePlayer offlinePlayer = CloudAPI.getInstance().getOfflinePlayer(uniqueId);
+                        final OfflinePlayer offlinePlayer = CloudAPI.getInstance().getOfflinePlayer(uniqueId);
                         if (offlinePlayer != null && offlinePlayer.getPermissionEntity() != null) {
                             if (args[2].equalsIgnoreCase("GROUP")) {
                                 if (args[3].equalsIgnoreCase("REMOVE")) {
                                     if (permissionPool.getGroups().containsKey(args[4])) {
                                         GroupEntityData groupEntityData = null;
-                                        for (GroupEntityData groupEntity : offlinePlayer.getPermissionEntity().getGroups()) {
+                                        for (final GroupEntityData groupEntity : offlinePlayer.getPermissionEntity().getGroups()) {
                                             if (groupEntity.getGroup().equalsIgnoreCase(args[4])) {
                                                 groupEntityData = groupEntity;
                                             }
@@ -343,7 +342,7 @@ public final class CommandPermissions extends Command implements TabExecutor {
                                             offlinePlayer.getPermissionEntity().getGroups().remove(groupEntityData);
                                         }
 
-                                        if (offlinePlayer.getPermissionEntity().getGroups().size() == 0) {
+                                        if (offlinePlayer.getPermissionEntity().getGroups().isEmpty()) {
                                             offlinePlayer.getPermissionEntity()
                                                          .getGroups()
                                                          .add(new GroupEntityData(permissionPool.getDefaultGroup().getName(), 0));
@@ -381,9 +380,9 @@ public final class CommandPermissions extends Command implements TabExecutor {
                 }
 
                 if (args.length == 6) {
-                    UUID uniqueId = CloudAPI.getInstance().getPlayerUniqueId(args[1]);
+                    final UUID uniqueId = CloudAPI.getInstance().getPlayerUniqueId(args[1]);
                     if (uniqueId != null) {
-                        OfflinePlayer offlinePlayer = CloudAPI.getInstance().getOfflinePlayer(uniqueId);
+                        final OfflinePlayer offlinePlayer = CloudAPI.getInstance().getOfflinePlayer(uniqueId);
                         if (offlinePlayer != null && offlinePlayer.getPermissionEntity() != null) {
                             if (args[2].equalsIgnoreCase("GROUP")) {
                                 if (args[3].equalsIgnoreCase("SET")) {
@@ -431,7 +430,7 @@ public final class CommandPermissions extends Command implements TabExecutor {
             if (args[0].equalsIgnoreCase("create")) {
                 if (args.length == 2) {
                     if (!permissionPool.getGroups().containsKey(args[1])) {
-                        PermissionGroup permissionGroup = new DefaultPermissionGroup(args[1]);
+                        final PermissionGroup permissionGroup = new DefaultPermissionGroup(args[1]);
                         CloudAPI.getInstance().updatePermissionGroup(permissionGroup);
                         sender.sendMessage("The group " + args[1] + " was created!");
                     } else {
@@ -465,23 +464,23 @@ public final class CommandPermissions extends Command implements TabExecutor {
         }
     }
 
-    private boolean permissionIsSet(Map<String, Boolean> permissions, String permission, boolean value) {
+    private boolean permissionIsSet(final Map<String, Boolean> permissions, final String permission, final boolean value) {
         if (permissions.containsKey(permission)) {
             return permissions.get(permission).equals(value);
         }
         return false;
     }
 
-    private void updatePlayer(OfflinePlayer offlinePlayer) {
+    private void updatePlayer(final OfflinePlayer offlinePlayer) {
         CloudAPI.getInstance().updatePlayer(offlinePlayer);
     }
 
-    private long calcDays(int value) {
+    private long calcDays(final int value) {
         return (System.currentTimeMillis() + ((TimeUnit.DAYS.toMillis(value))));
     }
 
     @Override
-    public Iterable<String> onTabComplete(CommandSender commandSender, String[] strings) {
+    public Iterable<String> onTabComplete(final CommandSender commandSender, final String[] strings) {
         switch (strings.length) {
             case 1: {
                 return ImmutableList.of("user", "group", "create");
@@ -489,7 +488,7 @@ public final class CommandPermissions extends Command implements TabExecutor {
             case 2: {
                 switch (strings[0].toLowerCase(Locale.ENGLISH)) {
                     case "group": {
-                        ArrayList<String> list = new ArrayList<>(CloudAPI.getInstance().getPermissionPool().getGroups().keySet());
+                        final ArrayList<String> list = new ArrayList<>(CloudAPI.getInstance().getPermissionPool().getGroups().keySet());
                         list.add("*");
                         return list;
                     }

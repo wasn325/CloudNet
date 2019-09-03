@@ -31,13 +31,13 @@ public class OfflinePlayer implements Nameable, Permissible {
 
     protected PermissionEntity permissionEntity;
 
-    public OfflinePlayer(UUID uniqueId,
-                         String name,
-                         Document metaData,
-                         Long lastLogin,
-                         Long firstLogin,
-                         PlayerConnection lastPlayerConnection,
-                         PermissionEntity permissionEntity) {
+    public OfflinePlayer(final UUID uniqueId,
+                         final String name,
+                         final Document metaData,
+                         final Long lastLogin,
+                         final Long firstLogin,
+                         final PlayerConnection lastPlayerConnection,
+                         final PermissionEntity permissionEntity) {
         this.uniqueId = uniqueId;
         this.name = name;
         this.metaData = metaData;
@@ -52,7 +52,7 @@ public class OfflinePlayer implements Nameable, Permissible {
         return name;
     }
 
-    public void setName(String name) {
+    public void setName(final String name) {
         this.name = name;
     }
 
@@ -60,7 +60,7 @@ public class OfflinePlayer implements Nameable, Permissible {
         return uniqueId;
     }
 
-    public void setUniqueId(UUID uniqueId) {
+    public void setUniqueId(final UUID uniqueId) {
         this.uniqueId = uniqueId;
     }
 
@@ -68,7 +68,7 @@ public class OfflinePlayer implements Nameable, Permissible {
         return metaData;
     }
 
-    public void setMetaData(Document metaData) {
+    public void setMetaData(final Document metaData) {
         this.metaData = metaData;
     }
 
@@ -76,7 +76,7 @@ public class OfflinePlayer implements Nameable, Permissible {
         return firstLogin;
     }
 
-    public void setFirstLogin(Long firstLogin) {
+    public void setFirstLogin(final Long firstLogin) {
         this.firstLogin = firstLogin;
     }
 
@@ -84,7 +84,7 @@ public class OfflinePlayer implements Nameable, Permissible {
         return lastLogin;
     }
 
-    public void setLastLogin(Long lastLogin) {
+    public void setLastLogin(final Long lastLogin) {
         this.lastLogin = lastLogin;
     }
 
@@ -93,7 +93,7 @@ public class OfflinePlayer implements Nameable, Permissible {
         return permissionEntity;
     }
 
-    public void setPermissionEntity(PermissionEntity permissionEntity) {
+    public void setPermissionEntity(final PermissionEntity permissionEntity) {
         this.permissionEntity = permissionEntity;
     }
 
@@ -101,7 +101,7 @@ public class OfflinePlayer implements Nameable, Permissible {
         return lastPlayerConnection;
     }
 
-    public void setLastPlayerConnection(PlayerConnection lastPlayerConnection) {
+    public void setLastPlayerConnection(final PlayerConnection lastPlayerConnection) {
         this.lastPlayerConnection = lastPlayerConnection;
     }
 }

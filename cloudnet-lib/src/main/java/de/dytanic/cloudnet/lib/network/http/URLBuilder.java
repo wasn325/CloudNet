@@ -10,10 +10,10 @@ import java.net.URLConnection;
 
 public class URLBuilder implements Cloneable {
 
-    private StringBuilder urlString = new StringBuilder();
-    private StringBuilder param = new StringBuilder().append('?');
+    private final StringBuilder urlString = new StringBuilder();
+    private final StringBuilder param = new StringBuilder().append('?');
 
-    public URLBuilder(String http, String mainUrl) {
+    public URLBuilder(final String http, final String mainUrl) {
         this.urlString.append(http).append("://").append(mainUrl).append(NetworkUtils.SLASH_STRING);
     }
 
@@ -25,7 +25,7 @@ public class URLBuilder implements Cloneable {
         return urlString;
     }
 
-    public URLBuilder path(String path) {
+    public URLBuilder path(final String path) {
         if (urlString.substring(0).endsWith(NetworkUtils.SLASH_STRING)) {
             urlString.append(path);
         } else {
@@ -34,7 +34,7 @@ public class URLBuilder implements Cloneable {
         return this;
     }
 
-    public URLBuilder query(String queryKey, String queryValue) {
+    public URLBuilder query(final String queryKey, final String queryValue) {
         param.append(queryKey).append('=').append(queryValue).append('&');
         return this;
     }
@@ -42,7 +42,7 @@ public class URLBuilder implements Cloneable {
     public java.net.URL url() {
         try {
             return new java.net.URL(urlString.substring(0) + param.substring(0));
-        } catch (Exception ex) {
+        } catch (final Exception ex) {
             return null;
         }
     }
@@ -51,7 +51,7 @@ public class URLBuilder implements Cloneable {
     public URLConnection urlConnection() {
         try {
             return new java.net.URL(urlString.substring(0) + param.substring(0)).openConnection();
-        } catch (Exception ex) {
+        } catch (final Exception ex) {
             return null;
         }
     }
@@ -59,7 +59,7 @@ public class URLBuilder implements Cloneable {
     public URLBuilder clone() {
         try {
             return (URLBuilder) super.clone();
-        } catch (CloneNotSupportedException e) {
+        } catch (final CloneNotSupportedException e) {
             e.printStackTrace();
         }
         return this;

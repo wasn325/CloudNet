@@ -12,7 +12,7 @@ import de.dytanic.cloudnet.lib.utility.document.Document;
 
 public class PacketOutAddServer extends Packet {
 
-    public PacketOutAddServer(ServerInfo serverInfo, ServerProcessMeta serverProcessMeta) {
+    public PacketOutAddServer(final ServerInfo serverInfo, final ServerProcessMeta serverProcessMeta) {
         super(PacketRC.CN_WRAPPER + 2, new Document("serverInfo", serverInfo).append("serverProcess", serverProcessMeta));
     }
 }

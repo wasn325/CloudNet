@@ -23,7 +23,7 @@ public class PlayerExecutorBridge extends PlayerExecutor {
     }
 
     @Override
-    public void sendPlayer(CloudPlayer cloudPlayer, String server) {
+    public void sendPlayer(final CloudPlayer cloudPlayer, final String server) {
         if (cloudPlayer == null || server == null) {
             return;
         }
@@ -37,7 +37,7 @@ public class PlayerExecutorBridge extends PlayerExecutor {
     }
 
     @Override
-    public void kickPlayer(CloudPlayer cloudPlayer, String reason) {
+    public void kickPlayer(final CloudPlayer cloudPlayer, final String reason) {
         if (cloudPlayer == null || reason == null) {
             return;
         }
@@ -51,7 +51,7 @@ public class PlayerExecutorBridge extends PlayerExecutor {
     }
 
     @Override
-    public void sendMessage(CloudPlayer cloudPlayer, String message) {
+    public void sendMessage(final CloudPlayer cloudPlayer, final String message) {
         if (cloudPlayer == null || message == null) {
             return;
         }
@@ -63,7 +63,7 @@ public class PlayerExecutorBridge extends PlayerExecutor {
     }
 
     @Override
-    public void sendActionbar(CloudPlayer cloudPlayer, String message) {
+    public void sendActionbar(final CloudPlayer cloudPlayer, final String message) {
         if (cloudPlayer == null || message == null) {
             return;
         }
@@ -74,7 +74,12 @@ public class PlayerExecutorBridge extends PlayerExecutor {
     }
 
     @Override
-    public void sendTitle(CloudPlayer cloudPlayer, String title, String subTitle, int fadeIn, int stay, int fadeOut) {
+    public void sendTitle(final CloudPlayer cloudPlayer,
+                          final String title,
+                          final String subTitle,
+                          final int fadeIn,
+                          final int stay,
+                          final int fadeOut) {
         CloudAPI.getInstance().sendCustomSubProxyMessage(CHANNEL_NAME, "sendTitle", new Document("uniqueId",
                                                                                                  cloudPlayer.getUniqueId()).append("title",
                                                                                                                                    title)

@@ -12,30 +12,30 @@ import java.util.Random;
  */
 public final class Auth {
 
-    private AuthType type;
+    private final AuthType type;
     private Document authData = new Document();
 
-    public Auth(AuthType type, Document authData) {
+    public Auth(final AuthType type, final Document authData) {
         this.type = type;
         this.authData = authData;
     }
 
-    public Auth(String servicekey, String cn_id) {
+    public Auth(final String servicekey, final String cn_id) {
         this.type = AuthType.CLOUD_NET;
         this.authData.append("key", servicekey).append("id", cn_id);
     }
 
-    public Auth(ServiceId serverId) {
+    public Auth(final ServiceId serverId) {
         this.type = AuthType.GAMESERVER_OR_BUNGEE;
         this.authData.append("serviceId", serverId);
     }
 
-    public Auth(User user) {
+    public Auth(final User user) {
         this.type = AuthType.GAMESERVER_OR_BUNGEE;
         this.authData.append("user", user);
     }
 
-    public Auth(ServiceId serverId, boolean external) {
+    public Auth(final ServiceId serverId, final boolean external) {
         this.type = AuthType.GAMESERVER_OR_BUNGEE;
         this.authData.append("serviceId", serverId);
         if (external) {
@@ -43,7 +43,7 @@ public final class Auth {
         }
     }
 
-    public Auth(String adminKey) {
+    public Auth(final String adminKey) {
         this.type = AuthType.USER_AUTH;
         this.authData.append("name", new Random().nextLong() + NetworkUtils.EMPTY_STRING).append("adminkey", adminKey);
     }

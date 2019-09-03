@@ -29,29 +29,29 @@ public class WebsiteLog extends WebHandler {
     }
 
     @Override
-    public FullHttpResponse handleRequest(ChannelHandlerContext channelHandlerContext,
-                                          QueryDecoder queryDecoder,
-                                          PathProvider path,
-                                          HttpRequest httpRequest) throws Exception {
+    public FullHttpResponse handleRequest(final ChannelHandlerContext channelHandlerContext,
+                                          final QueryDecoder queryDecoder,
+                                          final PathProvider path,
+                                          final HttpRequest httpRequest) throws Exception {
         CloudNet.getLogger().debug("HTTP Request from " + channelHandlerContext.channel().remoteAddress());
         if (!queryDecoder.getQueryParams().containsKey("server")) {
-            FullHttpResponse fullHttpResponse = newResponse(httpRequest.getProtocolVersion());
+            final FullHttpResponse fullHttpResponse = newResponse(httpRequest.getProtocolVersion());
             fullHttpResponse.setStatus(HttpResponseStatus.NOT_FOUND);
             return fullHttpResponse;
         }
         if (!CloudNet.getInstance().getServerLogManager().getScreenInfos().contains(queryDecoder.getQueryParams().get("server"))) {
-            FullHttpResponse fullHttpResponse = newResponse(httpRequest.getProtocolVersion());
+            final FullHttpResponse fullHttpResponse = newResponse(httpRequest.getProtocolVersion());
             fullHttpResponse.setStatus(HttpResponseStatus.NOT_FOUND);
             return fullHttpResponse;
         }
 
-        FullHttpResponse fullHttpResponse = newResponse(httpRequest.getProtocolVersion());
+        final FullHttpResponse fullHttpResponse = newResponse(httpRequest.getProtocolVersion());
         fullHttpResponse.setStatus(HttpResponseStatus.OK);
         fullHttpResponse.headers().set("Content-Type", "text/html; charset=utf-8");
 
-        StringBuilder stringBuilder = new StringBuilder();
-        try (InputStream inputStream = WebsiteDocumentation.class.getClassLoader()
-                                                                 .getResourceAsStream("files/log.html"); BufferedReader bufferedReader = new BufferedReader(
+        final StringBuilder stringBuilder = new StringBuilder();
+        try (final InputStream inputStream = WebsiteDocumentation.class.getClassLoader()
+                                                                       .getResourceAsStream("files/log.html"); final BufferedReader bufferedReader = new BufferedReader(
             new InputStreamReader(inputStream, StandardCharsets.UTF_8))) {
             String input;
             while ((input = bufferedReader.readLine()) != null) {

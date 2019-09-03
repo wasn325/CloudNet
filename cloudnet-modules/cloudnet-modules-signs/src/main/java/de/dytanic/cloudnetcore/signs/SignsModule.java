@@ -50,10 +50,10 @@ public class SignsModule extends CoreModule implements IEventListener<UpdateAllE
         configSignLayout.loadLayout();
         signDatabase = new SignDatabase(getCloud().getDatabaseManager().getDatabase("cloud_internal_cfg"));
 
-        if (getCloud().getPacketManager().buildHandlers(PacketRC.SERVER_SELECTORS + 1).size() == 0) {
+        if (getCloud().getPacketManager().buildHandlers(PacketRC.SERVER_SELECTORS + 1).isEmpty()) {
             getCloud().getPacketManager().registerHandler(PacketRC.SERVER_SELECTORS + 1, PacketInAddSign.class);
         }
-        if (getCloud().getPacketManager().buildHandlers(PacketRC.SERVER_SELECTORS + 2).size() == 0) {
+        if (getCloud().getPacketManager().buildHandlers(PacketRC.SERVER_SELECTORS + 2).isEmpty()) {
             getCloud().getPacketManager().registerHandler(PacketRC.SERVER_SELECTORS + 2, PacketInRemoveSign.class);
         }
 
@@ -62,7 +62,7 @@ public class SignsModule extends CoreModule implements IEventListener<UpdateAllE
     }
 
     @Override
-    public void onCall(UpdateAllEvent event) {
+    public void onCall(final UpdateAllEvent event) {
         if (event.isOnlineCloudNetworkUpdate()) {
             event.getNetworkManager().sendToLobbys(new PacketOutSignSelector(signDatabase.loadAll(), configSignLayout.loadLayout()));
         }
@@ -71,15 +71,14 @@ public class SignsModule extends CoreModule implements IEventListener<UpdateAllE
     private class ListenerImpl implements IEventListener<ChannelInitEvent> {
 
         @Override
-        public void onCall(ChannelInitEvent event) {
+        public void onCall(final ChannelInitEvent event) {
             if (event.getINetworkComponent() instanceof Wrapper) {
                 return;
             }
 
-            if (event.getINetworkComponent() instanceof MinecraftServer && (((MinecraftServer) event.getINetworkComponent()).getGroupMode()
-                                                                                                                            .equals(
-                                                                                                                                ServerGroupMode.LOBBY) || ((MinecraftServer) event
-                .getINetworkComponent()).getGroupMode().equals(ServerGroupMode.STATIC_LOBBY))) {
+            if (event.getINetworkComponent() instanceof MinecraftServer &&
+                (((MinecraftServer) event.getINetworkComponent()).getGroupMode() == ServerGroupMode.LOBBY ||
+                 ((MinecraftServer) event.getINetworkComponent()).getGroupMode() == ServerGroupMode.STATIC_LOBBY)) {
                 event.getINetworkComponent().sendPacket(new PacketOutSignSelector(signDatabase.loadAll(), configSignLayout.loadLayout()));
             }
         }

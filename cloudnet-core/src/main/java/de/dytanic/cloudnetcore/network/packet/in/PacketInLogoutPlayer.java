@@ -20,8 +20,8 @@ import java.util.UUID;
 public class PacketInLogoutPlayer extends PacketInHandler {
 
     @Override
-    public void handleInput(Document data, PacketSender packetSender) {
-        CloudPlayer cloudPlayer = data.getObject("player", new TypeToken<CloudPlayer>() {}.getType());
+    public void handleInput(final Document data, final PacketSender packetSender) {
+        final CloudPlayer cloudPlayer = data.getObject("player", new TypeToken<CloudPlayer>() {}.getType());
         if (cloudPlayer != null) {
             CloudNet.getInstance().getNetworkManager().handlePlayerLogout(cloudPlayer);
         } else if (packetSender instanceof ProxyServer) {

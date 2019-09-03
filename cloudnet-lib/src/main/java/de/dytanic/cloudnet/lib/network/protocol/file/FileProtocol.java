@@ -31,23 +31,23 @@ public class FileProtocol implements IProtocol {
     }
 
     @Override
-    public ProtocolStream createElement(Object element) {
+    public ProtocolStream createElement(final Object element) {
         if (element.getClass().equals(File.class)) {
             try {
-                byte[] input = Files.readAllBytes(Paths.get(((File) element).getPath()));
-                String dest = ((File) element).getPath();
+                final byte[] input = Files.readAllBytes(Paths.get(((File) element).getPath()));
+                final String dest = ((File) element).getPath();
                 return new FileDeploy(dest, input);
-            } catch (IOException e) {
+            } catch (final IOException e) {
                 e.printStackTrace();
             }
         }
 
         if (element.getClass().equals(Path.class)) {
             try {
-                byte[] input = Files.readAllBytes((Path) element);
-                String dest = ((Path) element).toUri().toString();
+                final byte[] input = Files.readAllBytes((Path) element);
+                final String dest = ((Path) element).toUri().toString();
                 return new FileDeploy(dest, input);
-            } catch (IOException e) {
+            } catch (final IOException e) {
                 e.printStackTrace();
             }
         }

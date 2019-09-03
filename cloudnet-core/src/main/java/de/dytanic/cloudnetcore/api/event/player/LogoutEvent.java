@@ -12,9 +12,9 @@ import de.dytanic.cloudnet.lib.player.CloudPlayer;
  */
 public class LogoutEvent extends Event {
 
-    private CloudPlayer playerWhereAmI;
+    private final CloudPlayer playerWhereAmI;
 
-    public LogoutEvent(CloudPlayer playerWhereAmI) {
+    public LogoutEvent(final CloudPlayer playerWhereAmI) {
         this.playerWhereAmI = playerWhereAmI;
     }
 

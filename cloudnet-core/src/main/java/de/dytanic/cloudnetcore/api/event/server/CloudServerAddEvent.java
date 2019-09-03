@@ -12,9 +12,9 @@ import de.dytanic.cloudnetcore.network.components.CloudServer;
  */
 public class CloudServerAddEvent extends Event {
 
-    private CloudServer cloudServer;
+    private final CloudServer cloudServer;
 
-    public CloudServerAddEvent(CloudServer cloudServer) {
+    public CloudServerAddEvent(final CloudServer cloudServer) {
         this.cloudServer = cloudServer;
     }
 

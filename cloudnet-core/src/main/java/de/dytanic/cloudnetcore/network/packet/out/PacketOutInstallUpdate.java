@@ -10,7 +10,7 @@ import de.dytanic.cloudnet.lib.utility.document.Document;
 
 public class PacketOutInstallUpdate extends Packet {
 
-    public PacketOutInstallUpdate(String url) {
+    public PacketOutInstallUpdate(final String url) {
         super(PacketRC.CN_CORE + 8, new Document("url", url));
     }
 }

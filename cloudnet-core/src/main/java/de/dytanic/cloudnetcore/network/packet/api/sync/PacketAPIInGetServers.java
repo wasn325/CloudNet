@@ -22,25 +22,26 @@ import java.util.Collection;
 public class PacketAPIInGetServers extends PacketAPIIO {
 
     @Override
-    public void handleInput(Document data, PacketSender packetSender) {
+    public void handleInput(final Document data, final PacketSender packetSender) {
         if (packetUniqueId == null) {
             return;
         }
         if (data.contains("group")) {
-            Collection<ServerInfo> proxyInfos = CollectionWrapper.transform(CloudNet.getInstance().getServers(data.getString("group")),
-                                                                            new Catcher<ServerInfo, MinecraftServer>() {
+            final Collection<ServerInfo> proxyInfos = CollectionWrapper.transform(CloudNet.getInstance()
+                                                                                          .getServers(data.getString("group")),
+                                                                                  new Catcher<ServerInfo, MinecraftServer>() {
                                                                                 @Override
-                                                                                public ServerInfo doCatch(MinecraftServer key) {
+                                                                                public ServerInfo doCatch(final MinecraftServer key) {
                                                                                     return key.getServerInfo();
                                                                                 }
                                                                             });
 
             packetSender.sendPacket(getResult(new Document("serverInfos", proxyInfos)));
         } else {
-            Collection<ServerInfo> proxyInfos = CollectionWrapper.transform(CloudNet.getInstance().getServers().values(),
-                                                                            new Catcher<ServerInfo, MinecraftServer>() {
+            final Collection<ServerInfo> proxyInfos = CollectionWrapper.transform(CloudNet.getInstance().getServers().values(),
+                                                                                  new Catcher<ServerInfo, MinecraftServer>() {
                                                                                 @Override
-                                                                                public ServerInfo doCatch(MinecraftServer key) {
+                                                                                public ServerInfo doCatch(final MinecraftServer key) {
                                                                                     return key.getServerInfo();
                                                                                 }
                                                                             });
@@ -50,7 +51,7 @@ public class PacketAPIInGetServers extends PacketAPIIO {
     }
 
     @Override
-    protected Packet getResult(Document value) {
+    protected Packet getResult(final Document value) {
         return new Packet(packetUniqueId, PacketRC.SERVER_HANDLE, value);
     }
 }

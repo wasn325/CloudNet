@@ -18,7 +18,7 @@ public class HeaderFunction {
     /**
      * Whether this class has been run
      */
-    private boolean executed = false;
+    private boolean executed;
 
     /**
      * Constructs a new instance of the header function and automatically
@@ -26,15 +26,15 @@ public class HeaderFunction {
      * {@link NetworkUtils#header()}.
      */
     public HeaderFunction() {
-        File file = new File("HEADER.txt");
+        final File file = new File("HEADER.txt");
         if (file.exists()) {
             executed = true;
-            try (InputStreamReader inputStreamReader = new InputStreamReader(new FileInputStream(file),
-                                                                             StandardCharsets.UTF_8); BufferedReader bufferedReader = new BufferedReader(
+            try (final InputStreamReader inputStreamReader = new InputStreamReader(new FileInputStream(file),
+                                                                                   StandardCharsets.UTF_8); final BufferedReader bufferedReader = new BufferedReader(
                 inputStreamReader)) {
                 bufferedReader.lines().forEach(System.out::println);
                 NetworkUtils.headerOut();
-            } catch (IOException e) {
+            } catch (final IOException e) {
                 e.printStackTrace();
             }
         } else {

@@ -14,30 +14,31 @@ import java.util.List;
  */
 public class ServerInfo {
     public static final Type TYPE = new TypeToken<ServerInfo>() {}.getType();
-    private ServiceId serviceId;
-    private String host;
-    private int port;
-    private boolean online;
-    private List<String> players;
-    private int memory;
+    private final ServiceId serviceId;
+    private final String host;
+    private final int port;
+    private final boolean online;
+    private final List<String> players;
+    private final int memory;
     private String motd;
-    private int onlineCount;
-    private int maxPlayers;
+    private final int onlineCount;
+    private final int maxPlayers;
     private ServerState serverState;
-    private ServerConfig serverConfig;
-    private Template template;
-    public ServerInfo(ServiceId serviceId,
-                      String host,
-                      int port,
-                      boolean online,
-                      List<String> players,
-                      int memory,
-                      String motd,
-                      int onlineCount,
-                      int maxPlayers,
-                      ServerState serverState,
-                      ServerConfig serverConfig,
-                      Template template) {
+    private final ServerConfig serverConfig;
+    private final Template template;
+
+    public ServerInfo(final ServiceId serviceId,
+                      final String host,
+                      final int port,
+                      final boolean online,
+                      final List<String> players,
+                      final int memory,
+                      final String motd,
+                      final int onlineCount,
+                      final int maxPlayers,
+                      final ServerState serverState,
+                      final ServerConfig serverConfig,
+                      final Template template) {
         this.serviceId = serviceId;
         this.host = host;
         this.port = port;

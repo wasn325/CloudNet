@@ -19,7 +19,7 @@ public class DefaultDNSRecord extends DNSRecord {
      * @param content the content of this DNS record
      * @param data    additional data of this DNS record
      */
-    public DefaultDNSRecord(DNSType type, String name, String content, JsonObject data) {
+    public DefaultDNSRecord(final DNSType type, final String name, final String content, final JsonObject data) {
         super(type.name(), name, content, 1, false, data);
     }
 }

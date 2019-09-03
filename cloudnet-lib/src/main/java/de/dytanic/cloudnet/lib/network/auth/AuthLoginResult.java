@@ -5,9 +5,9 @@ package de.dytanic.cloudnet.lib.network.auth;
  */
 public class AuthLoginResult {
 
-    private boolean value;
+    private final boolean value;
 
-    public AuthLoginResult(boolean value) {
+    public AuthLoginResult(final boolean value) {
         this.value = value;
     }
 

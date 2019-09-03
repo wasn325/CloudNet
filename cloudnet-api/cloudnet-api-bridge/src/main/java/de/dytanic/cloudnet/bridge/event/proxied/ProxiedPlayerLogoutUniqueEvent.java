@@ -11,9 +11,9 @@ import java.util.UUID;
  */
 public class ProxiedPlayerLogoutUniqueEvent extends ProxiedCloudEvent {
 
-    private UUID uniqueId;
+    private final UUID uniqueId;
 
-    public ProxiedPlayerLogoutUniqueEvent(UUID uniqueId) {
+    public ProxiedPlayerLogoutUniqueEvent(final UUID uniqueId) {
         this.uniqueId = uniqueId;
     }
 

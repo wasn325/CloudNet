@@ -16,9 +16,9 @@ import de.dytanic.cloudnetcore.network.components.ProxyServer;
 public class PacketInStopProxy extends PacketInHandler {
 
     @Override
-    public void handleInput(Document data, PacketSender packetSender) {
-        String proxyId = data.getString("serverId");
-        ProxyServer proxyServer = CloudNet.getInstance().getProxy(proxyId);
+    public void handleInput(final Document data, final PacketSender packetSender) {
+        final String proxyId = data.getString("serverId");
+        final ProxyServer proxyServer = CloudNet.getInstance().getProxy(proxyId);
         if (proxyServer != null) {
             proxyServer.getWrapper().stopProxy(proxyServer);
         }

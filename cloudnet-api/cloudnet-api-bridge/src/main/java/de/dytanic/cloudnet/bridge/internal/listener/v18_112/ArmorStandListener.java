@@ -21,11 +21,11 @@ import java.lang.reflect.InvocationTargetException;
 public final class ArmorStandListener implements Listener {
 
     @EventHandler
-    public void handle(PlayerArmorStandManipulateEvent e) {
-        MobSelector.MobImpl mob = CollectionWrapper.filter(MobSelector.getInstance().getMobs().values(),
-                                                           new Acceptable<MobSelector.MobImpl>() {
+    public void handle(final PlayerArmorStandManipulateEvent e) {
+        final MobSelector.MobImpl mob = CollectionWrapper.filter(MobSelector.getInstance().getMobs().values(),
+                                                                 new Acceptable<MobSelector.MobImpl>() {
                                                                @Override
-                                                               public boolean isAccepted(MobSelector.MobImpl value) {
+                                                               public boolean isAccepted(final MobSelector.MobImpl value) {
                                                                    try {
                                                                        return e.getRightClicked()
                                                                                .getUniqueId()
@@ -33,7 +33,7 @@ public final class ArmorStandListener implements Listener {
                                                                                             .getClass()
                                                                                             .getMethod("getUniqueId")
                                                                                             .invoke(value.getDisplayMessage()));
-                                                                   } catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e1) {
+                                                                   } catch (final IllegalAccessException | InvocationTargetException | NoSuchMethodException e1) {
                                                                        return false;
                                                                    }
                                                                }
@@ -44,11 +44,11 @@ public final class ArmorStandListener implements Listener {
     }
 
     @EventHandler
-    public void handle(ItemDespawnEvent e) {
-        MobSelector.MobImpl mob = CollectionWrapper.filter(MobSelector.getInstance().getMobs().values(),
-                                                           new Acceptable<MobSelector.MobImpl>() {
+    public void handle(final ItemDespawnEvent e) {
+        final MobSelector.MobImpl mob = CollectionWrapper.filter(MobSelector.getInstance().getMobs().values(),
+                                                                 new Acceptable<MobSelector.MobImpl>() {
                                                                @Override
-                                                               public boolean isAccepted(MobSelector.MobImpl value) {
+                                                               public boolean isAccepted(final MobSelector.MobImpl value) {
                                                                    return ((Entity) value.getDisplayMessage()).getPassenger() != null && e.getEntity()
                                                                                                                                           .getEntityId() == ((Entity) value
                                                                        .getDisplayMessage()).getPassenger().getEntityId();

@@ -27,7 +27,7 @@ public class DatabaseImpl implements Database {
     private final java.util.Map<String, Document> documents;
     private final File backendDir;
 
-    public DatabaseImpl(String name, Map<String, Document> documents, File backendDir) {
+    public DatabaseImpl(final String name, final Map<String, Document> documents, final File backendDir) {
         this.name = name;
         this.documents = documents;
         this.backendDir = backendDir;
@@ -47,13 +47,13 @@ public class DatabaseImpl implements Database {
 
     @Override
     public Database loadDocuments() {
-        File[] files = backendDir.listFiles();
+        final File[] files = backendDir.listFiles();
         if (files == null) {
             return this;
         }
-        for (File file : files) {
+        for (final File file : files) {
             if (!this.documents.containsKey(file.getName())) {
-                Document document = Document.loadDocument(file);
+                final Document document = Document.loadDocument(file);
                 if (document.contains(UNIQUE_NAME_KEY)) {
                     this.documents.put(file.getName(), document);
                 }
@@ -68,7 +68,7 @@ public class DatabaseImpl implements Database {
     }
 
     @Override
-    public Document getDocument(String name) {
+    public Document getDocument(final String name) {
         if (name == null) {
             return null;
         }
@@ -76,7 +76,7 @@ public class DatabaseImpl implements Database {
         Document document = documents.get(name);
 
         if (document == null) {
-            File doc = new File("database/" + this.name + NetworkUtils.SLASH_STRING + name);
+            final File doc = new File("database/" + this.name + NetworkUtils.SLASH_STRING + name);
             if (doc.exists()) {
                 document = Document.loadDocument(doc);
                 this.documents.put(doc.getName(), document);
@@ -87,15 +87,15 @@ public class DatabaseImpl implements Database {
     }
 
     @Override
-    public Database insert(Document... documents) {
-        for (Document document : documents) {
+    public Database insert(final Document... documents) {
+        for (final Document document : documents) {
             if (document.contains(UNIQUE_NAME_KEY)) {
                 this.documents.put(document.getString(UNIQUE_NAME_KEY), document);
-                Path path = Paths.get("database/" + this.name + '/' + document.getString(UNIQUE_NAME_KEY));
+                final Path path = Paths.get("database/" + this.name + '/' + document.getString(UNIQUE_NAME_KEY));
                 if (!Files.exists(path)) {
                     try {
                         Files.createFile(path);
-                    } catch (IOException e) {
+                    } catch (final IOException e) {
                         e.printStackTrace();
                     }
                 }
@@ -106,25 +106,25 @@ public class DatabaseImpl implements Database {
     }
 
     @Override
-    public Database delete(String name) {
+    public Database delete(final String name) {
         if (name == null) {
             return this;
         }
 
-        Document document = getDocument(name);
+        final Document document = getDocument(name);
         if (document != null) {
             documents.remove(name);
         }
         try {
             Files.delete(Paths.get("database", this.name, name));
-        } catch (IOException e) {
+        } catch (final IOException e) {
             e.printStackTrace();
         }
         return this;
     }
 
     @Override
-    public Database delete(Document document) {
+    public Database delete(final Document document) {
         if (document.contains(UNIQUE_NAME_KEY)) {
             delete(document.getString(UNIQUE_NAME_KEY));
         }
@@ -132,28 +132,28 @@ public class DatabaseImpl implements Database {
     }
 
     @Override
-    public Document load(String name) {
+    public Document load(final String name) {
         return Document.loadDocument(new File("database/" + this.name + NetworkUtils.SLASH_STRING + name));
     }
 
     @Override
-    public boolean contains(Document document) {
+    public boolean contains(final Document document) {
         return contains(document.getString(UNIQUE_NAME_KEY));
     }
 
     @Override
-    public boolean contains(String name) {
+    public boolean contains(final String name) {
         return getDocument(name) != null;
     }
 
     @Override
     public int size() {
-        String[] files = backendDir.list();
+        final String[] files = backendDir.list();
         return files == null ? 0 : files.length;
     }
 
     @Override
-    public boolean containsDoc(String name) {
+    public boolean containsDoc(final String name) {
         if (name == null) {
             return false;
         }
@@ -161,7 +161,7 @@ public class DatabaseImpl implements Database {
     }
 
     @Override
-    public Database insertAsync(Document... documents) {
+    public Database insertAsync(final Document... documents) {
         TaskScheduler.runtimeScheduler().schedule(() -> {
             insert(documents);
         });
@@ -169,7 +169,7 @@ public class DatabaseImpl implements Database {
     }
 
     @Override
-    public Database deleteAsync(String name) {
+    public Database deleteAsync(final String name) {
         TaskScheduler.runtimeScheduler().schedule(() -> {
             delete(name);
         });
@@ -177,7 +177,7 @@ public class DatabaseImpl implements Database {
     }
 
     @Override
-    public FutureTask<Document> getDocumentAsync(String name) {
+    public FutureTask<Document> getDocumentAsync(final String name) {
         return new FutureTask<>(() -> getDocument(name));
     }
 
@@ -185,7 +185,7 @@ public class DatabaseImpl implements Database {
      * Saves the currently loaded documents to their files.
      */
     public void save() {
-        for (Document document : documents.values()) {
+        for (final Document document : documents.values()) {
             if (document.contains(UNIQUE_NAME_KEY)) {
                 document.saveAsConfig(Paths.get("database", this.name, document.getString(UNIQUE_NAME_KEY)));
             }

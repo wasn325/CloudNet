@@ -21,79 +21,79 @@ public class MethodWebHandlerAdapter extends MethodWebHandler {
      *
      * @param path the path where this handler is available.
      */
-    protected MethodWebHandlerAdapter(String path) {
+    protected MethodWebHandlerAdapter(final String path) {
         super(path);
     }
 
     @Override
-    public FullHttpResponse connect(ChannelHandlerContext channelHandlerContext,
-                                    QueryDecoder queryDecoder,
-                                    PathProvider pathProvider,
-                                    HttpRequest httpRequest) throws Exception {
+    public FullHttpResponse connect(final ChannelHandlerContext channelHandlerContext,
+                                    final QueryDecoder queryDecoder,
+                                    final PathProvider pathProvider,
+                                    final HttpRequest httpRequest) throws Exception {
         return null;
     }
 
     @Override
-    public FullHttpResponse delete(ChannelHandlerContext channelHandlerContext,
-                                   QueryDecoder queryDecoder,
-                                   PathProvider pathProvider,
-                                   HttpRequest httpRequest) throws Exception {
+    public FullHttpResponse delete(final ChannelHandlerContext channelHandlerContext,
+                                   final QueryDecoder queryDecoder,
+                                   final PathProvider pathProvider,
+                                   final HttpRequest httpRequest) throws Exception {
         return null;
     }
 
     @Override
-    public FullHttpResponse get(ChannelHandlerContext channelHandlerContext,
-                                QueryDecoder queryDecoder,
-                                PathProvider pathProvider,
-                                HttpRequest httpRequest) throws Exception {
+    public FullHttpResponse get(final ChannelHandlerContext channelHandlerContext,
+                                final QueryDecoder queryDecoder,
+                                final PathProvider pathProvider,
+                                final HttpRequest httpRequest) throws Exception {
         return null;
     }
 
     @Override
-    public FullHttpResponse put(ChannelHandlerContext channelHandlerContext,
-                                QueryDecoder queryDecoder,
-                                PathProvider pathProvider,
-                                HttpRequest httpRequest) throws Exception {
+    public FullHttpResponse put(final ChannelHandlerContext channelHandlerContext,
+                                final QueryDecoder queryDecoder,
+                                final PathProvider pathProvider,
+                                final HttpRequest httpRequest) throws Exception {
         return null;
     }
 
     @Override
-    public FullHttpResponse head(ChannelHandlerContext channelHandlerContext,
-                                 QueryDecoder queryDecoder,
-                                 PathProvider pathProvider,
-                                 HttpRequest httpRequest) throws Exception {
+    public FullHttpResponse head(final ChannelHandlerContext channelHandlerContext,
+                                 final QueryDecoder queryDecoder,
+                                 final PathProvider pathProvider,
+                                 final HttpRequest httpRequest) throws Exception {
         return null;
     }
 
     @Override
-    public FullHttpResponse options(ChannelHandlerContext channelHandlerContext,
-                                    QueryDecoder queryDecoder,
-                                    PathProvider pathProvider,
-                                    HttpRequest httpRequest) throws Exception {
+    public FullHttpResponse options(final ChannelHandlerContext channelHandlerContext,
+                                    final QueryDecoder queryDecoder,
+                                    final PathProvider pathProvider,
+                                    final HttpRequest httpRequest) throws Exception {
         return null;
     }
 
     @Override
-    public FullHttpResponse patch(ChannelHandlerContext channelHandlerContext,
-                                  QueryDecoder queryDecoder,
-                                  PathProvider pathProvider,
-                                  HttpRequest httpRequest) throws Exception {
+    public FullHttpResponse patch(final ChannelHandlerContext channelHandlerContext,
+                                  final QueryDecoder queryDecoder,
+                                  final PathProvider pathProvider,
+                                  final HttpRequest httpRequest) throws Exception {
         return null;
     }
 
     @Override
-    public FullHttpResponse trace(ChannelHandlerContext channelHandlerContext,
-                                  QueryDecoder queryDecoder,
-                                  PathProvider pathProvider,
-                                  HttpRequest httpRequest) throws Exception {
+    public FullHttpResponse trace(final ChannelHandlerContext channelHandlerContext,
+                                  final QueryDecoder queryDecoder,
+                                  final PathProvider pathProvider,
+                                  final HttpRequest httpRequest) throws Exception {
         return null;
     }
 
     @Override
-    public FullHttpResponse post(ChannelHandlerContext channelHandlerContext,
-                                 QueryDecoder queryDecoder,
-                                 PathProvider pathProvider,
-                                 HttpRequest httpRequest) throws Exception {
+    public FullHttpResponse post(final ChannelHandlerContext channelHandlerContext,
+                                 final QueryDecoder queryDecoder,
+                                 final PathProvider pathProvider,
+                                 final HttpRequest httpRequest) throws Exception {
         return null;
     }
 }

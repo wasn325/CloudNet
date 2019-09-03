@@ -7,11 +7,11 @@ import de.dytanic.cloudnet.lib.player.CloudPlayer;
  */
 public class ProxiedPlayerServerSwitchEvent extends ProxiedCloudEvent {
 
-    private CloudPlayer cloudPlayer;
+    private final CloudPlayer cloudPlayer;
 
-    private String server;
+    private final String server;
 
-    public ProxiedPlayerServerSwitchEvent(CloudPlayer cloudPlayer, String server) {
+    public ProxiedPlayerServerSwitchEvent(final CloudPlayer cloudPlayer, final String server) {
         this.cloudPlayer = cloudPlayer;
         this.server = server;
     }

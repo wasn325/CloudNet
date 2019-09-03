@@ -14,7 +14,7 @@ import de.dytanic.cloudnet.lib.utility.document.Document;
  */
 public class PacketOutUpdateProxyInfo extends Packet {
 
-    public PacketOutUpdateProxyInfo(ProxyInfo proxyInfo) {
+    public PacketOutUpdateProxyInfo(final ProxyInfo proxyInfo) {
         super(PacketRC.SERVER_HANDLE + 6, new Document("proxyInfo", proxyInfo));
     }
 }

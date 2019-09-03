@@ -25,18 +25,18 @@ public class SetupSpigotVersion implements Consumer<ConsoleReader> {
 
     private final Consumer<String> download = new Consumer<String>() {
         @Override
-        public void accept(String url) {
+        public void accept(final String url) {
             try {
                 System.out.println("Downloading spigot.jar...");
-                URLConnection connection = new URL(url).openConnection();
+                final URLConnection connection = new URL(url).openConnection();
                 connection.setRequestProperty("User-Agent",
                                               "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.95 Safari/537.11");
                 connection.connect();
-                try (InputStream inputStream = connection.getInputStream()) {
+                try (final InputStream inputStream = connection.getInputStream()) {
                     Files.copy(inputStream, target != null ? target : Paths.get("local/spigot.jar"), StandardCopyOption.REPLACE_EXISTING);
                 }
                 System.out.println("Download was successfully completed!");
-            } catch (Exception e) {
+            } catch (final Exception e) {
                 e.printStackTrace();
             }
         }
@@ -48,7 +48,7 @@ public class SetupSpigotVersion implements Consumer<ConsoleReader> {
      * @param reader The console reader
      */
     @Override
-    public void accept(ConsoleReader reader) {
+    public void accept(final ConsoleReader reader) {
         System.out.println("No spigot.jar has been found!");
 
         System.out.println("Choose a minecraft server version [\"paper\", \"spigot\", \"buildtools\"]");
@@ -79,7 +79,7 @@ public class SetupSpigotVersion implements Consumer<ConsoleReader> {
                         System.out.println("This version is not supported!");
                 }
 
-            } catch (Exception ex) {
+            } catch (final Exception ex) {
                 ex.printStackTrace();
             }
         }
@@ -139,7 +139,7 @@ public class SetupSpigotVersion implements Consumer<ConsoleReader> {
                                 System.out.println("This version is not supported!");
                                 break;
                         }
-                    } catch (IOException e) {
+                    } catch (final IOException e) {
                         e.printStackTrace();
                     }
                 }
@@ -152,7 +152,7 @@ public class SetupSpigotVersion implements Consumer<ConsoleReader> {
         }
     }
 
-    public void setTarget(Path target) {
+    public void setTarget(final Path target) {
         this.target = target;
     }
 }

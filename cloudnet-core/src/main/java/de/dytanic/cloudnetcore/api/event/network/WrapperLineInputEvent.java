@@ -14,11 +14,11 @@ import de.dytanic.cloudnetcore.network.components.Wrapper;
  */
 public class WrapperLineInputEvent extends AsyncEvent<WrapperLineInputEvent> {
 
-    private WrapperScreen wrapperScreen;
+    private final WrapperScreen wrapperScreen;
 
-    private Wrapper wrapper;
+    private final Wrapper wrapper;
 
-    public WrapperLineInputEvent(Wrapper wrapper, WrapperScreen wrapperScreen) {
+    public WrapperLineInputEvent(final Wrapper wrapper, final WrapperScreen wrapperScreen) {
         super(new AsyncPosterAdapter<>());
         this.wrapper = wrapper;
         this.wrapperScreen = wrapperScreen;

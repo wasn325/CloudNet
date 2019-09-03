@@ -26,17 +26,17 @@ public class ServerMob implements Nameable {
     protected String displayMessage;
     protected Document metaDataDoc;
 
-    public ServerMob(UUID uniqueId,
-                     String display,
-                     String name,
-                     String type,
-                     String targetGroup,
-                     Integer itemId,
-                     String itemName,
-                     Boolean autoJoin,
-                     MobPosition position,
-                     String displayMessage,
-                     Document metaDataDoc) {
+    public ServerMob(final UUID uniqueId,
+                     final String display,
+                     final String name,
+                     final String type,
+                     final String targetGroup,
+                     final Integer itemId,
+                     final String itemName,
+                     final Boolean autoJoin,
+                     final MobPosition position,
+                     final String displayMessage,
+                     final Document metaDataDoc) {
         this.uniqueId = uniqueId;
         this.display = display;
         this.name = name;
@@ -54,7 +54,7 @@ public class ServerMob implements Nameable {
         return itemName;
     }
 
-    public void setItemName(String itemName) {
+    public void setItemName(final String itemName) {
         this.itemName = itemName;
     }
 
@@ -62,7 +62,7 @@ public class ServerMob implements Nameable {
         return display;
     }
 
-    public void setDisplay(String display) {
+    public void setDisplay(final String display) {
         this.display = display;
     }
 
@@ -71,7 +71,7 @@ public class ServerMob implements Nameable {
         return name;
     }
 
-    public void setName(String name) {
+    public void setName(final String name) {
         this.name = name;
     }
 
@@ -79,7 +79,7 @@ public class ServerMob implements Nameable {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(final String type) {
         this.type = type;
     }
 
@@ -87,7 +87,7 @@ public class ServerMob implements Nameable {
         return uniqueId;
     }
 
-    public void setUniqueId(UUID uniqueId) {
+    public void setUniqueId(final UUID uniqueId) {
         this.uniqueId = uniqueId;
     }
 
@@ -95,7 +95,7 @@ public class ServerMob implements Nameable {
         return targetGroup;
     }
 
-    public void setTargetGroup(String targetGroup) {
+    public void setTargetGroup(final String targetGroup) {
         this.targetGroup = targetGroup;
     }
 
@@ -103,7 +103,7 @@ public class ServerMob implements Nameable {
         return autoJoin;
     }
 
-    public void setAutoJoin(Boolean autoJoin) {
+    public void setAutoJoin(final Boolean autoJoin) {
         this.autoJoin = autoJoin;
     }
 
@@ -111,7 +111,7 @@ public class ServerMob implements Nameable {
         return metaDataDoc;
     }
 
-    public void setMetaDataDoc(Document metaDataDoc) {
+    public void setMetaDataDoc(final Document metaDataDoc) {
         this.metaDataDoc = metaDataDoc;
     }
 
@@ -119,7 +119,7 @@ public class ServerMob implements Nameable {
         return itemId;
     }
 
-    public void setItemId(Integer itemId) {
+    public void setItemId(final Integer itemId) {
         this.itemId = itemId;
     }
 
@@ -127,7 +127,7 @@ public class ServerMob implements Nameable {
         return position;
     }
 
-    public void setPosition(MobPosition position) {
+    public void setPosition(final MobPosition position) {
         this.position = position;
     }
 
@@ -135,7 +135,7 @@ public class ServerMob implements Nameable {
         return displayMessage;
     }
 
-    public void setDisplayMessage(String displayMessage) {
+    public void setDisplayMessage(final String displayMessage) {
         this.displayMessage = displayMessage;
     }
 }

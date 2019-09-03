@@ -6,9 +6,9 @@ import de.dytanic.cloudnetwrapper.CloudNetWrapper;
 
 public class ShutdownHook implements Runnable {
 
-    private CloudNetWrapper cloudNetWrapper;
+    private final CloudNetWrapper cloudNetWrapper;
 
-    public ShutdownHook(CloudNetWrapper wrapper) {
+    public ShutdownHook(final CloudNetWrapper wrapper) {
         this.cloudNetWrapper = wrapper;
     }
 

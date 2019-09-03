@@ -17,14 +17,14 @@ import de.dytanic.cloudnetcore.network.packet.api.sync.PacketAPIIO;
 public class PacketDBInExistsDocument extends PacketAPIIO {
 
     @Override
-    public void handleInput(Document data, PacketSender packetSender) {
-        String name = data.getString("name");
-        boolean document = CloudNet.getInstance().getDatabaseManager().getDatabase(data.getString("db")).containsDoc(name);
+    public void handleInput(final Document data, final PacketSender packetSender) {
+        final String name = data.getString("name");
+        final boolean document = CloudNet.getInstance().getDatabaseManager().getDatabase(data.getString("db")).containsDoc(name);
         packetSender.sendPacket(getResult(new Document("exists", document)));
     }
 
     @Override
-    protected Packet getResult(Document value) {
+    protected Packet getResult(final Document value) {
         return new Packet(packetUniqueId, PacketRC.DB, value);
     }
 }

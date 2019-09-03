@@ -9,7 +9,7 @@ public final class UpdateConfigurationDatabase extends DatabaseUsable {
 
     private static final String NAME = "update_configurations";
 
-    public UpdateConfigurationDatabase(Database database) {
+    public UpdateConfigurationDatabase(final Database database) {
         super(database);
 
         if (database.getDocument(NAME) == null) {
@@ -17,7 +17,7 @@ public final class UpdateConfigurationDatabase extends DatabaseUsable {
         }
     }
 
-    public void set(Document document) {
+    public void set(final Document document) {
         if (document.contains(Database.UNIQUE_NAME_KEY) && document.getString(Database.UNIQUE_NAME_KEY).equals(NAME)) {
             database.insert(document);
         }

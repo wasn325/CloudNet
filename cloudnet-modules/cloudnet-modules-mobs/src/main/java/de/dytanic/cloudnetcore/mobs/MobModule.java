@@ -48,10 +48,10 @@ public class MobModule extends CoreModule implements IEventListener<UpdateAllEve
         configMobs = new ConfigMobs();
         mobDatabase = new MobDatabase(getCloud().getDatabaseManager().getDatabase("cloud_internal_cfg"));
 
-        if (getCloud().getPacketManager().buildHandlers(PacketRC.SERVER_SELECTORS + 3).size() == 0) {
+        if (getCloud().getPacketManager().buildHandlers(PacketRC.SERVER_SELECTORS + 3).isEmpty()) {
             getCloud().getPacketManager().registerHandler(PacketRC.SERVER_SELECTORS + 3, PacketInAddMob.class);
         }
-        if (getCloud().getPacketManager().buildHandlers(PacketRC.SERVER_SELECTORS + 4).size() == 0) {
+        if (getCloud().getPacketManager().buildHandlers(PacketRC.SERVER_SELECTORS + 4).isEmpty()) {
             getCloud().getPacketManager().registerHandler(PacketRC.SERVER_SELECTORS + 4, PacketInRemoveMob.class);
         }
 
@@ -60,7 +60,7 @@ public class MobModule extends CoreModule implements IEventListener<UpdateAllEve
     }
 
     @Override
-    public void onCall(UpdateAllEvent event) {
+    public void onCall(final UpdateAllEvent event) {
         if (event.isOnlineCloudNetworkUpdate()) {
             getCloud().getNetworkManager().sendToLobbys(new PacketOutMobSelector(configMobs.load(), mobDatabase.loadAll()));
         }
@@ -69,12 +69,12 @@ public class MobModule extends CoreModule implements IEventListener<UpdateAllEve
     private class ListenerImpl implements IEventListener<ChannelInitEvent> {
 
         @Override
-        public void onCall(ChannelInitEvent event) {
+        public void onCall(final ChannelInitEvent event) {
             if (event.getINetworkComponent() instanceof MinecraftServer) {
-                MinecraftServer minecraftServer = (MinecraftServer) event.getINetworkComponent();
+                final MinecraftServer minecraftServer = (MinecraftServer) event.getINetworkComponent();
 
-                if (minecraftServer.getGroupMode().equals(ServerGroupMode.LOBBY) || minecraftServer.getGroupMode()
-                                                                                                   .equals(ServerGroupMode.STATIC_LOBBY)) {
+                if (minecraftServer.getGroupMode() == ServerGroupMode.LOBBY ||
+                    minecraftServer.getGroupMode() == ServerGroupMode.STATIC_LOBBY) {
                     minecraftServer.sendPacket(new PacketOutMobSelector(configMobs.load(), mobDatabase.loadAll()));
                 }
             }

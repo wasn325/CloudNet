@@ -29,25 +29,25 @@ final class WebServerHandler extends ChannelInboundHandlerAdapter {
     /**
      * The web server that is handled by this handler instance.
      */
-    private WebServer webServer;
+    private final WebServer webServer;
 
     /**
      * Constructs a new web server handler for a given web server.
      *
      * @param webServer the web server to handle the inbound channel for.
      */
-    public WebServerHandler(WebServer webServer) {
+    public WebServerHandler(final WebServer webServer) {
         this.webServer = webServer;
     }
 
     @Override
-    public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
+    public void channelRead(final ChannelHandlerContext ctx, final Object msg) throws Exception {
         if (!(msg instanceof HttpRequest)) {
             return;
         }
-        HttpRequest httpRequest = ((HttpRequest) msg);
+        final HttpRequest httpRequest = ((HttpRequest) msg);
 
-        URI uri = new URI(httpRequest.uri());
+        final URI uri = new URI(httpRequest.uri());
         String path = uri.getRawPath();
         if (path == null) {
             path = NetworkUtils.SLASH_STRING;
@@ -57,21 +57,23 @@ final class WebServerHandler extends ChannelInboundHandlerAdapter {
             path = path.substring(0, path.length() - 1);
         }
 
-        List<WebHandler> webHandlers = webServer.getWebServerProvider().getHandlers(path);
-        if (webHandlers.size() != 0) {
+        final List<WebHandler> webHandlers = webServer.getWebServerProvider().getHandlers(path);
+        if (!webHandlers.isEmpty()) {
             FullHttpResponse fullHttpResponse = null;
-            for (WebHandler webHandler : webHandlers) {
+            for (final WebHandler webHandler : webHandlers) {
                 if (path.isEmpty() || path.equals(NetworkUtils.SLASH_STRING)) {
                     fullHttpResponse = webHandler.handleRequest(ctx,
                                                                 new QueryDecoder(uri.getQuery()),
                                                                 new PathProvider(path, new WrappedMap()),
                                                                 httpRequest);
                 } else {
-                    String[] array = path.replaceFirst(NetworkUtils.SLASH_STRING, NetworkUtils.EMPTY_STRING)
-                                         .split(NetworkUtils.SLASH_STRING);
-                    String[] pathArray = webHandler.getPath().replaceFirst(NetworkUtils.SLASH_STRING, NetworkUtils.EMPTY_STRING).split(
+                    final String[] array = path.replaceFirst(NetworkUtils.SLASH_STRING, NetworkUtils.EMPTY_STRING)
+                                               .split(NetworkUtils.SLASH_STRING);
+                    final String[] pathArray = webHandler.getPath()
+                                                         .replaceFirst(NetworkUtils.SLASH_STRING, NetworkUtils.EMPTY_STRING)
+                                                         .split(
                         NetworkUtils.SLASH_STRING);
-                    WrappedMap wrappedMap = new WrappedMap();
+                    final WrappedMap wrappedMap = new WrappedMap();
                     for (short i = 0; i < array.length; i++) {
                         if (pathArray[i].startsWith("{") && pathArray[i].endsWith("}")) {
                             wrappedMap.append(pathArray[i].replace("{", NetworkUtils.EMPTY_STRING).replace("}", NetworkUtils.EMPTY_STRING),
@@ -92,14 +94,15 @@ final class WebServerHandler extends ChannelInboundHandlerAdapter {
             fullHttpResponse.headers().set("Access-Control-Allow-Origin", "*");
             ctx.writeAndFlush(fullHttpResponse).addListener(ChannelFutureListener.CLOSE);
         } else {
-            FullHttpResponse fullHttpResponse = new DefaultFullHttpResponse(httpRequest.protocolVersion(), HttpResponseStatus.NOT_FOUND);
+            final FullHttpResponse fullHttpResponse = new DefaultFullHttpResponse(httpRequest.protocolVersion(),
+                                                                                  HttpResponseStatus.NOT_FOUND);
             fullHttpResponse.headers().set("Access-Control-Allow-Origin", "*");
             ctx.writeAndFlush(fullHttpResponse).addListener(ChannelFutureListener.CLOSE);
         }
     }
 
     @Override
-    public void channelReadComplete(ChannelHandlerContext ctx) {
+    public void channelReadComplete(final ChannelHandlerContext ctx) {
         ctx.flush();
     }
 }

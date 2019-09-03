@@ -13,14 +13,14 @@ import de.dytanic.cloudnet.event.Event;
  */
 public abstract class AsyncEvent<E extends AsyncEvent<?>> extends Event {
 
-    private AsyncPoster<E> poster;
+    private final AsyncPoster<E> poster;
 
     /**
      * Constructs a new asynchronous event with an asynchronous poster.
      *
      * @param poster the poster to handle pre- and post-call methods
      */
-    public AsyncEvent(AsyncPoster<E> poster) {
+    public AsyncEvent(final AsyncPoster<E> poster) {
         this.poster = poster;
         this.asynchronous = true;
     }

@@ -12,11 +12,11 @@ import de.dytanic.cloudnetcore.network.components.Wrapper;
  */
 public class EnabledScreen {
 
-    private ServiceId serviceId;
+    private final ServiceId serviceId;
 
-    private Wrapper wrapper;
+    private final Wrapper wrapper;
 
-    public EnabledScreen(ServiceId serviceId, Wrapper wrapper) {
+    public EnabledScreen(final ServiceId serviceId, final Wrapper wrapper) {
         this.serviceId = serviceId;
         this.wrapper = wrapper;
     }

@@ -10,7 +10,7 @@ public class MultiValue<F, S> {
     private F first;
     private S second;
 
-    public MultiValue(F first, S second) {
+    public MultiValue(final F first, final S second) {
         this.first = first;
         this.second = second;
     }
@@ -43,7 +43,7 @@ public class MultiValue<F, S> {
         return second;
     }
 
-    public void setSecond(S second) {
+    public void setSecond(final S second) {
         this.second = second;
     }
 
@@ -51,7 +51,7 @@ public class MultiValue<F, S> {
         return first;
     }
 
-    public void setFirst(F first) {
+    public void setFirst(final F first) {
         this.first = first;
     }
 }

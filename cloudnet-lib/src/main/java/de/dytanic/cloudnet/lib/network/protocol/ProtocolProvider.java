@@ -18,7 +18,7 @@ import java.util.Map;
  */
 public final class ProtocolProvider {
 
-    private static Map<Integer, IProtocol> protocols;
+    private static final Map<Integer, IProtocol> protocols;
 
     static {
         protocols = NetworkUtils.newConcurrentHashMap();
@@ -29,15 +29,15 @@ public final class ProtocolProvider {
     private ProtocolProvider() {
     }
 
-    public static ProtocolBuffer protocolBuffer(ByteBuf byteBuf) {
+    public static ProtocolBuffer protocolBuffer(final ByteBuf byteBuf) {
         return new ProtocolBuffer(byteBuf);
     }
 
-    public static void registerProtocol(IProtocol iProtocol) {
+    public static void registerProtocol(final IProtocol iProtocol) {
         protocols.put(iProtocol.getId(), iProtocol);
     }
 
-    public static IProtocol getProtocol(int id) {
+    public static IProtocol getProtocol(final int id) {
         return protocols.get(id);
     }
 

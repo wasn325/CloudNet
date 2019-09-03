@@ -12,9 +12,9 @@ import de.dytanic.cloudnet.lib.player.CloudPlayer;
  */
 public class PlayerInitEvent extends Event {
 
-    private CloudPlayer cloudPlayer;
+    private final CloudPlayer cloudPlayer;
 
-    public PlayerInitEvent(CloudPlayer cloudPlayer) {
+    public PlayerInitEvent(final CloudPlayer cloudPlayer) {
         this.cloudPlayer = cloudPlayer;
     }
 

@@ -12,7 +12,7 @@ public interface Database {
 
     String UNIQUE_NAME_KEY = "_database_id_unique";
 
-    static DatabaseDocument createEmptyDocument(String name) {
+    static DatabaseDocument createEmptyDocument(final String name) {
         return new DatabaseDocument(name);
     }
 

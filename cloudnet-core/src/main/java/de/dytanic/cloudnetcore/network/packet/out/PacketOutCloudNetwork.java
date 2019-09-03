@@ -11,7 +11,7 @@ import de.dytanic.cloudnet.lib.utility.document.Document;
 
 public class PacketOutCloudNetwork extends Packet {
 
-    public PacketOutCloudNetwork(CloudNetwork cloudNetwork) {
+    public PacketOutCloudNetwork(final CloudNetwork cloudNetwork) {
         super(PacketRC.SERVER_HANDLE + 1, new Document("cloudnetwork", cloudNetwork));
     }
 }

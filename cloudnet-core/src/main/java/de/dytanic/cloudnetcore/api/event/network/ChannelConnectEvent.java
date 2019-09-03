@@ -15,9 +15,9 @@ public class ChannelConnectEvent extends Event implements Cancelable {
 
     private boolean cancelled;
 
-    private Channel channel;
+    private final Channel channel;
 
-    public ChannelConnectEvent(boolean cancelled, Channel channel) {
+    public ChannelConnectEvent(final boolean cancelled, final Channel channel) {
         this.cancelled = cancelled;
         this.channel = channel;
     }
@@ -28,7 +28,7 @@ public class ChannelConnectEvent extends Event implements Cancelable {
     }
 
     @Override
-    public void setCancelled(boolean cancel) {
+    public void setCancelled(final boolean cancel) {
         this.cancelled = cancel;
     }
 

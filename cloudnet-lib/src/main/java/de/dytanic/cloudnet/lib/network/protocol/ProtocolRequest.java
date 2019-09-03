@@ -9,11 +9,11 @@ package de.dytanic.cloudnet.lib.network.protocol;
  */
 public class ProtocolRequest {
 
-    private int id;
+    private final int id;
 
-    private Object element;
+    private final Object element;
 
-    public ProtocolRequest(int id, Object element) {
+    public ProtocolRequest(final int id, final Object element) {
         this.id = id;
         this.element = element;
     }

@@ -5,10 +5,10 @@ package de.dytanic.cloudnet.lib.server.priority;
  */
 public class PriorityConfig {
 
-    private int onlineServers;
-    private int onlineCount;
+    private final int onlineServers;
+    private final int onlineCount;
 
-    public PriorityConfig(int onlineServers, int onlineCount) {
+    public PriorityConfig(final int onlineServers, final int onlineCount) {
         this.onlineServers = onlineServers;
         this.onlineCount = onlineCount;
     }

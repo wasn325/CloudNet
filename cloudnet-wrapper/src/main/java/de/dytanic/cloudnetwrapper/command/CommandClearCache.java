@@ -19,13 +19,13 @@ public class CommandClearCache extends Command {
     }
 
     @Override
-    public void onExecuteCommand(CommandSender sender, String[] args) {
+    public void onExecuteCommand(final CommandSender sender, final String[] args) {
         try {
             FileUtility.deleteDirectory(new File("local/cache"));
             Files.createDirectories(Paths.get("local/cache/web_templates"));
             Files.createDirectories(Paths.get("local/cache/web_plugins"));
 
-        } catch (Exception ex) {
+        } catch (final Exception ex) {
             ex.printStackTrace();
         }
 

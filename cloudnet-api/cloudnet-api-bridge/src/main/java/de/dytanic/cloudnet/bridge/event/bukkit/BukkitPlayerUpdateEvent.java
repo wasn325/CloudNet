@@ -12,10 +12,10 @@ import org.bukkit.event.HandlerList;
  */
 public class BukkitPlayerUpdateEvent extends BukkitCloudEvent {
 
-    private static HandlerList handlerList = new HandlerList();
-    private CloudPlayer cloudPlayer;
+    private static final HandlerList handlerList = new HandlerList();
+    private final CloudPlayer cloudPlayer;
 
-    public BukkitPlayerUpdateEvent(CloudPlayer cloudPlayer) {
+    public BukkitPlayerUpdateEvent(final CloudPlayer cloudPlayer) {
         this.cloudPlayer = cloudPlayer;
     }
 

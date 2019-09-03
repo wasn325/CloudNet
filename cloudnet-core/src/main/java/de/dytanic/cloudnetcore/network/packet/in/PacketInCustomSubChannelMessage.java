@@ -22,20 +22,20 @@ import de.dytanic.cloudnetcore.network.packet.out.PacketOutCustomSubChannelMessa
 public class PacketInCustomSubChannelMessage extends PacketInHandler {
 
     @Override
-    public void handleInput(Document data, PacketSender packetSender) {
-        DefaultType defaultType = data.getObject("defaultType", DefaultType.class);
-        String channel = data.getString("channel");
-        String message = data.getString("message");
-        Document document = data.getDocument("value");
-        if (defaultType.equals(DefaultType.BUKKIT)) {
+    public void handleInput(final Document data, final PacketSender packetSender) {
+        final DefaultType defaultType = data.getObject("defaultType", DefaultType.class);
+        final String channel = data.getString("channel");
+        final String message = data.getString("message");
+        final Document document = data.getDocument("value");
+        if (defaultType == DefaultType.BUKKIT) {
             if (data.contains("serverId")) {
-                MinecraftServer minecraftServer = CloudNet.getInstance().getServer(data.getString("serverId"));
+                final MinecraftServer minecraftServer = CloudNet.getInstance().getServer(data.getString("serverId"));
                 if (minecraftServer != null) {
                     minecraftServer.sendPacket(new PacketOutCustomSubChannelMessage(channel, message, document));
                     return;
                 }
 
-                CloudServer cloudServer = CloudNet.getInstance().getCloudGameServer(data.getString("serverId"));
+                final CloudServer cloudServer = CloudNet.getInstance().getCloudGameServer(data.getString("serverId"));
                 if (cloudServer != null) {
                     cloudServer.sendPacket(new PacketOutCustomSubChannelMessage(channel, message, document));
                 }
@@ -43,14 +43,14 @@ public class PacketInCustomSubChannelMessage extends PacketInHandler {
                 CloudNet.getInstance().getNetworkManager().sendAll(new PacketOutCustomSubChannelMessage(channel, message, document),
                                                                    new ChannelFilter() {
                                                                        @Override
-                                                                       public boolean accept(INetworkComponent networkComponent) {
+                                                                       public boolean accept(final INetworkComponent networkComponent) {
                                                                            return networkComponent instanceof MinecraftServer || networkComponent instanceof CloudServer;
                                                                        }
                                                                    });
             }
         } else {
             if (data.contains("serverId")) {
-                ProxyServer proxyServer = CloudNet.getInstance().getProxy(data.getString("serverId"));
+                final ProxyServer proxyServer = CloudNet.getInstance().getProxy(data.getString("serverId"));
                 if (proxyServer != null) {
                     proxyServer.sendPacket(new PacketOutCustomSubChannelMessage(channel, message, document));
                 }

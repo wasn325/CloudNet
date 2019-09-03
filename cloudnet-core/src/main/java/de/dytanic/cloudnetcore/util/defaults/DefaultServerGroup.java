@@ -17,14 +17,14 @@ import java.util.Collection;
 
 public class DefaultServerGroup extends ServerGroup {
 
-    public DefaultServerGroup(String name,
-                              Collection<String> wrapper,
-                              int memory,
-                              int startup,
-                              int percentForNewServerAutomatically,
-                              ServerGroupType serverType,
-                              ServerGroupMode groupMode,
-                              AdvancedServerConfig advancedServerConfig) {
+    public DefaultServerGroup(final String name,
+                              final Collection<String> wrapper,
+                              final int memory,
+                              final int startup,
+                              final int percentForNewServerAutomatically,
+                              final ServerGroupType serverType,
+                              final ServerGroupMode groupMode,
+                              final AdvancedServerConfig advancedServerConfig) {
         super(name,
               wrapper,
               false,

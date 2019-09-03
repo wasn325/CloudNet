@@ -20,10 +20,10 @@ import io.netty.channel.SimpleChannelInboundHandler;
  */
 public class CloudNetClientAuth extends SimpleChannelInboundHandler<Packet> implements PacketSender {
 
-    private Channel channel;
-    private CloudNetServer cloudNetProxyServer;
+    private final Channel channel;
+    private final CloudNetServer cloudNetProxyServer;
 
-    public CloudNetClientAuth(Channel channel, CloudNetServer cloudNetProxyServer) {
+    public CloudNetClientAuth(final Channel channel, final CloudNetServer cloudNetProxyServer) {
         this.channel = channel;
         this.cloudNetProxyServer = cloudNetProxyServer;
     }
@@ -38,16 +38,16 @@ public class CloudNetClientAuth extends SimpleChannelInboundHandler<Packet> impl
     }
 
     @Override
-    public void sendPacket(Packet... packets) {
+    public void sendPacket(final Packet... packets) {
         if (channel != null) {
-            for (Packet packet : packets) {
+            for (final Packet packet : packets) {
                 sendPacket(packet);
             }
         }
     }
 
     @Override
-    public void sendPacket(Packet packet) {
+    public void sendPacket(final Packet packet) {
         if (channel != null) {
             if (channel.eventLoop().inEventLoop()) {
                 channel.writeAndFlush(packet).addListener(ChannelFutureListener.FIRE_EXCEPTION_ON_FAILURE);
@@ -63,19 +63,19 @@ public class CloudNetClientAuth extends SimpleChannelInboundHandler<Packet> impl
     }
 
     @Override
-    public void sendPacketSynchronized(Packet packet) {
+    public void sendPacketSynchronized(final Packet packet) {
         channel.writeAndFlush(packet).syncUninterruptibly();
     }
 
     @Override
-    public void channelInactive(ChannelHandlerContext ctx) throws Exception {
+    public void channelInactive(final ChannelHandlerContext ctx) throws Exception {
         if ((!channel.isActive() || !channel.isOpen() || !channel.isWritable())) {
             channel.close().syncUninterruptibly();
         }
     }
 
     @Override
-    protected void channelRead0(ChannelHandlerContext channelHandlerContext, Packet packet) throws Exception {
+    protected void channelRead0(final ChannelHandlerContext channelHandlerContext, final Packet packet) throws Exception {
         CloudNet.getLogger().debug("Receiving Packet [" + CloudNet.getInstance()
                                                                   .getPacketManager()
                                                                   .packetId(packet) + "] on " + getChannel().remoteAddress().toString());
@@ -89,7 +89,7 @@ public class CloudNetClientAuth extends SimpleChannelInboundHandler<Packet> impl
     }
 
     @Override
-    public void send(Object object) {
+    public void send(final Object object) {
         if (channel == null) {
             return;
         }
@@ -107,42 +107,42 @@ public class CloudNetClientAuth extends SimpleChannelInboundHandler<Packet> impl
     }
 
     @Override
-    public void sendSynchronized(Object object) {
+    public void sendSynchronized(final Object object) {
         channel.writeAndFlush(object).syncUninterruptibly();
     }
 
     @Override
-    public void sendAsynchronized(Object object) {
+    public void sendAsynchronized(final Object object) {
         channel.writeAndFlush(object);
     }
 
     @Override
-    public void send(IProtocol iProtocol, Object element) {
+    public void send(final IProtocol iProtocol, final Object element) {
         send(new ProtocolRequest(iProtocol.getId(), element));
     }
 
     @Override
-    public void send(int id, Object element) {
+    public void send(final int id, final Object element) {
         send(new ProtocolRequest(id, element));
     }
 
     @Override
-    public void sendAsynchronized(int id, Object element) {
+    public void sendAsynchronized(final int id, final Object element) {
         sendAsynchronized(new ProtocolRequest(id, element));
     }
 
     @Override
-    public void sendAsynchronized(IProtocol iProtocol, Object element) {
+    public void sendAsynchronized(final IProtocol iProtocol, final Object element) {
         sendAsynchronized(new ProtocolRequest(iProtocol.getId(), element));
     }
 
     @Override
-    public void sendSynchronized(int id, Object element) {
+    public void sendSynchronized(final int id, final Object element) {
         sendSynchronized(new ProtocolRequest(id, element));
     }
 
     @Override
-    public void sendSynchronized(IProtocol iProtocol, Object element) {
+    public void sendSynchronized(final IProtocol iProtocol, final Object element) {
         sendSynchronized(new ProtocolRequest(iProtocol.getId(), element));
     }
 

@@ -12,12 +12,12 @@ import de.dytanic.cloudnet.lib.server.info.ServerInfo;
 import de.dytanic.cloudnet.lib.utility.document.Document;
 
 public class PacketOutExecuteServerCommand extends Packet {
-    public PacketOutExecuteServerCommand(ServerInfo serverInfo, String commandLine) {
+    public PacketOutExecuteServerCommand(final ServerInfo serverInfo, final String commandLine) {
         super(PacketRC.CN_CORE + 7, new Document("serverInfo", serverInfo).append("type", DefaultType.BUKKIT)
                                                                           .append("commandLine", commandLine));
     }
 
-    public PacketOutExecuteServerCommand(ProxyInfo serverInfo, String commandLine) {
+    public PacketOutExecuteServerCommand(final ProxyInfo serverInfo, final String commandLine) {
         super(PacketRC.CN_CORE + 7, new Document("proxyInfo", serverInfo).append("type", DefaultType.BUNGEE_CORD)
                                                                          .append("commandLine", commandLine));
     }

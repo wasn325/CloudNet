@@ -35,21 +35,18 @@ public class ConfigCloudFlare extends ConfigAbstract implements ILoader<Collecti
 
     @Override
     public Collection<CloudFlareConfig> load() {
-        File old = new File("local/cloudflare.json");
+        final File old = new File("local/cloudflare.json");
 
         if (old.exists()) {
-            CloudFlareConfig cloudFlareConfig = Document.loadDocument(old).getObject("cloudflare",
-                                                                                     new TypeToken<CloudFlareConfig>() {}.getType());
+            final CloudFlareConfig cloudFlareConfig = Document.loadDocument(old).getObject("cloudflare",
+                                                                                           new TypeToken<CloudFlareConfig>() {}.getType());
 
             new Document().append("configurations", new CloudFlareConfig[] {cloudFlareConfig}).saveAsConfig(path);
             old.delete();
         }
 
-        Collection<CloudFlareConfig> cloudFlareConfigs = Document.loadDocument(path).getObject("configurations",
-                                                                                               new TypeToken<Collection<CloudFlareConfig>>() {}
+        return Document.loadDocument(path).getObject("configurations", new TypeToken<Collection<CloudFlareConfig>>() {}
                                                                                                    .getType());
-
-        return cloudFlareConfigs;
     }
 
 }

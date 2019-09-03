@@ -12,11 +12,11 @@ import org.bukkit.event.HandlerList;
  */
 public class BukkitUpdateSignLayoutsEvent extends BukkitCloudEvent {
 
-    private static HandlerList handlerList = new HandlerList();
+    private static final HandlerList handlerList = new HandlerList();
 
-    private SignLayoutConfig signLayoutConfig;
+    private final SignLayoutConfig signLayoutConfig;
 
-    public BukkitUpdateSignLayoutsEvent(SignLayoutConfig signLayoutConfig) {
+    public BukkitUpdateSignLayoutsEvent(final SignLayoutConfig signLayoutConfig) {
         this.signLayoutConfig = signLayoutConfig;
     }
 

@@ -22,31 +22,31 @@ import java.util.concurrent.CopyOnWriteArrayList;
  */
 public class DefaultModuleManager {
 
-    private Collection<DefaultModule> modules = new CopyOnWriteArrayList<>();
+    private final Collection<DefaultModule> modules = new CopyOnWriteArrayList<>();
 
     public DefaultModuleManager() throws Exception {
-        Properties properties = new Properties();
+        final Properties properties = new Properties();
 
-        try (InputStream inputStream = CloudNet.class.getClassLoader().getResourceAsStream("modules/modules.properties")) {
+        try (final InputStream inputStream = CloudNet.class.getClassLoader().getResourceAsStream("modules/modules.properties")) {
             properties.load(inputStream);
         }
 
-        Collection<?> property = Collections.list(properties.propertyNames());
+        final Collection<?> property = Collections.list(properties.propertyNames());
         CollectionWrapper.iterator(property, new Runnabled() {
             @Override
-            public void run(Object obj) {
-                String pro = obj.toString();
+            public void run(final Object obj) {
+                final String pro = obj.toString();
                 modules.add(new DefaultModule(pro, properties.getProperty(pro)));
             }
         });
 
         Path path;
-        for (DefaultModule defaultModule : modules) {
+        for (final DefaultModule defaultModule : modules) {
             path = Paths.get("modules/" + defaultModule.getModuleName() + ".jar");
 
             Files.deleteIfExists(path);
 
-            try (InputStream inputStream = defaultModule.stream()) {
+            try (final InputStream inputStream = defaultModule.stream()) {
                 Files.copy(inputStream, path);
             }
         }

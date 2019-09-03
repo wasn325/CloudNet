@@ -17,9 +17,9 @@ import java.util.UUID;
  */
 public class UserablePermissionEntity extends PermissionEntity {
 
-    private User user;
+    private final User user;
 
-    public UserablePermissionEntity(UUID uniqueId, User user) {
+    public UserablePermissionEntity(final UUID uniqueId, final User user) {
         super(uniqueId, new HashMap<>(), "User | ", "", new ArrayList<>());
         this.user = user;
     }
@@ -28,13 +28,13 @@ public class UserablePermissionEntity extends PermissionEntity {
         return user;
     }
 
-    public boolean hasPermission(String permission) {
+    public boolean hasPermission(final String permission) {
         return user.getPermissions().contains(permission.toLowerCase()) || user.getPermissions().contains("*");
     }
 
     @Deprecated
     @Override
-    public boolean hasPermission(PermissionPool permissionPool, String permission, String group) {
+    public boolean hasPermission(final PermissionPool permissionPool, final String permission, final String group) {
         throw new UnsupportedOperationException("User hasPermissio(String permission);");
     }
 }

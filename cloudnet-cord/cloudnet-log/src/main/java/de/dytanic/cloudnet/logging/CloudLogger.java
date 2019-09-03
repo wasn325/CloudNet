@@ -35,7 +35,7 @@ public class CloudLogger extends Logger {
 
     private final List<ICloudLoggerHandler> handler = new LinkedList<>();
 
-    private boolean debugging = false;
+    private boolean debugging;
     private boolean showPrompt = !Boolean.getBoolean("cloudnet.logging.prompt.disabled");
 
     /**
@@ -49,7 +49,7 @@ public class CloudLogger extends Logger {
      */
     public CloudLogger() throws IOException, NoSuchFieldException, IllegalAccessException {
         super("CloudNetServerLogger", null);
-        Field field = Charset.class.getDeclaredField("defaultCharset");
+        final Field field = Charset.class.getDeclaredField("defaultCharset");
         field.setAccessible(true);
         field.set(null, StandardCharsets.UTF_8);
 
@@ -65,13 +65,13 @@ public class CloudLogger extends Logger {
         this.reader = new ConsoleReader(System.in, System.out);
         this.reader.setExpandEvents(false);
 
-        FileHandler fileHandler = new FileHandler("local/logs/cloudnet.log", 8000000, 8, true);
+        final FileHandler fileHandler = new FileHandler("local/logs/cloudnet.log", 8000000, 8, true);
         fileHandler.setEncoding(StandardCharsets.UTF_8.name());
         fileHandler.setFormatter(new LoggingFormatter());
 
         addHandler(fileHandler);
 
-        LoggingHandler loggingHandler = new LoggingHandler();
+        final LoggingHandler loggingHandler = new LoggingHandler();
         loggingHandler.setFormatter(formatter);
         loggingHandler.setEncoding(StandardCharsets.UTF_8.name());
         loggingHandler.setLevel(Level.INFO);
@@ -92,7 +92,7 @@ public class CloudLogger extends Logger {
         return showPrompt;
     }
 
-    public void setShowPrompt(boolean showPrompt) {
+    public void setShowPrompt(final boolean showPrompt) {
         this.showPrompt = showPrompt;
     }
 
@@ -100,7 +100,7 @@ public class CloudLogger extends Logger {
         return debugging;
     }
 
-    public void setDebugging(boolean debugging) {
+    public void setDebugging(final boolean debugging) {
         this.debugging = debugging;
     }
 
@@ -126,18 +126,18 @@ public class CloudLogger extends Logger {
      *
      * @param message the message to send to the log
      */
-    public void debug(String message) {
+    public void debug(final String message) {
         if (debugging) {
             log(Level.WARNING, "[DEBUG] " + message);
         }
     }
 
-    public String readLine(String prompt) {
+    public String readLine(final String prompt) {
         try {
-            String line = this.reader.readLine(this.showPrompt ? prompt : null);
+            final String line = this.reader.readLine(this.showPrompt ? prompt : null);
             this.reader.setPrompt(NetworkUtils.EMPTY_STRING);
             return line;
-        } catch (IOException e) {
+        } catch (final IOException e) {
             e.printStackTrace();
         }
         return null;
@@ -147,13 +147,34 @@ public class CloudLogger extends Logger {
      * Shuts down all handlers and the reader.
      */
     public void shutdownAll() {
-        for (Handler handler : getHandlers()) {
+        for (final Handler handler : getHandlers()) {
             handler.close();
         }
         try {
             this.reader.killLine();
-        } catch (IOException e) {
+        } catch (final IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    private static class LoggingFormatter extends Formatter {
+
+        private final DateFormat format = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
+
+        @Override
+        public String format(final LogRecord record) {
+            final StringBuilder builder = new StringBuilder();
+            if (record.getThrown() != null) {
+                try (final StringWriter writer = new StringWriter()) {
+                    record.getThrown().printStackTrace(new PrintWriter(writer));
+                    builder.append(writer).append('\n');
+                } catch (final IOException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            return ConsoleReader.RESET_LINE + "[" + format.format(record.getMillis()) + "] " + record.getLevel().getName() + ": " +
+                   formatMessage(record) + '\n' + builder.toString();
         }
     }
 
@@ -164,13 +185,13 @@ public class CloudLogger extends Logger {
     private class LoggingOutputStream extends ByteArrayOutputStream {
         private final Level level;
 
-        public LoggingOutputStream(Level level) {
+        public LoggingOutputStream(final Level level) {
             this.level = level;
         }
 
         @Override
         public void flush() throws IOException {
-            String contents = toString(StandardCharsets.UTF_8.name());
+            final String contents = toString(StandardCharsets.UTF_8.name());
             super.reset();
             if (!contents.isEmpty() && !contents.equals(separator)) {
                 logp(level, NetworkUtils.EMPTY_STRING, NetworkUtils.EMPTY_STRING, contents);
@@ -186,13 +207,13 @@ public class CloudLogger extends Logger {
         private boolean closed;
 
         @Override
-        public void publish(LogRecord record) {
+        public void publish(final LogRecord record) {
             if (closed) {
                 return;
             }
 
-            String formatMessage = getFormatter().formatMessage(record);
-            for (ICloudLoggerHandler handler : CloudLogger.this.getHandler()) {
+            final String formatMessage = getFormatter().formatMessage(record);
+            for (final ICloudLoggerHandler handler : CloudLogger.this.getHandler()) {
                 handler.handleConsole(formatMessage);
             }
 
@@ -201,7 +222,7 @@ public class CloudLogger extends Logger {
                     reader.print(ConsoleReader.RESET_LINE + getFormatter().format(record));
                     reader.drawLine();
                     reader.flush();
-                } catch (Throwable ignored) {
+                } catch (final Throwable ignored) {
                 }
             }
         }
@@ -213,28 +234,6 @@ public class CloudLogger extends Logger {
         @Override
         public void close() throws SecurityException {
             closed = true;
-        }
-    }
-
-    private static class LoggingFormatter extends Formatter {
-
-        private final DateFormat format = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
-
-        @Override
-        public String format(LogRecord record) {
-            StringBuilder builder = new StringBuilder();
-            if (record.getThrown() != null) {
-                try (StringWriter writer = new StringWriter()) {
-                    record.getThrown().printStackTrace(new PrintWriter(writer));
-                    builder.append(writer).append('\n');
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-
-            return ConsoleReader.RESET_LINE + "[" + format.format(record.getMillis()) + "] " + record.getLevel()
-                                                                                                     .getName() + ": " + formatMessage(
-                record) + '\n' + builder.toString();
         }
     }
 }

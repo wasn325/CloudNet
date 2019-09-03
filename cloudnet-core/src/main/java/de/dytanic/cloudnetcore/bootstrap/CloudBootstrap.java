@@ -26,7 +26,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
  */
 public final class CloudBootstrap {
 
-    public static synchronized void main(String[] args) throws Exception {
+    public static synchronized void main(final String[] args) throws Exception {
         ResourceLeakDetector.setLevel(ResourceLeakDetector.Level.DISABLED);
 
         System.setProperty("file.encoding", "UTF-8");
@@ -38,7 +38,7 @@ public final class CloudBootstrap {
         System.setProperty("io.netty.recycler.maxCapacity", "0");
         System.setProperty("io.netty.recycler.maxCapacity.default", "0");
 
-        OptionParser optionParser = new OptionParser();
+        final OptionParser optionParser = new OptionParser();
 
         optionParser.allowsUnrecognizedOptions();
         optionParser.acceptsAll(Arrays.asList("version", "v"));
@@ -54,12 +54,12 @@ public final class CloudBootstrap {
         optionParser.accepts("installWrapper");
         optionParser.accepts("onlyConsole");
 
-        OptionSet optionSet = optionParser.parse(args);
+        final OptionSet optionSet = optionParser.parse(args);
 
-        List<String> consolePreInit = new CopyOnWriteArrayList<>();
+        final List<String> consolePreInit = new CopyOnWriteArrayList<>();
 
         if (optionSet.has("help") || optionSet.has("?")) {
-            HelpService helpService = new HelpService();
+            final HelpService helpService = new HelpService();
             helpService.getDescriptions().put("help",
                                               new ServiceDescription[] {new ServiceDescription("--help | --?",
                                                                                                "This is the main argument to get all information about other parameters")});
@@ -112,14 +112,14 @@ public final class CloudBootstrap {
             return;
         }
 
-        CloudLogger cloudNetLogging = new CloudLogger();
+        final CloudLogger cloudNetLogging = new CloudLogger();
         if (optionSet.has("debug")) {
             cloudNetLogging.setDebugging(true);
         }
 
         cloudNetLogging.getHandler().add(new ICloudLoggerHandler() {
             @Override
-            public void handleConsole(String input) {
+            public void handleConsole(final String input) {
                 if (!CloudNet.RUNNING) {
                     consolePreInit.add(input);
                 }
@@ -127,8 +127,8 @@ public final class CloudBootstrap {
         });
 
         new HeaderFunction();
-        CloudConfig coreConfig = new CloudConfig(cloudNetLogging.getReader());
-        CloudNet cloudNetCore = new CloudNet(coreConfig, cloudNetLogging, optionSet, consolePreInit, Arrays.asList(args));
+        final CloudConfig coreConfig = new CloudConfig(cloudNetLogging.getReader());
+        final CloudNet cloudNetCore = new CloudNet(coreConfig, cloudNetLogging, optionSet, consolePreInit, Arrays.asList(args));
 
         if (!cloudNetCore.bootstrap()) {
             System.exit(0);
@@ -138,18 +138,18 @@ public final class CloudBootstrap {
             System.out.println("Use the command \"help\" for further information!");
             String commandLine;
 
-            String user = System.getProperty("user.name");
+            final String user = System.getProperty("user.name");
 
             try {
-                while (true) {
+                while (!Thread.interrupted()) {
                     while ((commandLine = cloudNetLogging.readLine(user + "@Master $ ")) != null && CloudNet.RUNNING) {
-                        String dispatcher = cloudNetCore.getDbHandlers().getCommandDispatcherDatabase().findDispatcher(commandLine);
+                        final String dispatcher = cloudNetCore.getDbHandlers().getCommandDispatcherDatabase().findDispatcher(commandLine);
                         if (dispatcher != null) {
                             try {
                                 if (!cloudNetCore.getCommandManager().dispatchCommand(dispatcher)) {
                                     continue;
                                 }
-                            } catch (Exception ex) {
+                            } catch (final Exception ex) {
                                 ex.printStackTrace();
                             }
                         }
@@ -159,11 +159,11 @@ public final class CloudBootstrap {
                         }
                     }
                 }
-            } catch (Exception ex) {
-
+            } catch (final Exception ex) {
+                ex.printStackTrace();
             }
         } else {
-            while (true) {
+            while (!Thread.interrupted()) {
                 NetworkUtils.sleepUninterruptedly(Long.MAX_VALUE);
             }
         }

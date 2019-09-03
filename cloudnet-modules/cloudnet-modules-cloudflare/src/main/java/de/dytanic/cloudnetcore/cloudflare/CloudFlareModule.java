@@ -55,20 +55,20 @@ public class CloudFlareModule extends CoreModule {
         cloudFlareDatabase = new CloudFlareDatabase(getCloud().getDatabaseManager().getDatabase("cloudnet_internal_cfg"));
         try {
 
-            CloudFlareService cloudFlareAPI = new CloudFlareService(configCloudFlare.load());
+            final CloudFlareService cloudFlareAPI = new CloudFlareService(configCloudFlare.load());
             cloudFlareAPI.bootstrap(MapWrapper.transform(getCloud().getWrappers(), new Catcher<String, String>() {
                 @Override
-                public String doCatch(String key) {
+                public String doCatch(final String key) {
                     return key;
                 }
             }, new Catcher<SimpledWrapperInfo, Wrapper>() {
                 @Override
-                public SimpledWrapperInfo doCatch(Wrapper key) {
+                public SimpledWrapperInfo doCatch(final Wrapper key) {
                     return new SimpledWrapperInfo(key.getServerId(), key.getNetworkInfo().getHostName());
                 }
             }), getCloud().getProxyGroups(), cloudFlareDatabase);
 
-        } catch (Exception ex) {
+        } catch (final Exception ex) {
             ex.printStackTrace();
         }
 
@@ -83,7 +83,7 @@ public class CloudFlareModule extends CoreModule {
 
         try {
             CloudFlareService.getInstance().shutdown(cloudFlareDatabase);
-        } catch (Exception ignored) {
+        } catch (final Exception ignored) {
         }
     }
 }

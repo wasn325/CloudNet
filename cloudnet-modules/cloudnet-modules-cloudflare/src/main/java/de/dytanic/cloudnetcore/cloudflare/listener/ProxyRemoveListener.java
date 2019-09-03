@@ -16,7 +16,7 @@ import de.dytanic.cloudnetcore.cloudflare.CloudFlareModule;
 public class ProxyRemoveListener implements IEventListener<ProxyRemoveEvent> {
 
     @Override
-    public void onCall(ProxyRemoveEvent event) {
+    public void onCall(final ProxyRemoveEvent event) {
         CloudFlareModule.getInstance().getExecutor().execute(new Runnable() {
             @Override
             public void run() {

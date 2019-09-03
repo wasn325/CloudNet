@@ -26,7 +26,6 @@ import org.apache.logging.log4j.core.config.LoggerConfig;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabExecutor;
 import org.bukkit.entity.EntityType;
@@ -39,10 +38,10 @@ import java.util.stream.Collectors;
 /**
  * Created by Tareko on 23.08.2017.
  */
-public final class CommandCloudServer implements CommandExecutor, TabExecutor {
+public final class CommandCloudServer implements TabExecutor {
 
     @Override
-    public boolean onCommand(CommandSender commandSender, Command command, String label, String[] args) {
+    public boolean onCommand(final CommandSender commandSender, final Command command, final String label, final String[] args) {
         CloudAPI.getInstance().getLogger().finest(String.format("%s executed %s (label = %s) with arguments %s",
                                                                 commandSender,
                                                                 command,
@@ -95,7 +94,7 @@ public final class CommandCloudServer implements CommandExecutor, TabExecutor {
         return false;
     }
 
-    private static boolean playerGuard(CommandSender sender, Function<Player, Boolean> method) {
+    private static boolean playerGuard(final CommandSender sender, final Function<Player, Boolean> method) {
         if (sender instanceof Player) {
             return method.apply((Player) sender);
         } else {
@@ -104,18 +103,18 @@ public final class CommandCloudServer implements CommandExecutor, TabExecutor {
         }
     }
 
-    private boolean createMob(CommandSender commandSender, String[] args, Player player) {
+    private boolean createMob(final CommandSender commandSender, final String[] args, final Player player) {
         if (checkMobSelectorActive(commandSender)) {
             return true;
         }
 
         try {
-            EntityType entityType = EntityType.valueOf(args[1].toUpperCase());
+            final EntityType entityType = EntityType.valueOf(args[1].toUpperCase());
             if (!entityType.isAlive() || !entityType.isSpawnable()) {
                 return true;
             }
             if (MobSelector.getInstance().getMobs().values().stream().noneMatch(mob -> mob.getMob().getName().equalsIgnoreCase(args[2]))) {
-                StringBuilder stringBuilder = new StringBuilder();
+                final StringBuilder stringBuilder = new StringBuilder();
                 for (int i = 6; i < args.length; i++) {
                     stringBuilder.append(args[i]).append(NetworkUtils.SPACE_STRING);
                 }
@@ -125,26 +124,26 @@ public final class CommandCloudServer implements CommandExecutor, TabExecutor {
                     return true;
                 }
 
-                int materialId = NetworkUtils.checkIsNumber(args[4]) ? Integer.parseInt(args[4]) : -1;
-                Material material = ItemStackBuilder.getMaterialIgnoreVersion(args[4].toUpperCase(Locale.ENGLISH), materialId);
+                final int materialId = NetworkUtils.checkIsNumber(args[4]) ? Integer.parseInt(args[4]) : -1;
+                final Material material = ItemStackBuilder.getMaterialIgnoreVersion(args[4].toUpperCase(Locale.ENGLISH), materialId);
 
                 if (material == null) {
                     commandSender.sendMessage(CloudAPI.getInstance().getPrefix() + "An item with this itemName does not exist");
                     return true;
                 }
 
-                ServerMob serverMob = new ServerMob(UUID.randomUUID(),
-                                                    stringBuilder.substring(0, stringBuilder.length() - 1),
-                                                    args[2],
-                                                    entityType.name(),
-                                                    args[3],
-                                                    -1,
-                                                    material.name(),
-                                                    args[5].equalsIgnoreCase("true"),
-                                                    MobSelector.getInstance()
+                final ServerMob serverMob = new ServerMob(UUID.randomUUID(),
+                                                          stringBuilder.substring(0, stringBuilder.length() - 1),
+                                                          args[2],
+                                                          entityType.name(),
+                                                          args[3],
+                                                          -1,
+                                                          material.name(),
+                                                          args[5].equalsIgnoreCase("true"),
+                                                          MobSelector.getInstance()
                                                                .toPosition(CloudAPI.getInstance().getGroup(), player.getLocation()),
-                                                    "§8#§c%group% &bPlayers online §8|§7 %group_online% of %max_players%",
-                                                    new Document());
+                                                          "§8#§c%group% &bPlayers online §8|§7 %group_online% of %max_players%",
+                                                          new Document());
                 CloudAPI.getInstance().getNetworkConnection().sendPacket(new PacketOutAddMob(serverMob));
                 player.sendMessage(CloudAPI.getInstance().getPrefix() + "The mob will be created, please wait...");
 
@@ -152,22 +151,22 @@ public final class CommandCloudServer implements CommandExecutor, TabExecutor {
                 commandSender.sendMessage(CloudAPI.getInstance().getPrefix() + "The mob with the name " + args[2] + " already exists!");
                 return true;
             }
-        } catch (Exception ex) {
-            for (EntityType entityType : EntityType.values()) {
+        } catch (final Exception ex) {
+            for (final EntityType entityType : EntityType.values()) {
                 commandSender.sendMessage("- " + entityType.name());
             }
         }
         return false;
     }
 
-    private boolean editMobLine(CommandSender commandSender, String[] args) {
+    private boolean editMobLine(final CommandSender commandSender, final String[] args) {
         if (checkMobSelectorActive(commandSender)) {
             return true;
         }
 
-        MobSelector.MobImpl mob = findMobWithName(args[1]);
+        final MobSelector.MobImpl mob = findMobWithName(args[1]);
         if (mob != null) {
-            StringBuilder stringBuilder = new StringBuilder();
+            final StringBuilder stringBuilder = new StringBuilder();
 
             for (int i = 2; i < args.length; i++) {
                 stringBuilder.append(args[i]).append(NetworkUtils.SPACE_STRING);
@@ -184,10 +183,10 @@ public final class CommandCloudServer implements CommandExecutor, TabExecutor {
         return false;
     }
 
-    private boolean setDisplay(CommandSender commandSender, String[] args) {
-        MobSelector.MobImpl mob = findMobWithName(args[1]);
+    private boolean setDisplay(final CommandSender commandSender, final String[] args) {
+        final MobSelector.MobImpl mob = findMobWithName(args[1]);
         if (mob != null) {
-            StringBuilder stringBuilder = new StringBuilder();
+            final StringBuilder stringBuilder = new StringBuilder();
 
             for (short i = 2; i < args.length; i++) {
                 stringBuilder.append(args[i]).append(NetworkUtils.SPACE_STRING);
@@ -204,15 +203,15 @@ public final class CommandCloudServer implements CommandExecutor, TabExecutor {
         return false;
     }
 
-    private boolean removeSign(CommandSender commandSender, Player player) {
+    private boolean removeSign(final CommandSender commandSender, final Player player) {
         if (checkSignSelectorActive(commandSender)) {
             return true;
         }
 
-        Block block = player.getTargetBlock((Set<Material>) null, 15);
+        final Block block = player.getTargetBlock((Set<Material>) null, 15);
         if (block.getState() instanceof org.bukkit.block.Sign) {
             if (SignSelector.getInstance().containsPosition(block.getLocation())) {
-                Sign sign = SignSelector.getInstance().getSignByPosition(block.getLocation());
+                final Sign sign = SignSelector.getInstance().getSignByPosition(block.getLocation());
 
                 if (sign != null) {
                     CloudAPI.getInstance().getNetworkConnection().sendPacket(new PacketOutRemoveSign(sign));
@@ -223,7 +222,7 @@ public final class CommandCloudServer implements CommandExecutor, TabExecutor {
         return false;
     }
 
-    private boolean listMobs(CommandSender commandSender) {
+    private boolean listMobs(final CommandSender commandSender) {
         if (checkMobSelectorActive(commandSender)) {
             return true;
         }
@@ -232,12 +231,12 @@ public final class CommandCloudServer implements CommandExecutor, TabExecutor {
         return false;
     }
 
-    private boolean mobList(CommandSender commandSender) {
+    private boolean mobList(final CommandSender commandSender) {
         if (checkMobSelectorActive(commandSender)) {
             return true;
         }
 
-        for (EntityType entityType : EntityType.values()) {
+        for (final EntityType entityType : EntityType.values()) {
             if (entityType.isAlive() && entityType.isSpawnable()) {
                 commandSender.sendMessage("- " + entityType.name());
             }
@@ -245,7 +244,7 @@ public final class CommandCloudServer implements CommandExecutor, TabExecutor {
         return false;
     }
 
-    private boolean debug(CommandSender commandSender) {
+    private boolean debug(final CommandSender commandSender) {
         CloudAPI.getInstance().setDebug(!CloudAPI.getInstance().isDebug());
 
         final LoggerContext context = (LoggerContext) LogManager.getContext(false);
@@ -263,13 +262,13 @@ public final class CommandCloudServer implements CommandExecutor, TabExecutor {
         return false;
     }
 
-    private boolean copyTo(CommandSender commandSender, String arg) {
+    private boolean copyTo(final CommandSender commandSender, final String arg) {
         if (checkSignSelectorActive(commandSender)) {
             return false;
         }
 
         if (CloudAPI.getInstance().getServerGroupMap().containsKey(arg)) {
-            for (Sign sign : SignSelector.getInstance().getSigns().values()) {
+            for (final Sign sign : SignSelector.getInstance().getSigns().values()) {
                 CloudAPI.getInstance().getNetworkConnection().sendPacket(new PacketOutAddSign(new Sign(sign.getTargetGroup(),
                                                                                                        new Position(arg,
                                                                                                                     sign.getPosition()
@@ -288,16 +287,16 @@ public final class CommandCloudServer implements CommandExecutor, TabExecutor {
         return true;
     }
 
-    private boolean createSign(CommandSender commandSender, String[] args, Player player) {
+    private boolean createSign(final CommandSender commandSender, final String[] args, final Player player) {
         if (checkSignSelectorActive(commandSender)) {
             return false;
         }
 
-        Block block = player.getTargetBlock((Set<Material>) null, 15);
+        final Block block = player.getTargetBlock((Set<Material>) null, 15);
         if (block.getState() instanceof org.bukkit.block.Sign) {
             if (!SignSelector.getInstance().containsPosition(block.getLocation())) {
                 if (CloudAPI.getInstance().getServerGroupMap().containsKey(args[1])) {
-                    Sign sign = new Sign(args[1], SignSelector.getInstance().toPosition(block.getLocation()));
+                    final Sign sign = new Sign(args[1], SignSelector.getInstance().toPosition(block.getLocation()));
                     CloudAPI.getInstance().getNetworkConnection().sendPacket(new PacketOutAddSign(sign));
                     commandSender.sendMessage(CloudAPI.getInstance().getPrefix() + "The sign was successfully created!");
                 } else {
@@ -310,12 +309,12 @@ public final class CommandCloudServer implements CommandExecutor, TabExecutor {
         return false;
     }
 
-    private boolean removeSigns(CommandSender commandSender, String arg) {
+    private boolean removeSigns(final CommandSender commandSender, final String arg) {
         if (checkSignSelectorActive(commandSender)) {
             return true;
         }
 
-        for (Sign sign : SignSelector.getInstance().getSigns().values()) {
+        for (final Sign sign : SignSelector.getInstance().getSigns().values()) {
             if (sign.getTargetGroup() != null && sign.getTargetGroup().equalsIgnoreCase(arg)) {
                 CloudAPI.getInstance().getNetworkConnection().sendPacket(new PacketOutRemoveSign(sign));
             }
@@ -325,12 +324,12 @@ public final class CommandCloudServer implements CommandExecutor, TabExecutor {
         return false;
     }
 
-    private boolean removeMob(CommandSender commandSender, String arg) {
+    private boolean removeMob(final CommandSender commandSender, final String arg) {
         if (checkMobSelectorActive(commandSender)) {
             return true;
         }
 
-        MobSelector.MobImpl mob = findMobWithName(arg);
+        final MobSelector.MobImpl mob = findMobWithName(arg);
         if (mob != null) {
             CloudAPI.getInstance().getNetworkConnection().sendPacket(new PacketOutRemoveMob(mob.getMob()));
             commandSender.sendMessage(CloudAPI.getInstance().getPrefix() + "The mob has been removed");
@@ -340,15 +339,15 @@ public final class CommandCloudServer implements CommandExecutor, TabExecutor {
         return false;
     }
 
-    private boolean setItem(CommandSender commandSender, String[] args) {
+    private boolean setItem(final CommandSender commandSender, final String[] args) {
         if (checkMobSelectorActive(commandSender)) {
             return true;
         }
 
-        MobSelector.MobImpl mob = findMobWithName(args[1]);
+        final MobSelector.MobImpl mob = findMobWithName(args[1]);
         if (mob != null) {
-            int itemId = NetworkUtils.checkIsNumber(args[2]) ? Integer.parseInt(args[2]) : 138;
-            Material material = ItemStackBuilder.getMaterialIgnoreVersion(args[2], itemId);
+            final int itemId = NetworkUtils.checkIsNumber(args[2]) ? Integer.parseInt(args[2]) : 138;
+            final Material material = ItemStackBuilder.getMaterialIgnoreVersion(args[2], itemId);
             if (material != null) {
                 mob.getMob().setItemName(material.name());
                 CloudAPI.getInstance().getNetworkConnection().sendPacket(new PacketOutAddMob(mob.getMob()));
@@ -360,7 +359,7 @@ public final class CommandCloudServer implements CommandExecutor, TabExecutor {
         return false;
     }
 
-    private void help(CommandSender commandSender) {
+    private void help(final CommandSender commandSender) {
         if (SignSelector.getInstance() != null) {
             commandSender.sendMessage(CloudAPI.getInstance().getPrefix() + "/cs createSign <targetGroup>");
             commandSender.sendMessage(CloudAPI.getInstance().getPrefix() + "/cs removeSign");
@@ -380,7 +379,7 @@ public final class CommandCloudServer implements CommandExecutor, TabExecutor {
         commandSender.sendMessage(CloudAPI.getInstance().getPrefix() + "/cs debug");
     }
 
-    private static boolean checkMobSelectorActive(CommandSender commandSender) {
+    private static boolean checkMobSelectorActive(final CommandSender commandSender) {
         if (MobSelector.getInstance() == null) {
             commandSender.sendMessage(CloudAPI.getInstance().getPrefix() + "The Module \"MobSelector\" isn't enabled!");
             return true;
@@ -389,7 +388,7 @@ public final class CommandCloudServer implements CommandExecutor, TabExecutor {
         }
     }
 
-    private static MobSelector.MobImpl findMobWithName(String arg) {
+    private static MobSelector.MobImpl findMobWithName(final String arg) {
         return MobSelector.getInstance()
                           .getMobs()
                           .values()
@@ -399,7 +398,7 @@ public final class CommandCloudServer implements CommandExecutor, TabExecutor {
                           .orElse(null);
     }
 
-    private static boolean checkSignSelectorActive(CommandSender commandSender) {
+    private static boolean checkSignSelectorActive(final CommandSender commandSender) {
         if (SignSelector.getInstance() == null) {
             commandSender.sendMessage(CloudAPI.getInstance().getPrefix() + "The Module \"SignSelector\" isn't enabled!");
             return true;
@@ -408,7 +407,7 @@ public final class CommandCloudServer implements CommandExecutor, TabExecutor {
     }
 
     @Override
-    public List<String> onTabComplete(CommandSender commandSender, Command command, String s, String[] args) {
+    public List<String> onTabComplete(final CommandSender commandSender, final Command command, final String s, final String[] args) {
         switch (args.length) {
             case 1: {
                 return ImmutableList.of("createSign",

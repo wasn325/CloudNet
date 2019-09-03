@@ -12,8 +12,8 @@ import de.dytanic.cloudnetwrapper.CloudNetWrapper;
 public class PacketInExecuteCommand extends PacketInHandler {
 
     @Override
-    public void handleInput(Document data, PacketSender packetSender) {
-        String commandLine = data.getString("commandLine");
+    public void handleInput(final Document data, final PacketSender packetSender) {
+        final String commandLine = data.getString("commandLine");
         CloudNetWrapper.getInstance().getCommandManager().dispatchCommand(commandLine);
     }
 }

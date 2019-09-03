@@ -19,8 +19,8 @@ import java.util.UUID;
 public class PacketAPIInGetPlayer extends PacketAPIIO {
 
     @Override
-    public void handleInput(Document data, PacketSender packetSender) {
-        UUID uniqueId = data.getObject("uniqueId", new TypeToken<UUID>() {}.getType());
+    public void handleInput(final Document data, final PacketSender packetSender) {
+        final UUID uniqueId = data.getObject("uniqueId", new TypeToken<UUID>() {}.getType());
         if (uniqueId != null && CloudNet.getInstance().getNetworkManager().getOnlinePlayers().containsKey(uniqueId)) {
             packetSender.sendPacket(getResult(new Document("player",
                                                            CloudNet.getInstance().getNetworkManager().getOnlinePlayers().get(uniqueId))));
@@ -30,7 +30,7 @@ public class PacketAPIInGetPlayer extends PacketAPIIO {
     }
 
     @Override
-    protected Packet getResult(Document value) {
+    protected Packet getResult(final Document value) {
         return new Packet(packetUniqueId, PacketRC.PLAYER_HANDLE, value);
     }
 }

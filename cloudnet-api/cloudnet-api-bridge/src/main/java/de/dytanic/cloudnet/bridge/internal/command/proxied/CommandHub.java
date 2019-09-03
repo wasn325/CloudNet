@@ -26,7 +26,7 @@ public final class CommandHub extends Command {
     }
 
     @Override
-    public void execute(CommandSender commandSender, String[] args) {
+    public void execute(final CommandSender commandSender, final String[] args) {
         CloudAPI.getInstance().getLogger().finest(String.format("%s executed %s with arguments %s",
                                                                 commandSender,
                                                                 this,
@@ -35,9 +35,9 @@ public final class CommandHub extends Command {
             return;
         }
 
-        ServerInfo serverInfo = CloudProxy.getInstance().getCachedServers().get(((ProxiedPlayer) commandSender).getServer()
-                                                                                                               .getInfo()
-                                                                                                               .getName());
+        final ServerInfo serverInfo = CloudProxy.getInstance().getCachedServers().get(((ProxiedPlayer) commandSender).getServer()
+                                                                                                                     .getInfo()
+                                                                                                                     .getName());
 
         if (serverInfo != null) {
             if (CloudProxy.getInstance()
@@ -59,12 +59,12 @@ public final class CommandHub extends Command {
                                                                          CloudAPI.getInstance().getGroup(),
                                                                          ((ProxiedPlayer) commandSender).getServer().getInfo().getName());
 
-        ProxiedPlayerFallbackEvent proxiedPlayerFallbackEvent = new ProxiedPlayerFallbackEvent((ProxiedPlayer) commandSender,
-                                                                                               CloudAPI.getInstance()
+        final ProxiedPlayerFallbackEvent proxiedPlayerFallbackEvent = new ProxiedPlayerFallbackEvent((ProxiedPlayer) commandSender,
+                                                                                                     CloudAPI.getInstance()
                                                                                                        .getOnlinePlayer(((ProxiedPlayer) commandSender)
                                                                                                                             .getUniqueId()),
-                                                                                               ProxiedPlayerFallbackEvent.FallbackType.HUB_COMMAND,
-                                                                                               fallback);
+                                                                                                     ProxiedPlayerFallbackEvent.FallbackType.HUB_COMMAND,
+                                                                                                     fallback);
 
         ProxyServer.getInstance().getPluginManager().callEvent(proxiedPlayerFallbackEvent);
 

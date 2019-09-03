@@ -17,7 +17,7 @@ public class CorePlayerExecutor extends PlayerExecutor {
     public static final PlayerExecutor INSTANCE = new CorePlayerExecutor();
 
     @Override
-    public void sendPlayer(CloudPlayer cloudPlayer, String server) {
+    public void sendPlayer(final CloudPlayer cloudPlayer, final String server) {
         CloudNet.getInstance().getNetworkManager().sendProxyMessage("cloudnet_internal", "sendPlayer", new Document("uniqueId",
                                                                                                                     cloudPlayer.getUniqueId())
             .append("name", cloudPlayer.getName())
@@ -25,7 +25,7 @@ public class CorePlayerExecutor extends PlayerExecutor {
     }
 
     @Override
-    public void kickPlayer(CloudPlayer cloudPlayer, String reason) {
+    public void kickPlayer(final CloudPlayer cloudPlayer, final String reason) {
         CloudNet.getInstance().getNetworkManager().sendProxyMessage("cloudnet_internal", "kickPlayer", new Document("uniqueId",
                                                                                                                     cloudPlayer.getUniqueId())
             .append("name", cloudPlayer.getName())
@@ -33,7 +33,7 @@ public class CorePlayerExecutor extends PlayerExecutor {
     }
 
     @Override
-    public void sendMessage(CloudPlayer cloudPlayer, String message) {
+    public void sendMessage(final CloudPlayer cloudPlayer, final String message) {
         CloudNet.getInstance().getNetworkManager().sendProxyMessage("cloudnet_internal", "sendMessage", new Document("message",
                                                                                                                      message).append("name",
                                                                                                                                      cloudPlayer

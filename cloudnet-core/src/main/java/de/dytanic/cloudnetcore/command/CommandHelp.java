@@ -25,10 +25,10 @@ public class CommandHelp extends Command {
     }
 
     @Override
-    public void onExecuteCommand(CommandSender sender, String[] args) {
-        List<String> messages = new ArrayList<>(CloudNet.getInstance().getCommandManager().getCommands().size() + 9);
+    public void onExecuteCommand(final CommandSender sender, final String[] args) {
+        final List<String> messages = new ArrayList<>(CloudNet.getInstance().getCommandManager().getCommands().size() + 9);
 
-        for (String command : CloudNet.getInstance().getCommandManager().getCommands()) {
+        for (final String command : CloudNet.getInstance().getCommandManager().getCommands()) {
             messages.add(command + " | " + CloudNet.getInstance().getCommandManager().getCommand(command).getDescription());
         }
 

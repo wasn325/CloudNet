@@ -15,7 +15,7 @@ import de.dytanic.cloudnetcore.permissions.PermissionModule;
 public final class UpdateAllListener implements IEventListener<UpdateAllEvent> {
 
     @Override
-    public void onCall(UpdateAllEvent event) {
+    public void onCall(final UpdateAllEvent event) {
         PermissionModule.getInstance().getPermissionPool().setAvailable(PermissionModule.getInstance().getConfigPermission().isEnabled());
         PermissionModule.getInstance().getPermissionPool().getGroups().clear();
         NetworkUtils.addAll(PermissionModule.getInstance().getPermissionPool().getGroups(),

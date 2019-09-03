@@ -9,11 +9,11 @@ import de.dytanic.cloudnetwrapper.server.ServerStage;
 
 public class ServerProcess {
 
-    private ServerProcessMeta meta;
+    private final ServerProcessMeta meta;
 
     private ServerStage serverStage;
 
-    public ServerProcess(ServerProcessMeta meta, ServerStage serverStage) {
+    public ServerProcess(final ServerProcessMeta meta, final ServerStage serverStage) {
         this.meta = meta;
         this.serverStage = serverStage;
     }
@@ -26,7 +26,7 @@ public class ServerProcess {
         return serverStage;
     }
 
-    public void setServerStage(ServerStage serverStage) {
+    public void setServerStage(final ServerStage serverStage) {
         this.serverStage = serverStage;
     }
 }

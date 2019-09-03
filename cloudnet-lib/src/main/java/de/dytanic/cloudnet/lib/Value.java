@@ -9,7 +9,7 @@ public class Value<E> {
 
     private E value;
 
-    public Value(E value) {
+    public Value(final E value) {
         this.value = value;
     }
 
@@ -39,7 +39,7 @@ public class Value<E> {
         return value;
     }
 
-    public void setValue(E value) {
+    public void setValue(final E value) {
         this.value = value;
     }
 }

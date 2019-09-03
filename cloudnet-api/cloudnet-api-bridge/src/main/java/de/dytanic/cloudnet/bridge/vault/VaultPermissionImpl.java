@@ -31,18 +31,18 @@ public class VaultPermissionImpl extends Permission {
     }
 
     @Override
-    public boolean playerHas(String world, String player, String permission) {
-        OfflinePlayer offlinePlayer = getPlayer(player);
-        PermissionEntity permissionEntity = offlinePlayer.getPermissionEntity();
-        boolean hasPermission = permissionEntity.hasPermission(CloudAPI.getInstance().getPermissionPool(), permission, null);
+    public boolean playerHas(final String world, final String player, final String permission) {
+        final OfflinePlayer offlinePlayer = getPlayer(player);
+        final PermissionEntity permissionEntity = offlinePlayer.getPermissionEntity();
+        final boolean hasPermission = permissionEntity.hasPermission(CloudAPI.getInstance().getPermissionPool(), permission, null);
         CloudAPI.getInstance().getLogger().finest(player + " hasPermission \"" + permission + "\": " + hasPermission);
         return hasPermission;
     }
 
     @Override
-    public boolean playerAdd(String world, String player, String permission) {
-        OfflinePlayer offlinePlayer = getPlayer(player);
-        PermissionEntity permissionEntity = offlinePlayer.getPermissionEntity();
+    public boolean playerAdd(final String world, final String player, final String permission) {
+        final OfflinePlayer offlinePlayer = getPlayer(player);
+        final PermissionEntity permissionEntity = offlinePlayer.getPermissionEntity();
         permissionEntity.getPermissions().put(permission, true);
         offlinePlayer.setPermissionEntity(permissionEntity);
         updatePlayer(offlinePlayer);
@@ -51,9 +51,9 @@ public class VaultPermissionImpl extends Permission {
     }
 
     @Override
-    public boolean playerRemove(String world, String player, String permission) {
-        OfflinePlayer offlinePlayer = getPlayer(player);
-        PermissionEntity permissionEntity = offlinePlayer.getPermissionEntity();
+    public boolean playerRemove(final String world, final String player, final String permission) {
+        final OfflinePlayer offlinePlayer = getPlayer(player);
+        final PermissionEntity permissionEntity = offlinePlayer.getPermissionEntity();
         permissionEntity.getPermissions().remove(permission);
         offlinePlayer.setPermissionEntity(permissionEntity);
         updatePlayer(offlinePlayer);
@@ -62,14 +62,14 @@ public class VaultPermissionImpl extends Permission {
     }
 
     @Override
-    public boolean groupHas(String world, String group, String permission) {
-        PermissionGroup permissionGroup = CloudAPI.getInstance().getPermissionGroup(group);
+    public boolean groupHas(final String world, final String group, final String permission) {
+        final PermissionGroup permissionGroup = CloudAPI.getInstance().getPermissionGroup(group);
         return permissionGroup.getPermissions().getOrDefault(permission, false);
     }
 
     @Override
-    public boolean groupAdd(String world, String group, String permission) {
-        PermissionGroup permissionGroup = CloudAPI.getInstance().getPermissionGroup(group);
+    public boolean groupAdd(final String world, final String group, final String permission) {
+        final PermissionGroup permissionGroup = CloudAPI.getInstance().getPermissionGroup(group);
         permissionGroup.getPermissions().put(permission, true);
         CloudAPI.getInstance().updatePermissionGroup(permissionGroup);
         CloudAPI.getInstance().getLogger().finest(group + " added permission \"" + permission + '"');
@@ -77,8 +77,8 @@ public class VaultPermissionImpl extends Permission {
     }
 
     @Override
-    public boolean groupRemove(String world, String group, String permission) {
-        PermissionGroup permissionGroup = CloudAPI.getInstance().getPermissionGroup(group);
+    public boolean groupRemove(final String world, final String group, final String permission) {
+        final PermissionGroup permissionGroup = CloudAPI.getInstance().getPermissionGroup(group);
         permissionGroup.getPermissions().remove(permission);
         CloudAPI.getInstance().updatePermissionGroup(permissionGroup);
         CloudAPI.getInstance().getLogger().finest(group + " removed permission \"" + permission + '"');
@@ -86,22 +86,22 @@ public class VaultPermissionImpl extends Permission {
     }
 
     @Override
-    public boolean playerInGroup(String world, String player, String group) {
-        OfflinePlayer offlinePlayer = getPlayer(player);
-        PermissionEntity permissionEntity = offlinePlayer.getPermissionEntity();
+    public boolean playerInGroup(final String world, final String player, final String group) {
+        final OfflinePlayer offlinePlayer = getPlayer(player);
+        final PermissionEntity permissionEntity = offlinePlayer.getPermissionEntity();
         return permissionEntity.isInGroup(group);
     }
 
     @Override
-    public boolean playerAddGroup(String world, String player, String group) {
-        OfflinePlayer offlinePlayer = getPlayer(player);
-        PermissionEntity permissionEntity = offlinePlayer.getPermissionEntity();
+    public boolean playerAddGroup(final String world, final String player, final String group) {
+        final OfflinePlayer offlinePlayer = getPlayer(player);
+        final PermissionEntity permissionEntity = offlinePlayer.getPermissionEntity();
 
-        Optional<GroupEntityData> groupEntityData = permissionEntity.getGroups()
-                                                                    .stream()
-                                                                    .filter(ged -> ged.getGroup()
-                                                                                      .equalsIgnoreCase(group))
-                                                                    .findFirst();
+        final Optional<GroupEntityData> groupEntityData = permissionEntity.getGroups()
+                                                                          .stream()
+                                                                          .filter(ged -> ged.getGroup()
+                                                                                            .equalsIgnoreCase(group))
+                                                                          .findFirst();
         groupEntityData.ifPresent(entityData -> permissionEntity.getGroups().remove(entityData));
 
         permissionEntity.getGroups().add(new GroupEntityData(group, 0));
@@ -112,9 +112,9 @@ public class VaultPermissionImpl extends Permission {
     }
 
     @Override
-    public boolean playerRemoveGroup(String world, String player, String group) {
-        OfflinePlayer offlinePlayer = getPlayer(player);
-        PermissionEntity permissionEntity = offlinePlayer.getPermissionEntity();
+    public boolean playerRemoveGroup(final String world, final String player, final String group) {
+        final OfflinePlayer offlinePlayer = getPlayer(player);
+        final PermissionEntity permissionEntity = offlinePlayer.getPermissionEntity();
         permissionEntity.getGroups().stream().filter(ged -> ged.getGroup().equalsIgnoreCase(group)).findFirst().ifPresent(ged -> {
             permissionEntity.getGroups().remove(ged);
         });
@@ -126,13 +126,13 @@ public class VaultPermissionImpl extends Permission {
     }
 
     @Override
-    public String[] getPlayerGroups(String world, String player) {
-        PermissionEntity permissionEntity = getPlayer(player).getPermissionEntity();
+    public String[] getPlayerGroups(final String world, final String player) {
+        final PermissionEntity permissionEntity = getPlayer(player).getPermissionEntity();
         return (String[]) permissionEntity.getGroups().stream().map(GroupEntityData::getGroup).toArray();
     }
 
     @Override
-    public String getPrimaryGroup(String world, String player) {
+    public String getPrimaryGroup(final String world, final String player) {
         return getPlayer(player).getPermissionEntity().getHighestPermissionGroup(CloudAPI.getInstance().getPermissionPool()).getName();
     }
 
@@ -146,11 +146,11 @@ public class VaultPermissionImpl extends Permission {
         return true;
     }
 
-    private void updatePlayer(OfflinePlayer offlinePlayer) {
+    private void updatePlayer(final OfflinePlayer offlinePlayer) {
         CloudAPI.getInstance().updatePlayer(offlinePlayer);
     }
 
-    private OfflinePlayer getPlayer(String name) {
+    private OfflinePlayer getPlayer(final String name) {
         OfflinePlayer offlinePlayer = CloudServer.getInstance().getCachedPlayer(name);
 
         if (offlinePlayer == null) {

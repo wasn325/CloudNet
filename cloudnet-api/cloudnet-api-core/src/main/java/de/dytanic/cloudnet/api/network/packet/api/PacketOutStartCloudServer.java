@@ -20,14 +20,14 @@ import java.util.Properties;
  */
 public class PacketOutStartCloudServer extends Packet {
 
-    public PacketOutStartCloudServer(String serverName,
-                                     ServerConfig serverConfig,
-                                     int memory,
-                                     boolean priorityStop,
-                                     String[] processPreParameters,
-                                     Collection<ServerInstallablePlugin> plugins,
-                                     Properties properties,
-                                     ServerGroupType serverGroupType) {
+    public PacketOutStartCloudServer(final String serverName,
+                                     final ServerConfig serverConfig,
+                                     final int memory,
+                                     final boolean priorityStop,
+                                     final String[] processPreParameters,
+                                     final Collection<ServerInstallablePlugin> plugins,
+                                     final Properties properties,
+                                     final ServerGroupType serverGroupType) {
         super(PacketRC.SERVER_HANDLE + 9, new Document("serverName", serverName).append("serverConfig", serverConfig)
                                                                                 .append("memory",
                                                                                         memory)
@@ -39,15 +39,15 @@ public class PacketOutStartCloudServer extends Packet {
                                                                                 .append("serverGroupType", serverGroupType));
     }
 
-    public PacketOutStartCloudServer(WrapperInfo wrapperInfo,
-                                     String serverName,
-                                     ServerConfig serverConfig,
-                                     int memory,
-                                     boolean priorityStop,
-                                     String[] processPreParameters,
-                                     Collection<ServerInstallablePlugin> plugins,
-                                     Properties properties,
-                                     ServerGroupType serverGroupType) {
+    public PacketOutStartCloudServer(final WrapperInfo wrapperInfo,
+                                     final String serverName,
+                                     final ServerConfig serverConfig,
+                                     final int memory,
+                                     final boolean priorityStop,
+                                     final String[] processPreParameters,
+                                     final Collection<ServerInstallablePlugin> plugins,
+                                     final Properties properties,
+                                     final ServerGroupType serverGroupType) {
         super(PacketRC.SERVER_HANDLE + 9, new Document("serverName", serverName).append("wrapperInfo", wrapperInfo)
                                                                                 .append("serverConfig",
                                                                                         serverConfig)

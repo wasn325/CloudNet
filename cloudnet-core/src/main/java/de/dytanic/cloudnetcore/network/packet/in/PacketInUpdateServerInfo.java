@@ -20,10 +20,10 @@ import java.lang.reflect.Type;
  */
 public class PacketInUpdateServerInfo extends PacketInHandler {
 
-    private static Type type = new TypeToken<ServerInfo>() {}.getType();
+    private static final Type type = new TypeToken<ServerInfo>() {}.getType();
 
     @Override
-    public void handleInput(Document data, PacketSender packetSender) {
+    public void handleInput(final Document data, final PacketSender packetSender) {
         if (packetSender instanceof MinecraftServer) {
             ((MinecraftServer) packetSender).setLastServerInfo(((MinecraftServer) packetSender).getServerInfo());
             ((MinecraftServer) packetSender).setServerInfo(data.getObject("serverInfo", type));

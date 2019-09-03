@@ -19,47 +19,47 @@ public final class ReflectionUtil {
     private ReflectionUtil() {
     }
 
-    public static Class<?> reflectCraftClazz(String suffix) {
+    public static Class<?> reflectCraftClazz(final String suffix) {
         try {
-            String version = org.bukkit.Bukkit.getServer().getClass().getPackage().getName().split("\\.")[3];
+            final String version = org.bukkit.Bukkit.getServer().getClass().getPackage().getName().split("\\.")[3];
             return Class.forName("org.bukkit.craftbukkit." + version + suffix);
-        } catch (Exception ex) {
+        } catch (final Exception ex) {
             try {
                 return Class.forName("org.bukkit.craftbukkit." + suffix);
-            } catch (ClassNotFoundException e) {
+            } catch (final ClassNotFoundException e) {
+                e.printStackTrace();
             }
         }
         return null;
     }
 
-    public static Class<?> forName(String path) {
+    public static Class<?> forName(final String path) {
         try {
             return Class.forName(path);
-        } catch (ClassNotFoundException e) {
+        } catch (final ClassNotFoundException e) {
             return null;
         }
     }
 
-    public static Class<?> reflectNMSClazz(String suffix) {
+    public static Class<?> reflectNMSClazz(final String suffix) {
         try {
-            String version = org.bukkit.Bukkit.getServer().getClass().getPackage().getName().split("\\.")[3];
+            final String version = org.bukkit.Bukkit.getServer().getClass().getPackage().getName().split("\\.")[3];
             return Class.forName("net.minecraft.server." + version + suffix);
-        } catch (Exception ex) {
+        } catch (final Exception ex) {
             try {
                 return Class.forName("net.minecraft.server." + suffix);
-            } catch (ClassNotFoundException e) {
+            } catch (final ClassNotFoundException e) {
+                e.printStackTrace();
             }
         }
         return null;
     }
 
-    public static Object armorstandCreation(Location location, Entity entity, ServerMob serverMob) {
+    public static Object armorstandCreation(final Location location, final Entity entity, final ServerMob serverMob) {
         try {
-            Object armorstand = entity.getWorld().spawnEntity(entity.getLocation()
-                                                                    .clone()
-                                                                    .add(0,
+            final Object armorstand = entity.getWorld().spawnEntity(entity.getLocation().clone().add(0,
                                                                          ((LivingEntity) entity).getEyeHeight() - (entity instanceof Wither ? 0.15 : 0.3),
-                                                                         0), EntityType.valueOf("ARMOR_STAND"));
+                                                                                                     0), EntityType.valueOf("ARMOR_STAND"));
 
             armorstand.getClass().getMethod("setVisible", boolean.class).invoke(armorstand, false);
             armorstand.getClass().getMethod("setCustomNameVisible", boolean.class).invoke(armorstand, true);
@@ -68,7 +68,7 @@ public final class ReflectionUtil {
             armorstand.getClass().getMethod("setSmall", boolean.class).invoke(armorstand, true);
             armorstand.getClass().getMethod("setCanPickupItems", boolean.class).invoke(armorstand, false);
             return armorstand;
-        } catch (Exception ex) {
+        } catch (final Exception ex) {
             ex.printStackTrace();
         }
         return null;

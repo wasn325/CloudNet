@@ -7,14 +7,14 @@ import java.util.UUID;
  * Created by Tareko on 18.07.2017.
  */
 public final class ServiceId {
-    private String group;
-    private int id;
-    private UUID uniqueId;
-    private String wrapperId;
-    private String serverId;
-    private String gameId;
+    private final String group;
+    private final int id;
+    private final UUID uniqueId;
+    private final String wrapperId;
+    private final String serverId;
+    private final String gameId;
 
-    public ServiceId(String group, int id, UUID uniqueId, String wrapperId) {
+    public ServiceId(final String group, final int id, final UUID uniqueId, final String wrapperId) {
         this.group = group;
         this.id = id;
         this.uniqueId = uniqueId;
@@ -24,7 +24,7 @@ public final class ServiceId {
         this.gameId = uniqueId.toString().split("-")[0];
     }
 
-    public ServiceId(String group, int id, UUID uniqueId, String wrapperId, String serverId) {
+    public ServiceId(final String group, final int id, final UUID uniqueId, final String wrapperId, final String serverId) {
         this.group = group;
         this.id = id;
         this.uniqueId = uniqueId;

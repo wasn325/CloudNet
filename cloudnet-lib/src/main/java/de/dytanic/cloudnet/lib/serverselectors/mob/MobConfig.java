@@ -7,15 +7,18 @@ import java.util.Map;
  */
 public class MobConfig {
 
-    private int inventorySize;
+    private final int inventorySize;
 
-    private int startPoint;
+    private final int startPoint;
 
-    private MobItemLayout itemLayout;
+    private final MobItemLayout itemLayout;
 
-    private Map<Integer, MobItemLayout> defaultItemInventory;
+    private final Map<Integer, MobItemLayout> defaultItemInventory;
 
-    public MobConfig(int inventorySize, int startPoint, MobItemLayout itemLayout, Map<Integer, MobItemLayout> defaultItemInventory) {
+    public MobConfig(final int inventorySize,
+                     final int startPoint,
+                     final MobItemLayout itemLayout,
+                     final Map<Integer, MobItemLayout> defaultItemInventory) {
         this.inventorySize = inventorySize;
         this.startPoint = startPoint;
         this.itemLayout = itemLayout;

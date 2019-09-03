@@ -16,7 +16,7 @@ public class CloudPlayerCommandSender implements CommandSender {
 
     private final CloudPlayer cloudPlayer;
 
-    public CloudPlayerCommandSender(CloudPlayer cloudPlayer) {
+    public CloudPlayerCommandSender(final CloudPlayer cloudPlayer) {
         this.cloudPlayer = cloudPlayer;
     }
 
@@ -30,26 +30,26 @@ public class CloudPlayerCommandSender implements CommandSender {
     }
 
     @Override
-    public void sendMessage(String s) {
+    public void sendMessage(final String s) {
         cloudPlayer.getPlayerExecutor().sendMessage(cloudPlayer, s);
     }
 
     @Override
-    public void sendMessages(String... strings) {
-        for (String m : strings) {
+    public void sendMessages(final String... strings) {
+        for (final String m : strings) {
             sendMessage(m);
         }
     }
 
     @Override
-    public void sendMessage(BaseComponent... baseComponents) {
-        for (BaseComponent m : baseComponents) {
+    public void sendMessage(final BaseComponent... baseComponents) {
+        for (final BaseComponent m : baseComponents) {
             sendMessage(m);
         }
     }
 
     @Override
-    public void sendMessage(BaseComponent baseComponent) {
+    public void sendMessage(final BaseComponent baseComponent) {
         sendMessage(baseComponent.toLegacyText());
     }
 
@@ -59,22 +59,22 @@ public class CloudPlayerCommandSender implements CommandSender {
     }
 
     @Override
-    public void addGroups(String... strings) {
+    public void addGroups(final String... strings) {
 
     }
 
     @Override
-    public void removeGroups(String... strings) {
+    public void removeGroups(final String... strings) {
 
     }
 
     @Override
-    public boolean hasPermission(String s) {
+    public boolean hasPermission(final String s) {
         return new PermissionCheckEvent(this, s, false).hasPermission();
     }
 
     @Override
-    public void setPermission(String s, boolean b) {
+    public void setPermission(final String s, final boolean b) {
 
     }
 

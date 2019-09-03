@@ -19,7 +19,7 @@ public interface ServerDispatcher extends Executable, Screenable {
         return startup;
     }
 
-    default void executeCommand(String consoleCommand) {
+    default void executeCommand(final String consoleCommand) {
         if (getInstance() == null && !getInstance().isAlive()) {
             return;
         }
@@ -28,7 +28,7 @@ public interface ServerDispatcher extends Executable, Screenable {
             final OutputStream outputStream = getInstance().getOutputStream();
             outputStream.write((consoleCommand + '\n').getBytes());
             outputStream.flush();
-        } catch (Exception ex) {
+        } catch (final Exception ex) {
             ex.printStackTrace();
         }
     }
@@ -40,7 +40,7 @@ public interface ServerDispatcher extends Executable, Screenable {
             // Can't close the resource as we need it for the next check later
             //noinspection resource
             return getInstance() != null && getInstance().isAlive() && getInstance().getInputStream().available() != -1;
-        } catch (IOException e) {
+        } catch (final IOException e) {
             return false;
         }
     }

@@ -6,11 +6,11 @@ package de.dytanic.cloudnet.lib.proxylayout;
 
 public class AutoSlot {
 
-    private int dynamicSlotSize;
+    private final int dynamicSlotSize;
 
-    private boolean enabled;
+    private final boolean enabled;
 
-    public AutoSlot(int dynamicSlotSize, boolean enabled) {
+    public AutoSlot(final int dynamicSlotSize, final boolean enabled) {
         this.dynamicSlotSize = dynamicSlotSize;
         this.enabled = enabled;
     }

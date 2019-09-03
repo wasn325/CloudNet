@@ -5,22 +5,23 @@ package de.dytanic.cloudnet.lib.network;
  */
 public class WrapperInfo {
 
-    private String serverId;
-    private String hostName;
-    private String version;
-    private boolean ready;
-    private int availableProcessors;
-    private int startPort;
-    private int process_queue_size;
-    private int memory;
-    public WrapperInfo(String serverId,
-                       String hostName,
-                       String version,
-                       boolean ready,
-                       int availableProcessors,
-                       int startPort,
-                       int process_queue_size,
-                       int memory) {
+    private final String serverId;
+    private final String hostName;
+    private final String version;
+    private final boolean ready;
+    private final int availableProcessors;
+    private final int startPort;
+    private final int process_queue_size;
+    private final int memory;
+
+    public WrapperInfo(final String serverId,
+                       final String hostName,
+                       final String version,
+                       final boolean ready,
+                       final int availableProcessors,
+                       final int startPort,
+                       final int process_queue_size,
+                       final int memory) {
         this.serverId = serverId;
         this.hostName = hostName;
         this.version = version;

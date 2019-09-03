@@ -24,14 +24,14 @@ public class CommandLocalWrapper extends Command {
     }
 
     @Override
-    public void onExecuteCommand(CommandSender sender, String[] args) {
+    public void onExecuteCommand(final CommandSender sender, final String[] args) {
         if (!CloudNet.getInstance().getLocalCloudWrapper().isEnabled()) {
             sender.sendMessage("The local wrapper is disabled, enable it by adding \"--installWrapper\" to the end of your start command");
             return;
         }
 
         if (args.length == 1 && args[0].equalsIgnoreCase("info")) {
-            Wrapper wrapper = CloudNet.getInstance().getLocalCloudWrapper().getWrapper();
+            final Wrapper wrapper = CloudNet.getInstance().getLocalCloudWrapper().getWrapper();
             if (wrapper == null) {
                 sender.sendMessage("Wrapper not found!");
                 return;
@@ -42,26 +42,26 @@ public class CommandLocalWrapper extends Command {
                                    .getUsedMemory() + NetworkUtils.SLASH_STRING + wrapper.getMaxMemory() + "MB",
                                " ");
 
-            Configuration configuration = CloudNet.getInstance().getLocalCloudWrapper().loadWrapperConfiguration();
-            try (StringWriter writer = new StringWriter()) {
+            final Configuration configuration = CloudNet.getInstance().getLocalCloudWrapper().loadWrapperConfiguration();
+            try (final StringWriter writer = new StringWriter()) {
                 ConfigurationProvider.getProvider(YamlConfiguration.class).save(configuration, writer);
                 sender.sendMessage("Config:");
                 sender.sendMessage(writer.toString().split("\n"));
-            } catch (IOException e) {
+            } catch (final IOException e) {
                 e.printStackTrace();
             }
         } else if (args.length == 1 && args[0].equalsIgnoreCase("restart")) {
             try {
                 CloudNet.getInstance().getLocalCloudWrapper().restart();
-            } catch (IOException e) {
+            } catch (final IOException e) {
                 e.printStackTrace();
             }
         } else if (args.length == 1 && args[0].equalsIgnoreCase("console")) {
-            boolean preEnabled = CloudNet.getInstance().getLocalCloudWrapper().isShowConsoleOutput();
+            final boolean preEnabled = CloudNet.getInstance().getLocalCloudWrapper().isShowConsoleOutput();
             CloudNet.getInstance().getLocalCloudWrapper().setShowConsoleOutput(!preEnabled);
-            sender.sendMessage("Logging of the local wrapper has been " + (!preEnabled ? "enabled" : "disabled"));
+            sender.sendMessage("Logging of the local wrapper has been " + (preEnabled ? "disabled" : "enabled"));
         } else if (args.length >= 2 && args[0].equalsIgnoreCase("cmd")) {
-            String command = String.join(" ", Arrays.copyOfRange(args, 1, args.length));
+            final String command = String.join(" ", Arrays.copyOfRange(args, 1, args.length));
             if (command.trim().isEmpty()) {
                 sender.sendMessage("Cannot send empty command");
                 return;
@@ -69,7 +69,7 @@ public class CommandLocalWrapper extends Command {
             sender.sendMessage("Sending command to local wrapper...");
             try {
                 CloudNet.getInstance().getLocalCloudWrapper().executeCommand(command);
-            } catch (IOException e) {
+            } catch (final IOException e) {
                 e.printStackTrace();
             }
         } else {

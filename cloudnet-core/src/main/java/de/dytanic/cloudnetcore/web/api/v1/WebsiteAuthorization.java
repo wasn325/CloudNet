@@ -29,17 +29,18 @@ public class WebsiteAuthorization extends MethodWebHandlerAdapter {
     }
 
     @Override
-    public FullHttpResponse get(ChannelHandlerContext channelHandlerContext,
-                                QueryDecoder queryDecoder,
-                                PathProvider path,
-                                HttpRequest httpRequest) throws Exception {
+    public FullHttpResponse get(final ChannelHandlerContext channelHandlerContext,
+                                final QueryDecoder queryDecoder,
+                                final PathProvider path,
+                                final HttpRequest httpRequest) throws Exception {
         CloudNet.getLogger().debug("HTTP Request from " + channelHandlerContext.channel().remoteAddress());
 
-        FullHttpResponse fullHttpResponse = new DefaultFullHttpResponse(httpRequest.getProtocolVersion(), HttpResponseStatus.UNAUTHORIZED);
+        final FullHttpResponse fullHttpResponse = new DefaultFullHttpResponse(httpRequest.getProtocolVersion(),
+                                                                              HttpResponseStatus.UNAUTHORIZED);
         fullHttpResponse.headers().set("Content-Type", "application/json");
         fullHttpResponse.headers().set("Access-Control-Allow-Origin", "*");
 
-        Document dataDocument = new Document("success", false).append("reason", new ArrayList<>()).append("response", new Document());
+        final Document dataDocument = new Document("success", false).append("reason", new ArrayList<>()).append("response", new Document());
         if (!httpRequest.headers().contains("-Xcloudnet-user") || (!httpRequest.headers()
                                                                                .contains("-Xcloudnet-token") && !httpRequest.headers()
                                                                                                                             .contains(

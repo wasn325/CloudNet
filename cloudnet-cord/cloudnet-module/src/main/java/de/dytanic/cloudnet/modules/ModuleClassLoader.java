@@ -13,7 +13,7 @@ import java.net.URLClassLoader;
  */
 public class ModuleClassLoader extends URLClassLoader implements ModuleLoader {
 
-    private ModuleConfig config;
+    private final ModuleConfig config;
 
     /**
      * Constructs a new class loader for modules
@@ -23,7 +23,7 @@ public class ModuleClassLoader extends URLClassLoader implements ModuleLoader {
      * @throws MalformedURLException when {@link ModuleConfig#getFile()} does not
      *                               resolve to a url
      */
-    public ModuleClassLoader(ModuleConfig config) throws MalformedURLException {
+    public ModuleClassLoader(final ModuleConfig config) throws MalformedURLException {
         super(new URL[] {config.getFile().toURI().toURL()});
         this.config = config;
     }
@@ -33,8 +33,8 @@ public class ModuleClassLoader extends URLClassLoader implements ModuleLoader {
     }
 
     public Module loadModule() throws Exception {
-        Class<?> bootstrap = loadClass(config.getMain());
-        Module module = (Module) bootstrap.getDeclaredConstructor().newInstance();
+        final Class<?> bootstrap = loadClass(config.getMain());
+        final Module module = (Module) bootstrap.getDeclaredConstructor().newInstance();
 
         module.setClassLoader(this);
         module.setModuleConfig(config);

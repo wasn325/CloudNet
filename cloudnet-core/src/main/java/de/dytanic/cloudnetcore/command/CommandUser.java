@@ -19,18 +19,18 @@ public class CommandUser extends Command {
     }
 
     @Override
-    public void onExecuteCommand(CommandSender sender, String[] args) {
+    public void onExecuteCommand(final CommandSender sender, final String[] args) {
         if (args.length == 3 && args[0].equalsIgnoreCase("create")) {
             if (CloudNet.getInstance().getUser(args[1]) != null) {
                 sender.sendMessage("A user with that name already exists!");
                 return;
             }
-            User user = new BasicUser(args[1], args[2], new ArrayList<>());
+            final User user = new BasicUser(args[1], args[2], new ArrayList<>());
             CloudNet.getInstance().getUsers().add(user);
             CloudNet.getInstance().getConfig().save(CloudNet.getInstance().getUsers());
             sender.sendMessage("Successfully created a new user!");
         } else if (args.length == 3 && args[0].equalsIgnoreCase("changePassword")) {
-            User user = CloudNet.getInstance().getUser(args[1]);
+            final User user = CloudNet.getInstance().getUser(args[1]);
             if (user == null) {
                 sender.sendMessage("A user with that name does not exist!");
                 return;
@@ -39,7 +39,7 @@ public class CommandUser extends Command {
             CloudNet.getInstance().getConfig().save(CloudNet.getInstance().getUsers());
             sender.sendMessage("Successfully changed the password of the user \"" + user.getName() + "\"!");
         } else if (args.length == 2 && args[0].equalsIgnoreCase("delete")) {
-            User user = CloudNet.getInstance().getUser(args[1]);
+            final User user = CloudNet.getInstance().getUser(args[1]);
             if (user == null) {
                 sender.sendMessage("A user with that name does not exist!");
                 return;
@@ -49,22 +49,22 @@ public class CommandUser extends Command {
             sender.sendMessage("Successfully deleted the user \"" + user.getName() + '"');
         } else if (args.length == 1 && args[0].equalsIgnoreCase("list")) {
             sender.sendMessage("Users:");
-            for (User user : CloudNet.getInstance().getUsers()) {
+            for (final User user : CloudNet.getInstance().getUsers()) {
                 sender.sendMessage(" - " + user.getName() + '/' + user.getUniqueId() + ':',
                                    "  API-Token: " + user.getApiToken(),
                                    "  Permissions: ");
-                for (String permission : user.getPermissions()) {
+                for (final String permission : user.getPermissions()) {
                     sender.sendMessage("   - " + permission);
                 }
             }
         } else if (args.length == 4 && args[0].equalsIgnoreCase("permission")) {
-            User user = CloudNet.getInstance().getUser(args[2]);
+            final User user = CloudNet.getInstance().getUser(args[2]);
             if (user == null) {
                 sender.sendMessage("A user with that name does not exist!");
                 return;
             }
 
-            String permission = args[3];
+            final String permission = args[3];
 
             if (args[1].equalsIgnoreCase("add")) {
                 if (user.getPermissions().contains(permission)) {

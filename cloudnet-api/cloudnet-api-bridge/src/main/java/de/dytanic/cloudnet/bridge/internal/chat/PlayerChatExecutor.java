@@ -7,13 +7,13 @@ import net.md_5.bungee.api.chat.BaseComponent;
 
 public interface PlayerChatExecutor {
 
-    default void sendMessage(CloudPlayer cloudPlayer, BaseComponent... baseComponents) {
+    default void sendMessage(final CloudPlayer cloudPlayer, final BaseComponent... baseComponents) {
         for (final BaseComponent baseComponent : baseComponents) {
             sendMessage(cloudPlayer, baseComponent);
         }
     }
 
-    default void sendMessage(CloudPlayer cloudPlayer, BaseComponent baseComponent) {
+    default void sendMessage(final CloudPlayer cloudPlayer, final BaseComponent baseComponent) {
         if (cloudPlayer != null) {
             final Document messageValue = new Document("baseComponent", baseComponent).append("uniqueId", cloudPlayer.getUniqueId()).append(
                 "name",

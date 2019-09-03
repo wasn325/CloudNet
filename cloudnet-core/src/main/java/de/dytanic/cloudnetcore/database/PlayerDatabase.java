@@ -25,18 +25,18 @@ import java.util.UUID;
  */
 public class PlayerDatabase extends DatabaseUsable {
 
-    public PlayerDatabase(Database database) {
+    public PlayerDatabase(final Database database) {
         super(database);
     }
 
-    public OfflinePlayer registerPlayer(PlayerConnection playerConnection) {
-        OfflinePlayer offlinePlayer = new OfflinePlayer(playerConnection.getUniqueId(),
-                                                        playerConnection.getName(),
-                                                        new Document(),
-                                                        System.currentTimeMillis(),
-                                                        System.currentTimeMillis(),
-                                                        playerConnection,
-                                                        new PermissionEntity(playerConnection.getUniqueId(),
+    public OfflinePlayer registerPlayer(final PlayerConnection playerConnection) {
+        final OfflinePlayer offlinePlayer = new OfflinePlayer(playerConnection.getUniqueId(),
+                                                              playerConnection.getName(),
+                                                              new Document(),
+                                                              System.currentTimeMillis(),
+                                                              System.currentTimeMillis(),
+                                                              playerConnection,
+                                                              new PermissionEntity(playerConnection.getUniqueId(),
                                                                              new HashMap<>(),
                                                                              null,
                                                                              null,
@@ -45,12 +45,12 @@ public class PlayerDatabase extends DatabaseUsable {
         return offlinePlayer;
     }
 
-    public PlayerDatabase updatePlayer(OfflinePlayer offlinePlayer) {
+    public PlayerDatabase updatePlayer(final OfflinePlayer offlinePlayer) {
         CloudNet.getLogger().debug("PlayerDatabase updatePlayer offlinePlayer null: " + (offlinePlayer == null));
         if (offlinePlayer == null) {
             return this;
         }
-        Document document = database.getDocument(offlinePlayer.getUniqueId().toString());
+        final Document document = database.getDocument(offlinePlayer.getUniqueId().toString());
         document.append("offlinePlayer", CloudPlayer.newOfflinePlayer(offlinePlayer));
         database.insert(document);
         CloudNet.getLogger().debug("PlayerDatabase updatePlayer call UpdatePlayerEvent");
@@ -58,34 +58,34 @@ public class PlayerDatabase extends DatabaseUsable {
         return this;
     }
 
-    public PlayerDatabase updateName(UUID uuid, String name) {
-        Document document = database.getDocument(uuid.toString());
-        OfflinePlayer offlinePlayer = document.getObject("offlinePlayer", OfflinePlayer.TYPE);
+    public PlayerDatabase updateName(final UUID uuid, final String name) {
+        final Document document = database.getDocument(uuid.toString());
+        final OfflinePlayer offlinePlayer = document.getObject("offlinePlayer", OfflinePlayer.TYPE);
         offlinePlayer.setName(name);
         document.append("offlinePlayer", offlinePlayer);
         database.insert(document);
         return this;
     }
 
-    public boolean containsPlayer(UUID uuid) {
+    public boolean containsPlayer(final UUID uuid) {
         return database.containsDoc(uuid.toString());
     }
 
-    public PlayerDatabase updatePermissionEntity(UUID uuid, PermissionEntity permissionEntity) {
-        Document document = database.getDocument(uuid.toString());
-        OfflinePlayer offlinePlayer = document.getObject("offlinePlayer", OfflinePlayer.TYPE);
+    public PlayerDatabase updatePermissionEntity(final UUID uuid, final PermissionEntity permissionEntity) {
+        final Document document = database.getDocument(uuid.toString());
+        final OfflinePlayer offlinePlayer = document.getObject("offlinePlayer", OfflinePlayer.TYPE);
         offlinePlayer.setPermissionEntity(permissionEntity);
         document.append("offlinePlayer", offlinePlayer);
         database.insert(document);
         return this;
     }
 
-    public OfflinePlayer getPlayer(UUID uniqueId) {
+    public OfflinePlayer getPlayer(final UUID uniqueId) {
         CloudNet.getLogger().debug("PlayerDatabase getPlayer uniqueId " + uniqueId);
         if (uniqueId == null) {
             return null;
         }
-        Document document = database.getDocument(uniqueId.toString());
+        final Document document = database.getDocument(uniqueId.toString());
         CloudNet.getLogger().debug("PlayerDatabase getPlayer document null: " + (document == null));
         if (document == null) {
             return null;
@@ -97,10 +97,10 @@ public class PlayerDatabase extends DatabaseUsable {
     public Map<UUID, OfflinePlayer> getRegisteredPlayers() {
         database.loadDocuments();
 
-        Map<UUID, OfflinePlayer> map = new HashMap<>();
+        final Map<UUID, OfflinePlayer> map = new HashMap<>();
 
-        for (Document document : database.getDocs()) {
-            OfflinePlayer offlinePlayer = document.getObject("offlinePlayer", OfflinePlayer.TYPE);
+        for (final Document document : database.getDocs()) {
+            final OfflinePlayer offlinePlayer = document.getObject("offlinePlayer", OfflinePlayer.TYPE);
             map.put(offlinePlayer.getUniqueId(), offlinePlayer);
         }
 

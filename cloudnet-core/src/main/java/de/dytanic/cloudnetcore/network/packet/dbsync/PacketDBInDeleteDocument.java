@@ -15,8 +15,8 @@ import de.dytanic.cloudnetcore.CloudNet;
 public class PacketDBInDeleteDocument extends PacketInHandler {
 
     @Override
-    public void handleInput(Document data, PacketSender packetSender) {
-        String name = data.getString("name");
+    public void handleInput(final Document data, final PacketSender packetSender) {
+        final String name = data.getString("name");
         CloudNet.getInstance().getDatabaseManager().getDatabase(data.getString("db")).delete(name);
     }
 }

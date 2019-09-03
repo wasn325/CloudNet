@@ -9,15 +9,16 @@ package de.dytanic.cloudnetcore.util;
  */
 public class CustomServerConfig {
 
-    private String serverId;
+    private final String serverId;
 
-    private int memory;
+    private final int memory;
 
-    private String group, wrapper;
+    private final String group;
+    private final String wrapper;
 
-    private boolean onlineMode;
+    private final boolean onlineMode;
 
-    public CustomServerConfig(String serverId, int memory, String group, String wrapper, boolean onlineMode) {
+    public CustomServerConfig(final String serverId, final int memory, final String group, final String wrapper, final boolean onlineMode) {
         this.serverId = serverId;
         this.memory = memory;
         this.group = group;

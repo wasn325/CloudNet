@@ -26,7 +26,7 @@ public class PacketProtocol implements IProtocol {
     }
 
     @Override
-    public ProtocolStream createElement(Object element) {
+    public ProtocolStream createElement(final Object element) {
         if (element instanceof Packet) {
             return (Packet) element;
         }

@@ -17,7 +17,7 @@ public class CloudPlayer extends OfflinePlayer {
     private Timestamp loginTimeStamp;
     private PlayerExecutor playerExecutor;
 
-    public CloudPlayer(OfflinePlayer player, PlayerConnection onlineConnection, String proxy) {
+    public CloudPlayer(final OfflinePlayer player, final PlayerConnection onlineConnection, final String proxy) {
         super(player.getUniqueId(),
               player.getName(),
               player.getMetaData(),
@@ -33,7 +33,7 @@ public class CloudPlayer extends OfflinePlayer {
         this.loginTimeStamp = new Timestamp(System.currentTimeMillis());
     }
 
-    public static OfflinePlayer newOfflinePlayer(OfflinePlayer cloudPlayer) {
+    public static OfflinePlayer newOfflinePlayer(final OfflinePlayer cloudPlayer) {
         return new OfflinePlayer(cloudPlayer.getUniqueId(),
                                  cloudPlayer.getName(),
                                  cloudPlayer.getMetaData(),
@@ -77,7 +77,7 @@ public class CloudPlayer extends OfflinePlayer {
         return server;
     }
 
-    public void setServer(String server) {
+    public void setServer(final String server) {
         this.server = server;
     }
 
@@ -85,7 +85,7 @@ public class CloudPlayer extends OfflinePlayer {
         return proxy;
     }
 
-    public void setProxy(String proxy) {
+    public void setProxy(final String proxy) {
         this.proxy = proxy;
     }
 
@@ -93,7 +93,7 @@ public class CloudPlayer extends OfflinePlayer {
         return playerConnection;
     }
 
-    public void setPlayerConnection(PlayerConnection playerConnection) {
+    public void setPlayerConnection(final PlayerConnection playerConnection) {
         this.playerConnection = playerConnection;
     }
 
@@ -101,7 +101,7 @@ public class CloudPlayer extends OfflinePlayer {
         return loginTimeStamp;
     }
 
-    public void setLoginTimeStamp(Timestamp loginTimeStamp) {
+    public void setLoginTimeStamp(final Timestamp loginTimeStamp) {
         this.loginTimeStamp = loginTimeStamp;
     }
 
@@ -109,7 +109,7 @@ public class CloudPlayer extends OfflinePlayer {
         return playerExecutor;
     }
 
-    public void setPlayerExecutor(PlayerExecutor playerExecutor) {
+    public void setPlayerExecutor(final PlayerExecutor playerExecutor) {
         this.playerExecutor = playerExecutor;
     }
 }

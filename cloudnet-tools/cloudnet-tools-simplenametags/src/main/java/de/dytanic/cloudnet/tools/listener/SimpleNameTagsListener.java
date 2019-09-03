@@ -14,7 +14,7 @@ import org.bukkit.event.player.PlayerJoinEvent;
 public class SimpleNameTagsListener implements Listener {
 
     @EventHandler
-    public void handleJoin(PlayerJoinEvent e) {
+    public void handleJoin(final PlayerJoinEvent e) {
         Bukkit.getScheduler().runTaskLaterAsynchronously(Bukkit.getPluginManager().getPlugin("SimpleNameTags"), new Runnable() {
             @Override
             public void run() {
@@ -24,7 +24,7 @@ public class SimpleNameTagsListener implements Listener {
     }
 
     @EventHandler
-    public void handleUpdate(BukkitPlayerUpdateEvent e) {
+    public void handleUpdate(final BukkitPlayerUpdateEvent e) {
         if (Bukkit.getPlayer(e.getCloudPlayer().getUniqueId()) != null && e.getCloudPlayer().getServer() != null && e.getCloudPlayer()
                                                                                                                      .getServer()
                                                                                                                      .equalsIgnoreCase(

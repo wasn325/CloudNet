@@ -20,17 +20,17 @@ import java.util.Properties;
  */
 public class PacketOutStartServer extends Packet {
 
-    public PacketOutStartServer(String group,
-                                int memory,
-                                ServerConfig serverConfig,
-                                Properties properties,
-                                boolean priorityStop,
-                                String[] processParameters,
-                                Template template,
-                                String customServr,
-                                boolean onlineMode,
-                                Collection<ServerInstallablePlugin> plugins,
-                                String urlTemplate) {
+    public PacketOutStartServer(final String group,
+                                final int memory,
+                                final ServerConfig serverConfig,
+                                final Properties properties,
+                                final boolean priorityStop,
+                                final String[] processParameters,
+                                final Template template,
+                                final String customServr,
+                                final boolean onlineMode,
+                                final Collection<ServerInstallablePlugin> plugins,
+                                final String urlTemplate) {
         super(PacketRC.SERVER_HANDLE + 4, new Document("group", group).append("memory", memory).append("priorityStop", priorityStop).append(
             "serverConfig",
             serverConfig).append("properties", properties).append("processParameters", processParameters).append("customServer",
@@ -42,18 +42,18 @@ public class PacketOutStartServer extends Packet {
         }
     }
 
-    public PacketOutStartServer(String group,
-                                int memory,
-                                ServerConfig serverConfig,
-                                Properties properties,
-                                boolean priorityStop,
-                                String[] processParameters,
-                                Template template,
-                                String customServr,
-                                boolean onlineMode,
-                                Collection<ServerInstallablePlugin> plugins,
-                                String urlTemplate,
-                                String serverId) {
+    public PacketOutStartServer(final String group,
+                                final int memory,
+                                final ServerConfig serverConfig,
+                                final Properties properties,
+                                final boolean priorityStop,
+                                final String[] processParameters,
+                                final Template template,
+                                final String customServr,
+                                final boolean onlineMode,
+                                final Collection<ServerInstallablePlugin> plugins,
+                                final String urlTemplate,
+                                final String serverId) {
         super(PacketRC.SERVER_HANDLE + 4, new Document("group", group).append("memory", memory).append("priorityStop", priorityStop).append(
             "serverConfig",
             serverConfig).append("properties", properties).append("processParameters", processParameters).append("customServer",
@@ -65,18 +65,18 @@ public class PacketOutStartServer extends Packet {
         }
     }
 
-    public PacketOutStartServer(WrapperInfo wrapper,
-                                String group,
-                                int memory,
-                                ServerConfig serverConfig,
-                                Properties properties,
-                                boolean priorityStop,
-                                String[] processParameters,
-                                Template template,
-                                String customServr,
-                                boolean onlineMode,
-                                Collection<ServerInstallablePlugin> plugins,
-                                String urlTemplate) {
+    public PacketOutStartServer(final WrapperInfo wrapper,
+                                final String group,
+                                final int memory,
+                                final ServerConfig serverConfig,
+                                final Properties properties,
+                                final boolean priorityStop,
+                                final String[] processParameters,
+                                final Template template,
+                                final String customServr,
+                                final boolean onlineMode,
+                                final Collection<ServerInstallablePlugin> plugins,
+                                final String urlTemplate) {
         super(PacketRC.SERVER_HANDLE + 4, new Document("group", group).append("wrapper", wrapper.getServerId())
                                                                       .append("memory", memory)
                                                                       .append("priorityStop", priorityStop)
@@ -92,19 +92,19 @@ public class PacketOutStartServer extends Packet {
         }
     }
 
-    public PacketOutStartServer(WrapperInfo wrapperInfo,
-                                String group,
-                                String serviceId,
-                                int memory,
-                                ServerConfig serverConfig,
-                                Properties properties,
-                                boolean priorityStop,
-                                String[] processParameters,
-                                Template template,
-                                String customServr,
-                                boolean onlineMode,
-                                Collection<ServerInstallablePlugin> plugins,
-                                String urlTemplate) {
+    public PacketOutStartServer(final WrapperInfo wrapperInfo,
+                                final String group,
+                                final String serviceId,
+                                final int memory,
+                                final ServerConfig serverConfig,
+                                final Properties properties,
+                                final boolean priorityStop,
+                                final String[] processParameters,
+                                final Template template,
+                                final String customServr,
+                                final boolean onlineMode,
+                                final Collection<ServerInstallablePlugin> plugins,
+                                final String urlTemplate) {
         super(PacketRC.SERVER_HANDLE + 4, new Document("group", group).append("wrapper", wrapperInfo.getServerId())
                                                                       .append("priorityStop",
                                                                               priorityStop)

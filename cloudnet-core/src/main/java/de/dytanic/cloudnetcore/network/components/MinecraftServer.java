@@ -19,18 +19,21 @@ import io.netty.channel.Channel;
  */
 public final class MinecraftServer implements INetworkComponent {
 
-    private ServiceId serviceId;
-    private ServerProcessMeta processMeta;
-    private Wrapper wrapper;
-    private ServerGroupMode groupMode;
+    private final ServiceId serviceId;
+    private final ServerProcessMeta processMeta;
+    private final Wrapper wrapper;
+    private final ServerGroupMode groupMode;
 
-    private long channelLostTime = 0L;
+    private long channelLostTime;
 
     private ServerInfo serverInfo;
     private ServerInfo lastServerInfo;
     private Channel channel;
 
-    public MinecraftServer(ServerProcessMeta processMeta, Wrapper wrapper, ServerGroup group, ServerInfo serverInfo) {
+    public MinecraftServer(final ServerProcessMeta processMeta,
+                           final Wrapper wrapper,
+                           final ServerGroup group,
+                           final ServerInfo serverInfo) {
         this.processMeta = processMeta;
         this.serviceId = serverInfo.getServiceId();
         this.wrapper = wrapper;
@@ -46,7 +49,7 @@ public final class MinecraftServer implements INetworkComponent {
     }
 
     @Override
-    public void setChannel(Channel channel) {
+    public void setChannel(final Channel channel) {
         this.channel = channel;
     }
 
@@ -58,7 +61,7 @@ public final class MinecraftServer implements INetworkComponent {
         return channelLostTime;
     }
 
-    public void setChannelLostTime(long channelLostTime) {
+    public void setChannelLostTime(final long channelLostTime) {
         this.channelLostTime = channelLostTime;
     }
 
@@ -66,7 +69,7 @@ public final class MinecraftServer implements INetworkComponent {
         return lastServerInfo;
     }
 
-    public void setLastServerInfo(ServerInfo lastServerInfo) {
+    public void setLastServerInfo(final ServerInfo lastServerInfo) {
         this.lastServerInfo = lastServerInfo;
     }
 
@@ -74,7 +77,7 @@ public final class MinecraftServer implements INetworkComponent {
         return serverInfo;
     }
 
-    public void setServerInfo(ServerInfo serverInfo) {
+    public void setServerInfo(final ServerInfo serverInfo) {
         this.serverInfo = serverInfo;
     }
 
@@ -92,7 +95,7 @@ public final class MinecraftServer implements INetworkComponent {
         }
     }
 
-    public void sendCustomMessage(String channel, String message, Document value) {
+    public void sendCustomMessage(final String channel, final String message, final Document value) {
         this.sendPacket(new PacketOutCustomSubChannelMessage(channel, message, value));
     }
 

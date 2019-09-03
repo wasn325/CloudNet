@@ -17,12 +17,12 @@ import de.dytanic.cloudnet.lib.utility.threading.Runnabled;
 public class PacketInUpdateOnlineCount extends PacketInHandlerDefault {
 
     @Override
-    public void handleInput(Document data, PacketSender packetSender) {
-        int online = data.getInt("onlineCount");
+    public void handleInput(final Document data, final PacketSender packetSender) {
+        final int online = data.getInt("onlineCount");
         CloudAPI.getInstance().getCloudNetwork().setOnlineCount(online);
         CloudAPI.getInstance().getNetworkHandlerProvider().iterator(new Runnabled<NetworkHandler>() {
             @Override
-            public void run(NetworkHandler obj) {
+            public void run(final NetworkHandler obj) {
                 obj.onUpdateOnlineCount(online);
             }
         });

@@ -18,12 +18,12 @@ import de.dytanic.cloudnetcore.network.components.MinecraftServer;
 public class PacketAPIInGetServer extends PacketAPIIO {
 
     @Override
-    public void handleInput(Document data, PacketSender packetSender) {
-        MinecraftServer minecraftServer = CloudNet.getInstance().getServer(data.getString("server"));
+    public void handleInput(final Document data, final PacketSender packetSender) {
+        final MinecraftServer minecraftServer = CloudNet.getInstance().getServer(data.getString("server"));
         if (minecraftServer != null) {
             packetSender.sendPacket(getResult(new Document("serverInfo", minecraftServer.getServerInfo())));
         } else {
-            CloudServer cloudServer = CloudNet.getInstance().getCloudGameServer(data.getString("server"));
+            final CloudServer cloudServer = CloudNet.getInstance().getCloudGameServer(data.getString("server"));
             if (cloudServer != null) {
                 packetSender.sendPacket(getResult(new Document("serverInfo", cloudServer.getServerInfo())));
                 return;
@@ -34,7 +34,7 @@ public class PacketAPIInGetServer extends PacketAPIIO {
     }
 
     @Override
-    protected Packet getResult(Document value) {
+    protected Packet getResult(final Document value) {
         return new Packet(packetUniqueId, PacketRC.API, value);
     }
 }

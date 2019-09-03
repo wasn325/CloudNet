@@ -14,15 +14,15 @@ import de.dytanic.cloudnet.lib.utility.document.Document;
 
 public class PacketOutUpdateProxyServerList extends Packet {
 
-    public PacketOutUpdateProxyServerList(java.util.Map<String, ServerInfo> stringServerInfoMap) {
+    public PacketOutUpdateProxyServerList(final java.util.Map<String, ServerInfo> stringServerInfoMap) {
         super(PacketRC.SERVER_HANDLE + 1, new Document("servers", MapWrapper.transform(stringServerInfoMap, new Catcher<String, String>() {
             @Override
-            public String doCatch(String key) {
+            public String doCatch(final String key) {
                 return key;
             }
         }, new Catcher<SimpleServerInfo, ServerInfo>() {
             @Override
-            public SimpleServerInfo doCatch(ServerInfo key) {
+            public SimpleServerInfo doCatch(final ServerInfo key) {
                 return key.toSimple();
             }
         })));

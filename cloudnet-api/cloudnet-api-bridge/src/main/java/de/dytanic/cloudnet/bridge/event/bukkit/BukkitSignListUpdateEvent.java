@@ -15,11 +15,11 @@ import java.util.UUID;
  */
 public class BukkitSignListUpdateEvent extends BukkitCloudEvent {
 
-    private static HandlerList handlerList = new HandlerList();
+    private static final HandlerList handlerList = new HandlerList();
 
-    private Map<UUID, Sign> signList;
+    private final Map<UUID, Sign> signList;
 
-    public BukkitSignListUpdateEvent(Map<UUID, Sign> signList) {
+    public BukkitSignListUpdateEvent(final Map<UUID, Sign> signList) {
         this.signList = signList;
     }
 

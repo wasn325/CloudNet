@@ -17,7 +17,7 @@ import java.util.*;
 public final class CommandManager implements Completer {
 
     private final Map<String, Command> commands = NetworkUtils.newConcurrentHashMap();
-    private ConsoleCommandSender consoleSender = new ConsoleCommandSender();
+    private final ConsoleCommandSender consoleSender = new ConsoleCommandSender();
 
     /**
      * Constructs a new command manager with a {@link ConsoleCommandSender} and
@@ -43,7 +43,7 @@ public final class CommandManager implements Completer {
      *
      * @return the command manager this was called on, allows for chaining
      */
-    public CommandManager registerCommand(Command command) {
+    public CommandManager registerCommand(final Command command) {
         if (command == null) {
             return this;
         }
@@ -51,7 +51,7 @@ public final class CommandManager implements Completer {
         this.commands.put(command.getName().toLowerCase(), command);
 
         if (command.getAliases().length != 0) {
-            for (String aliases : command.getAliases()) {
+            for (final String aliases : command.getAliases()) {
                 commands.put(aliases.toLowerCase(), command);
             }
         }
@@ -88,7 +88,7 @@ public final class CommandManager implements Completer {
      *
      * @see CommandManager#dispatchCommand(CommandSender, String)
      */
-    public boolean dispatchCommand(String command) {
+    public boolean dispatchCommand(final String command) {
         return dispatchCommand(consoleSender, command);
     }
 
@@ -107,13 +107,13 @@ public final class CommandManager implements Completer {
      *
      * @return whether the command executed successfully
      */
-    public boolean dispatchCommand(CommandSender sender, String command) {
-        String[] a = command.split(" ");
+    public boolean dispatchCommand(final CommandSender sender, final String command) {
+        final String[] a = command.split(" ");
         if (this.commands.containsKey(a[0].toLowerCase())) {
-            String b = command.replace((command.contains(" ") ? command.split(" ")[0] + ' ' : command), NetworkUtils.EMPTY_STRING);
+            final String b = command.replace((command.contains(" ") ? command.split(" ")[0] + ' ' : command), NetworkUtils.EMPTY_STRING);
             try {
-                for (String argument : a) {
-                    for (CommandArgument commandArgument : this.commands.get(a[0].toLowerCase()).getCommandArguments()) {
+                for (final String argument : a) {
+                    for (final CommandArgument commandArgument : this.commands.get(a[0].toLowerCase()).getCommandArguments()) {
                         if (commandArgument.getName().equalsIgnoreCase(argument)) {
                             commandArgument.preExecute(this.commands.get(a[0]), command);
                         }
@@ -123,19 +123,19 @@ public final class CommandManager implements Completer {
                 if (b.equals(NetworkUtils.EMPTY_STRING)) {
                     this.commands.get(a[0].toLowerCase()).onExecuteCommand(sender, new String[0]);
                 } else {
-                    String[] c = b.split(" ");
+                    final String[] c = b.split(" ");
                     this.commands.get(a[0].toLowerCase()).onExecuteCommand(sender, c);
                 }
 
-                for (String argument : a) {
-                    for (CommandArgument commandArgument : this.commands.get(a[0].toLowerCase()).getCommandArguments()) {
+                for (final String argument : a) {
+                    for (final CommandArgument commandArgument : this.commands.get(a[0].toLowerCase()).getCommandArguments()) {
                         if (commandArgument.getName().equalsIgnoreCase(argument)) {
                             commandArgument.postExecute(this.commands.get(a[0]), command);
                         }
                     }
                 }
 
-            } catch (Exception ex) {
+            } catch (final Exception ex) {
                 ex.printStackTrace();
             }
             return true;
@@ -145,24 +145,24 @@ public final class CommandManager implements Completer {
     }
 
     @Override
-    public int complete(String buffer, int cursor, List<CharSequence> candidates) {
-        String[] input = buffer.split(" ");
+    public int complete(final String buffer, final int cursor, final List<CharSequence> candidates) {
+        final String[] input = buffer.split(" ");
 
-        List<String> responses = new ArrayList<>();
+        final List<String> responses = new ArrayList<>();
 
         if (buffer.isEmpty() || buffer.indexOf(' ') == -1) {
             responses.addAll(this.commands.keySet());
         } else {
-            Command command = getCommand(input[0]);
+            final Command command = getCommand(input[0]);
 
             if (command instanceof TabCompletable) {
-                String[] args = buffer.split(" ");
-                String testString = args[args.length - 1];
+                final String[] args = buffer.split(" ");
+                final String testString = args[args.length - 1];
 
                 responses.addAll(CollectionWrapper.filterMany(((TabCompletable) command).onTab(input.length - 1, input[input.length - 1]),
                                                               new Acceptable<String>() {
                                                                   @Override
-                                                                  public boolean isAccepted(String s) {
+                                                                  public boolean isAccepted(final String s) {
                                                                       return s != null && (testString.isEmpty() || s.toLowerCase().contains(
                                                                           testString.toLowerCase()));
                                                                   }
@@ -173,7 +173,7 @@ public final class CommandManager implements Completer {
         Collections.sort(responses);
 
         candidates.addAll(responses);
-        int lastSpace = buffer.lastIndexOf(' ');
+        final int lastSpace = buffer.lastIndexOf(' ');
 
         return (lastSpace == -1) ? cursor - buffer.length() : cursor - (buffer.length() - lastSpace - 1);
     }
@@ -186,7 +186,7 @@ public final class CommandManager implements Completer {
      * @return the command, if there is one with the given {@code name} or alias
      * or {@code null}, if no command matches the {@code name}
      */
-    public Command getCommand(String name) {
+    public Command getCommand(final String name) {
         return commands.get(name.toLowerCase());
     }
 }

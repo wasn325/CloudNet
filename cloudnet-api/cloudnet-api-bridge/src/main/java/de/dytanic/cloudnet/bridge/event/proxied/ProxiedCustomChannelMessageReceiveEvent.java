@@ -11,13 +11,13 @@ import de.dytanic.cloudnet.lib.utility.document.Document;
  */
 public class ProxiedCustomChannelMessageReceiveEvent extends ProxiedCloudEvent {
 
-    private String channel;
+    private final String channel;
 
-    private String message;
+    private final String message;
 
-    private Document document;
+    private final Document document;
 
-    public ProxiedCustomChannelMessageReceiveEvent(String channel, String message, Document document) {
+    public ProxiedCustomChannelMessageReceiveEvent(final String channel, final String message, final Document document) {
         this.channel = channel;
         this.message = message;
         this.document = document;

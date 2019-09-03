@@ -43,24 +43,24 @@ public class ServerGroup implements Nameable {
 
     protected WrappedMap settings;
 
-    public ServerGroup(String name,
-                       Collection<String> wrapper,
-                       boolean kickedForceFallback,
-                       int memory,
-                       int dynamicMemory,
-                       int joinPower,
-                       boolean maintenance,
-                       int startup,
-                       int priority,
-                       int groupPriority,
-                       int priorityStopTime,
-                       int onlineCountForPriority,
-                       int priorityForGroupOnlineCount,
-                       int percentForNewServerAutomatically,
-                       ServerGroupType serverType,
-                       ServerGroupMode groupMode,
-                       Collection<Template> templates,
-                       AdvancedServerConfig advancedServerConfig) {
+    public ServerGroup(final String name,
+                       final Collection<String> wrapper,
+                       final boolean kickedForceFallback,
+                       final int memory,
+                       final int dynamicMemory,
+                       final int joinPower,
+                       final boolean maintenance,
+                       final int startup,
+                       final int priority,
+                       final int groupPriority,
+                       final int priorityStopTime,
+                       final int onlineCountForPriority,
+                       final int priorityForGroupOnlineCount,
+                       final int percentForNewServerAutomatically,
+                       final ServerGroupType serverType,
+                       final ServerGroupMode groupMode,
+                       final Collection<Template> templates,
+                       final AdvancedServerConfig advancedServerConfig) {
         this.name = name;
         this.kickedForceFallback = kickedForceFallback;
         this.wrapper = wrapper;
@@ -95,7 +95,7 @@ public class ServerGroup implements Nameable {
         return memory;
     }
 
-    public void setMemory(int memory) {
+    public void setMemory(final int memory) {
         this.memory = memory;
     }
 
@@ -104,7 +104,7 @@ public class ServerGroup implements Nameable {
         return name;
     }
 
-    public void setName(String name) {
+    public void setName(final String name) {
         this.name = name;
     }
 
@@ -112,7 +112,7 @@ public class ServerGroup implements Nameable {
         return wrapper;
     }
 
-    public void setWrapper(Collection<String> wrapper) {
+    public void setWrapper(final Collection<String> wrapper) {
         this.wrapper = wrapper;
     }
 
@@ -120,7 +120,7 @@ public class ServerGroup implements Nameable {
         return percentForNewServerAutomatically;
     }
 
-    public void setPercentForNewServerAutomatically(int percentForNewServerAutomatically) {
+    public void setPercentForNewServerAutomatically(final int percentForNewServerAutomatically) {
         this.percentForNewServerAutomatically = percentForNewServerAutomatically;
     }
 
@@ -128,7 +128,7 @@ public class ServerGroup implements Nameable {
         return joinPower;
     }
 
-    public void setJoinPower(int joinPower) {
+    public void setJoinPower(final int joinPower) {
         this.joinPower = joinPower;
     }
 
@@ -136,7 +136,7 @@ public class ServerGroup implements Nameable {
         return advancedServerConfig;
     }
 
-    public void setAdvancedServerConfig(AdvancedServerConfig advancedServerConfig) {
+    public void setAdvancedServerConfig(final AdvancedServerConfig advancedServerConfig) {
         this.advancedServerConfig = advancedServerConfig;
     }
 
@@ -144,7 +144,7 @@ public class ServerGroup implements Nameable {
         return settings;
     }
 
-    public void setSettings(WrappedMap settings) {
+    public void setSettings(final WrappedMap settings) {
         this.settings = settings;
     }
 
@@ -152,7 +152,7 @@ public class ServerGroup implements Nameable {
         return groupMode;
     }
 
-    public void setGroupMode(ServerGroupMode groupMode) {
+    public void setGroupMode(final ServerGroupMode groupMode) {
         this.groupMode = groupMode;
     }
 
@@ -160,7 +160,7 @@ public class ServerGroup implements Nameable {
         return templates;
     }
 
-    public void setTemplates(Collection<Template> templates) {
+    public void setTemplates(final Collection<Template> templates) {
         this.templates = templates;
     }
 
@@ -168,7 +168,7 @@ public class ServerGroup implements Nameable {
         return dynamicMemory;
     }
 
-    public void setDynamicMemory(int dynamicMemory) {
+    public void setDynamicMemory(final int dynamicMemory) {
         this.dynamicMemory = dynamicMemory;
     }
 
@@ -176,7 +176,7 @@ public class ServerGroup implements Nameable {
         return maxOnlineServers;
     }
 
-    public void setMaxOnlineServers(int maxOnlineServers) {
+    public void setMaxOnlineServers(final int maxOnlineServers) {
         this.maxOnlineServers = maxOnlineServers;
     }
 
@@ -184,7 +184,7 @@ public class ServerGroup implements Nameable {
         return minOnlineServers;
     }
 
-    public void setMinOnlineServers(int minOnlineServers) {
+    public void setMinOnlineServers(final int minOnlineServers) {
         this.minOnlineServers = minOnlineServers;
     }
 
@@ -192,7 +192,7 @@ public class ServerGroup implements Nameable {
         return priorityService;
     }
 
-    public void setPriorityService(PriorityService priorityService) {
+    public void setPriorityService(final PriorityService priorityService) {
         this.priorityService = priorityService;
     }
 
@@ -200,7 +200,7 @@ public class ServerGroup implements Nameable {
         return serverType;
     }
 
-    public void setServerType(ServerGroupType serverType) {
+    public void setServerType(final ServerGroupType serverType) {
         this.serverType = serverType;
     }
 
@@ -208,7 +208,7 @@ public class ServerGroup implements Nameable {
         return globalTemplate;
     }
 
-    public void setGlobalTemplate(Template globalTemplate) {
+    public void setGlobalTemplate(final Template globalTemplate) {
         this.globalTemplate = globalTemplate;
     }
 
@@ -216,7 +216,7 @@ public class ServerGroup implements Nameable {
         return maintenance;
     }
 
-    public void setMaintenance(boolean maintenance) {
+    public void setMaintenance(final boolean maintenance) {
         this.maintenance = maintenance;
     }
 
@@ -224,7 +224,7 @@ public class ServerGroup implements Nameable {
         return kickedForceFallback;
     }
 
-    public void setKickedForceFallback(boolean kickedForceFallback) {
+    public void setKickedForceFallback(final boolean kickedForceFallback) {
         this.kickedForceFallback = kickedForceFallback;
     }
 

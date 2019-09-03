@@ -11,9 +11,9 @@ import java.util.concurrent.TimeoutException;
 public class TaskEntryFuture<T> implements Future<T> {
 
     protected volatile boolean waits;
-    private TaskEntry<T> entry;
+    private final TaskEntry<T> entry;
 
-    public TaskEntryFuture(TaskEntry<T> entry, boolean waits) {
+    public TaskEntryFuture(final TaskEntry<T> entry, final boolean waits) {
         this.entry = entry;
         this.waits = waits;
     }
@@ -27,7 +27,7 @@ public class TaskEntryFuture<T> implements Future<T> {
     }
 
     @Override
-    public boolean cancel(boolean pMayInterruptIfRunning) {
+    public boolean cancel(final boolean pMayInterruptIfRunning) {
 
         if (pMayInterruptIfRunning) {
             entry.task = null;
@@ -60,7 +60,7 @@ public class TaskEntryFuture<T> implements Future<T> {
 
 
     @Override
-    public synchronized T get(long pTimeout, TimeUnit pUnit) throws InterruptedException, ExecutionException, TimeoutException {
+    public synchronized T get(final long pTimeout, final TimeUnit pUnit) throws InterruptedException, ExecutionException, TimeoutException {
 
         waits = true;
         /*

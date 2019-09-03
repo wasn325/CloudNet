@@ -18,36 +18,36 @@ import java.util.function.Consumer;
  */
 public class SetupWrapper {
 
-    private String name;
+    private final String name;
 
-    public SetupWrapper(CommandSender commandSender, String name) {
+    public SetupWrapper(final CommandSender commandSender, final String name) {
         this.name = name;
 
-        Setup setup = new Setup().setupCancel(new ISetupCancel() {
+        final Setup setup = new Setup().setupCancel(new ISetupCancel() {
             @Override
             public void cancel() {
                 System.out.println("Setup was cancelled");
             }
         }).setupComplete(new ISetupComplete() {
             @Override
-            public void complete(Document data) {
-                String host = data.getString("address");
-                String user = data.getString("user");
+            public void complete(final Document data) {
+                final String host = data.getString("address");
+                final String user = data.getString("user");
 
-                WrapperMeta wrapperMeta = new WrapperMeta(name, host, user);
+                final WrapperMeta wrapperMeta = new WrapperMeta(name, host, user);
                 CloudNet.getInstance().getConfig().createWrapper(wrapperMeta);
                 commandSender.sendMessage("Wrapper [" + wrapperMeta.getId() + "] was registered on CloudNet");
             }
         });
 
-        Consumer<SetupRequest> request = setup::request;
+        final Consumer<SetupRequest> request = setup::request;
         request.accept(new SetupRequest("address",
                                         "What's the IP address of the wrapper?",
                                         "Specified IP address is invalid!",
                                         SetupResponseType.STRING,
                                         new Catcher<Boolean, String>() {
                                             @Override
-                                            public Boolean doCatch(String key) {
+                                            public Boolean doCatch(final String key) {
                                                 return key.split("\\.").length == 4 && !key.equalsIgnoreCase("127.0.0.1");
                                             }
                                         }));
@@ -57,7 +57,7 @@ public class SetupWrapper {
                                         SetupResponseType.STRING,
                                         new Catcher<Boolean, String>() {
                                             @Override
-                                            public Boolean doCatch(String key) {
+                                            public Boolean doCatch(final String key) {
                                                 return CloudNet.getInstance().getUser(key) != null;
                                             }
                                         }));

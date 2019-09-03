@@ -17,8 +17,8 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 public class ModuleManager {
 
     private final Collection<Module> modules = new ConcurrentLinkedQueue<>();
-    private ModuleDetector moduleDetector = new ModuleDetector();
-    private File directory = new File("modules");
+    private final ModuleDetector moduleDetector = new ModuleDetector();
+    private final File directory = new File("modules");
     private Collection<String> disabledModuleList = new ArrayList<>();
 
     public ModuleManager() {
@@ -33,7 +33,7 @@ public class ModuleManager {
         return disabledModuleList;
     }
 
-    public void setDisabledModuleList(Collection<String> disabledModuleList) {
+    public void setDisabledModuleList(final Collection<String> disabledModuleList) {
         this.disabledModuleList = disabledModuleList;
     }
 
@@ -49,24 +49,19 @@ public class ModuleManager {
         return detect(directory);
     }
 
-    public Collection<ModuleConfig> detect(File directory) {
-        Set<ModuleConfig> modules = moduleDetector.detectAvailable(directory);
-        return modules;
-    }
-
     public ModuleManager loadModules() throws Exception {
         return loadModules(directory);
     }
 
-    public ModuleManager loadModules(File directory) throws Exception {
-        Collection<ModuleConfig> configs = detect(directory);
+    public ModuleManager loadModules(final File directory) throws Exception {
+        final Collection<ModuleConfig> configs = detect(directory);
 
-        for (ModuleConfig config : configs) {
+        for (final ModuleConfig config : configs) {
             if (!disabledModuleList.contains(config.getName())) {
                 System.out.println("Loading module \"" + config.getName() + "\" version: " + config.getVersion() + "...");
 
-                ModuleLoader moduleLoader = new ModuleClassLoader(config);
-                Module module = moduleLoader.loadModule();
+                final ModuleLoader moduleLoader = new ModuleClassLoader(config);
+                final Module module = moduleLoader.loadModule();
                 module.setModuleLoader(moduleLoader);
                 module.setDataFolder(directory);
                 this.modules.add(module);
@@ -75,14 +70,18 @@ public class ModuleManager {
         return this;
     }
 
-    public ModuleManager loadInternalModules(Set<ModuleConfig> modules) throws Exception {
+    public Collection<ModuleConfig> detect(final File directory) {
+        return moduleDetector.detectAvailable(directory);
+    }
+
+    public ModuleManager loadInternalModules(final Set<ModuleConfig> modules) throws Exception {
         return loadInternalModules(modules, this.directory);
     }
 
-    public ModuleManager loadInternalModules(Set<ModuleConfig> modules, File dataFolder) throws Exception {
-        for (ModuleConfig moduleConfig : modules) {
-            ModuleLoader moduleLoader = new ModuleInternalLoader(moduleConfig);
-            Module module = moduleLoader.loadModule();
+    public ModuleManager loadInternalModules(final Set<ModuleConfig> modules, final File dataFolder) throws Exception {
+        for (final ModuleConfig moduleConfig : modules) {
+            final ModuleLoader moduleLoader = new ModuleInternalLoader(moduleConfig);
+            final Module module = moduleLoader.loadModule();
             module.setDataFolder(dataFolder);
             module.setModuleLoader(moduleLoader);
             this.modules.add(module);
@@ -91,7 +90,7 @@ public class ModuleManager {
     }
 
     public ModuleManager enableModules() {
-        for (Module module : modules) {
+        for (final Module module : modules) {
             System.out.println("Enabling module \"" + module.getModuleConfig().getName() + "\" version: " + module.getModuleConfig()
                                                                                                                   .getVersion() + "...");
             module.onBootstrap();
@@ -99,7 +98,7 @@ public class ModuleManager {
         return this;
     }
 
-    public ModuleManager disableModule(Module module) {
+    public ModuleManager disableModule(final Module module) {
         System.out.println("Disabling module \"" + module.getModuleConfig().getName() + "\" version: " + module.getModuleConfig()
                                                                                                                .getVersion() + "...");
         module.onShutdown();
@@ -109,7 +108,7 @@ public class ModuleManager {
 
     public ModuleManager disableModules() {
         while (!modules.isEmpty()) {
-            Module module = (Module) ((Queue) modules).poll();
+            final Module module = (Module) ((Queue) modules).poll();
             System.out.println("Disabling module \"" + module.getModuleConfig().getName() + "\" version: " + module.getModuleConfig()
                                                                                                                    .getVersion() + "...");
             module.onShutdown();

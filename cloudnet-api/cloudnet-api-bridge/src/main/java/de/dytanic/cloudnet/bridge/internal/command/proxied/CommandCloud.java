@@ -44,7 +44,7 @@ public final class CommandCloud extends Command implements TabExecutor {
     }
 
     @Override
-    public void execute(CommandSender commandSender, String[] args) {
+    public void execute(final CommandSender commandSender, final String[] args) {
         CloudAPI.getInstance().getLogger().finest(String.format("%s executed %s with arguments %s",
                                                                 commandSender,
                                                                 this,
@@ -52,7 +52,7 @@ public final class CommandCloud extends Command implements TabExecutor {
         if (args.length > 2) {
             if (args[0].equalsIgnoreCase("cmds") && commandSender.hasPermission("cloudnet.command.cloud.commandserver")) {
                 if (CloudProxy.getInstance().getCachedServers().containsKey(args[1])) {
-                    StringBuilder builder = new StringBuilder();
+                    final StringBuilder builder = new StringBuilder();
 
                     for (short i = 2; i < args.length; i++) {
                         builder.append(args[i]).append(NetworkUtils.SPACE_STRING);
@@ -65,7 +65,7 @@ public final class CommandCloud extends Command implements TabExecutor {
                 }
             }
             if (args[0].equalsIgnoreCase("cmdp") && commandSender.hasPermission("cloudnet.command.cloud.commandproxy")) {
-                StringBuilder builder = new StringBuilder();
+                final StringBuilder builder = new StringBuilder();
 
                 for (short i = 2; i < args.length; i++) {
                     builder.append(args[i]).append(NetworkUtils.SPACE_STRING);
@@ -85,7 +85,7 @@ public final class CommandCloud extends Command implements TabExecutor {
                                                                                    .getPrefix() + "Whitelisted players from " + CloudProxy.getInstance()
                                                                                                                                           .getProxyGroup()
                                                                                                                                           .getName()));
-                    for (String entry : CloudProxy.getInstance().getProxyGroup().getProxyConfig().getWhitelist()) {
+                    for (final String entry : CloudProxy.getInstance().getProxyGroup().getProxyConfig().getWhitelist()) {
                         commandSender.sendMessage(TextComponent.fromLegacyText("§7- " + entry));
                     }
                 } else if (args[0].equalsIgnoreCase("rl") && commandSender.hasPermission("cloudnet.command.cloud.reload")) {
@@ -94,11 +94,11 @@ public final class CommandCloud extends Command implements TabExecutor {
                                                                                    .getPrefix() + "The information was sent to the cloud"));
                     return;
                 } else if (args[0].equalsIgnoreCase("statistics") && commandSender.hasPermission("cloudnet.command.cloud.statistics")) {
-                    Document document = CloudAPI.getInstance().getStatistics();
+                    final Document document = CloudAPI.getInstance().getStatistics();
 
                     commandSender.sendMessage(TextComponent.fromLegacyText(CloudAPI.getInstance().getPrefix() + "Statistics"));
 
-                    for (String key : document.keys()) {
+                    for (final String key : document.keys()) {
                         if (!Database.UNIQUE_NAME_KEY.equalsIgnoreCase(key)) {
                             commandSender.sendMessage(TextComponent.fromLegacyText("§3" + key + "§8| §e " + document.get(key).toString()));
                         }
@@ -116,15 +116,15 @@ public final class CommandCloud extends Command implements TabExecutor {
                     int maxMemory = 0;
                     int usedMemory = 0;
 
-                    Map<String, Collection<ServerInfo>> groupSorted = new LinkedHashMap<>();
+                    final Map<String, Collection<ServerInfo>> groupSorted = new LinkedHashMap<>();
 
-                    for (WrapperInfo cnsInfo : CloudAPI.getInstance().getWrappers()) {
+                    for (final WrapperInfo cnsInfo : CloudAPI.getInstance().getWrappers()) {
                         commandSender.sendMessage(TextComponent.fromLegacyText("§8[§7" + cnsInfo.getServerId() + "§8/§7" + cnsInfo.getHostName() + "§8] §7Cores: " + cnsInfo
                             .getAvailableProcessors()));
                         maxMemory = maxMemory + cnsInfo.getMemory();
                     }
                     commandSender.sendMessage(TextComponent.fromLegacyText(NetworkUtils.SPACE_STRING));
-                    for (ProxyInfo simpleProxyInfo : CloudAPI.getInstance().getProxys()) {
+                    for (final ProxyInfo simpleProxyInfo : CloudAPI.getInstance().getProxys()) {
                         commandSender.sendMessage(TextComponent.fromLegacyText("§8[§c" + simpleProxyInfo.getServiceId()
                                                                                                         .getServerId() + "§8] §8(§e" + simpleProxyInfo
                             .getOnlineCount() + "§8) : §7" + simpleProxyInfo.getMemory() + "MB"));
@@ -132,7 +132,7 @@ public final class CommandCloud extends Command implements TabExecutor {
                     }
 
                     commandSender.sendMessage(TextComponent.fromLegacyText(NetworkUtils.SPACE_STRING));
-                    for (ServerInfo simpleProxyInfo : CloudAPI.getInstance().getServers()) {
+                    for (final ServerInfo simpleProxyInfo : CloudAPI.getInstance().getServers()) {
                         if (simpleProxyInfo.getServiceId().getGroup() != null) {
                             if (!groupSorted.containsKey(simpleProxyInfo.getServiceId().getGroup())) {
                                 groupSorted.put(simpleProxyInfo.getServiceId().getGroup(), new ArrayList<>());
@@ -147,10 +147,10 @@ public final class CommandCloud extends Command implements TabExecutor {
 
                     commandSender.sendMessage(TextComponent.fromLegacyText(NetworkUtils.SPACE_STRING));
 
-                    for (Map.Entry<String, Collection<ServerInfo>> entry : groupSorted.entrySet()) {
+                    for (final Map.Entry<String, Collection<ServerInfo>> entry : groupSorted.entrySet()) {
                         commandSender.sendMessage(TextComponent.fromLegacyText("§7Group: §e" + entry.getKey()));
 
-                        for (ServerInfo serverInfo : entry.getValue()) {
+                        for (final ServerInfo serverInfo : entry.getValue()) {
                             sendServerInfo(commandSender, serverInfo);
                             usedMemory = usedMemory + serverInfo.getMemory();
                         }
@@ -161,7 +161,7 @@ public final class CommandCloud extends Command implements TabExecutor {
                     commandSender.sendMessage(TextComponent.fromLegacyText("§7Memory in use: " + usedMemory + "§8/§7" + maxMemory + "MB"));
                 } else if (args[0].equalsIgnoreCase("listProxys") && commandSender.hasPermission("cloudnet.command.listproxys")) {
                     commandSender.sendMessage(TextComponent.fromLegacyText(CloudAPI.getInstance().getPrefix() + "Proxys:"));
-                    for (ProxyInfo proxy : CloudAPI.getInstance().getProxys()) {
+                    for (final ProxyInfo proxy : CloudAPI.getInstance().getProxys()) {
                         commandSender.sendMessage(TextComponent.fromLegacyText("§7- " + (proxy.isOnline() ? "§e" : "§c") + proxy.getServiceId()
                                                                                                                                 .getServerId() + " §8(§e" + proxy
                             .getOnlineCount() + "§8) "));
@@ -169,8 +169,9 @@ public final class CommandCloud extends Command implements TabExecutor {
                     return;
                 } else if (args[0].equalsIgnoreCase("listServers") && commandSender.hasPermission("cloudnet.command.cloud.listservers")) {
                     commandSender.sendMessage(TextComponent.fromLegacyText(CloudAPI.getInstance().getPrefix() + "Server:"));
-                    for (ServerInfo server : CloudProxy.getInstance().getCachedServers().values()) {
-                        TextComponent textComponent = new TextComponent(TextComponent.fromLegacyText("§7- " + (server.isOnline() ? "§e" : "§c") + server
+                    for (final ServerInfo server : CloudProxy.getInstance().getCachedServers().values()) {
+                        final TextComponent textComponent = new TextComponent(TextComponent.fromLegacyText(
+                            "§7- " + (server.isOnline() ? "§e" : "§c") + server
                             .getServiceId()
                             .getServerId() + "§8(" + server.getOnlineCount() + "§8) §7State: " + server.getServerState()));
                         textComponent.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND,
@@ -179,15 +180,15 @@ public final class CommandCloud extends Command implements TabExecutor {
                     }
                     return;
                 } else if (args[0].equalsIgnoreCase("listOnline") && commandSender.hasPermission("cloudnet.command.cloud.listonline")) {
-                    for (CloudPlayer playerWhereAmI : CloudAPI.getInstance().getOnlinePlayers()) {
+                    for (final CloudPlayer playerWhereAmI : CloudAPI.getInstance().getOnlinePlayers()) {
                         commandSender.sendMessage(TextComponent.fromLegacyText("§7- §e" + playerWhereAmI.getName() + " §7on §e" + playerWhereAmI
                             .getServer() + NetworkUtils.SLASH_STRING + playerWhereAmI.getProxy()));
                     }
                     return;
                 } else if (args[0].equalsIgnoreCase("listGroups") && commandSender.hasPermission("cloudnet.command.cloud.listgroups")) {
-                    StringBuilder builder = new StringBuilder();
+                    final StringBuilder builder = new StringBuilder();
 
-                    for (SimpleServerGroup group : CloudAPI.getInstance().getCloudNetwork().getServerGroups().values()) {
+                    for (final SimpleServerGroup group : CloudAPI.getInstance().getCloudNetwork().getServerGroups().values()) {
                         builder.append((group.isMaintenance() ? "§c" : "§e")).append(group.getName()).append("§7, ");
                     }
 
@@ -208,7 +209,7 @@ public final class CommandCloud extends Command implements TabExecutor {
                     switch (args[1].toLowerCase()) {
                         case "autoslot": {
                             if (commandSender.hasPermission("cloudnet.command.cloud.autoslot")) {
-                                ProxyGroup proxyGroup = CloudProxy.getInstance().getProxyGroup();
+                                final ProxyGroup proxyGroup = CloudProxy.getInstance().getProxyGroup();
                                 proxyGroup.getProxyConfig().setAutoSlot(new AutoSlot(proxyGroup.getProxyConfig()
                                                                                                .getAutoSlot()
                                                                                                .getDynamicSlotSize(),
@@ -223,7 +224,7 @@ public final class CommandCloud extends Command implements TabExecutor {
                         return;
                         case "maintenance": {
                             if (commandSender.hasPermission("cloudnet.command.cloud.maintenance")) {
-                                ProxyGroup proxyGroup = CloudProxy.getInstance().getProxyGroup();
+                                final ProxyGroup proxyGroup = CloudProxy.getInstance().getProxyGroup();
                                 proxyGroup.getProxyConfig().setMaintenance(!proxyGroup.getProxyConfig().isMaintenance());
                                 CloudAPI.getInstance().updateProxyGroup(proxyGroup);
                                 commandSender.sendMessage(TextComponent.fromLegacyText(CloudAPI.getInstance()
@@ -241,8 +242,8 @@ public final class CommandCloud extends Command implements TabExecutor {
                                                                                                                                     .getServerId()
                                                                                                                                     .equalsIgnoreCase(
                                                                                                                                         args[1]))) {
-                        String url = CloudAPI.getInstance().createServerLogUrl(args[1]);
-                        TextComponent textComponent = new TextComponent(TextComponent.fromLegacyText("§n§l§b" + url));
+                        final String url = CloudAPI.getInstance().createServerLogUrl(args[1]);
+                        final TextComponent textComponent = new TextComponent(TextComponent.fromLegacyText("§n§l§b" + url));
                         textComponent.setClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, url));
                         commandSender.sendMessage(new TextComponent(TextComponent.fromLegacyText(CloudAPI.getInstance()
                                                                                                          .getPrefix() + "You can review the log at: ")),
@@ -256,7 +257,7 @@ public final class CommandCloud extends Command implements TabExecutor {
                     return;
                 } else if (args[0].equalsIgnoreCase("setMaxPlayers") && commandSender.hasPermission("cloudnet.command.cloud.setmaxplayers")) {
                     if (isNumber(args[1])) {
-                        ProxyGroup proxyGroup = CloudProxy.getInstance().getProxyGroup();
+                        final ProxyGroup proxyGroup = CloudProxy.getInstance().getProxyGroup();
                         proxyGroup.getProxyConfig().setMaxPlayers(Integer.parseInt(args[1]));
                         CloudAPI.getInstance().updateProxyGroup(proxyGroup);
                         commandSender.sendMessage(TextComponent.fromLegacyText(CloudAPI.getInstance()
@@ -283,7 +284,7 @@ public final class CommandCloud extends Command implements TabExecutor {
                     return;
                 } else if (args[0].equalsIgnoreCase("maintenance") && commandSender.hasPermission("cloudnet.command.cloud.maintenancegroup")) {
                     if (CloudAPI.getInstance().getServerGroupMap().containsKey(args[1])) {
-                        ServerGroup serverGroup = CloudAPI.getInstance().getServerGroup(args[1]);
+                        final ServerGroup serverGroup = CloudAPI.getInstance().getServerGroup(args[1]);
                         serverGroup.setMaintenance(!serverGroup.isMaintenance());
                         CloudAPI.getInstance().updateServerGroup(serverGroup);
                         commandSender.sendMessage(TextComponent.fromLegacyText(CloudAPI.getInstance()
@@ -311,9 +312,9 @@ public final class CommandCloud extends Command implements TabExecutor {
                     return;
                 } else if (args[0].equalsIgnoreCase("stopGroup") && commandSender.hasPermission("cloudnet.command.cloud.stopgroup")) {
                     if (CloudAPI.getInstance().getServerGroupMap().containsKey(args[1])) {
-                        List<String> servers = CloudProxy.getInstance().getServers(args[1]);
+                        final List<String> servers = CloudProxy.getInstance().getServers(args[1]);
 
-                        for (String server : servers) {
+                        for (final String server : servers) {
                             CloudAPI.getInstance().stopServer(server);
                         }
 
@@ -323,9 +324,9 @@ public final class CommandCloud extends Command implements TabExecutor {
                     }
 
                     if (CloudAPI.getInstance().getProxyGroupMap().containsKey(args[1])) {
-                        Collection<ProxyInfo> servers = CloudAPI.getInstance().getProxys();
+                        final Collection<ProxyInfo> servers = CloudAPI.getInstance().getProxys();
 
-                        for (ProxyInfo proxyInfo : servers) {
+                        for (final ProxyInfo proxyInfo : servers) {
                             if (proxyInfo.getServiceId().getGroup().equalsIgnoreCase(args[1])) {
                                 CloudAPI.getInstance().stopProxy(proxyInfo.getServiceId().getServerId());
                             }
@@ -356,9 +357,9 @@ public final class CommandCloud extends Command implements TabExecutor {
                         return;
                     }
                     if (CloudAPI.getInstance().getProxyGroupMap().containsKey(args[1])) {
-                        Collection<ProxyInfo> servers = CloudAPI.getInstance().getProxys();
+                        final Collection<ProxyInfo> servers = CloudAPI.getInstance().getProxys();
 
-                        for (ProxyInfo proxyInfo : servers) {
+                        for (final ProxyInfo proxyInfo : servers) {
                             if (proxyInfo.getServiceId().getGroup().equalsIgnoreCase(args[1]) && proxyInfo.getOnlineCount() == 0) {
                                 CloudAPI.getInstance().stopProxy(proxyInfo.getServiceId().getServerId());
                             }
@@ -398,7 +399,7 @@ public final class CommandCloud extends Command implements TabExecutor {
                                 return;
                             }
                             ProxyServer.getInstance().getScheduler().schedule(CloudProxy.getInstance().getPlugin(), () -> {
-                                ProxyGroup proxyGroup = CloudProxy.getInstance().getProxyGroup();
+                                final ProxyGroup proxyGroup = CloudProxy.getInstance().getProxyGroup();
                                 proxyGroup.getProxyConfig().setMaintenance(!proxyGroup.getProxyConfig().isMaintenance());
                                 CloudAPI.getInstance().updateProxyGroup(proxyGroup);
                                 commandSender.sendMessage(TextComponent.fromLegacyText(CloudAPI.getInstance()
@@ -425,12 +426,12 @@ public final class CommandCloud extends Command implements TabExecutor {
                             commandSender.sendMessage(TextComponent.fromLegacyText(CloudAPI.getInstance()
                                                                                            .getPrefix() + "The information was sent to the cloud"));
                         } else {
-                            ServerGroup serverGroup = CloudAPI.getInstance().getServerGroup(args[1]);
-                            Optional<Template> template = serverGroup.getTemplates()
-                                                                     .stream()
-                                                                     .filter(t -> t.getName()
-                                                                                   .equalsIgnoreCase(args[2]))
-                                                                     .findFirst();
+                            final ServerGroup serverGroup = CloudAPI.getInstance().getServerGroup(args[1]);
+                            final Optional<Template> template = serverGroup.getTemplates()
+                                                                           .stream()
+                                                                           .filter(t -> t.getName()
+                                                                                         .equalsIgnoreCase(args[2]))
+                                                                           .findFirst();
                             template.ifPresent(value -> {
                                 CloudAPI.getInstance().startGameServer(CloudAPI.getInstance().getServerGroupData(args[1]),
                                                                        new ServerConfig(false,
@@ -461,7 +462,7 @@ public final class CommandCloud extends Command implements TabExecutor {
                     }
                 } else if (args[0].equalsIgnoreCase("whitelist") && commandSender.hasPermission("cloudnet.command.cloud.whitelist")) {
                     if (args[1].equalsIgnoreCase("add")) {
-                        ProxyGroup proxyGroup = CloudProxy.getInstance().getProxyGroup();
+                        final ProxyGroup proxyGroup = CloudProxy.getInstance().getProxyGroup();
                         if (proxyGroup.getProxyConfig().getWhitelist().contains(args[2])) {
                             commandSender.sendMessage(TextComponent.fromLegacyText(CloudAPI.getInstance()
                                                                                            .getPrefix() + " The user " + args[2] + " is already on the whitelist."));
@@ -472,7 +473,7 @@ public final class CommandCloud extends Command implements TabExecutor {
                         commandSender.sendMessage(TextComponent.fromLegacyText(CloudAPI.getInstance()
                                                                                        .getPrefix() + " You added " + args[2] + " to the whitelist of the maintenance mode."));
                     } else if (args[1].equalsIgnoreCase("remove")) {
-                        ProxyGroup proxyGroup = CloudProxy.getInstance().getProxyGroup();
+                        final ProxyGroup proxyGroup = CloudProxy.getInstance().getProxyGroup();
                         proxyGroup.getProxyConfig().getWhitelist().remove(args[2]);
                         CloudAPI.getInstance().updateProxyGroup(proxyGroup);
                         commandSender.sendMessage(TextComponent.fromLegacyText(CloudAPI.getInstance()
@@ -528,26 +529,26 @@ public final class CommandCloud extends Command implements TabExecutor {
 
     }
 
-    private void sendServerInfo(CommandSender commandSender, ServerInfo serverInfo) {
-        TextComponent textComponent = new TextComponent(TextComponent.fromLegacyText("§8[§c" + serverInfo.getServiceId()
-                                                                                                         .getServerId() + "§8] §8(§e" + serverInfo
+    private void sendServerInfo(final CommandSender commandSender, final ServerInfo serverInfo) {
+        final TextComponent textComponent = new TextComponent(TextComponent.fromLegacyText(
+            "§8[§c" + serverInfo.getServiceId().getServerId() + "§8] §8(§e" + serverInfo
             .getOnlineCount() + "§8) §e" + serverInfo.getServerState().name() + " §8: §7" + serverInfo.getMemory() + "MB"));
 
         textComponent.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/server " + serverInfo.getServiceId().getServerId()));
         commandSender.sendMessage(textComponent);
     }
 
-    private static boolean isNumber(String input) {
+    private static boolean isNumber(final String input) {
         try {
             Integer.parseInt(input);
             return true;
-        } catch (NumberFormatException e) {
+        } catch (final NumberFormatException e) {
             return false;
         }
     }
 
     @Override
-    public Iterable<String> onTabComplete(CommandSender commandSender, String[] args) {
+    public Iterable<String> onTabComplete(final CommandSender commandSender, final String[] args) {
 
         switch (args.length) {
             case 1: {
@@ -624,19 +625,19 @@ public final class CommandCloud extends Command implements TabExecutor {
     }
 
     private List<String> getProxyAndServerGroups() {
-        LinkedList<String> groups = new LinkedList<>(CloudAPI.getInstance().getProxyGroupMap().keySet());
+        final LinkedList<String> groups = new LinkedList<>(CloudAPI.getInstance().getProxyGroupMap().keySet());
         groups.addAll(CloudAPI.getInstance().getServerGroupMap().keySet());
         groups.sort(Collections.reverseOrder());
         return groups;
     }
 
     private List<String> getProxiesAndServers() {
-        LinkedList<String> groups = CloudAPI.getInstance()
-                                            .getProxys()
-                                            .stream()
-                                            .map(ProxyInfo::getServiceId)
-                                            .map(ServiceId::getServerId)
-                                            .collect(Collectors.toCollection(LinkedList::new));
+        final LinkedList<String> groups = CloudAPI.getInstance()
+                                                  .getProxys()
+                                                  .stream()
+                                                  .map(ProxyInfo::getServiceId)
+                                                  .map(ServiceId::getServerId)
+                                                  .collect(Collectors.toCollection(LinkedList::new));
         groups.addAll(CloudAPI.getInstance()
                               .getServers()
                               .stream()

@@ -19,12 +19,12 @@ import de.dytanic.cloudnetcore.network.packet.out.PacketOutUpdateOfflinePlayer;
 public class PacketInUpdatePlayer extends PacketInHandler {
 
     @Override
-    public void handleInput(Document data, PacketSender packetSender) {
-        OfflinePlayer offlinePlayer = data.getObject("player", new TypeToken<OfflinePlayer>() {}.getType());
+    public void handleInput(final Document data, final PacketSender packetSender) {
+        final OfflinePlayer offlinePlayer = data.getObject("player", new TypeToken<OfflinePlayer>() {}.getType());
         CloudNet.getInstance().getDbHandlers().getPlayerDatabase().updatePlayer(offlinePlayer);
 
         if (CloudNet.getInstance().getNetworkManager().getOnlinePlayers().containsKey(offlinePlayer.getUniqueId())) {
-            CloudPlayer cloudPlayer = CloudNet.getInstance().getNetworkManager().getOnlinePlayers().get(offlinePlayer.getUniqueId());
+            final CloudPlayer cloudPlayer = CloudNet.getInstance().getNetworkManager().getOnlinePlayers().get(offlinePlayer.getUniqueId());
             cloudPlayer.setMetaData(offlinePlayer.getMetaData());
             cloudPlayer.setPermissionEntity(offlinePlayer.getPermissionEntity());
             CloudNet.getInstance().getNetworkManager().handlePlayerUpdate(cloudPlayer);

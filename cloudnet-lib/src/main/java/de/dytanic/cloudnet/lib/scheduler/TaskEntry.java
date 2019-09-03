@@ -8,12 +8,12 @@ public class TaskEntry<T> {
 
     private final TaskEntryFuture<T> future;
     protected volatile Callable<T> task;
-    protected volatile T value = null;
+    protected volatile T value;
     protected Callback<T> callback;
     protected long delayTimeOut, repeat, delay;
-    protected boolean completed = false;
+    protected boolean completed;
 
-    public TaskEntry(Callable<T> task, Callback<T> complete, long delay, long repeat) {
+    public TaskEntry(final Callable<T> task, final Callback<T> complete, final long delay, final long repeat) {
 
         this.task = task;
         this.callback = complete;
@@ -30,7 +30,7 @@ public class TaskEntry<T> {
             return;
         }
 
-        T val = task.call();
+        final T val = task.call();
 
         value = val;
 

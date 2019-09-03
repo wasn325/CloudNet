@@ -16,29 +16,29 @@ public class SetupRequest implements Nameable {
     /**
      * Name of this setup request.
      */
-    private String name;
+    private final String name;
     /**
      * Question that is displayed to the user.
      */
-    private String question;
+    private final String question;
     /**
      * Message that is shown when the input was invalid.
      */
-    private String inValidMessage;
+    private final String inValidMessage;
     /**
      * The type of response that is required from the user.
      */
-    private SetupResponseType responseType;
+    private final SetupResponseType responseType;
     /**
      * The validation function that determines whether the input is valid or not.
      */
-    private Catcher<Boolean, String> validater;
+    private final Catcher<Boolean, String> validater;
 
-    public SetupRequest(String name,
-                        String question,
-                        String inValidMessage,
-                        SetupResponseType responseType,
-                        Catcher<Boolean, String> validater) {
+    public SetupRequest(final String name,
+                        final String question,
+                        final String inValidMessage,
+                        final SetupResponseType responseType,
+                        final Catcher<Boolean, String> validater) {
         this.name = name;
         this.question = question;
         this.inValidMessage = inValidMessage;

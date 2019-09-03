@@ -9,11 +9,11 @@ package de.dytanic.cloudnet.lib.user;
  */
 public class SimpledUser {
 
-    private String userName;
+    private final String userName;
 
-    private String apiToken;
+    private final String apiToken;
 
-    public SimpledUser(String userName, String apiToken) {
+    public SimpledUser(final String userName, final String apiToken) {
         this.userName = userName;
         this.apiToken = apiToken;
     }

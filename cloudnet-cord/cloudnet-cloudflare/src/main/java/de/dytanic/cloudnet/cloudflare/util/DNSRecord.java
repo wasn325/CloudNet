@@ -14,34 +14,39 @@ public class DNSRecord {
     /**
      * The type of this record.
      */
-    private String type;
+    private final String type;
 
     /**
      * Name of this record like in a zone file
      */
-    private String name;
+    private final String name;
 
     /**
      * The content of this record like in a zone file
      */
-    private String content;
+    private final String content;
 
     /**
      * The "Time-to-live" for this record
      */
-    private int ttl;
+    private final int ttl;
 
     /**
      * Whether the record should be proxied by CLoudFlare
      */
-    private boolean proxied;
+    private final boolean proxied;
 
     /**
      * Additional data about this record for SRV records
      */
-    private JsonObject data;
+    private final JsonObject data;
 
-    public DNSRecord(String type, String name, String content, int ttl, boolean proxied, JsonObject data) {
+    public DNSRecord(final String type,
+                     final String name,
+                     final String content,
+                     final int ttl,
+                     final boolean proxied,
+                     final JsonObject data) {
         this.type = type;
         this.name = name;
         this.content = content;

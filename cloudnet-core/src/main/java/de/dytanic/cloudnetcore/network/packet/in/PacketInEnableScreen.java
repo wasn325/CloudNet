@@ -18,11 +18,11 @@ import de.dytanic.cloudnetcore.network.components.Wrapper;
 public class PacketInEnableScreen extends PacketInHandler {
 
     @Override
-    public void handleInput(Document data, PacketSender packetSender) {
+    public void handleInput(final Document data, final PacketSender packetSender) {
         if (!(packetSender instanceof Wrapper)) {
             return;
         }
-        ServiceId serviceId = data.getObject("serviceId", new TypeToken<ServiceId>() {}.getType());
+        final ServiceId serviceId = data.getObject("serviceId", new TypeToken<ServiceId>() {}.getType());
         CloudNet.getInstance().getScreenProvider().handleEnableScreen(serviceId, ((Wrapper) packetSender));
     }
 }

@@ -11,11 +11,11 @@ import de.dytanic.cloudnet.lib.interfaces.Nameable;
  */
 public class SimpledWrapperInfo implements Nameable {
 
-    private String name;
+    private final String name;
 
-    private String hostName;
+    private final String hostName;
 
-    public SimpledWrapperInfo(String name, String hostName) {
+    public SimpledWrapperInfo(final String name, final String hostName) {
         this.name = name;
         this.hostName = hostName;
     }

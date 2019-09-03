@@ -23,7 +23,7 @@ import java.util.Properties;
 public class PacketInStartCloudServer extends PacketInHandler {
 
     @Override
-    public void handleInput(Document data, PacketSender packetSender) {
+    public void handleInput(final Document data, final PacketSender packetSender) {
         if (!data.contains("wrapperInfo")) {
             CloudNet.getInstance().startCloudServer(data.getString("serverName"),
                                                     data.getObject("serverConfig", new TypeToken<ServerConfig>() {}.getType()),

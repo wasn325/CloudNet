@@ -24,13 +24,13 @@ public final class CommandResource extends Command {
     }
 
     @Override
-    public boolean execute(CommandSender sender, String alias, String[] args) {
+    public boolean execute(final CommandSender sender, final String alias, final String[] args) {
         CloudAPI.getInstance().getLogger().finest(String.format("%s executed %s with arguments %s", sender, alias, Arrays.toString(args)));
         if (!testPermission(sender)) {
             return false;
         }
-        long used = ManagementFactory.getMemoryMXBean().getHeapMemoryUsage().getUsed() / 1048576L;
-        long max = Runtime.getRuntime().maxMemory() / 1048576L;
+        final long used = ManagementFactory.getMemoryMXBean().getHeapMemoryUsage().getUsed() / 1048576L;
+        final long max = Runtime.getRuntime().maxMemory() / 1048576L;
 
         sender.sendMessage(CloudAPI.getInstance().getPrefix() + NetworkUtils.SPACE_STRING);
         sender.sendMessage(CloudAPI.getInstance().getPrefix() + "§7Server: §b" + CloudAPI.getInstance()

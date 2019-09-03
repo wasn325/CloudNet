@@ -9,11 +9,11 @@ package de.dytanic.cloudnetcore.network;
  */
 public class NetworkInfo {
 
-    private String serverId;
-    private String hostName;
-    private int port;
+    private final String serverId;
+    private final String hostName;
+    private final int port;
 
-    public NetworkInfo(String serverId, String hostName, int port) {
+    public NetworkInfo(final String serverId, final String hostName, final int port) {
         this.serverId = serverId;
         this.hostName = hostName;
         this.port = port;

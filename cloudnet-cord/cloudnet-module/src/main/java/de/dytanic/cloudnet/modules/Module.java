@@ -145,7 +145,7 @@ public abstract class Module<E> extends EventKey {
      *
      * @return the module
      */
-    public Module<E> createUtils(Document document) {
+    public Module<E> createUtils(final Document document) {
         if (utilFile == null) {
             utilFile = new File("modules/" + moduleConfig.getName() + "/utils.json");
             if (!utilFile.exists()) {
@@ -177,7 +177,7 @@ public abstract class Module<E> extends EventKey {
      *
      * @return the module
      */
-    public Module<E> saveUtils(Document document) {
+    public Module<E> saveUtils(final Document document) {
         if (utilFile == null) {
             utilFile = new File("modules/" + moduleConfig.getName() + "/utils.json");
         }
@@ -193,7 +193,7 @@ public abstract class Module<E> extends EventKey {
     public Module<E> saveConfig() {
         try {
             ConfigurationProvider.getProvider(YamlConfiguration.class).save(getConfig(), configFile);
-        } catch (IOException e) {
+        } catch (final IOException e) {
             e.printStackTrace();
         }
         return this;
@@ -219,7 +219,7 @@ public abstract class Module<E> extends EventKey {
             if (!configFile.exists()) {
                 try {
                     configFile.createNewFile();
-                } catch (IOException e) {
+                } catch (final IOException e) {
                     e.printStackTrace();
                 }
             }
@@ -227,7 +227,7 @@ public abstract class Module<E> extends EventKey {
 
         try {
             configuration = ConfigurationProvider.getProvider(YamlConfiguration.class).load(configFile);
-        } catch (IOException e) {
+        } catch (final IOException e) {
             e.printStackTrace();
         }
     }
@@ -243,14 +243,14 @@ public abstract class Module<E> extends EventKey {
             dataFolder = new File("modules", moduleConfig.getName());
             try {
                 Files.createDirectories(dataFolder.toPath());
-            } catch (IOException e) {
+            } catch (final IOException e) {
                 e.printStackTrace();
             }
         }
         return dataFolder;
     }
 
-    public void setDataFolder(File dataFolder) {
+    public void setDataFolder(final File dataFolder) {
         this.dataFolder = dataFolder;
     }
 
@@ -268,7 +268,7 @@ public abstract class Module<E> extends EventKey {
         return configuration;
     }
 
-    public void setConfiguration(Configuration configuration) {
+    public void setConfiguration(final Configuration configuration) {
         this.configuration = configuration;
     }
 
@@ -276,7 +276,7 @@ public abstract class Module<E> extends EventKey {
         return configFile;
     }
 
-    public void setConfigFile(File configFile) {
+    public void setConfigFile(final File configFile) {
         this.configFile = configFile;
     }
 
@@ -284,7 +284,7 @@ public abstract class Module<E> extends EventKey {
         return utilFile;
     }
 
-    public void setUtilFile(File utilFile) {
+    public void setUtilFile(final File utilFile) {
         this.utilFile = utilFile;
     }
 
@@ -292,7 +292,7 @@ public abstract class Module<E> extends EventKey {
         return classLoader;
     }
 
-    public void setClassLoader(ModuleClassLoader classLoader) {
+    public void setClassLoader(final ModuleClassLoader classLoader) {
         this.classLoader = classLoader;
     }
 
@@ -300,7 +300,7 @@ public abstract class Module<E> extends EventKey {
         return moduleConfig;
     }
 
-    public void setModuleConfig(ModuleConfig moduleConfig) {
+    public void setModuleConfig(final ModuleConfig moduleConfig) {
         this.moduleConfig = moduleConfig;
     }
 
@@ -308,7 +308,7 @@ public abstract class Module<E> extends EventKey {
         return moduleLoader;
     }
 
-    public void setModuleLoader(ModuleLoader moduleLoader) {
+    public void setModuleLoader(final ModuleLoader moduleLoader) {
         this.moduleLoader = moduleLoader;
     }
 

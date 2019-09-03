@@ -20,7 +20,7 @@ public abstract class Command implements CommandExecutor, Nameable {
 
     protected String description = "Default command description";
 
-    private Collection<CommandArgument> commandArguments = new HashSet<>();
+    private final Collection<CommandArgument> commandArguments = new HashSet<>();
 
     /**
      * Constructs a new command with a name, a needed permission and variable aliases.
@@ -29,7 +29,7 @@ public abstract class Command implements CommandExecutor, Nameable {
      * @param permission the permission a user has to have
      * @param aliases    other names of this command
      */
-    protected Command(String name, String permission, String... aliases) {
+    protected Command(final String name, final String permission, final String... aliases) {
         this.name = name;
         this.permission = permission;
         this.aliases = aliases;
@@ -43,7 +43,7 @@ public abstract class Command implements CommandExecutor, Nameable {
      *
      * @return the command for chaining
      */
-    protected <T extends Command> T appendArgument(CommandArgument commandArgument) {
+    protected <T extends Command> T appendArgument(final CommandArgument commandArgument) {
         this.commandArguments.add(commandArgument);
         //noinspection unchecked
         return (T) this;

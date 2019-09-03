@@ -51,7 +51,7 @@ public class ProxiedBootstrap extends Plugin {
 
         CollectionWrapper.iterator(ProxyServer.getInstance().getConfig().getListeners(), new Runnabled<ListenerInfo>() {
             @Override
-            public void run(ListenerInfo obj) {
+            public void run(final ListenerInfo obj) {
                 obj.getServerPriority().clear();
             }
         });

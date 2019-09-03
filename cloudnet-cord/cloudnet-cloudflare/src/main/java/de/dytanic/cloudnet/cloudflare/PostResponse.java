@@ -15,17 +15,17 @@ public class PostResponse {
     /**
      * The provided configuration for this cached record
      */
-    private CloudFlareConfig cloudFlareConfig;
+    private final CloudFlareConfig cloudFlareConfig;
     /**
      * The DNS record that created the response
      */
-    private DNSRecord dnsRecord;
+    private final DNSRecord dnsRecord;
     /**
      * The ID at CloudFlare that identifies this DNS record
      */
-    private String id;
+    private final String id;
 
-    public PostResponse(CloudFlareConfig cloudFlareConfig, DNSRecord dnsRecord, String id) {
+    public PostResponse(final CloudFlareConfig cloudFlareConfig, final DNSRecord dnsRecord, final String id) {
         this.cloudFlareConfig = cloudFlareConfig;
         this.dnsRecord = dnsRecord;
         this.id = id;

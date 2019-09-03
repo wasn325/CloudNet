@@ -5,7 +5,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class NetorHashMap<Key, VF, VS> implements NetorMap<Key> {
 
-    private ConcurrentHashMap<Key, NetorSet<VF, VS>> values = new ConcurrentHashMap<>();
+    private final ConcurrentHashMap<Key, NetorSet<VF, VS>> values = new ConcurrentHashMap<>();
 
     @Override
     public void clear() {
@@ -18,13 +18,13 @@ public class NetorHashMap<Key, VF, VS> implements NetorMap<Key> {
     }
 
     @Override
-    public void remove(Key key) {
+    public void remove(final Key key) {
         values.remove(key);
     }
 
     @Override
-    public boolean contains(Key key) {
-        return values.containsKey(key) ? true : false;
+    public boolean contains(final Key key) {
+        return values.containsKey(key);
     }
 
     @Override
@@ -32,23 +32,23 @@ public class NetorHashMap<Key, VF, VS> implements NetorMap<Key> {
         return values.keySet();
     }
 
-    public void add(Key key, VF valueF, VS valueS) {
+    public void add(final Key key, final VF valueF, final VS valueS) {
         values.put(key, new NetorSet<>(valueF, valueS));
     }
 
-    public VF getF(Key key) {
+    public VF getF(final Key key) {
         return values.get(key).getFirstValue();
     }
 
-    public VS getS(Key key) {
+    public VS getS(final Key key) {
         return values.get(key).getSecondValue();
     }
 
-    public void updateF(Key key, VF value) {
+    public void updateF(final Key key, final VF value) {
         values.get(key).updateFirst(value);
     }
 
-    public void updateS(Key key, VS value) {
+    public void updateS(final Key key, final VS value) {
         values.get(key).updateSecond(value);
     }
 

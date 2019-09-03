@@ -31,12 +31,12 @@ import java.util.zip.ZipFile;
 public final class PacketInCreateTemplate extends PacketInHandler {
 
     @Override
-    public void handleInput(Document data, PacketSender packetSender) {
+    public void handleInput(final Document data, final PacketSender packetSender) {
 
         if (data.getString("type").equals(DefaultType.BUKKIT.name())) {
-            ServerGroup serverGroup = data.getObject("serverGroup", new TypeToken<ServerGroup>() {}.getType());
+            final ServerGroup serverGroup = data.getObject("serverGroup", new TypeToken<ServerGroup>() {}.getType());
             try {
-                for (Template template : serverGroup.getTemplates()) {
+                for (final Template template : serverGroup.getTemplates()) {
                     if (!Files.exists(Paths.get("local/templates/" + serverGroup.getName() + NetworkUtils.SLASH_STRING + template.getName()))) {
                         System.out.println("Creating GroupTemplate for " + serverGroup.getName() + ' ' + template.getName() + "...");
                         Files.createDirectories(Paths.get("local/templates/" + serverGroup.getName() + NetworkUtils.SLASH_STRING + template.getName() + ""));
@@ -51,7 +51,7 @@ public final class PacketInCreateTemplate extends PacketInHandler {
                         new File("local/templates/" + serverGroup.getName() + NetworkUtils.SLASH_STRING + template.getName() + "/plugins").mkdir();
                     }
                 }
-                Template template = serverGroup.getGlobalTemplate();
+                final Template template = serverGroup.getGlobalTemplate();
                 if (!Files.exists(Paths.get("local/templates/" + serverGroup.getName() + NetworkUtils.SLASH_STRING + template.getName()))) {
                     System.out.println("Creating GroupTemplate for " + serverGroup.getName() + ' ' + template.getName() + "...");
                     Files.createDirectories(Paths.get("local/templates/" + serverGroup.getName() + NetworkUtils.SLASH_STRING + template.getName() + ""));
@@ -66,17 +66,20 @@ public final class PacketInCreateTemplate extends PacketInHandler {
                     new File("local/templates/" + serverGroup.getName() + NetworkUtils.SLASH_STRING + template.getName() + "/plugins").mkdir();
                 }
 
-            } catch (IOException e) {
+            } catch (final IOException e) {
                 e.printStackTrace();
             }
 
-            if (serverGroup.getServerType().equals(ServerGroupType.CAULDRON)) {
-                for (Template template : serverGroup.getTemplates()) {
+            if (serverGroup.getServerType() == ServerGroupType.CAULDRON) {
+                for (final Template template : serverGroup.getTemplates()) {
                     if (!Files.exists(Paths.get("local/templates/" + serverGroup.getName() + NetworkUtils.SLASH_STRING + template.getName() + "/cauldron.jar"))) {
                         try {
                             System.out.println("Downloading cauldron.zip...");
-                            File file = new File("local/templates/" + serverGroup.getName() + NetworkUtils.SLASH_STRING + template.getName() + "/cauldron.zip");
-                            URLConnection connection = new URL("https://yivesmirror.com/files/cauldron/cauldron-1.7.10-2.1403.1.54.zip").openConnection();
+                            final File file = new File(
+                                "local/templates/" + serverGroup.getName() + NetworkUtils.SLASH_STRING + template.getName() +
+                                "/cauldron.zip");
+                            final URLConnection connection = new URL(
+                                "https://yivesmirror.com/files/cauldron/cauldron-1.7.10-2.1403.1.54.zip").openConnection();
                             connection.setUseCaches(false);
                             connection.setRequestProperty("User-Agent",
                                                           "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.95 Safari/537.11");
@@ -85,10 +88,10 @@ public final class PacketInCreateTemplate extends PacketInHandler {
                                        Paths.get("local/templates/" + serverGroup.getName() + NetworkUtils.SLASH_STRING + template.getName() + "/cauldron.zip"));
                             System.out.println("Downloading Complete!");
 
-                            ZipFile zip = new ZipFile(file);
-                            Enumeration<? extends ZipEntry> entryEnumeration = zip.entries();
+                            final ZipFile zip = new ZipFile(file);
+                            final Enumeration<? extends ZipEntry> entryEnumeration = zip.entries();
                             while (entryEnumeration.hasMoreElements()) {
-                                ZipEntry entry = entryEnumeration.nextElement();
+                                final ZipEntry entry = entryEnumeration.nextElement();
 
                                 if (!entry.isDirectory()) {
                                     extractEntry(zip,
@@ -104,17 +107,18 @@ public final class PacketInCreateTemplate extends PacketInHandler {
                                 .renameTo(new File("local/templates/" + serverGroup.getName() + NetworkUtils.SLASH_STRING + template.getName() + "/cauldron.jar"));
 
                             System.out.println("Using a cauldron.jar for your minecraft service template " + serverGroup.getName() + ", please copyFileToDirectory a eula.txt into the template or into the global folder");
-                        } catch (Exception e) {
+                        } catch (final Exception e) {
                             e.printStackTrace();
                         }
                     }
                 }
-                Template template = serverGroup.getGlobalTemplate();
+                final Template template = serverGroup.getGlobalTemplate();
                 if (!Files.exists(Paths.get("local/templates/" + serverGroup.getName() + NetworkUtils.SLASH_STRING + template.getName() + "/cauldron.jar"))) {
                     try {
                         System.out.println("Downloading cauldron.zip...");
-                        File file = new File("local/templates/" + serverGroup.getName() + NetworkUtils.SLASH_STRING + template.getName() + "/cauldron.zip");
-                        URLConnection connection = new URL("https://yivesmirror.com/files/cauldron/cauldron-1.7.10-2.1403.1.54.zip").openConnection();
+                        final File file = new File(
+                            "local/templates/" + serverGroup.getName() + NetworkUtils.SLASH_STRING + template.getName() + "/cauldron.zip");
+                        final URLConnection connection = new URL("https://yivesmirror.com/files/cauldron/cauldron-1.7.10-2.1403.1.54.zip").openConnection();
                         connection.setUseCaches(false);
                         connection.setRequestProperty("User-Agent",
                                                       "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.95 Safari/537.11");
@@ -123,10 +127,10 @@ public final class PacketInCreateTemplate extends PacketInHandler {
                                    Paths.get("local/templates/" + serverGroup.getName() + NetworkUtils.SLASH_STRING + template.getName() + "/cauldron.zip"));
                         System.out.println("Download was completed successfully!");
 
-                        ZipFile zip = new ZipFile(file);
-                        Enumeration<? extends ZipEntry> entryEnumeration = zip.entries();
+                        final ZipFile zip = new ZipFile(file);
+                        final Enumeration<? extends ZipEntry> entryEnumeration = zip.entries();
                         while (entryEnumeration.hasMoreElements()) {
-                            ZipEntry entry = entryEnumeration.nextElement();
+                            final ZipEntry entry = entryEnumeration.nextElement();
 
                             if (!entry.isDirectory()) {
                                 extractEntry(zip,
@@ -142,18 +146,19 @@ public final class PacketInCreateTemplate extends PacketInHandler {
                             .renameTo(new File("local/templates/" + serverGroup.getName() + NetworkUtils.SLASH_STRING + template.getName() + "/cauldron.jar"));
 
                         System.out.println("Using a cauldron.jar for your minecraft service template " + serverGroup.getName() + ", please copyFileToDirectory a eula.txt into the template or into the global folder");
-                    } catch (Exception e) {
+                    } catch (final Exception e) {
                         e.printStackTrace();
                     }
                 }
             }
 
-            if (serverGroup.getServerType().equals(ServerGroupType.GLOWSTONE)) {
-                for (Template template : serverGroup.getTemplates()) {
-                    Path path = Paths.get("local/templates/" + serverGroup.getName() + NetworkUtils.SLASH_STRING + template.getName() + "/glowstone.jar");
+            if (serverGroup.getServerType() == ServerGroupType.GLOWSTONE) {
+                for (final Template template : serverGroup.getTemplates()) {
+                    final Path path = Paths.get(
+                        "local/templates/" + serverGroup.getName() + NetworkUtils.SLASH_STRING + template.getName() + "/glowstone.jar");
                     if (!Files.exists(path)) {
                         try {
-                            URLConnection connection = new URL("https://yivesmirror.com/grab/glowstone/Glowstone-latest.jar").openConnection();
+                            final URLConnection connection = new URL("https://yivesmirror.com/grab/glowstone/Glowstone-latest.jar").openConnection();
                             connection.setUseCaches(false);
                             connection.setRequestProperty("User-Agent",
                                                           "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.95 Safari/537.11");
@@ -162,16 +167,17 @@ public final class PacketInCreateTemplate extends PacketInHandler {
                             Files.copy(connection.getInputStream(), path);
                             System.out.println("Download was completed successfully");
                             ((HttpURLConnection) connection).disconnect();
-                        } catch (Exception ex) {
+                        } catch (final Exception ex) {
                             ex.printStackTrace();
                         }
                     }
                 }
-                Template template = serverGroup.getGlobalTemplate();
-                Path path = Paths.get("local/templates/" + serverGroup.getName() + NetworkUtils.SLASH_STRING + template.getName() + "/glowstone.jar");
+                final Template template = serverGroup.getGlobalTemplate();
+                final Path path = Paths.get(
+                    "local/templates/" + serverGroup.getName() + NetworkUtils.SLASH_STRING + template.getName() + "/glowstone.jar");
                 if (!Files.exists(path)) {
                     try {
-                        URLConnection connection = new URL("https://yivesmirror.com/grab/glowstone/Glowstone-latest.jar").openConnection();
+                        final URLConnection connection = new URL("https://yivesmirror.com/grab/glowstone/Glowstone-latest.jar").openConnection();
                         connection.setUseCaches(false);
                         connection.setRequestProperty("User-Agent",
                                                       "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.95 Safari/537.11");
@@ -180,25 +186,25 @@ public final class PacketInCreateTemplate extends PacketInHandler {
                         Files.copy(connection.getInputStream(), path);
                         System.out.println("Download was completed successfully");
                         ((HttpURLConnection) connection).disconnect();
-                    } catch (Exception ex) {
+                    } catch (final Exception ex) {
                         ex.printStackTrace();
                     }
                 }
             }
         } else {
-            ProxyGroup proxyGroup = data.getObject("proxyGroup", new TypeToken<ProxyGroup>() {}.getType());
+            final ProxyGroup proxyGroup = data.getObject("proxyGroup", new TypeToken<ProxyGroup>() {}.getType());
             try {
                 if (!Files.exists(Paths.get("local/templates/" + proxyGroup.getName()))) {
                     System.out.println("Creating GroupTemplate for " + proxyGroup.getName() + " DEFAULT...");
                     Files.createDirectories(Paths.get("local/templates/" + proxyGroup.getName() + "/plugins"));
                 }
-            } catch (IOException e) {
+            } catch (final IOException e) {
                 e.printStackTrace();
             }
         }
     }
 
-    private void extractEntry(ZipFile zipFile, ZipEntry entry, String destDir) throws IOException {
+    private void extractEntry(final ZipFile zipFile, final ZipEntry entry, final String destDir) throws IOException {
         final String path = entry.getName();
         if (entry.isDirectory()) {
             Files.createDirectories(Paths.get(destDir, path));

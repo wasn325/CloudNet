@@ -20,9 +20,9 @@ public class DatabaseManager {
 
     private final File dir;
     private final Timer timer;
-    private short tick = 1;
+    private final short tick = 1;
 
-    private java.util.Map<String, Database> databaseCollection = NetworkUtils.newConcurrentHashMap();
+    private final java.util.Map<String, Database> databaseCollection = NetworkUtils.newConcurrentHashMap();
 
     /**
      * Constructs a new database manager.
@@ -55,7 +55,7 @@ public class DatabaseManager {
      * @see DatabaseImpl#save()
      */
     public DatabaseManager save() {
-        for (Database database : databaseCollection.values()) {
+        for (final Database database : databaseCollection.values()) {
             ((DatabaseImpl) database).save();
         }
         return this;
@@ -69,7 +69,7 @@ public class DatabaseManager {
      * @see DatabaseImpl#clear()
      */
     public DatabaseManager clear() {
-        for (Database database : databaseCollection.values()) {
+        for (final Database database : databaseCollection.values()) {
             ((DatabaseImpl) database).clear();
         }
         return this;
@@ -97,7 +97,7 @@ public class DatabaseManager {
      * @return a list of database names
      */
     public List<String> getDatabases() {
-        String[] databases = dir.list();
+        final String[] databases = dir.list();
         return databases == null ? new ArrayList<>() : Arrays.asList(databases);
     }
 
@@ -109,14 +109,14 @@ public class DatabaseManager {
      *
      * @return the database for the given {@code name}
      */
-    public Database getDatabase(String name) {
-        Database database;
+    public Database getDatabase(final String name) {
+        final Database database;
 
         if (databaseCollection.containsKey(name)) {
             return databaseCollection.get(name);
         }
 
-        File file = new File("database/" + name);
+        final File file = new File("database/" + name);
         if (!file.exists()) {
             //noinspection ResultOfMethodCallIgnored
             file.mkdir();

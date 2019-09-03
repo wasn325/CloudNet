@@ -22,15 +22,15 @@ public abstract class MethodWebHandler extends WebHandler {
      *
      * @param path the path where this handler is available.
      */
-    protected MethodWebHandler(String path) {
+    protected MethodWebHandler(final String path) {
         super(path);
     }
 
     @Override
-    public final FullHttpResponse handleRequest(ChannelHandlerContext channelHandlerContext,
-                                                QueryDecoder queryDecoder,
-                                                PathProvider path,
-                                                HttpRequest httpRequest) throws Exception {
+    public final FullHttpResponse handleRequest(final ChannelHandlerContext channelHandlerContext,
+                                                final QueryDecoder queryDecoder,
+                                                final PathProvider path,
+                                                final HttpRequest httpRequest) throws Exception {
         if (httpRequest.method().equals(HttpMethod.CONNECT)) {
             return connect(channelHandlerContext, queryDecoder, path, httpRequest);
         }

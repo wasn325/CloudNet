@@ -13,7 +13,7 @@ import de.dytanic.cloudnet.lib.utility.document.Document;
  */
 public class PacketDBOutGetSize extends Packet {
 
-    public PacketDBOutGetSize(String name) {
+    public PacketDBOutGetSize(final String name) {
         super(PacketRC.DB + 5, new Document("name", name));
     }
 }

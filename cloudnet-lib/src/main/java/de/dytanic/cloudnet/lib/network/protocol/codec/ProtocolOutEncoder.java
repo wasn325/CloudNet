@@ -15,17 +15,17 @@ import io.netty.handler.codec.MessageToByteEncoder;
 public final class ProtocolOutEncoder extends MessageToByteEncoder {
 
     @Override
-    protected void encode(ChannelHandlerContext channelHandlerContext, Object o, ByteBuf byteBuf) throws Exception {
-        ProtocolBuffer protocolBuffer = ProtocolProvider.protocolBuffer(byteBuf);
+    protected void encode(final ChannelHandlerContext channelHandlerContext, final Object o, final ByteBuf byteBuf) throws Exception {
+        final ProtocolBuffer protocolBuffer = ProtocolProvider.protocolBuffer(byteBuf);
 
         if (o instanceof ProtocolRequest) {
-            ProtocolRequest protocolRequest = ((ProtocolRequest) o);
-            IProtocol iProtocol = ProtocolProvider.getProtocol(protocolRequest.getId());
-            ProtocolStream protocolStream = iProtocol.createElement(protocolRequest.getElement());
+            final ProtocolRequest protocolRequest = ((ProtocolRequest) o);
+            final IProtocol iProtocol = ProtocolProvider.getProtocol(protocolRequest.getId());
+            final ProtocolStream protocolStream = iProtocol.createElement(protocolRequest.getElement());
             protocolStream.write(protocolBuffer);
         } else {
-            for (IProtocol iProtocol : ProtocolProvider.protocols()) {
-                ProtocolStream protocolStream = iProtocol.createElement(o);
+            for (final IProtocol iProtocol : ProtocolProvider.protocols()) {
+                final ProtocolStream protocolStream = iProtocol.createElement(o);
                 if (protocolStream != null) {
                     protocolStream.write(protocolBuffer);
                     break;

@@ -5,7 +5,7 @@ public class PaperMCProject {
     private final String project;
     private final String[] versions;
 
-    public PaperMCProject(String project, String[] versions) {
+    public PaperMCProject(final String project, final String[] versions) {
         this.project = project;
         this.versions = versions;
     }

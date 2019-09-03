@@ -11,9 +11,9 @@ import de.dytanic.cloudnet.lib.player.CloudPlayer;
  */
 public class ProxiedPlayerLoginEvent extends ProxiedCloudEvent {
 
-    private CloudPlayer cloudPlayer;
+    private final CloudPlayer cloudPlayer;
 
-    public ProxiedPlayerLoginEvent(CloudPlayer cloudPlayer) {
+    public ProxiedPlayerLoginEvent(final CloudPlayer cloudPlayer) {
         this.cloudPlayer = cloudPlayer;
     }
 

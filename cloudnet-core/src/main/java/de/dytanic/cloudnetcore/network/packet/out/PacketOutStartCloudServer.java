@@ -14,11 +14,11 @@ import de.dytanic.cloudnet.lib.utility.document.Document;
  */
 public class PacketOutStartCloudServer extends Packet {
 
-    public PacketOutStartCloudServer(CloudServerMeta cloudServerMeta) {
+    public PacketOutStartCloudServer(final CloudServerMeta cloudServerMeta) {
         super(PacketRC.CN_CORE + 13, new Document("cloudServerMeta", cloudServerMeta));
     }
 
-    public PacketOutStartCloudServer(CloudServerMeta cloudServerMeta, boolean async) {
+    public PacketOutStartCloudServer(final CloudServerMeta cloudServerMeta, final boolean async) {
         super(PacketRC.CN_CORE + 13, new Document("cloudServerMeta", cloudServerMeta).append("async", async));
     }
 }

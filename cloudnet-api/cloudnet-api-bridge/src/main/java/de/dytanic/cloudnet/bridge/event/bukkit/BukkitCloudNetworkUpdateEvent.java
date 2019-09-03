@@ -12,11 +12,11 @@ import org.bukkit.event.HandlerList;
  */
 public class BukkitCloudNetworkUpdateEvent extends BukkitCloudEvent {
 
-    private static HandlerList handlerList = new HandlerList();
+    private static final HandlerList handlerList = new HandlerList();
 
-    private CloudNetwork cloudNetwork;
+    private final CloudNetwork cloudNetwork;
 
-    public BukkitCloudNetworkUpdateEvent(CloudNetwork cloudNetwork) {
+    public BukkitCloudNetworkUpdateEvent(final CloudNetwork cloudNetwork) {
         this.cloudNetwork = cloudNetwork;
     }
 

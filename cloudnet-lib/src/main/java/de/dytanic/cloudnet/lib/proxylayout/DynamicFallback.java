@@ -16,11 +16,11 @@ import java.util.List;
  */
 public class DynamicFallback {
 
-    private String defaultFallback;
+    private final String defaultFallback;
 
-    private List<ServerFallback> fallbacks;
+    private final List<ServerFallback> fallbacks;
 
-    public DynamicFallback(String defaultFallback, List<ServerFallback> fallbacks) {
+    public DynamicFallback(final String defaultFallback, final List<ServerFallback> fallbacks) {
         this.defaultFallback = defaultFallback;
         this.fallbacks = fallbacks;
     }
@@ -36,7 +36,7 @@ public class DynamicFallback {
     public ServerFallback getDefault() {
         return CollectionWrapper.filter(fallbacks, new Acceptable<ServerFallback>() {
             @Override
-            public boolean isAccepted(ServerFallback serverFallback) {
+            public boolean isAccepted(final ServerFallback serverFallback) {
                 return serverFallback.getGroup().equals(defaultFallback);
             }
         });
@@ -45,7 +45,7 @@ public class DynamicFallback {
     public Collection<String> getNamedFallbackes() {
         return CollectionWrapper.transform(this.fallbacks, new Catcher<String, ServerFallback>() {
             @Override
-            public String doCatch(ServerFallback key) {
+            public String doCatch(final ServerFallback key) {
                 return key.getGroup();
             }
         });

@@ -19,26 +19,26 @@ import java.util.Map;
  */
 public class ScreenProvider {
 
-    private Map<String, EnabledScreen> screens = NetworkUtils.newConcurrentHashMap();
+    private final Map<String, EnabledScreen> screens = NetworkUtils.newConcurrentHashMap();
 
     private ServiceId mainServiceId;
 
-    public void handleEnableScreen(ServiceId serviceId, Wrapper wrapper) {
+    public void handleEnableScreen(final ServiceId serviceId, final Wrapper wrapper) {
         screens.put(serviceId.getServerId(), new EnabledScreen(serviceId, wrapper));
     }
 
-    public void handleDisableScreen(ServiceId serviceId) {
+    public void handleDisableScreen(final ServiceId serviceId) {
         screens.remove(serviceId.getServerId());
     }
 
-    public void disableScreen(String server) {
-        MinecraftServer minecraftServer = CloudNet.getInstance().getServer(server);
+    public void disableScreen(final String server) {
+        final MinecraftServer minecraftServer = CloudNet.getInstance().getServer(server);
         if (minecraftServer != null) {
             minecraftServer.getWrapper().disableScreen(minecraftServer.getServerInfo());
             return;
         }
 
-        ProxyServer proxyServer = CloudNet.getInstance().getProxy(server);
+        final ProxyServer proxyServer = CloudNet.getInstance().getProxy(server);
         if (proxyServer != null) {
             proxyServer.getWrapper().disableScreen(proxyServer.getProxyInfo());
         }
@@ -52,7 +52,7 @@ public class ScreenProvider {
         return mainServiceId;
     }
 
-    public void setMainServiceId(ServiceId mainServiceId) {
+    public void setMainServiceId(final ServiceId mainServiceId) {
         this.mainServiceId = mainServiceId;
     }
 }

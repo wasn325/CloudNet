@@ -23,10 +23,10 @@ public final class CommandList extends Command {
     }
 
     @Override
-    public void onExecuteCommand(CommandSender sender, String[] args) {
+    public void onExecuteCommand(final CommandSender sender, final String[] args) {
         sender.sendMessage("CloudNet: ");
         int memory = 0, maxMemory = 0;
-        for (Wrapper wrapper : CloudNet.getInstance().getWrappers().values()) {
+        for (final Wrapper wrapper : CloudNet.getInstance().getWrappers().values()) {
             memory += wrapper.getUsedMemory();
             maxMemory += wrapper.getMaxMemory();
 
@@ -38,7 +38,7 @@ public final class CommandList extends Command {
             }
 
             sender.sendMessage(" ", "Proxys:");
-            for (ProxyServer proxyServer : wrapper.getProxys().values()) {
+            for (final ProxyServer proxyServer : wrapper.getProxys().values()) {
                 sender.sendMessage("Proxy [" + proxyServer.getServerId() + "] @" + proxyServer.getNetworkInfo()
                                                                                               .getHostName() + " | " + proxyServer.getProxyInfo()
                                                                                                                                   .getOnlineCount() + NetworkUtils.SLASH_STRING + CloudNet
@@ -49,7 +49,7 @@ public final class CommandList extends Command {
                     .getMaxPlayers() + " | State: " + (proxyServer.getChannel() != null ? "connected" : "not connected"));
             }
             sender.sendMessage(" ", "Servers:");
-            for (MinecraftServer proxyServer : wrapper.getServers().values()) {
+            for (final MinecraftServer proxyServer : wrapper.getServers().values()) {
                 sender.sendMessage("Server [" + proxyServer.getServerId() + "] @" + proxyServer.getServerInfo()
                                                                                                .getHost() + " | " + proxyServer.getServerInfo()
                                                                                                                                .getOnlineCount() + NetworkUtils.SLASH_STRING + proxyServer
@@ -59,7 +59,7 @@ public final class CommandList extends Command {
             sender.sendMessage(" ");
         }
 
-        for (CloudPlayer cloudPlayer : CloudNet.getInstance().getNetworkManager().getOnlinePlayers().values()) {
+        for (final CloudPlayer cloudPlayer : CloudNet.getInstance().getNetworkManager().getOnlinePlayers().values()) {
             sender.sendMessage("* " + cloudPlayer.getUniqueId() + '#' + cloudPlayer.getName() + " - " + cloudPlayer.getProxy() + ':' + cloudPlayer
                 .getServer());
         }

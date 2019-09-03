@@ -19,13 +19,14 @@ public class SystemTimer extends Thread {
     @Override
     public void run() {
         while (!isInterrupted()) {
-            System.out.println("Memory [\"" + (ManagementFactory.getMemoryMXBean()
-                                                                .getHeapMemoryUsage()
-                                                                .getUsed() / 1024) + "KB\"] | CPU Programm [\"" + NetworkUtils.DECIMAL_FORMAT
-                .format(NetworkUtils.internalCpuUsage()) + "\"] | CPU System [\"" + NetworkUtils.DECIMAL_FORMAT.format(NetworkUtils.cpuUsage()) + "\"]");
+            System.out.println(
+                "Memory [\"" + (ManagementFactory.getMemoryMXBean().getHeapMemoryUsage().getUsed() / 1024) + "KB\"] | CPU Programm [\"" +
+                NetworkUtils.DECIMAL_FORMAT.format(NetworkUtils.internalCpuUsage()) + "\"] | CPU System [\"" +
+                NetworkUtils.DECIMAL_FORMAT.format(NetworkUtils.cpuUsage()) + "\"]");
             try {
                 Thread.sleep(1000);
-            } catch (InterruptedException ex) {
+            } catch (final InterruptedException ex) {
+                ex.printStackTrace();
             }
         }
     }

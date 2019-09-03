@@ -21,11 +21,11 @@ public final class PacketInSendScreenLine extends PacketInHandler {
     private static final Type TYPE = new TypeToken<Collection<ScreenInfo>>() {}.getType();
 
     @Override
-    public void handleInput(Document data, PacketSender packetSender) {
-        Collection<ScreenInfo> screenInfos = data.getObject("screenInfo", TYPE);
+    public void handleInput(final Document data, final PacketSender packetSender) {
+        final Collection<ScreenInfo> screenInfos = data.getObject("screenInfo", TYPE);
         CloudNet.getInstance().getEventManager().callEvent(new ScreenInfoEvent(screenInfos));
 
-        for (ScreenInfo screenInfo : screenInfos) {
+        for (final ScreenInfo screenInfo : screenInfos) {
             if (CloudNet.getInstance().getScreenProvider().getMainServiceId() != null && screenInfo.getServiceId()
                                                                                                    .getServerId()
                                                                                                    .equalsIgnoreCase(CloudNet.getInstance()

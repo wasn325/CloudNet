@@ -11,9 +11,9 @@ import de.dytanic.cloudnet.lib.player.CloudPlayer;
  */
 public class ProxiedPlayerUpdateEvent extends ProxiedCloudEvent {
 
-    private CloudPlayer cloudPlayer;
+    private final CloudPlayer cloudPlayer;
 
-    public ProxiedPlayerUpdateEvent(CloudPlayer cloudPlayer) {
+    public ProxiedPlayerUpdateEvent(final CloudPlayer cloudPlayer) {
         this.cloudPlayer = cloudPlayer;
     }
 

@@ -19,11 +19,11 @@ public class StatisticManager extends DatabaseUsable {
     private static StatisticManager instance;
     private boolean statistic = true;
 
-    public StatisticManager(Database database) {
+    public StatisticManager(final Database database) {
         super(database);
         instance = this;
         if (!database.containsDoc(NAME)) {
-            Document document = new DatabaseDocument(NAME);
+            final Document document = new DatabaseDocument(NAME);
             database.insert(document);
         }
 
@@ -45,14 +45,14 @@ public class StatisticManager extends DatabaseUsable {
             return;
         }
         try {
-            Document document = database.getDocument(NAME);
+            final Document document = database.getDocument(NAME);
             if (!document.contains("playerLogin")) {
                 document.append("playerLogin", 0L);
             }
 
             document.append("playerLogin", document.getLong("playerLogin") + 1L);
-        } catch (Exception ex) {
-
+        } catch (final Exception ex) {
+            ex.printStackTrace();
         }
     }
 
@@ -60,7 +60,7 @@ public class StatisticManager extends DatabaseUsable {
         if (!statistic) {
             return;
         }
-        Document document = database.getDocument(NAME);
+        final Document document = database.getDocument(NAME);
         if (!document.contains("startedProxys")) {
             document.append("startedProxys", 0);
         }
@@ -72,7 +72,7 @@ public class StatisticManager extends DatabaseUsable {
         if (!statistic) {
             return;
         }
-        Document document = database.getDocument(NAME);
+        final Document document = database.getDocument(NAME);
         if (!document.contains("startedServers")) {
             document.append("startedServers", 0L);
         }
@@ -84,7 +84,7 @@ public class StatisticManager extends DatabaseUsable {
         if (!statistic) {
             return;
         }
-        Document document = database.getDocument(NAME);
+        final Document document = database.getDocument(NAME);
         if (!document.contains("cloudStartup")) {
             document.append("cloudStartup", 0L);
         }
@@ -96,7 +96,7 @@ public class StatisticManager extends DatabaseUsable {
         if (!statistic) {
             return;
         }
-        Document document = database.getDocument(NAME);
+        final Document document = database.getDocument(NAME);
         if (!document.contains("wrapperConnections")) {
             document.append("wrapperConnections", 0);
         }
@@ -108,7 +108,7 @@ public class StatisticManager extends DatabaseUsable {
         if (!statistic) {
             return;
         }
-        Document document = database.getDocument(NAME);
+        final Document document = database.getDocument(NAME);
         if (!document.contains("playerCommandExecutions")) {
             document.append("playerCommandExecutions", 0L);
         }
@@ -116,11 +116,11 @@ public class StatisticManager extends DatabaseUsable {
         document.append("playerCommandExecutions", document.getLong("playerCommandExecutions") + 1L);
     }
 
-    public void highestServerOnlineCount(int value) {
+    public void highestServerOnlineCount(final int value) {
         if (!statistic) {
             return;
         }
-        Document document = database.getDocument(NAME);
+        final Document document = database.getDocument(NAME);
         if (!document.contains("highestServerOnlineCount")) {
             document.append("highestServerOnlineCount", 0);
         }
@@ -130,11 +130,11 @@ public class StatisticManager extends DatabaseUsable {
         }
     }
 
-    public void highestPlayerOnlineCount(int value) {
+    public void highestPlayerOnlineCount(final int value) {
         if (!statistic) {
             return;
         }
-        Document document = database.getDocument(NAME);
+        final Document document = database.getDocument(NAME);
         if (!document.contains("highestPlayerOnline")) {
             document.append("highestPlayerOnline", 0);
         }
@@ -144,15 +144,15 @@ public class StatisticManager extends DatabaseUsable {
         }
     }
 
-    public void cloudOnlineTime(long activeNow) {
+    public void cloudOnlineTime(final long activeNow) {
         if (!statistic) {
             return;
         }
-        Document document = database.getDocument(NAME);
+        final Document document = database.getDocument(NAME);
         if (!document.contains("cloudOnlineTime")) {
             document.append("cloudOnlineTime", 0);
         }
-        long append = System.currentTimeMillis() - activeNow;
+        final long append = System.currentTimeMillis() - activeNow;
         document.append("cloudOnlineTime", document.getLong("cloudOnlineTime") + append);
     }
 }

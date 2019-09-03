@@ -20,23 +20,23 @@ import java.util.Map;
 public class PacketDBInGetDocument extends PacketAPIIO {
 
     @Override
-    public void handleInput(Document data, PacketSender packetSender) {
+    public void handleInput(final Document data, final PacketSender packetSender) {
         if (!data.contains("name")) {
-            Map<String, Document> docs = ((DatabaseImpl) CloudNet.getInstance()
-                                                                 .getDatabaseManager()
-                                                                 .getDatabase(data.getString("db"))
-                                                                 .loadDocuments()).getDocuments();
+            final Map<String, Document> docs = ((DatabaseImpl) CloudNet.getInstance()
+                                                                       .getDatabaseManager()
+                                                                       .getDatabase(data.getString("db"))
+                                                                       .loadDocuments()).getDocuments();
             packetSender.sendPacket(getResult(new Document("docs", docs)));
         } else {
-            String x = data.getString("name");
-            String db = data.getString("db");
-            Document document = CloudNet.getInstance().getDatabaseManager().getDatabase(db).getDocument(x);
+            final String x = data.getString("name");
+            final String db = data.getString("db");
+            final Document document = CloudNet.getInstance().getDatabaseManager().getDatabase(db).getDocument(x);
             packetSender.sendPacket(getResult(new Document("result", document)));
         }
     }
 
     @Override
-    protected Packet getResult(Document value) {
+    protected Packet getResult(final Document value) {
         return new Packet(packetUniqueId, PacketRC.DB, value);
     }
 }

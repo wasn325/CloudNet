@@ -23,12 +23,12 @@ public class User implements Nameable {
     protected Collection<String> permissions;
     protected Map<String, Object> metaData;
 
-    public User(String name,
-                UUID uniqueId,
-                String apiToken,
-                String hashedPassword,
-                Collection<String> permissions,
-                Map<String, Object> metaData) {
+    public User(final String name,
+                final UUID uniqueId,
+                final String apiToken,
+                final String hashedPassword,
+                final Collection<String> permissions,
+                final Map<String, Object> metaData) {
         this.name = name;
         this.uniqueId = uniqueId;
         this.apiToken = apiToken;
@@ -97,11 +97,11 @@ public class User implements Nameable {
         return new SimpledUser(name, apiToken);
     }
 
-    public boolean hasPermission(String permission) {
+    public boolean hasPermission(final String permission) {
         return permissions.contains("*") || permissions.contains(permission);
     }
 
-    public void setPassword(String password) {
+    public void setPassword(final String password) {
         this.hashedPassword = DyHash.hashString(password);
     }
 }

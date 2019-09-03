@@ -12,15 +12,15 @@ import org.bukkit.event.HandlerList;
  */
 public class BukkitCustomChannelMessageReceiveEvent extends BukkitCloudEvent {
 
-    private static HandlerList handlerList = new HandlerList();
+    private static final HandlerList handlerList = new HandlerList();
 
-    private String channel;
+    private final String channel;
 
-    private String message;
+    private final String message;
 
-    private Document document;
+    private final Document document;
 
-    public BukkitCustomChannelMessageReceiveEvent(String channel, String message, Document document) {
+    public BukkitCustomChannelMessageReceiveEvent(final String channel, final String message, final Document document) {
         this.channel = channel;
         this.message = message;
         this.document = document;

@@ -5,11 +5,11 @@ package de.dytanic.cloudnet.lib.player;
  */
 public class PlayerCommandExecution {
 
-    private String name;
+    private final String name;
 
-    private String commandLine;
+    private final String commandLine;
 
-    public PlayerCommandExecution(String name, String commandLine) {
+    public PlayerCommandExecution(final String name, final String commandLine) {
         this.name = name;
         this.commandLine = commandLine;
     }

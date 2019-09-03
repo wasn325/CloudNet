@@ -12,42 +12,42 @@ import java.util.Properties;
  */
 public class ServerProcessMeta {
 
-    private ServiceId serviceId;
+    private final ServiceId serviceId;
 
-    private int memory;
+    private final int memory;
 
-    private boolean priorityStop;
+    private final boolean priorityStop;
 
-    private String url;
+    private final String url;
 
-    private String[] processParameters;
+    private final String[] processParameters;
 
-    private boolean onlineMode;
+    private final boolean onlineMode;
 
-    private Collection<ServerInstallablePlugin> downloadablePlugins;
+    private final Collection<ServerInstallablePlugin> downloadablePlugins;
 
-    private ServerConfig serverConfig;
+    private final ServerConfig serverConfig;
 
-    private String customServerDownload;
+    private final String customServerDownload;
 
-    private int port;
+    private final int port;
 
-    private Properties serverProperties;
+    private final Properties serverProperties;
 
-    private Template template;
+    private final Template template;
 
-    public ServerProcessMeta(ServiceId serviceId,
-                             int memory,
-                             boolean priorityStop,
-                             String url,
-                             String[] processParameters,
-                             boolean onlineMode,
-                             Collection<ServerInstallablePlugin> downloadablePlugins,
-                             ServerConfig serverConfig,
-                             String customServerDownload,
-                             int port,
-                             Properties serverProperties,
-                             Template template) {
+    public ServerProcessMeta(final ServiceId serviceId,
+                             final int memory,
+                             final boolean priorityStop,
+                             final String url,
+                             final String[] processParameters,
+                             final boolean onlineMode,
+                             final Collection<ServerInstallablePlugin> downloadablePlugins,
+                             final ServerConfig serverConfig,
+                             final String customServerDownload,
+                             final int port,
+                             final Properties serverProperties,
+                             final Template template) {
         this.serviceId = serviceId;
         this.memory = memory;
         this.priorityStop = priorityStop;

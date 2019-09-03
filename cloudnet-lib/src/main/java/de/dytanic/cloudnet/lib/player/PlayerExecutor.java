@@ -6,25 +6,30 @@ package de.dytanic.cloudnet.lib.player;
 
 public class PlayerExecutor {
 
-    protected boolean available = false;
+    protected boolean available;
 
     public boolean isAvailable() {
         return available;
     }
 
-    public void sendPlayer(CloudPlayer cloudPlayer, String server) {
+    public void sendPlayer(final CloudPlayer cloudPlayer, final String server) {
     }
 
-    public void kickPlayer(CloudPlayer cloudPlayer, String reason) {
+    public void kickPlayer(final CloudPlayer cloudPlayer, final String reason) {
     }
 
-    public void sendMessage(CloudPlayer cloudPlayer, String message) {
+    public void sendMessage(final CloudPlayer cloudPlayer, final String message) {
     }
 
-    public void sendActionbar(CloudPlayer cloudPlayer, String message) {
+    public void sendActionbar(final CloudPlayer cloudPlayer, final String message) {
     }
 
-    public void sendTitle(CloudPlayer cloudPlayer, String title, String subTitle, int fadeIn, int stay, int fadeOut) {
+    public void sendTitle(final CloudPlayer cloudPlayer,
+                          final String title,
+                          final String subTitle,
+                          final int fadeIn,
+                          final int stay,
+                          final int fadeOut) {
     }
 
 }

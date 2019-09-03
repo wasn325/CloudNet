@@ -15,7 +15,7 @@ import de.dytanic.cloudnetcore.CloudNet;
 public class PacketDBInSelectDatabase extends PacketInHandler {
 
     @Override
-    public void handleInput(Document data, PacketSender packetSender) {
+    public void handleInput(final Document data, final PacketSender packetSender) {
         CloudNet.getInstance().getDatabaseManager().getDatabase(data.getString("name"));
     }
 }

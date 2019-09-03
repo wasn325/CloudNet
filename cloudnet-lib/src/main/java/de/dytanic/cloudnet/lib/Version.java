@@ -5,9 +5,9 @@ package de.dytanic.cloudnet.lib;
  */
 public class Version {
 
-    private String version;
+    private final String version;
 
-    public Version(String version) {
+    public Version(final String version) {
         this.version = version;
     }
 

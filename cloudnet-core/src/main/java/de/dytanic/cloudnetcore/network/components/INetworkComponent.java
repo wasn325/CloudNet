@@ -19,15 +19,15 @@ public interface INetworkComponent extends PacketSender, ChannelUser {
 
     Wrapper getWrapper();
 
-    default void sendPacket(Packet... packets) {
-        for (Packet packet : packets) {
+    default void sendPacket(final Packet... packets) {
+        for (final Packet packet : packets) {
             sendPacket(packet);
         }
     }
 
     String getServerId();
 
-    default void sendPacket(Packet packet) {
+    default void sendPacket(final Packet packet) {
         CloudNet.getLogger().debug("Sending Packet " + packet.getClass().getSimpleName() + " (id=" + CloudNet.getInstance()
                                                                                                              .getPacketManager()
                                                                                                              .packetId(packet) + ";dataLength=" + CloudNet
@@ -42,7 +42,7 @@ public interface INetworkComponent extends PacketSender, ChannelUser {
         if (getChannel().eventLoop().inEventLoop()) {
             try {
                 getChannel().writeAndFlush(packet).addListener(ChannelFutureListener.FIRE_EXCEPTION_ON_FAILURE);
-            } catch (Exception ignored) {
+            } catch (final Exception ignored) {
             }
         } else {
             getChannel().eventLoop().execute(new Runnable() {
@@ -50,14 +50,14 @@ public interface INetworkComponent extends PacketSender, ChannelUser {
                 public void run() {
                     try {
                         getChannel().writeAndFlush(packet).addListener(ChannelFutureListener.FIRE_EXCEPTION_ON_FAILURE);
-                    } catch (Exception ignored) {
+                    } catch (final Exception ignored) {
                     }
                 }
             });
         }
     }
 
-    default void sendPacketSynchronized(Packet packet) {
+    default void sendPacketSynchronized(final Packet packet) {
         if (getChannel() == null) {
             return;
         }
@@ -72,7 +72,7 @@ public interface INetworkComponent extends PacketSender, ChannelUser {
     }
 
     @Override
-    default void send(Object object) {
+    default void send(final Object object) {
         if (getChannel() == null) {
             return;
         }
@@ -90,42 +90,42 @@ public interface INetworkComponent extends PacketSender, ChannelUser {
     }
 
     @Override
-    default void sendSynchronized(Object object) {
+    default void sendSynchronized(final Object object) {
         getChannel().writeAndFlush(object).syncUninterruptibly();
     }
 
     @Override
-    default void sendAsynchronized(Object object) {
+    default void sendAsynchronized(final Object object) {
         getChannel().writeAndFlush(object);
     }
 
     @Override
-    default void send(IProtocol iProtocol, Object element) {
+    default void send(final IProtocol iProtocol, final Object element) {
         send(new ProtocolRequest(iProtocol.getId(), element));
     }
 
     @Override
-    default void send(int id, Object element) {
+    default void send(final int id, final Object element) {
         send(new ProtocolRequest(id, element));
     }
 
     @Override
-    default void sendAsynchronized(int id, Object element) {
+    default void sendAsynchronized(final int id, final Object element) {
         sendAsynchronized(new ProtocolRequest(id, element));
     }
 
     @Override
-    default void sendAsynchronized(IProtocol iProtocol, Object element) {
+    default void sendAsynchronized(final IProtocol iProtocol, final Object element) {
         sendAsynchronized(new ProtocolRequest(iProtocol.getId(), element));
     }
 
     @Override
-    default void sendSynchronized(int id, Object element) {
+    default void sendSynchronized(final int id, final Object element) {
         sendSynchronized(new ProtocolRequest(id, element));
     }
 
     @Override
-    default void sendSynchronized(IProtocol iProtocol, Object element) {
+    default void sendSynchronized(final IProtocol iProtocol, final Object element) {
         sendSynchronized(new ProtocolRequest(iProtocol.getId(), element));
     }
 }

@@ -20,17 +20,18 @@ import java.util.List;
 public class ProtocolInDecoder extends ByteToMessageDecoder {
 
     @Override
-    protected void decode(ChannelHandlerContext channelHandlerContext, ByteBuf byteBuf, List<Object> list) throws Exception {
-        ProtocolBuffer protocolBuffer = ProtocolProvider.protocolBuffer(byteBuf);
+    protected void decode(final ChannelHandlerContext channelHandlerContext, final ByteBuf byteBuf, final List<Object> list) throws
+        Exception {
+        final ProtocolBuffer protocolBuffer = ProtocolProvider.protocolBuffer(byteBuf);
 
-        for (IProtocol iProtocol : ProtocolProvider.protocols()) {
+        for (final IProtocol iProtocol : ProtocolProvider.protocols()) {
             try {
-                ProtocolStream protocolStream = iProtocol.createEmptyElement();
+                final ProtocolStream protocolStream = iProtocol.createEmptyElement();
                 protocolStream.read(protocolBuffer.clone());
                 list.add(protocolStream);
                 break;
-            } catch (Exception ex) {
-
+            } catch (final Exception ex) {
+                ex.printStackTrace();
             }
         }
     }

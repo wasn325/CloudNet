@@ -34,14 +34,15 @@ public class WebsiteUtils extends MethodWebHandlerAdapter {
     }
 
     @Override
-    public FullHttpResponse get(ChannelHandlerContext channelHandlerContext,
-                                QueryDecoder queryDecoder,
-                                PathProvider path,
-                                HttpRequest httpRequest) throws Exception {
-        FullHttpResponse fullHttpResponse = new DefaultFullHttpResponse(httpRequest.getProtocolVersion(), HttpResponseStatus.UNAUTHORIZED);
+    public FullHttpResponse get(final ChannelHandlerContext channelHandlerContext,
+                                final QueryDecoder queryDecoder,
+                                final PathProvider path,
+                                final HttpRequest httpRequest) throws Exception {
+        final FullHttpResponse fullHttpResponse = new DefaultFullHttpResponse(httpRequest.getProtocolVersion(),
+                                                                              HttpResponseStatus.UNAUTHORIZED);
         fullHttpResponse.headers().set("Content-Type", "application/json");
 
-        Document dataDocument = new Document("success", false).append("reason", new ArrayList<>()).append("response", new Document());
+        final Document dataDocument = new Document("success", false).append("reason", new ArrayList<>()).append("response", new Document());
         if (!httpRequest.headers().contains("-Xcloudnet-user") || (!httpRequest.headers()
                                                                                .contains("-Xcloudnet-token") && !httpRequest.headers()
                                                                                                                             .contains(
@@ -64,7 +65,7 @@ public class WebsiteUtils extends MethodWebHandlerAdapter {
             return fullHttpResponse;
         }
 
-        User user = CloudNet.getInstance().getUser(httpRequest.headers().get("-Xcloudnet-user"));
+        final User user = CloudNet.getInstance().getUser(httpRequest.headers().get("-Xcloudnet-user"));
 
         switch (httpRequest.headers().get("-Xmessage").toLowerCase()) {
             case "serverinfos": {
@@ -77,8 +78,8 @@ public class WebsiteUtils extends MethodWebHandlerAdapter {
                 }
 
                 dataDocument.append("success", true);
-                Document response = new Document();
-                for (MinecraftServer minecraftServer : CloudNet.getInstance().getServers().values()) {
+                final Document response = new Document();
+                for (final MinecraftServer minecraftServer : CloudNet.getInstance().getServers().values()) {
                     response.append(minecraftServer.getServiceId().getServerId(), minecraftServer.getServerInfo());
                 }
                 dataDocument.append("response", response);
@@ -96,8 +97,8 @@ public class WebsiteUtils extends MethodWebHandlerAdapter {
                 }
 
                 dataDocument.append("success", true);
-                Document response = new Document();
-                for (ProxyServer minecraftServer : CloudNet.getInstance().getProxys().values()) {
+                final Document response = new Document();
+                for (final ProxyServer minecraftServer : CloudNet.getInstance().getProxys().values()) {
                     response.append(minecraftServer.getServiceId().getServerId(), minecraftServer.getProxyInfo());
                 }
                 dataDocument.append("response", response);
@@ -115,8 +116,8 @@ public class WebsiteUtils extends MethodWebHandlerAdapter {
                 }
 
                 dataDocument.append("success", true);
-                Document response = new Document();
-                for (CloudPlayer cloudPlayer : CloudNet.getInstance().getNetworkManager().getOnlinePlayers().values()) {
+                final Document response = new Document();
+                for (final CloudPlayer cloudPlayer : CloudNet.getInstance().getNetworkManager().getOnlinePlayers().values()) {
                     response.append(cloudPlayer.getUniqueId().toString(), cloudPlayer);
                 }
                 dataDocument.append("response", response);
@@ -163,7 +164,7 @@ public class WebsiteUtils extends MethodWebHandlerAdapter {
                 fullHttpResponse.content().writeBytes(dataDocument.convertToJsonString().getBytes(StandardCharsets.UTF_8));
 
                 if (httpRequest.headers().contains("-Xvalue")) {
-                    String group = httpRequest.headers().get("-Xvalue");
+                    final String group = httpRequest.headers().get("-Xvalue");
                     CloudNet.getInstance().getScheduler().runTaskSync(new Runnable() {
                         @Override
                         public void run() {
@@ -187,7 +188,7 @@ public class WebsiteUtils extends MethodWebHandlerAdapter {
                 fullHttpResponse.content().writeBytes(dataDocument.convertToJsonString().getBytes(StandardCharsets.UTF_8));
 
                 if (httpRequest.headers().contains("-Xvalue")) {
-                    String group = httpRequest.headers().get("-Xvalue");
+                    final String group = httpRequest.headers().get("-Xvalue");
                     CloudNet.getInstance().getScheduler().runTaskSync(new Runnable() {
                         @Override
                         public void run() {

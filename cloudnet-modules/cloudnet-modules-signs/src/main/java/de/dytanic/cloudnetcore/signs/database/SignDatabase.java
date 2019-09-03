@@ -20,37 +20,37 @@ import java.util.UUID;
  */
 public class SignDatabase extends DatabaseUsable {
 
-    public SignDatabase(Database database) {
+    public SignDatabase(final Database database) {
         super(database);
 
-        Document document = database.getDocument("signs");
+        final Document document = database.getDocument("signs");
         if (document == null) {
             database.insert(new DatabaseDocument("signs").append("signs", new Document()));
         }
     }
 
-    public SignDatabase appendSign(Sign sign) {
-        Document x = database.getDocument("signs");
-        Document document = x.getDocument("signs");
+    public SignDatabase appendSign(final Sign sign) {
+        final Document x = database.getDocument("signs");
+        final Document document = x.getDocument("signs");
         document.append(sign.getUniqueId().toString(), sign);
         database.insert(document);
         return this;
     }
 
-    public SignDatabase removeSign(UUID uniqueId) {
-        Document x = database.getDocument("signs");
-        Document document = x.getDocument("signs");
+    public SignDatabase removeSign(final UUID uniqueId) {
+        final Document x = database.getDocument("signs");
+        final Document document = x.getDocument("signs");
         document.remove(uniqueId.toString());
         database.insert(document);
         return this;
     }
 
     public java.util.Map<UUID, Sign> loadAll() {
-        Document x = database.getDocument("signs");
-        Document document = x.getDocument("signs");
-        Type typeToken = new TypeToken<Sign>() {}.getType();
-        java.util.Map<UUID, Sign> signs = new LinkedHashMap<>();
-        for (String key : document.keys()) {
+        final Document x = database.getDocument("signs");
+        final Document document = x.getDocument("signs");
+        final Type typeToken = new TypeToken<Sign>() {}.getType();
+        final java.util.Map<UUID, Sign> signs = new LinkedHashMap<>();
+        for (final String key : document.keys()) {
             signs.put(UUID.fromString(key), document.getObject(key, typeToken));
         }
         return signs;

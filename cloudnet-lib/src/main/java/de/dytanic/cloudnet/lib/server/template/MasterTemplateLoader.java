@@ -20,19 +20,24 @@ import java.nio.file.Paths;
  */
 public class MasterTemplateLoader {
 
-    private String url;
+    private final String url;
 
-    private String dest;
+    private final String dest;
 
-    private SimpledUser simpledUser;
+    private final SimpledUser simpledUser;
 
-    private Template template;
+    private final Template template;
 
-    private String group;
+    private final String group;
 
-    private String customName;
+    private final String customName;
 
-    public MasterTemplateLoader(String url, String dest, SimpledUser simpledUser, Template template, String group, String customName) {
+    public MasterTemplateLoader(final String url,
+                                final String dest,
+                                final SimpledUser simpledUser,
+                                final Template template,
+                                final String group,
+                                final String customName) {
         this.url = url;
         this.dest = dest;
         this.simpledUser = simpledUser;
@@ -67,7 +72,7 @@ public class MasterTemplateLoader {
 
     public MasterTemplateLoader load() {
         try {
-            HttpURLConnection urlConnection = (HttpURLConnection) new URL(url).openConnection();
+            final HttpURLConnection urlConnection = (HttpURLConnection) new URL(url).openConnection();
             urlConnection.setRequestMethod("GET");
             urlConnection.setRequestProperty("-Xcloudnet-user", simpledUser.getUserName());
             urlConnection.setRequestProperty("-Xcloudnet-token", simpledUser.getApiToken());
@@ -85,17 +90,17 @@ public class MasterTemplateLoader {
 
             urlConnection.disconnect();
 
-        } catch (IOException e) {
+        } catch (final IOException e) {
             e.printStackTrace();
         }
         return this;
     }
 
-    public MasterTemplateLoader unZip(String dest) {
+    public MasterTemplateLoader unZip(final String dest) {
         try {
             ZipConverter.extract(Paths.get(this.dest), Paths.get(dest));
             new File(this.dest).delete();
-        } catch (IOException e) {
+        } catch (final IOException e) {
             e.printStackTrace();
         }
         return this;

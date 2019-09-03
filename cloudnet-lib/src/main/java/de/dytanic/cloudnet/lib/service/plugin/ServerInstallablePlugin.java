@@ -6,13 +6,13 @@ package de.dytanic.cloudnet.lib.service.plugin;
 
 public class ServerInstallablePlugin {
 
-    private String name;
+    private final String name;
 
-    private PluginResourceType pluginResourceType;
+    private final PluginResourceType pluginResourceType;
 
-    private String url;
+    private final String url;
 
-    public ServerInstallablePlugin(String name, PluginResourceType pluginResourceType, String url) {
+    public ServerInstallablePlugin(final String name, final PluginResourceType pluginResourceType, final String url) {
         this.name = name;
         this.pluginResourceType = pluginResourceType;
         this.url = url;

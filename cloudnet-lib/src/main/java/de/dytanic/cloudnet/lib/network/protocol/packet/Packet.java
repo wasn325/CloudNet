@@ -27,38 +27,38 @@ public class Packet extends ProtocolStream {
     public Packet() {
     }
 
-    public Packet(int id) {
+    public Packet(final int id) {
         this.id = id;
         this.data = new Document();
     }
 
-    public Packet(Document data) {
+    public Packet(final Document data) {
         this.data = data;
         this.id = 0;
     }
 
-    public Packet(int id, Document data) {
+    public Packet(final int id, final Document data) {
         this.id = id;
         this.data = data;
     }
 
-    public Packet(UUID uniqueId, int id, Document data) {
+    public Packet(final UUID uniqueId, final int id, final Document data) {
         this.uniqueId = uniqueId;
         this.id = id;
         this.data = data;
     }
 
     @Override
-    public void write(ProtocolBuffer outPut) throws Exception {
+    public void write(final ProtocolBuffer outPut) throws Exception {
         outPut.writeString(NetworkUtils.GSON.toJson(this));
     }
 
     @Override
-    public void read(ProtocolBuffer in) throws Exception {
-        int vx = in.readableBytes();
+    public void read(final ProtocolBuffer in) throws Exception {
+        final int vx = in.readableBytes();
         if (vx != 0) {
-            String input = in.readString();
-            Packet packet = NetworkUtils.GSON.fromJson(input, TYPE);
+            final String input = in.readString();
+            final Packet packet = NetworkUtils.GSON.fromJson(input, TYPE);
             this.uniqueId = packet.uniqueId;
             this.data = packet.data;
             this.id = packet.id;

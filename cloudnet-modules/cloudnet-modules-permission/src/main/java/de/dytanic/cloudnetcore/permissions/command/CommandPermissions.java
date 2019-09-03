@@ -35,18 +35,18 @@ public final class CommandPermissions extends Command {
     }
 
     @Override
-    public void onExecuteCommand(CommandSender sender, String[] args) {
-        PermissionPool permissionPool = PermissionModule.getInstance().getPermissionPool();
+    public void onExecuteCommand(final CommandSender sender, final String[] args) {
+        final PermissionPool permissionPool = PermissionModule.getInstance().getPermissionPool();
         if (args.length > 0) {
             if (args[0].equalsIgnoreCase("group")) {
                 if (args.length == 1) {
                     sender.sendMessage(NetworkUtils.SPACE_STRING, "Permission groups:");
-                    ArrayList<PermissionGroup> permissionGroups = new ArrayList<>(PermissionModule.getInstance()
-                                                                                                  .getPermissionPool()
-                                                                                                  .getGroups()
-                                                                                                  .values());
+                    final ArrayList<PermissionGroup> permissionGroups = new ArrayList<>(PermissionModule.getInstance()
+                                                                                                        .getPermissionPool()
+                                                                                                        .getGroups()
+                                                                                                        .values());
                     permissionGroups.sort(Comparator.comparingInt(PermissionGroup::getTagId));
-                    for (PermissionGroup permissionGroup : permissionGroups) {
+                    for (final PermissionGroup permissionGroup : permissionGroups) {
                         sender.sendMessage(permissionGroup.getName() + " [" + permissionGroup.getJoinPower() + "] implements " + permissionGroup
                             .getImplementGroups());
                     }
@@ -56,21 +56,21 @@ public final class CommandPermissions extends Command {
                 if (args.length == 2) {
                     if (permissionPool.getGroups().containsKey(args[1])) {
                         sender.sendMessage(NetworkUtils.SPACE_STRING);
-                        PermissionGroup permissionGroup = permissionPool.getGroups().get(args[1]);
+                        final PermissionGroup permissionGroup = permissionPool.getGroups().get(args[1]);
                         sender.sendMessage("Name: " + permissionGroup.getName());
                         sender.sendMessage("Implementations: " + permissionGroup.getImplementGroups());
                         sender.sendMessage("TagId: " + permissionGroup.getTagId());
                         sender.sendMessage("JoinPower: " + permissionGroup.getJoinPower());
-                        for (Map.Entry<String, Boolean> x : permissionGroup.getPermissions().entrySet()) {
+                        for (final Map.Entry<String, Boolean> x : permissionGroup.getPermissions().entrySet()) {
                             sender.sendMessage("- " + x.getKey() + ':' + x.getValue());
                         }
                         sender.sendMessage(NetworkUtils.SPACE_STRING);
                         sender.sendMessage("Permissions for server groups:");
-                        for (Map.Entry<String, List<String>> x : permissionGroup.getServerGroupPermissions().entrySet()) {
+                        for (final Map.Entry<String, List<String>> x : permissionGroup.getServerGroupPermissions().entrySet()) {
                             sender.sendMessage(x.getKey() + ':');
                             CollectionWrapper.iterator(x.getValue(), new Runnabled<String>() {
                                 @Override
-                                public void run(String obj) {
+                                public void run(final String obj) {
                                     sender.sendMessage("- " + obj);
                                 }
                             });
@@ -84,7 +84,7 @@ public final class CommandPermissions extends Command {
                 if (args.length == 4) {
                     if (args[2].equalsIgnoreCase("setDisplay")) {
                         if (permissionPool.getGroups().containsKey(args[1])) {
-                            PermissionGroup permissionGroup = permissionPool.getGroups().get(args[1]);
+                            final PermissionGroup permissionGroup = permissionPool.getGroups().get(args[1]);
                             permissionGroup.setDisplay(args[3].replace("_", NetworkUtils.SPACE_STRING));
                             PermissionModule.getInstance().getConfigPermission().updatePermissionGroup(permissionGroup);
                             CloudNet.getInstance().getNetworkManager().reload();
@@ -98,7 +98,7 @@ public final class CommandPermissions extends Command {
 
                     if (args[2].equalsIgnoreCase("setPrefix")) {
                         if (permissionPool.getGroups().containsKey(args[1])) {
-                            PermissionGroup permissionGroup = permissionPool.getGroups().get(args[1]);
+                            final PermissionGroup permissionGroup = permissionPool.getGroups().get(args[1]);
                             permissionGroup.setPrefix(args[3].replace("_", NetworkUtils.SPACE_STRING));
                             PermissionModule.getInstance().getConfigPermission().updatePermissionGroup(permissionGroup);
                             CloudNet.getInstance().getNetworkManager().reload();
@@ -112,7 +112,7 @@ public final class CommandPermissions extends Command {
 
                     if (args[2].equalsIgnoreCase("setSuffix")) {
                         if (permissionPool.getGroups().containsKey(args[1])) {
-                            PermissionGroup permissionGroup = permissionPool.getGroups().get(args[1]);
+                            final PermissionGroup permissionGroup = permissionPool.getGroups().get(args[1]);
                             permissionGroup.setSuffix(args[3].replace("_", NetworkUtils.SPACE_STRING));
                             PermissionModule.getInstance().getConfigPermission().updatePermissionGroup(permissionGroup);
                             CloudNet.getInstance().getNetworkManager().reload();
@@ -125,7 +125,7 @@ public final class CommandPermissions extends Command {
                     }
                     if (args[2].equalsIgnoreCase("setColor")) {
                         if (permissionPool.getGroups().containsKey(args[1])) {
-                            PermissionGroup permissionGroup = permissionPool.getGroups().get(args[1]);
+                            final PermissionGroup permissionGroup = permissionPool.getGroups().get(args[1]);
                             permissionGroup.setColor(args[3].toLowerCase());
                             PermissionModule.getInstance().getConfigPermission().updatePermissionGroup(permissionGroup);
                             CloudNet.getInstance().getNetworkManager().reload();
@@ -139,7 +139,7 @@ public final class CommandPermissions extends Command {
 
                     if (args[2].equalsIgnoreCase("setDefault")) {
                         if (permissionPool.getGroups().containsKey(args[1])) {
-                            PermissionGroup permissionGroup = permissionPool.getGroups().get(args[1]);
+                            final PermissionGroup permissionGroup = permissionPool.getGroups().get(args[1]);
                             permissionGroup.setDefaultGroup(args[3].equalsIgnoreCase("true"));
                             PermissionModule.getInstance().getConfigPermission().updatePermissionGroup(permissionGroup);
                             CloudNet.getInstance().getNetworkManager().reload();
@@ -153,7 +153,7 @@ public final class CommandPermissions extends Command {
 
                     if (args[2].equalsIgnoreCase("setJoinPower")) {
                         if (permissionPool.getGroups().containsKey(args[1]) && NetworkUtils.checkIsNumber(args[3])) {
-                            PermissionGroup permissionGroup = permissionPool.getGroups().get(args[1]);
+                            final PermissionGroup permissionGroup = permissionPool.getGroups().get(args[1]);
                             permissionGroup.setJoinPower(Integer.parseInt(args[3]));
                             PermissionModule.getInstance().getConfigPermission().updatePermissionGroup(permissionGroup);
                             CloudNet.getInstance().getNetworkManager().reload();
@@ -167,7 +167,7 @@ public final class CommandPermissions extends Command {
 
                     if (args[2].equalsIgnoreCase("setTagId")) {
                         if (permissionPool.getGroups().containsKey(args[1]) && NetworkUtils.checkIsNumber(args[3])) {
-                            PermissionGroup permissionGroup = permissionPool.getGroups().get(args[1]);
+                            final PermissionGroup permissionGroup = permissionPool.getGroups().get(args[1]);
                             permissionGroup.setTagId(Integer.parseInt(args[3]));
                             PermissionModule.getInstance().getConfigPermission().updatePermissionGroup(permissionGroup);
                             CloudNet.getInstance().getNetworkManager().reload();
@@ -184,9 +184,9 @@ public final class CommandPermissions extends Command {
                 if (args.length == 5) {
                     if (args[2].equalsIgnoreCase("add") && args[3].equalsIgnoreCase("permission")) {
                         if (permissionPool.getGroups().containsKey(args[1])) {
-                            PermissionGroup permissionGroup = permissionPool.getGroups().get(args[1]);
-                            String permission = args[4].replaceFirst("-", NetworkUtils.EMPTY_STRING);
-                            boolean value = !args[4].startsWith("-");
+                            final PermissionGroup permissionGroup = permissionPool.getGroups().get(args[1]);
+                            final String permission = args[4].replaceFirst("-", NetworkUtils.EMPTY_STRING);
+                            final boolean value = !args[4].startsWith("-");
                             if (!permissionIsSet(permissionGroup.getPermissions(), permission, value)) {
                                 permissionGroup.getPermissions().put(permission, value);
                                 PermissionModule.getInstance().getConfigPermission().updatePermissionGroup(permissionGroup);
@@ -205,7 +205,7 @@ public final class CommandPermissions extends Command {
 
                     if (args[2].equalsIgnoreCase("remove") && args[3].equalsIgnoreCase("permission")) {
                         if (permissionPool.getGroups().containsKey(args[1])) {
-                            PermissionGroup permissionGroup = permissionPool.getGroups().get(args[1]);
+                            final PermissionGroup permissionGroup = permissionPool.getGroups().get(args[1]);
                             permissionGroup.getPermissions().remove(args[4]);
                             PermissionModule.getInstance().getConfigPermission().updatePermissionGroup(permissionGroup);
                             CloudNet.getInstance().getNetworkManager().reload();
@@ -220,7 +220,7 @@ public final class CommandPermissions extends Command {
                 if (args.length == 6) {
                     if (args[2].equalsIgnoreCase("add") && args[3].equalsIgnoreCase("permission")) {
                         if (permissionPool.getGroups().containsKey(args[1])) {
-                            PermissionGroup permissionGroup = permissionPool.getGroups().get(args[1]);
+                            final PermissionGroup permissionGroup = permissionPool.getGroups().get(args[1]);
 
                             if (!permissionGroup.getServerGroupPermissions().containsKey(args[5])) {
                                 permissionGroup.getServerGroupPermissions().put(args[5], new ArrayList<>());
@@ -238,7 +238,7 @@ public final class CommandPermissions extends Command {
 
                     if (args[2].equalsIgnoreCase("remove") && args[3].equalsIgnoreCase("permission")) {
                         if (permissionPool.getGroups().containsKey(args[1])) {
-                            PermissionGroup permissionGroup = permissionPool.getGroups().get(args[1]);
+                            final PermissionGroup permissionGroup = permissionPool.getGroups().get(args[1]);
 
                             if (!permissionGroup.getServerGroupPermissions().containsKey(args[5])) {
                                 permissionGroup.getServerGroupPermissions().put(args[5], new ArrayList<>());
@@ -259,13 +259,13 @@ public final class CommandPermissions extends Command {
             }
             if (args[0].equalsIgnoreCase("user")) {
                 if (args.length == 2) {
-                    UUID uniqueId = CloudNet.getInstance().getDbHandlers().getNameToUUIDDatabase().get(args[1]);
+                    final UUID uniqueId = CloudNet.getInstance().getDbHandlers().getNameToUUIDDatabase().get(args[1]);
                     if (uniqueId != null) {
-                        OfflinePlayer offlinePlayer = CloudNet.getInstance().getDbHandlers().getPlayerDatabase().getPlayer(uniqueId);
+                        final OfflinePlayer offlinePlayer = CloudNet.getInstance().getDbHandlers().getPlayerDatabase().getPlayer(uniqueId);
                         if (offlinePlayer != null && offlinePlayer.getPermissionEntity() != null) {
-                            StringBuilder stringBuilder = new StringBuilder();
-                            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yyyy-HH:mm:ss");
-                            for (GroupEntityData groupEntityData : offlinePlayer.getPermissionEntity().getGroups()) {
+                            final StringBuilder stringBuilder = new StringBuilder();
+                            final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yyyy-HH:mm:ss");
+                            for (final GroupEntityData groupEntityData : offlinePlayer.getPermissionEntity().getGroups()) {
                                 stringBuilder.append(groupEntityData.getGroup() + '@' + (groupEntityData.getTimeout() == 0 || groupEntityData
                                     .getTimeout() == -1 ? "LIFETIME" : simpleDateFormat.format(groupEntityData.getTimeout())) + NetworkUtils.SPACE_STRING);
                             }
@@ -275,9 +275,9 @@ public final class CommandPermissions extends Command {
                                                "Groups: " + stringBuilder.substring(0),
                                                NetworkUtils.SPACE_STRING);
 
-                            for (Map.Entry<String, Boolean> booleanEntry : offlinePlayer.getPermissionEntity()
-                                                                                        .getPermissions()
-                                                                                        .entrySet()) {
+                            for (final Map.Entry<String, Boolean> booleanEntry : offlinePlayer.getPermissionEntity()
+                                                                                              .getPermissions()
+                                                                                              .entrySet()) {
                                 sender.sendMessage("- " + booleanEntry.getKey() + " [" + booleanEntry.getValue() + ']');
                             }
 
@@ -294,15 +294,15 @@ public final class CommandPermissions extends Command {
                 //UTILS
 
                 if (args.length == 5) {//perms user Dytanic group remove Admin
-                    UUID uniqueId = CloudNet.getInstance().getDbHandlers().getNameToUUIDDatabase().get(args[1]);
+                    final UUID uniqueId = CloudNet.getInstance().getDbHandlers().getNameToUUIDDatabase().get(args[1]);
                     if (uniqueId != null) {
-                        OfflinePlayer offlinePlayer = CloudNet.getInstance().getDbHandlers().getPlayerDatabase().getPlayer(uniqueId);
+                        final OfflinePlayer offlinePlayer = CloudNet.getInstance().getDbHandlers().getPlayerDatabase().getPlayer(uniqueId);
                         if (offlinePlayer != null && offlinePlayer.getPermissionEntity() != null) {
                             if (args[2].equalsIgnoreCase("GROUP")) {
                                 if (args[3].equalsIgnoreCase("REMOVE")) {
                                     if (PermissionModule.getInstance().getPermissionPool().getGroups().containsKey(args[4])) {
                                         GroupEntityData groupEntityData = null;
-                                        for (GroupEntityData groupEntity : offlinePlayer.getPermissionEntity().getGroups()) {
+                                        for (final GroupEntityData groupEntity : offlinePlayer.getPermissionEntity().getGroups()) {
                                             if (groupEntity.getGroup().equalsIgnoreCase(args[4])) {
                                                 groupEntityData = groupEntity;
                                             }
@@ -312,7 +312,7 @@ public final class CommandPermissions extends Command {
                                             offlinePlayer.getPermissionEntity().getGroups().remove(groupEntityData);
                                         }
 
-                                        if (offlinePlayer.getPermissionEntity().getGroups().size() == 0) {
+                                        if (offlinePlayer.getPermissionEntity().getGroups().isEmpty()) {
                                             offlinePlayer.getPermissionEntity()
                                                          .getGroups()
                                                          .add(new GroupEntityData(permissionPool.getDefaultGroup().getName(), 0));
@@ -349,9 +349,9 @@ public final class CommandPermissions extends Command {
                 }
 
                 if (args.length == 6) {
-                    UUID uniqueId = CloudNet.getInstance().getDbHandlers().getNameToUUIDDatabase().get(args[1]);
+                    final UUID uniqueId = CloudNet.getInstance().getDbHandlers().getNameToUUIDDatabase().get(args[1]);
                     if (uniqueId != null) {
-                        OfflinePlayer offlinePlayer = CloudNet.getInstance().getDbHandlers().getPlayerDatabase().getPlayer(uniqueId);
+                        final OfflinePlayer offlinePlayer = CloudNet.getInstance().getDbHandlers().getPlayerDatabase().getPlayer(uniqueId);
                         if (offlinePlayer != null && offlinePlayer.getPermissionEntity() != null) {
                             if (args[2].equalsIgnoreCase("GROUP")) {
                                 if (args[3].equalsIgnoreCase("SET")) {
@@ -399,7 +399,7 @@ public final class CommandPermissions extends Command {
             if (args[0].equalsIgnoreCase("create")) {
                 if (args.length == 2) {
                     if (!permissionPool.getGroups().containsKey(args[1])) {
-                        PermissionGroup permissionGroup = new DefaultPermissionGroup(args[1]);
+                        final PermissionGroup permissionGroup = new DefaultPermissionGroup(args[1]);
                         PermissionModule.getInstance().getConfigPermission().updatePermissionGroup(permissionGroup);
                         CloudNet.getInstance().getNetworkManager().reload();
                         CloudNet.getInstance().getNetworkManager().updateAll0();
@@ -436,14 +436,14 @@ public final class CommandPermissions extends Command {
         }
     }
 
-    private boolean permissionIsSet(Map<String, Boolean> permissions, String permission, boolean value) {
+    private boolean permissionIsSet(final Map<String, Boolean> permissions, final String permission, final boolean value) {
         if (permissions.containsKey(permission)) {
             return permissions.get(permission).equals(value);
         }
         return false;
     }
 
-    private void updatePlayer(OfflinePlayer offlinePlayer) {
+    private void updatePlayer(final OfflinePlayer offlinePlayer) {
         CloudNet.getInstance().getDbHandlers().getPlayerDatabase().updatePlayer(offlinePlayer);
         if (CloudNet.getInstance().getNetworkManager().getOnlinePlayers().containsKey(offlinePlayer.getUniqueId())) {
             CloudNet.getInstance().getNetworkManager().getOnlinePlayers().get(offlinePlayer.getUniqueId()).setPermissionEntity(offlinePlayer
@@ -456,7 +456,7 @@ public final class CommandPermissions extends Command {
         CloudNet.getInstance().getNetworkManager().sendAllUpdate(new PacketOutUpdateOfflinePlayer(offlinePlayer));
     }
 
-    private long calcDays(int value) {
+    private long calcDays(final int value) {
         return (System.currentTimeMillis() + ((TimeUnit.DAYS.toMillis(value))));
     }
 }

@@ -13,9 +13,9 @@ import de.dytanic.cloudnetcore.network.components.MinecraftServer;
  */
 public class ServerAddEvent extends AsyncEvent<ServerAddEvent> {
 
-    private MinecraftServer minecraftServer;
+    private final MinecraftServer minecraftServer;
 
-    public ServerAddEvent(MinecraftServer minecraftServer) {
+    public ServerAddEvent(final MinecraftServer minecraftServer) {
         super(new AsyncPosterAdapter<>());
         this.minecraftServer = minecraftServer;
     }

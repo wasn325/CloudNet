@@ -8,17 +8,21 @@ import de.dytanic.cloudnet.lib.service.ServiceId;
 
 public class SimpleServerInfo {
 
-    private ServiceId serviceId;
+    private final ServiceId serviceId;
 
-    private String hostAddress;
+    private final String hostAddress;
 
-    private int port;
+    private final int port;
 
-    private int onlineCount;
+    private final int onlineCount;
 
-    private int maxPlayers;
+    private final int maxPlayers;
 
-    public SimpleServerInfo(ServiceId serviceId, String hostAddress, int port, int onlineCount, int maxPlayers) {
+    public SimpleServerInfo(final ServiceId serviceId,
+                            final String hostAddress,
+                            final int port,
+                            final int onlineCount,
+                            final int maxPlayers) {
         this.serviceId = serviceId;
         this.hostAddress = hostAddress;
         this.port = port;

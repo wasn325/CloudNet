@@ -15,9 +15,9 @@ public final class VaultInvoker {
     }
 
     public static void invoke() {
-        ServicesManager servicesManager = BukkitBootstrap.getPlugin(BukkitBootstrap.class).getServer().getServicesManager();
+        final ServicesManager servicesManager = BukkitBootstrap.getPlugin(BukkitBootstrap.class).getServer().getServicesManager();
 
-        Permission permission = new VaultPermissionImpl();
+        final Permission permission = new VaultPermissionImpl();
 
         servicesManager.register(Permission.class, permission, BukkitBootstrap.getPlugin(BukkitBootstrap.class), ServicePriority.Highest);
         servicesManager.register(Chat.class,

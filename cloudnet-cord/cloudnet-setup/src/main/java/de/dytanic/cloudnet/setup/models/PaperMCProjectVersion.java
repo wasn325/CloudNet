@@ -7,7 +7,7 @@ public class PaperMCProjectVersion {
     private final PaperMCProjectBuilds builds;
 
 
-    public PaperMCProjectVersion(String project, String version, PaperMCProjectBuilds builds) {
+    public PaperMCProjectVersion(final String project, final String version, final PaperMCProjectBuilds builds) {
         this.project = project;
         this.version = version;
         this.builds = builds;

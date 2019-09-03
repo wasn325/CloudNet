@@ -9,16 +9,17 @@ import java.util.Collection;
  * Created by Tareko on 18.07.2017.
  */
 public class Template {
-    private String name;
-    private TemplateResource backend;
-    private String url;
-    private String[] processPreParameters;
-    private Collection<ServerInstallablePlugin> installablePlugins;
-    public Template(String name,
-                    TemplateResource backend,
-                    String url,
-                    String[] processPreParameters,
-                    Collection<ServerInstallablePlugin> installablePlugins) {
+    private final String name;
+    private final TemplateResource backend;
+    private final String url;
+    private final String[] processPreParameters;
+    private final Collection<ServerInstallablePlugin> installablePlugins;
+
+    public Template(final String name,
+                    final TemplateResource backend,
+                    final String url,
+                    final String[] processPreParameters,
+                    final Collection<ServerInstallablePlugin> installablePlugins) {
         this.name = name;
         this.backend = backend;
         this.url = url;

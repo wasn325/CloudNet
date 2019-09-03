@@ -12,9 +12,9 @@ import de.dytanic.cloudnetcore.network.components.CloudServer;
  */
 public class CloudServerRemoveEvent extends Event {
 
-    private CloudServer cloudServer;
+    private final CloudServer cloudServer;
 
-    public CloudServerRemoveEvent(CloudServer cloudServer) {
+    public CloudServerRemoveEvent(final CloudServer cloudServer) {
         this.cloudServer = cloudServer;
     }
 

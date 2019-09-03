@@ -33,12 +33,12 @@ public final class CommandCreate extends Command {
     }
 
     @Override
-    public void onExecuteCommand(CommandSender sender, String[] args) {
+    public void onExecuteCommand(final CommandSender sender, final String[] args) {
 
         if (args.length > 2) {
             if (args[0].equalsIgnoreCase("dispatchCommand")) {
                 //create dispatchCommand name create
-                StringBuilder builder = new StringBuilder();
+                final StringBuilder builder = new StringBuilder();
                 for (short i = 2; i < args.length; i++) {
                     builder.append(args[i]);
                 }
@@ -114,7 +114,7 @@ public final class CommandCreate extends Command {
                 }
                 if (args[0].equalsIgnoreCase("user")) {
                     if (!CloudNet.getInstance().getUsers().contains(args[1])) {
-                        User user = new BasicUser(args[1], args[2], Arrays.asList());
+                        final User user = new BasicUser(args[1], args[2], Arrays.asList());
                         CloudNet.getInstance().getUsers().add(user);
                         CloudNet.getInstance().getConfig().save(CloudNet.getInstance().getUsers());
                         sender.sendMessage("The user was created!");
@@ -164,7 +164,7 @@ public final class CommandCreate extends Command {
                 if (args[0].equalsIgnoreCase("TEMPLATE")) {
                     if (CloudNet.getInstance().getServerGroups().containsKey(args[2])) {
                         if (args[3].equalsIgnoreCase("LOCAL")) {
-                            ServerGroup serverGroup = CloudNet.getInstance().getServerGroups().get(args[2]);
+                            final ServerGroup serverGroup = CloudNet.getInstance().getServerGroups().get(args[2]);
                             serverGroup.getTemplates().add(new Template(args[1],
                                                                         TemplateResource.LOCAL,
                                                                         null,
@@ -176,7 +176,7 @@ public final class CommandCreate extends Command {
                                                 CloudNet.getInstance().getConfig().getServerGroups(),
                                                 new Acceptable<ServerGroup>() {
                                                     @Override
-                                                    public boolean isAccepted(ServerGroup value) {
+                                                    public boolean isAccepted(final ServerGroup value) {
                                                         return true;
                                                     }
                                                 });
@@ -185,20 +185,20 @@ public final class CommandCreate extends Command {
                                                 CloudNet.getInstance().getConfig().getProxyGroups(),
                                                 new Acceptable<ProxyGroup>() {
                                                     @Override
-                                                    public boolean isAccepted(ProxyGroup value) {
+                                                    public boolean isAccepted(final ProxyGroup value) {
                                                         return true;
                                                     }
                                                 });
                             CloudNet.getInstance().getWrappers().values().forEach(new Consumer<Wrapper>() {
                                 @Override
-                                public void accept(Wrapper wrapper) {
+                                public void accept(final Wrapper wrapper) {
                                     wrapper.updateWrapper();
                                 }
                             });
                             sender.sendMessage("The template was created and all wrappers were updated!");
                         }
                         if (args[3].equalsIgnoreCase("MASTER")) {
-                            ServerGroup serverGroup = CloudNet.getInstance().getServerGroups().get(args[2]);
+                            final ServerGroup serverGroup = CloudNet.getInstance().getServerGroups().get(args[2]);
                             serverGroup.getTemplates().add(new Template(args[1],
                                                                         TemplateResource.MASTER,
                                                                         null,
@@ -210,7 +210,7 @@ public final class CommandCreate extends Command {
                                                 CloudNet.getInstance().getConfig().getServerGroups(),
                                                 new Acceptable<ServerGroup>() {
                                                     @Override
-                                                    public boolean isAccepted(ServerGroup value) {
+                                                    public boolean isAccepted(final ServerGroup value) {
                                                         return true;
                                                     }
                                                 });
@@ -219,13 +219,13 @@ public final class CommandCreate extends Command {
                                                 CloudNet.getInstance().getConfig().getProxyGroups(),
                                                 new Acceptable<ProxyGroup>() {
                                                     @Override
-                                                    public boolean isAccepted(ProxyGroup value) {
+                                                    public boolean isAccepted(final ProxyGroup value) {
                                                         return true;
                                                     }
                                                 });
                             CloudNet.getInstance().getWrappers().values().forEach(new Consumer<Wrapper>() {
                                 @Override
-                                public void accept(Wrapper wrapper) {
+                                public void accept(final Wrapper wrapper) {
                                     wrapper.updateWrapper();
                                 }
                             });
@@ -240,7 +240,7 @@ public final class CommandCreate extends Command {
                 if (args[0].equalsIgnoreCase("TEMPLATE")) {
                     if (CloudNet.getInstance().getServerGroups().containsKey(args[2])) {
                         if (args[3].equalsIgnoreCase("URL")) {
-                            ServerGroup serverGroup = CloudNet.getInstance().getServerGroups().get(args[2]);
+                            final ServerGroup serverGroup = CloudNet.getInstance().getServerGroups().get(args[2]);
                             serverGroup.getTemplates().add(new Template(args[1],
                                                                         TemplateResource.URL,
                                                                         args[4],
@@ -252,7 +252,7 @@ public final class CommandCreate extends Command {
                                                 CloudNet.getInstance().getConfig().getServerGroups(),
                                                 new Acceptable<ServerGroup>() {
                                                     @Override
-                                                    public boolean isAccepted(ServerGroup value) {
+                                                    public boolean isAccepted(final ServerGroup value) {
                                                         return true;
                                                     }
                                                 });
@@ -261,13 +261,13 @@ public final class CommandCreate extends Command {
                                                 CloudNet.getInstance().getConfig().getProxyGroups(),
                                                 new Acceptable<ProxyGroup>() {
                                                     @Override
-                                                    public boolean isAccepted(ProxyGroup value) {
+                                                    public boolean isAccepted(final ProxyGroup value) {
                                                         return true;
                                                     }
                                                 });
                             CloudNet.getInstance().getWrappers().values().forEach(new Consumer<Wrapper>() {
                                 @Override
-                                public void accept(Wrapper wrapper) {
+                                public void accept(final Wrapper wrapper) {
                                     wrapper.updateWrapper();
                                 }
                             });

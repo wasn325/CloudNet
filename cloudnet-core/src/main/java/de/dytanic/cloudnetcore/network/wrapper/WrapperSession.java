@@ -13,13 +13,13 @@ import java.util.UUID;
  */
 public class WrapperSession {
 
-    private UUID uniqueId;
+    private final UUID uniqueId;
 
-    private WrapperMeta wrapperMeta;
+    private final WrapperMeta wrapperMeta;
 
-    private long connected;
+    private final long connected;
 
-    public WrapperSession(UUID uniqueId, WrapperMeta wrapperMeta, long connected) {
+    public WrapperSession(final UUID uniqueId, final WrapperMeta wrapperMeta, final long connected) {
         this.uniqueId = uniqueId;
         this.wrapperMeta = wrapperMeta;
         this.connected = connected;

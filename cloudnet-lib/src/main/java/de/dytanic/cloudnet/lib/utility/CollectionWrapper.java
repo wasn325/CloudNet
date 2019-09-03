@@ -6,7 +6,6 @@ package de.dytanic.cloudnet.lib.utility;
 
 import de.dytanic.cloudnet.lib.utility.threading.Runnabled;
 
-import java.lang.reflect.Array;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -16,9 +15,9 @@ public final class CollectionWrapper {
     private CollectionWrapper() {
     }
 
-    public static <E, X> Collection<X> transform(Collection<E> collection, Catcher<X, E> catcher) {
-        Collection<X> xCollection = newCopyOnWriteArrayList();
-        for (E e : collection) {
+    public static <E, X> Collection<X> transform(final Collection<E> collection, final Catcher<X, E> catcher) {
+        final Collection<X> xCollection = newCopyOnWriteArrayList();
+        for (final E e : collection) {
             xCollection.add(catcher.doCatch(e));
         }
         return xCollection;
@@ -28,9 +27,9 @@ public final class CollectionWrapper {
         return new CopyOnWriteArrayList<>();
     }
 
-    public static <E> Collection<E> filterMany(Collection<E> elements, Acceptable<E> acceptable) {
-        Collection<E> collection = new LinkedList<>();
-        for (E element : elements) {
+    public static <E> Collection<E> filterMany(final Collection<E> elements, final Acceptable<E> acceptable) {
+        final Collection<E> collection = new LinkedList<>();
+        for (final E element : elements) {
             if (acceptable.isAccepted(element)) {
                 collection.add(element);
             }
@@ -38,8 +37,8 @@ public final class CollectionWrapper {
         return collection;
     }
 
-    public static <E> E filter(Collection<E> elements, Acceptable<E> acceptable) {
-        for (E element : elements) {
+    public static <E> E filter(final Collection<E> elements, final Acceptable<E> acceptable) {
+        for (final E element : elements) {
             if (acceptable.isAccepted(element)) {
                 return element;
             }
@@ -47,41 +46,41 @@ public final class CollectionWrapper {
         return null;
     }
 
-    public static <E> CopyOnWriteArrayList<E> transform(Collection<E> defaults) {
+    public static <E> CopyOnWriteArrayList<E> transform(final Collection<E> defaults) {
         return new CopyOnWriteArrayList<>(defaults);
     }
 
-    public static Collection<String> toCollection(String input, String splitter) {
+    public static Collection<String> toCollection(final String input, final String splitter) {
         return new CopyOnWriteArrayList<>(input.split(splitter));
     }
 
-    public static <E> void iterator(Collection<E> collection, Runnabled<E>... runnableds) {
-        for (E el : collection) {
-            for (Runnabled<E> runnabled : runnableds) {
+    public static <E> void iterator(final Collection<E> collection, final Runnabled<E>... runnableds) {
+        for (final E el : collection) {
+            for (final Runnabled<E> runnabled : runnableds) {
                 runnabled.run(el);
             }
         }
     }
 
-    public static <E> void iterator(E[] collection, Runnabled<E>... runnableds) {
-        for (E el : collection) {
-            for (Runnabled<E> runnabled : runnableds) {
+    public static <E> void iterator(final E[] collection, final Runnabled<E>... runnableds) {
+        for (final E el : collection) {
+            for (final Runnabled<E> runnabled : runnableds) {
                 runnabled.run(el);
             }
         }
     }
 
-    public static <E, X, C> Collection<E> getCollection(java.util.Map<X, C> map, Catcher<E, C> catcher) {
-        Collection<E> collection = new LinkedList<>();
-        for (C values : map.values()) {
+    public static <E, X, C> Collection<E> getCollection(final java.util.Map<X, C> map, final Catcher<E, C> catcher) {
+        final Collection<E> collection = new LinkedList<>();
+        for (final C values : map.values()) {
             collection.add(catcher.doCatch(values));
         }
         return collection;
     }
 
-    public static <E> void checkAndRemove(Collection<E> collection, Acceptable<E> acceptable) {
+    public static <E> void checkAndRemove(final Collection<E> collection, final Acceptable<E> acceptable) {
         E e = null;
-        for (E element : collection) {
+        for (final E element : collection) {
             if (acceptable.isAccepted(element)) {
                 e = element;
             }
@@ -93,14 +92,14 @@ public final class CollectionWrapper {
 
     }
 
-    public static <E> void iterator(E[] values, Runnabled<E> handled) {
-        for (E value : values) {
+    public static <E> void iterator(final E[] values, final Runnabled<E> handled) {
+        for (final E value : values) {
             handled.run(value);
         }
     }
 
-    public static <E> boolean equals(E[] array, E value) {
-        for (E a : array) {
+    public static <E> boolean equals(final E[] array, final E value) {
+        for (final E a : array) {
             if (a.equals(value)) {
                 return true;
             }
@@ -108,9 +107,9 @@ public final class CollectionWrapper {
         return false;
     }
 
-    public static <E> int filled(E[] array) {
+    public static <E> int filled(final E[] array) {
         int i = 0;
-        for (E element : array) {
+        for (final E element : array) {
             if (element != null) {
                 i++;
             }
@@ -118,8 +117,8 @@ public final class CollectionWrapper {
         return i;
     }
 
-    public static <E> boolean isEmpty(E[] array) {
-        for (E element : array) {
+    public static <E> boolean isEmpty(final E[] array) {
+        for (final E element : array) {
             if (element != null) {
                 return false;
             }
@@ -127,12 +126,12 @@ public final class CollectionWrapper {
         return true;
     }
 
-    public static <E> void remove(E[] array, E element) {
-        int i = index(array, element);
+    public static <E> void remove(final E[] array, final E element) {
+        final int i = index(array, element);
         array[i] = null;
     }
 
-    public static <E> int index(E[] array, E element) {
+    public static <E> int index(final E[] array, final E element) {
         for (int i = 0; i < array.length; i++) {
             if (array[i].equals(element)) {
                 return i;
@@ -141,7 +140,4 @@ public final class CollectionWrapper {
         return 0;
     }
 
-    public static <E> E[] dynamicArray(Class<E> clazz) {
-        return (E[]) Array.newInstance(clazz, Integer.MAX_VALUE);
-    }
 }

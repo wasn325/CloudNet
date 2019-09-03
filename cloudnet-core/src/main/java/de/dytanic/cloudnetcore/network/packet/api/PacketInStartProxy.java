@@ -19,7 +19,7 @@ import java.util.Collection;
 public class PacketInStartProxy extends PacketInHandler {
 
     @Override
-    public void handleInput(Document data, PacketSender packetSender) {
+    public void handleInput(final Document data, final PacketSender packetSender) {
         if (!data.contains("wrapper")) {
             CloudNet.getInstance().startProxy(CloudNet.getInstance().getProxyGroups().get(data.getString("group")),
                                               data.getInt("memory"),

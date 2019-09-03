@@ -12,9 +12,9 @@ public final class Scheduler implements TaskCancelable, Runnable {
 
     private final int ticks;
     private final Random random = new Random();
-    private ConcurrentHashMap<Long, ScheduledTask> tasks = NetworkUtils.newConcurrentHashMap();
+    private final ConcurrentHashMap<Long, ScheduledTask> tasks = NetworkUtils.newConcurrentHashMap();
 
-    public Scheduler(int ticks) {
+    public Scheduler(final int ticks) {
         this.ticks = ticks;
     }
 
@@ -30,38 +30,38 @@ public final class Scheduler implements TaskCancelable, Runnable {
         return random;
     }
 
-    public ScheduledTask runTaskSync(Runnable runnable) {
+    public ScheduledTask runTaskSync(final Runnable runnable) {
         return runTaskDelaySync(runnable, 0);
     }
 
-    public ScheduledTask runTaskDelaySync(Runnable runnable, int delayTicks) {
+    public ScheduledTask runTaskDelaySync(final Runnable runnable, final int delayTicks) {
         return runTaskRepeatSync(runnable, delayTicks, -1);
     }
 
-    public ScheduledTask runTaskRepeatSync(Runnable runnable, int delayTicks, int repeatDelay) {
-        long id = random.nextLong();
-        ScheduledTask task = new ScheduledTask(id, runnable, delayTicks, repeatDelay);
+    public ScheduledTask runTaskRepeatSync(final Runnable runnable, final int delayTicks, final int repeatDelay) {
+        final long id = random.nextLong();
+        final ScheduledTask task = new ScheduledTask(id, runnable, delayTicks, repeatDelay);
         this.tasks.put(id, task);
         return task;
     }
 
-    public ScheduledTask runTaskAsync(Runnable runnable) {
+    public ScheduledTask runTaskAsync(final Runnable runnable) {
         return runTaskDelayAsync(runnable, 0);
     }
 
-    public ScheduledTask runTaskDelayAsync(Runnable runnable, int delay) {
+    public ScheduledTask runTaskDelayAsync(final Runnable runnable, final int delay) {
         return runTaskRepeatAsync(runnable, delay, -1);
     }
 
-    public ScheduledTask runTaskRepeatAsync(Runnable runnable, int delay, int repeat) {
-        long id = random.nextLong();
-        ScheduledTask task = new ScheduledTaskAsync(id, runnable, delay, repeat, this);
+    public ScheduledTask runTaskRepeatAsync(final Runnable runnable, final int delay, final int repeat) {
+        final long id = random.nextLong();
+        final ScheduledTask task = new ScheduledTaskAsync(id, runnable, delay, repeat, this);
         this.tasks.put(id, task);
         return task;
     }
 
     @Override
-    public void cancelTask(Long id) {
+    public void cancelTask(final Long id) {
         if (tasks.containsKey(id)) {
             tasks.get(id).cancel();
         }
@@ -78,16 +78,17 @@ public final class Scheduler implements TaskCancelable, Runnable {
         while (!Thread.currentThread().isInterrupted()) {
             try {
                 Thread.sleep(1000 / ticks);
-            } catch (InterruptedException e) {
+            } catch (final InterruptedException e) {
+                e.printStackTrace();
             }
 
             if (tasks.isEmpty()) {
                 continue;
             }
 
-            ConcurrentHashMap<Long, ScheduledTask> tasks = this.tasks; //For a Performance optimizing
+            final ConcurrentHashMap<Long, ScheduledTask> tasks = this.tasks; //For a Performance optimizing
 
-            for (ScheduledTask task : tasks.values()) {
+            for (final ScheduledTask task : tasks.values()) {
 
                 if (task.isInterrupted()) {
                     this.tasks.remove(task.getTaskId());

@@ -32,15 +32,15 @@ public class Setup implements ISetup {
     /**
      * Method that called once this setup sequence has been completed successfully.
      */
-    private ISetupComplete setupComplete = null;
+    private ISetupComplete setupComplete;
 
     /**
      * Method that called when this setup sequence is cancelled.
      */
-    private ISetupCancel setupCancel = null;
+    private ISetupCancel setupCancel;
 
     @Override
-    public void start(ConsoleReader consoleReader) {
+    public void start(final ConsoleReader consoleReader) {
         SetupRequest setupRequest = null;
         while (!requests.isEmpty()) {
             if (setupRequest == null) {
@@ -48,10 +48,10 @@ public class Setup implements ISetup {
             }
             System.out.print(setupRequest.getQuestion() + " | " + setupRequest.getResponseType().toString());
 
-            String input;
+            final String input;
             try {
                 input = consoleReader.readLine();
-            } catch (Exception ex) {
+            } catch (final Exception ex) {
                 System.out.println("Error while reading input: " + ex.getLocalizedMessage());
                 continue;
             }
@@ -133,7 +133,7 @@ public class Setup implements ISetup {
      *
      * @return this setup instance
      */
-    public Setup request(SetupRequest setupRequest) {
+    public Setup request(final SetupRequest setupRequest) {
         requests.offer(setupRequest);
         return this;
     }
@@ -147,7 +147,7 @@ public class Setup implements ISetup {
      *
      * @return this setup instance
      */
-    public Setup setupComplete(ISetupComplete iSetupComplete) {
+    public Setup setupComplete(final ISetupComplete iSetupComplete) {
         this.setupComplete = iSetupComplete;
         return this;
     }
@@ -160,7 +160,7 @@ public class Setup implements ISetup {
      *
      * @return this setup instance
      */
-    public Setup setupCancel(ISetupCancel iSetupCancel) {
+    public Setup setupCancel(final ISetupCancel iSetupCancel) {
         this.setupCancel = iSetupCancel;
         return this;
     }

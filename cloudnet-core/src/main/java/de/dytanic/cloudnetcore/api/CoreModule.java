@@ -21,14 +21,14 @@ public class CoreModule extends Module<CloudNet> {
      * @param eventListener
      * @param <T>
      */
-    public <T extends Event> void registerListener(IEventListener<T> eventListener) {
+    public <T extends Event> void registerListener(final IEventListener<T> eventListener) {
         CloudNet.getInstance().getEventManager().registerListener(this, eventListener);
     }
 
     /**
      *
      */
-    public void appendModuleProperty(String key, Object value) {
+    public void appendModuleProperty(final String key, final Object value) {
         CloudNet.getInstance().getNetworkManager().getModuleProperties().append(key, value);
     }
 
@@ -37,7 +37,7 @@ public class CoreModule extends Module<CloudNet> {
      *
      * @param command
      */
-    public void registerCommand(Command command) {
+    public void registerCommand(final Command command) {
         CloudNet.getInstance().getCommandManager().registerCommand(command);
     }
 

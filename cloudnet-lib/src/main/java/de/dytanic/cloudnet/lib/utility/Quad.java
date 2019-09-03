@@ -16,7 +16,7 @@ public class Quad<F, S, T, FF> {
     public Quad() {
     }
 
-    public Quad(F first, S second, T third, FF fourth) {
+    public Quad(final F first, final S second, final T third, final FF fourth) {
         this.first = first;
         this.second = second;
         this.third = third;
@@ -27,7 +27,7 @@ public class Quad<F, S, T, FF> {
         return first;
     }
 
-    public void setFirst(F first) {
+    public void setFirst(final F first) {
         this.first = first;
     }
 
@@ -35,7 +35,7 @@ public class Quad<F, S, T, FF> {
         return fourth;
     }
 
-    public void setFourth(FF fourth) {
+    public void setFourth(final FF fourth) {
         this.fourth = fourth;
     }
 
@@ -43,7 +43,7 @@ public class Quad<F, S, T, FF> {
         return second;
     }
 
-    public void setSecond(S second) {
+    public void setSecond(final S second) {
         this.second = second;
     }
 
@@ -51,7 +51,7 @@ public class Quad<F, S, T, FF> {
         return third;
     }
 
-    public void setThird(T third) {
+    public void setThird(final T third) {
         this.third = third;
     }
 }

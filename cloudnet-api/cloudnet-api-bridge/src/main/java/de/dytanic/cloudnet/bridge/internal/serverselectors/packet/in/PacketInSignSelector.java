@@ -28,13 +28,13 @@ import java.util.UUID;
 public class PacketInSignSelector extends PacketInHandler {
 
     @Override
-    public void handleInput(Document data, PacketSender packetSender) {
-        Map<UUID, Sign> signMap = data.getObject("signs", new TypeToken<Map<UUID, Sign>>() {}.getType());
-        SignLayoutConfig signLayoutConfig = data.getObject("signLayoutConfig", new TypeToken<SignLayoutConfig>() {}.getType());
+    public void handleInput(final Document data, final PacketSender packetSender) {
+        final Map<UUID, Sign> signMap = data.getObject("signs", new TypeToken<Map<UUID, Sign>>() {}.getType());
+        final SignLayoutConfig signLayoutConfig = data.getObject("signLayoutConfig", new TypeToken<SignLayoutConfig>() {}.getType());
 
-        Map<UUID, Sign> values = MapWrapper.filter(signMap, new Acceptable<Sign>() {
+        final Map<UUID, Sign> values = MapWrapper.filter(signMap, new Acceptable<Sign>() {
             @Override
-            public boolean isAccepted(Sign value) {
+            public boolean isAccepted(final Sign value) {
                 return value.getPosition().getGroup().equals(CloudAPI.getInstance().getGroup());
             }
         });
@@ -44,25 +44,25 @@ public class PacketInSignSelector extends PacketInHandler {
         if (SignSelector.getInstance() != null) {
             SignSelector.getInstance().setSignLayoutConfig(signLayoutConfig);
 
-            Collection<UUID> collection = new HashSet<>();
+            final Collection<UUID> collection = new HashSet<>();
 
-            for (Sign sign : SignSelector.getInstance().getSigns().values()) {
+            for (final Sign sign : SignSelector.getInstance().getSigns().values()) {
                 if (!values.containsKey(sign.getUniqueId())) {
                     collection.add(sign.getUniqueId());
                 }
             }
 
-            for (UUID x : collection) {
+            for (final UUID x : collection) {
                 SignSelector.getInstance().getSigns().remove(x);
             }
 
-            for (Sign sign : values.values()) {
+            for (final Sign sign : values.values()) {
                 if (!SignSelector.getInstance().getSigns().containsKey(sign.getUniqueId())) {
                     SignSelector.getInstance().getSigns().put(sign.getUniqueId(), sign);
                 }
             }
         } else {
-            SignSelector signSelector = new SignSelector(values, signLayoutConfig);
+            final SignSelector signSelector = new SignSelector(values, signLayoutConfig);
             signSelector.start();
         }
     }

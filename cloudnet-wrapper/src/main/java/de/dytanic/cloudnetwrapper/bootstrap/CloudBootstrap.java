@@ -24,7 +24,7 @@ import java.util.Arrays;
 
 public class CloudBootstrap {
 
-    public static void main(String[] args) throws Exception {
+    public static void main(final String[] args) throws Exception {
         ResourceLeakDetector.setLevel(ResourceLeakDetector.Level.DISABLED);
 
         System.setProperty("file.encoding", "UTF-8");
@@ -36,7 +36,7 @@ public class CloudBootstrap {
         System.setProperty("io.netty.recycler.maxCapacity", "0");
         System.setProperty("io.netty.recycler.maxCapacity.default", "0");
 
-        OptionParser optionParser = new OptionParser();
+        final OptionParser optionParser = new OptionParser();
 
         optionParser.allowsUnrecognizedOptions();
         optionParser.acceptsAll(Arrays.asList("version", "v"));
@@ -50,10 +50,10 @@ public class CloudBootstrap {
         optionParser.accepts("disable-autoupdate");
         optionParser.accepts("disallow_bukkit_download");
 
-        OptionSet optionSet = optionParser.parse(args);
+        final OptionSet optionSet = optionParser.parse(args);
 
         if (optionSet.has("help") || optionSet.has("?")) {
-            HelpService helpService = new HelpService();
+            final HelpService helpService = new HelpService();
             helpService.getDescriptions().put("help",
                                               new ServiceDescription[] {new ServiceDescription("--help | --?",
                                                                                                "This is the main argument to get all information about other parameters")});
@@ -84,10 +84,8 @@ public class CloudBootstrap {
         }
 
         if (optionSet.has("version") || optionSet.has("v")) {
-            System.out.println("CloudNet-Wrapper RezSyM Version " + CloudBootstrap.class.getPackage()
-                                                                                        .getImplementationVersion() + '-' + CloudBootstrap.class
-                .getPackage()
-                .getSpecificationVersion());
+            System.out.println("CloudNet-Wrapper RezSyM Version " + CloudBootstrap.class.getPackage().getImplementationVersion() + '-' +
+                               CloudBootstrap.class.getPackage().getSpecificationVersion());
             return;
         }
 
@@ -99,14 +97,14 @@ public class CloudBootstrap {
         }
         /*==============================================*/
 
-        CloudLogger cloudNetLogging = new CloudLogger();
+        final CloudLogger cloudNetLogging = new CloudLogger();
         if (optionSet.has("debug")) {
             cloudNetLogging.setDebugging(true);
         }
 
         new HeaderFunction();
-        CloudNetWrapperConfig cloudNetWrapperConfig = new CloudNetWrapperConfig(cloudNetLogging.getReader());
-        CloudNetWrapper cloudNetWrapper = new CloudNetWrapper(optionSet, cloudNetWrapperConfig, cloudNetLogging);
+        final CloudNetWrapperConfig cloudNetWrapperConfig = new CloudNetWrapperConfig(cloudNetLogging.getReader());
+        final CloudNetWrapper cloudNetWrapper = new CloudNetWrapper(optionSet, cloudNetWrapperConfig, cloudNetLogging);
 
         if (!cloudNetWrapper.bootstrap()) {
             System.exit(0);
@@ -116,27 +114,27 @@ public class CloudBootstrap {
             System.out.println("Use the command \"help\" for further information!");
             String commandLine;
 
-            String user = System.getProperty("user.name");
+            final String user = System.getProperty("user.name");
 
-            while (true) {
+            while (!Thread.interrupted()) {
                 try {
-                    while ((commandLine = cloudNetLogging.readLine(user + '@' + cloudNetWrapper.getWrapperConfig()
-                                                                                               .getWrapperId() + " $ ")) != null) {
+                    while ((commandLine = cloudNetLogging.readLine(
+                        user + '@' + cloudNetWrapper.getWrapperConfig().getWrapperId() + " $ ")) != null) {
 
                         try {
                             if (!cloudNetWrapper.getCommandManager().dispatchCommand(commandLine)) {
                                 System.out.println("Command not found. Use the command \"help\" for further information!");
                             }
-                        } catch (Exception ex) {
+                        } catch (final Exception ex) {
                             ex.printStackTrace();
                         }
                     }
-                } catch (Exception ex) {
-
+                } catch (final Exception ex) {
+                    ex.printStackTrace();
                 }
             }
         } else {
-            while (true) {
+            while (!Thread.interrupted()) {
                 NetworkUtils.sleepUninterruptedly(Long.MAX_VALUE);
             }
         }

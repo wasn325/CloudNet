@@ -18,9 +18,9 @@ public class PermissionPool {
 
     private boolean available = true;
 
-    private java.util.Map<String, PermissionGroup> groups = new HashMap<>();
+    private final java.util.Map<String, PermissionGroup> groups = new HashMap<>();
 
-    public PermissionEntity getNewPermissionEntity(PlayerConnection playerWhereAmI) {
+    public PermissionEntity getNewPermissionEntity(final PlayerConnection playerWhereAmI) {
         return new PermissionEntity(playerWhereAmI.getUniqueId(),
                                     new HashMap<>(),
                                     null,
@@ -29,7 +29,7 @@ public class PermissionPool {
     }
 
     public PermissionGroup getDefaultGroup() {
-        for (PermissionGroup group : groups.values()) {
+        for (final PermissionGroup group : groups.values()) {
             if (group.isDefaultGroup()) {
                 return group;
             }
@@ -37,7 +37,7 @@ public class PermissionPool {
         return null;
     }
 
-    public PermissionEntity getNewPermissionEntity(OfflinePlayer playerWhereAmI) {
+    public PermissionEntity getNewPermissionEntity(final OfflinePlayer playerWhereAmI) {
         return new PermissionEntity(playerWhereAmI.getUniqueId(),
                                     new HashMap<>(),
                                     null,
@@ -53,7 +53,7 @@ public class PermissionPool {
         return available;
     }
 
-    public void setAvailable(boolean available) {
+    public void setAvailable(final boolean available) {
         this.available = available;
     }
 }

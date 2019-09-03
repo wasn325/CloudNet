@@ -22,7 +22,7 @@ import java.util.Properties;
 public class PacketInStartServer extends PacketInHandler {
 
     @Override
-    public void handleInput(Document data, PacketSender packetSender) {
+    public void handleInput(final Document data, final PacketSender packetSender) {
         CloudNet.getInstance().getScheduler().runTaskSync(new Runnable() {
             @Override
             public void run() {

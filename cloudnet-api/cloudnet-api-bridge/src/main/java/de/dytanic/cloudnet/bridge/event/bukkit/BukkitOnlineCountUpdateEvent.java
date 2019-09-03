@@ -11,11 +11,11 @@ import org.bukkit.event.HandlerList;
  */
 public class BukkitOnlineCountUpdateEvent extends BukkitCloudEvent {
 
-    private static HandlerList handlerList = new HandlerList();
+    private static final HandlerList handlerList = new HandlerList();
 
-    private int onlineCount;
+    private final int onlineCount;
 
-    public BukkitOnlineCountUpdateEvent(int onlineCount) {
+    public BukkitOnlineCountUpdateEvent(final int onlineCount) {
         this.onlineCount = onlineCount;
     }
 

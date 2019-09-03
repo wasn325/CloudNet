@@ -13,7 +13,7 @@ import de.dytanic.cloudnetcore.CloudNet;
  */
 public class CloudInitEvent extends AsyncEvent<CloudInitEvent> {
 
-    private CloudNet cloudNet = CloudNet.getInstance();
+    private final CloudNet cloudNet = CloudNet.getInstance();
 
     public CloudInitEvent() {
         super(new AsyncPosterAdapter<>());

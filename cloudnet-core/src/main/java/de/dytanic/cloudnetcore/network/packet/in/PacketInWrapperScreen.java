@@ -22,7 +22,7 @@ public class PacketInWrapperScreen extends PacketInHandler {
     private static final Type TYPE = new TypeToken<WrapperScreen>() {}.getType();
 
     @Override
-    public void handleInput(Document data, PacketSender packetSender) {
+    public void handleInput(final Document data, final PacketSender packetSender) {
         if (!(packetSender instanceof Wrapper)) {
             return;
         }

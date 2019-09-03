@@ -5,10 +5,10 @@ package de.dytanic.cloudnet.lib;
  */
 public class ConnectableAddress {
 
-    private String hostName;
-    private int port;
+    private final String hostName;
+    private final int port;
 
-    public ConnectableAddress(String hostName, int port) {
+    public ConnectableAddress(final String hostName, final int port) {
         this.hostName = hostName;
         this.port = port;
     }

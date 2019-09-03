@@ -7,10 +7,10 @@ import net.md_5.bungee.config.Configuration;
 
 class LocalWrapperConfig {
 
-    private long loadTime;
-    private Configuration configuration;
+    private final long loadTime;
+    private final Configuration configuration;
 
-    public LocalWrapperConfig(Configuration configuration) {
+    public LocalWrapperConfig(final Configuration configuration) {
         this.configuration = configuration;
         this.loadTime = System.currentTimeMillis();
     }

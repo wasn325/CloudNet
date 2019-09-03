@@ -14,14 +14,14 @@ public class PathProvider {
     /**
      * The path where a request has been sent to.
      */
-    private String path;
+    private final String path;
 
     /**
      * The parameters of a request to {@code path}.
      */
-    private WrappedMap pathParameters;
+    private final WrappedMap pathParameters;
 
-    public PathProvider(String path, WrappedMap pathParameters) {
+    public PathProvider(final String path, final WrappedMap pathParameters) {
         this.path = path;
         this.pathParameters = pathParameters;
     }

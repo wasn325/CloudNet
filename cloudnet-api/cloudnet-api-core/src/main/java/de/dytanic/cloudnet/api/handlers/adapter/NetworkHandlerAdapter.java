@@ -21,77 +21,77 @@ import java.util.UUID;
 public class NetworkHandlerAdapter implements NetworkHandler {
 
     @Override
-    public void onServerAdd(ServerInfo serverInfo) {
+    public void onServerAdd(final ServerInfo serverInfo) {
 
     }
 
     @Override
-    public void onServerInfoUpdate(ServerInfo serverInfo) {
+    public void onServerInfoUpdate(final ServerInfo serverInfo) {
 
     }
 
     @Override
-    public void onServerRemove(ServerInfo serverInfo) {
+    public void onServerRemove(final ServerInfo serverInfo) {
 
     }
 
     @Override
-    public void onProxyAdd(ProxyInfo proxyInfo) {
+    public void onProxyAdd(final ProxyInfo proxyInfo) {
 
     }
 
     @Override
-    public void onProxyInfoUpdate(ProxyInfo proxyInfo) {
+    public void onProxyInfoUpdate(final ProxyInfo proxyInfo) {
 
     }
 
     @Override
-    public void onProxyRemove(ProxyInfo proxyInfo) {
+    public void onProxyRemove(final ProxyInfo proxyInfo) {
 
     }
 
     @Override
-    public void onCloudNetworkUpdate(CloudNetwork cloudNetwork) {
+    public void onCloudNetworkUpdate(final CloudNetwork cloudNetwork) {
 
     }
 
     @Override
-    public void onCustomChannelMessageReceive(String channel, String message, Document document) {
+    public void onCustomChannelMessageReceive(final String channel, final String message, final Document document) {
 
     }
 
     @Override
-    public void onCustomSubChannelMessageReceive(String channel, String message, Document document) {
+    public void onCustomSubChannelMessageReceive(final String channel, final String message, final Document document) {
 
     }
 
     @Override
-    public void onPlayerLoginNetwork(CloudPlayer cloudPlayer) {
+    public void onPlayerLoginNetwork(final CloudPlayer cloudPlayer) {
 
     }
 
     @Override
-    public void onPlayerDisconnectNetwork(CloudPlayer cloudPlayer) {
+    public void onPlayerDisconnectNetwork(final CloudPlayer cloudPlayer) {
 
     }
 
     @Override
-    public void onPlayerDisconnectNetwork(UUID uniqueId) {
+    public void onPlayerDisconnectNetwork(final UUID uniqueId) {
 
     }
 
     @Override
-    public void onPlayerUpdate(CloudPlayer cloudPlayer) {
+    public void onPlayerUpdate(final CloudPlayer cloudPlayer) {
 
     }
 
     @Override
-    public void onOfflinePlayerUpdate(OfflinePlayer offlinePlayer) {
+    public void onOfflinePlayerUpdate(final OfflinePlayer offlinePlayer) {
 
     }
 
     @Override
-    public void onUpdateOnlineCount(int onlineCount) {
+    public void onUpdateOnlineCount(final int onlineCount) {
 
     }
 }

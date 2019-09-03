@@ -14,7 +14,7 @@ import java.util.*;
 /**
  * Created by Tareko on 21.05.2017.
  */
-public class Document implements DocumentAbstract {
+public class Document implements DocumentAbstract<Document> {
 
     protected static final JsonParser PARSER = new JsonParser();
     public static Gson GSON = new GsonBuilder().serializeNulls().setPrettyPrinting().disableHtmlEscaping().create();
@@ -22,27 +22,27 @@ public class Document implements DocumentAbstract {
     protected JsonObject dataCatcher;
     private File file;
 
-    public Document(String name) {
+    public Document(final String name) {
         this.name = name;
         this.dataCatcher = new JsonObject();
     }
 
-    public Document(String name, JsonObject source) {
+    public Document(final String name, final JsonObject source) {
         this.name = name;
         this.dataCatcher = source;
     }
 
-    public Document(File file, JsonObject jsonObject) {
+    public Document(final File file, final JsonObject jsonObject) {
         this.file = file;
         this.dataCatcher = jsonObject;
     }
 
-    public Document(String key, String value) {
+    public Document(final String key, final String value) {
         this.dataCatcher = new JsonObject();
         this.append(key, value);
     }
 
-    public Document append(String key, String value) {
+    public Document append(final String key, final String value) {
         if (value == null) {
             return this;
         }
@@ -50,7 +50,7 @@ public class Document implements DocumentAbstract {
         return this;
     }
 
-    public Document append(String key, Number value) {
+    public Document append(final String key, final Number value) {
         if (value == null) {
             return this;
         }
@@ -58,7 +58,7 @@ public class Document implements DocumentAbstract {
         return this;
     }
 
-    public Document append(String key, Boolean value) {
+    public Document append(final String key, final Boolean value) {
         if (value == null) {
             return this;
         }
@@ -67,7 +67,7 @@ public class Document implements DocumentAbstract {
     }
 
     @Override
-    public Document append(String key, JsonElement value) {
+    public Document append(final String key, final JsonElement value) {
         if (value == null) {
             return this;
         }
@@ -76,7 +76,7 @@ public class Document implements DocumentAbstract {
     }
 
     @Deprecated
-    public Document append(String key, Object value) {
+    public Document append(final String key, final Object value) {
         if (value == null) {
             return this;
         }
@@ -89,64 +89,64 @@ public class Document implements DocumentAbstract {
     }
 
     @Override
-    public Document remove(String key) {
+    public Document remove(final String key) {
         this.dataCatcher.remove(key);
         return this;
     }
 
     public Set<String> keys() {
-        Set<String> c = new HashSet<>();
+        final Set<String> c = new HashSet<>();
 
-        for (Map.Entry<String, JsonElement> x : dataCatcher.entrySet()) {
+        for (final Map.Entry<String, JsonElement> x : dataCatcher.entrySet()) {
             c.add(x.getKey());
         }
 
         return c;
     }
 
-    public String getString(String key) {
+    public String getString(final String key) {
         if (!dataCatcher.has(key)) {
             return null;
         }
         return dataCatcher.get(key).getAsString();
     }
 
-    public int getInt(String key) {
+    public int getInt(final String key) {
         if (!dataCatcher.has(key)) {
             return 0;
         }
         return dataCatcher.get(key).getAsInt();
     }
 
-    public long getLong(String key) {
+    public long getLong(final String key) {
         if (!dataCatcher.has(key)) {
             return 0L;
         }
         return dataCatcher.get(key).getAsLong();
     }
 
-    public double getDouble(String key) {
+    public double getDouble(final String key) {
         if (!dataCatcher.has(key)) {
             return 0D;
         }
         return dataCatcher.get(key).getAsDouble();
     }
 
-    public boolean getBoolean(String key) {
+    public boolean getBoolean(final String key) {
         if (!dataCatcher.has(key)) {
             return false;
         }
         return dataCatcher.get(key).getAsBoolean();
     }
 
-    public float getFloat(String key) {
+    public float getFloat(final String key) {
         if (!dataCatcher.has(key)) {
             return 0F;
         }
         return dataCatcher.get(key).getAsFloat();
     }
 
-    public short getShort(String key) {
+    public short getShort(final String key) {
         if (!dataCatcher.has(key)) {
             return 0;
         }
@@ -157,14 +157,101 @@ public class Document implements DocumentAbstract {
         return GSON.toJson(dataCatcher);
     }
 
-    public static Document loadDocument(Path backend) {
+    public boolean saveAsConfig(final File backend) {
+        if (backend == null) {
+            return false;
+        }
 
-        try (InputStreamReader reader = new InputStreamReader(Files.newInputStream(backend),
-                                                              StandardCharsets.UTF_8); BufferedReader bufferedReader = new BufferedReader(
+        if (backend.exists()) {
+            backend.delete();
+        }
+
+        try (final OutputStreamWriter writer = new OutputStreamWriter(new FileOutputStream(backend), StandardCharsets.UTF_8)) {
+            GSON.toJson(dataCatcher, (writer));
+            return true;
+        } catch (final IOException ex) {
+            ex.getStackTrace();
+        }
+        return false;
+    }
+
+    public boolean saveAsConfig(final String path) {
+        return saveAsConfig(Paths.get(path));
+    }
+
+    public Document getDocument(final String key) {
+        if (!dataCatcher.has(key)) {
+            return null;
+        }
+        return new Document(dataCatcher.get(key).getAsJsonObject());
+    }
+
+    public boolean saveAsConfig(final Path path) {
+        try (final OutputStreamWriter outputStreamWriter = new OutputStreamWriter(Files.newOutputStream(path), StandardCharsets.UTF_8)) {
+            GSON.toJson(dataCatcher, outputStreamWriter);
+            return true;
+        } catch (final IOException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public Document(final String key, final Object value) {
+        this.dataCatcher = new JsonObject();
+        this.append(key, value);
+    }
+
+    public Document append(final String key, final Document value) {
+        if (value == null) {
+            return this;
+        }
+        this.dataCatcher.add(key, value.dataCatcher);
+        return this;
+    }
+
+    public Document(final String key, final Number value) {
+        this.dataCatcher = new JsonObject();
+        this.append(key, value);
+    }
+
+    public Document(final Document defaults) {
+        this.dataCatcher = defaults.dataCatcher;
+    }
+
+    public Document(final Document defaults, final String name) {
+        this.dataCatcher = defaults.dataCatcher;
+        this.name = name;
+    }
+
+    public Document() {
+        this.dataCatcher = new JsonObject();
+    }
+
+    public Document(final JsonObject source) {
+        this.dataCatcher = source;
+    }
+
+    public static Document load(final String input) {
+        try (final InputStreamReader reader = new InputStreamReader(new StringBufferInputStream(input), StandardCharsets.UTF_8)) {
+            return new Document(PARSER.parse(new BufferedReader(reader)).getAsJsonObject());
+        } catch (final IOException e) {
+            e.printStackTrace();
+        }
+        return new Document();
+    }
+
+    public static Document loadDocument(final File backend) {
+        return loadDocument(backend.toPath());
+    }
+
+    public static Document loadDocument(final Path backend) {
+
+        try (final InputStreamReader reader = new InputStreamReader(Files.newInputStream(backend),
+                                                                    StandardCharsets.UTF_8); final BufferedReader bufferedReader = new BufferedReader(
             reader)) {
-            JsonObject object = PARSER.parse(bufferedReader).getAsJsonObject();
+            final JsonObject object = PARSER.parse(bufferedReader).getAsJsonObject();
             return new Document(object);
-        } catch (Exception ex) {
+        } catch (final Exception ex) {
             ex.getStackTrace();
         }
         return new Document();
@@ -180,102 +267,15 @@ public class Document implements DocumentAbstract {
         */
     }
 
-    public boolean saveAsConfig(String path) {
-        return saveAsConfig(Paths.get(path));
-    }
-
-    public Document getDocument(String key) {
-        if (!dataCatcher.has(key)) {
-            return null;
-        }
-        return new Document(dataCatcher.get(key).getAsJsonObject());
-    }
-
-    public static Document load(String input) {
-        try (InputStreamReader reader = new InputStreamReader(new StringBufferInputStream(input), StandardCharsets.UTF_8)) {
-            return new Document(PARSER.parse(new BufferedReader(reader)).getAsJsonObject());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return new Document();
-    }
-
-    public Document(String key, Object value) {
-        this.dataCatcher = new JsonObject();
-        this.append(key, value);
-    }
-
-    public Document append(String key, Document value) {
-        if (value == null) {
-            return this;
-        }
-        this.dataCatcher.add(key, value.dataCatcher);
-        return this;
-    }
-
-    public Document(String key, Number value) {
-        this.dataCatcher = new JsonObject();
-        this.append(key, value);
-    }
-
-    public Document(Document defaults) {
-        this.dataCatcher = defaults.dataCatcher;
-    }
-
-    public Document(Document defaults, String name) {
-        this.dataCatcher = defaults.dataCatcher;
-        this.name = name;
-    }
-
-    public Document() {
-        this.dataCatcher = new JsonObject();
-    }
-
-    public Document(JsonObject source) {
-        this.dataCatcher = source;
-    }
-
-    public static Document loadDocument(File backend) {
-        return loadDocument(backend.toPath());
-    }
-
-    public boolean saveAsConfig(File backend) {
-        if (backend == null) {
-            return false;
-        }
-
-        if (backend.exists()) {
-            backend.delete();
-        }
-
-        try (OutputStreamWriter writer = new OutputStreamWriter(new FileOutputStream(backend), StandardCharsets.UTF_8)) {
-            GSON.toJson(dataCatcher, (writer));
-            return true;
-        } catch (IOException ex) {
-            ex.getStackTrace();
-        }
-        return false;
-    }
-
-    public static Document $loadDocument(File backend) throws Exception {
+    public static Document $loadDocument(final File backend) throws Exception {
         try {
             return new Document(PARSER.parse(new String(Files.readAllBytes(backend.toPath()), StandardCharsets.UTF_8)).getAsJsonObject());
-        } catch (Exception ex) {
+        } catch (final Exception ex) {
             throw new Exception(ex);
         }
     }
 
-    public boolean saveAsConfig(Path path) {
-        try (OutputStreamWriter outputStreamWriter = new OutputStreamWriter(Files.newOutputStream(path), StandardCharsets.UTF_8)) {
-            GSON.toJson(dataCatcher, outputStreamWriter);
-            return true;
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return false;
-    }
-
-    public static Document load(JsonObject input) {
+    public static Document load(final JsonObject input) {
         return new Document(input);
     }
 
@@ -284,7 +284,7 @@ public class Document implements DocumentAbstract {
         return name;
     }
 
-    public void setName(String name) {
+    public void setName(final String name) {
         this.name = name;
     }
 
@@ -292,7 +292,7 @@ public class Document implements DocumentAbstract {
         return file;
     }
 
-    public void setFile(File file) {
+    public void setFile(final File file) {
         this.file = file;
     }
 
@@ -300,13 +300,13 @@ public class Document implements DocumentAbstract {
         return dataCatcher;
     }
 
-    public Document append(String key, List<String> value) {
+    public Document append(final String key, final List<String> value) {
         if (value == null) {
             return this;
         }
-        JsonArray jsonElements = new JsonArray();
+        final JsonArray jsonElements = new JsonArray();
 
-        for (String b : value) {
+        for (final String b : value) {
             jsonElements.add(b);
         }
 
@@ -314,31 +314,31 @@ public class Document implements DocumentAbstract {
         return this;
     }
 
-    public Document appendValues(java.util.Map<String, Object> values) {
-        for (java.util.Map.Entry<String, Object> valuess : values.entrySet()) {
+    public Document appendValues(final java.util.Map<String, Object> values) {
+        for (final java.util.Map.Entry<String, Object> valuess : values.entrySet()) {
             append(valuess.getKey(), valuess.getValue());
         }
         return this;
     }
 
-    public JsonElement get(String key) {
+    public JsonElement get(final String key) {
         if (!dataCatcher.has(key)) {
             return null;
         }
         return dataCatcher.get(key);
     }
 
-    public <T> T getObject(String key, Class<T> class_) {
+    public <T> T getObject(final String key, final Class<T> class_) {
         if (!dataCatcher.has(key)) {
             return null;
         }
-        JsonElement element = dataCatcher.get(key);
+        final JsonElement element = dataCatcher.get(key);
 
         return GSON.fromJson(element, class_);
     }
 
     public Document clear() {
-        for (String key : keys()) {
+        for (final String key : keys()) {
             remove(key);
         }
         return this;
@@ -348,10 +348,10 @@ public class Document implements DocumentAbstract {
         return this.dataCatcher.size();
     }
 
-    public Document loadProperties(Properties properties) {
-        Enumeration<?> enumeration = properties.propertyNames();
+    public Document loadProperties(final Properties properties) {
+        final Enumeration<?> enumeration = properties.propertyNames();
         while (enumeration.hasMoreElements()) {
-            Object x = enumeration.nextElement();
+            final Object x = enumeration.nextElement();
             this.append(x.toString(), properties.getProperty(x.toString()));
         }
         return this;
@@ -361,12 +361,12 @@ public class Document implements DocumentAbstract {
         return this.dataCatcher.size() == 0;
     }
 
-    public JsonArray getArray(String key) {
+    public JsonArray getArray(final String key) {
         return dataCatcher.get(key).getAsJsonArray();
     }
 
     @Deprecated
-    public boolean saveAsConfig0(File backend) {
+    public boolean saveAsConfig0(final File backend) {
         if (backend == null) {
             return false;
         }
@@ -375,33 +375,33 @@ public class Document implements DocumentAbstract {
             backend.delete();
         }
 
-        try (OutputStreamWriter writer = new OutputStreamWriter(new FileOutputStream(backend), StandardCharsets.UTF_8)) {
+        try (final OutputStreamWriter writer = new OutputStreamWriter(new FileOutputStream(backend), StandardCharsets.UTF_8)) {
             NetworkUtils.GSON.toJson(dataCatcher, (writer));
             return true;
-        } catch (IOException ex) {
+        } catch (final IOException ex) {
             ex.getStackTrace();
         }
         return false;
     }
 
-    public Document loadToExistingDocument(File backend) {
-        try (InputStreamReader reader = new InputStreamReader(new FileInputStream(backend), StandardCharsets.UTF_8)) {
+    public Document loadToExistingDocument(final File backend) {
+        try (final InputStreamReader reader = new InputStreamReader(new FileInputStream(backend), StandardCharsets.UTF_8)) {
 
             this.dataCatcher = PARSER.parse(reader).getAsJsonObject();
             this.file = backend;
             return this;
-        } catch (Exception ex) {
+        } catch (final Exception ex) {
             ex.getStackTrace();
         }
         return new Document();
     }
 
-    public Document loadToExistingDocument(Path path) {
-        try (InputStreamReader reader = new InputStreamReader(Files.newInputStream(path), StandardCharsets.UTF_8)) {
+    public Document loadToExistingDocument(final Path path) {
+        try (final InputStreamReader reader = new InputStreamReader(Files.newInputStream(path), StandardCharsets.UTF_8)) {
 
             this.dataCatcher = PARSER.parse(reader).getAsJsonObject();
             return this;
-        } catch (Exception ex) {
+        } catch (final Exception ex) {
             ex.getStackTrace();
         }
         return new Document();
@@ -416,7 +416,7 @@ public class Document implements DocumentAbstract {
         return dataCatcher.toString();
     }
 
-    public <T> T getObject(String key, Type type) {
+    public <T> T getObject(final String key, final Type type) {
         if (!contains(key)) {
             return null;
         }
@@ -424,7 +424,7 @@ public class Document implements DocumentAbstract {
         return GSON.fromJson(dataCatcher.get(key), type);
     }
 
-    public boolean contains(String key) {
+    public boolean contains(final String key) {
         return this.dataCatcher.has(key);
     }
 

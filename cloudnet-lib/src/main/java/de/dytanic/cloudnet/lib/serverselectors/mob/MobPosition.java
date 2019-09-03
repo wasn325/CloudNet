@@ -9,21 +9,27 @@ package de.dytanic.cloudnet.lib.serverselectors.mob;
  */
 public class MobPosition {
 
-    private String group;
+    private final String group;
 
-    private String world;
+    private final String world;
 
-    private double x;
+    private final double x;
 
-    private double y;
+    private final double y;
 
-    private double z;
+    private final double z;
 
-    private float yaw;
+    private final float yaw;
 
-    private float pitch;
+    private final float pitch;
 
-    public MobPosition(String group, String world, double x, double y, double z, float yaw, float pitch) {
+    public MobPosition(final String group,
+                       final String world,
+                       final double x,
+                       final double y,
+                       final double z,
+                       final float yaw,
+                       final float pitch) {
         this.group = group;
         this.world = world;
         this.x = x;

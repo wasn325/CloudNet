@@ -14,8 +14,8 @@ import de.dytanic.cloudnetcore.network.components.ProxyServer;
 public class CloudStopCheckHandler implements ICloudHandler {
 
     @Override
-    public void onHandle(CloudNet cloudNet) {
-        for (MinecraftServer minecraftServer : cloudNet.getServers().values()) {
+    public void onHandle(final CloudNet cloudNet) {
+        for (final MinecraftServer minecraftServer : cloudNet.getServers().values()) {
             if (minecraftServer.getChannelLostTime() != 0L && minecraftServer.getChannel() == null) {
                 if ((minecraftServer.getChannelLostTime() + 5000L) < System.currentTimeMillis()) {
                     minecraftServer.getWrapper().stopServer(minecraftServer);
@@ -23,7 +23,7 @@ public class CloudStopCheckHandler implements ICloudHandler {
             }
         }
 
-        for (ProxyServer minecraftServer : cloudNet.getProxys().values()) {
+        for (final ProxyServer minecraftServer : cloudNet.getProxys().values()) {
             if (minecraftServer.getChannelLostTime() != 0L && minecraftServer.getChannel() == null) {
                 if ((minecraftServer.getChannelLostTime() + 5000L) < System.currentTimeMillis()) {
                     minecraftServer.getWrapper().stopProxy(minecraftServer);

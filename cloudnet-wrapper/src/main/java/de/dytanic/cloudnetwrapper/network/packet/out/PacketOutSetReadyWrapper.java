@@ -10,7 +10,7 @@ import de.dytanic.cloudnet.lib.utility.document.Document;
 
 public class PacketOutSetReadyWrapper extends Packet {
 
-    public PacketOutSetReadyWrapper(boolean ready) {
+    public PacketOutSetReadyWrapper(final boolean ready) {
         super(PacketRC.CN_WRAPPER + 7, new Document("ready", ready));
     }
 }

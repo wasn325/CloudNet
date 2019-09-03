@@ -17,18 +17,17 @@ import io.netty.channel.Channel;
  */
 public class ProxyServer implements INetworkComponent {
 
-    private ServiceId serviceId;
-    private Wrapper wrapper;
-    private NetworkInfo networkInfo;
-
-    private long channelLostTime = 0L;
+    private final ServiceId serviceId;
+    private final Wrapper wrapper;
+    private final NetworkInfo networkInfo;
+    private final ProxyProcessMeta processMeta;
 
     private Channel channel;
     private ProxyInfo proxyInfo;
     private ProxyInfo lastProxyInfo;
-    private ProxyProcessMeta processMeta;
+    private long channelLostTime;
 
-    public ProxyServer(ProxyProcessMeta processMeta, Wrapper wrapper, ProxyInfo proxyInfo) {
+    public ProxyServer(final ProxyProcessMeta processMeta, final Wrapper wrapper, final ProxyInfo proxyInfo) {
         this.processMeta = processMeta;
         this.wrapper = wrapper;
         this.serviceId = proxyInfo.getServiceId();
@@ -45,7 +44,7 @@ public class ProxyServer implements INetworkComponent {
     }
 
     @Override
-    public void setChannel(Channel channel) {
+    public void setChannel(final Channel channel) {
         this.channel = channel;
     }
 
@@ -57,7 +56,7 @@ public class ProxyServer implements INetworkComponent {
         return proxyInfo;
     }
 
-    public void setProxyInfo(ProxyInfo proxyInfo) {
+    public void setProxyInfo(final ProxyInfo proxyInfo) {
         this.proxyInfo = proxyInfo;
     }
 
@@ -65,7 +64,7 @@ public class ProxyServer implements INetworkComponent {
         return channelLostTime;
     }
 
-    public void setChannelLostTime(long channelLostTime) {
+    public void setChannelLostTime(final long channelLostTime) {
         this.channelLostTime = channelLostTime;
     }
 
@@ -77,7 +76,7 @@ public class ProxyServer implements INetworkComponent {
         return lastProxyInfo;
     }
 
-    public void setLastProxyInfo(ProxyInfo lastProxyInfo) {
+    public void setLastProxyInfo(final ProxyInfo lastProxyInfo) {
         this.lastProxyInfo = lastProxyInfo;
     }
 
@@ -91,7 +90,7 @@ public class ProxyServer implements INetworkComponent {
         }
     }
 
-    public void sendCustomMessage(String channel, String message, Document value) {
+    public void sendCustomMessage(final String channel, final String message, final Document value) {
         this.sendPacket(new PacketOutCustomChannelMessage(channel, message, value));
     }
 

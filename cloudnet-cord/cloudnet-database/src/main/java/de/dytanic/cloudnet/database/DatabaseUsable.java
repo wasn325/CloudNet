@@ -16,7 +16,7 @@ public class DatabaseUsable {
      */
     protected Database database;
 
-    public DatabaseUsable(Database database) {
+    public DatabaseUsable(final Database database) {
         this.database = database;
     }
 

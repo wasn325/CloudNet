@@ -23,16 +23,16 @@ public class QueryDecoder {
      *
      * @param query the query to decode.
      */
-    public QueryDecoder(String query) {
+    public QueryDecoder(final String query) {
         if (query == null) {
             return;
         }
-        if (query.length() == 0 || query.equals("?")) {
+        if (query.isEmpty() || query.equals("?")) {
             return;
         }
 
-        for (String input : query.split("&")) {
-            String[] value = input.split("=");
+        for (final String input : query.split("&")) {
+            final String[] value = input.split("=");
             queryParams.put(value[0], value[1]);
         }
     }

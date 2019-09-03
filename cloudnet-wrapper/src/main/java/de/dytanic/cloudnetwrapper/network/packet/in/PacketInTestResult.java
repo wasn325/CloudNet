@@ -16,7 +16,7 @@ import de.dytanic.cloudnet.lib.utility.document.Document;
 public class PacketInTestResult extends PacketInHandler {
 
     @Override
-    public void handleInput(Document data, PacketSender packetSender) {
+    public void handleInput(final Document data, final PacketSender packetSender) {
         packetSender.sendPacket(new Packet(packetUniqueId,
                                            PacketRC.TEST,
                                            new Document("message",

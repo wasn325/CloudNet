@@ -14,7 +14,7 @@ import de.dytanic.cloudnet.lib.utility.document.Document;
  */
 public class PacketOutWrapperInfo extends Packet {
 
-    public PacketOutWrapperInfo(WrapperExternal wrapperExternal) {
+    public PacketOutWrapperInfo(final WrapperExternal wrapperExternal) {
         super(PacketRC.CN_CORE, new Document("wrapper", wrapperExternal));
     }
 }

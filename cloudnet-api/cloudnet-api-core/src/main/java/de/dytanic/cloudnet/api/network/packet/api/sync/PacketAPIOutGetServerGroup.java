@@ -13,7 +13,7 @@ import de.dytanic.cloudnet.lib.utility.document.Document;
  */
 public class PacketAPIOutGetServerGroup extends Packet {
 
-    public PacketAPIOutGetServerGroup(String name) {
+    public PacketAPIOutGetServerGroup(final String name) {
         super(PacketRC.API + 6, new Document("serverGroup", name));
     }
 }

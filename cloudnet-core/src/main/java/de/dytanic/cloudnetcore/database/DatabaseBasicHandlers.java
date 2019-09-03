@@ -13,20 +13,20 @@ import de.dytanic.cloudnet.lib.database.Database;
  */
 public class DatabaseBasicHandlers {
 
-    private StatisticManager statisticManager;
+    private final StatisticManager statisticManager;
 
-    private PlayerDatabase playerDatabase;
+    private final PlayerDatabase playerDatabase;
 
-    private CommandDispatcherDatabase commandDispatcherDatabase;
+    private final CommandDispatcherDatabase commandDispatcherDatabase;
 
-    private NameToUUIDDatabase nameToUUIDDatabase;
+    private final NameToUUIDDatabase nameToUUIDDatabase;
 
-    private WrapperSessionDatabase wrapperSessionDatabase;
+    private final WrapperSessionDatabase wrapperSessionDatabase;
 
-    private UpdateConfigurationDatabase updateConfigurationDatabase;
+    private final UpdateConfigurationDatabase updateConfigurationDatabase;
 
-    public DatabaseBasicHandlers(DatabaseManager databaseManager) {
-        Database config = databaseManager.getDatabase("cloud_internal_cfg");
+    public DatabaseBasicHandlers(final DatabaseManager databaseManager) {
+        final Database config = databaseManager.getDatabase("cloud_internal_cfg");
 
         playerDatabase = new PlayerDatabase(databaseManager.getDatabase("cloudnet_internal_players"));
         nameToUUIDDatabase = new NameToUUIDDatabase(databaseManager.getDatabase("cloud_internal_nameanduuid_dispatcher"));

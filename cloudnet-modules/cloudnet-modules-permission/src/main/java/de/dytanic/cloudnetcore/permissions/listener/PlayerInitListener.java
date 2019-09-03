@@ -18,7 +18,7 @@ import java.util.LinkedList;
 public final class PlayerInitListener implements IEventListener<PlayerInitEvent> {
 
     @Override
-    public void onCall(PlayerInitEvent event) {
+    public void onCall(final PlayerInitEvent event) {
 
         if (event.getCloudPlayer().getPermissionEntity() == null) {
             event.getCloudPlayer().setPermissionEntity(PermissionModule.getInstance()
@@ -26,8 +26,8 @@ public final class PlayerInitListener implements IEventListener<PlayerInitEvent>
                                                                        .getNewPermissionEntity(event.getCloudPlayer()));
         }
 
-        Collection<GroupEntityData> groupEntiys = new LinkedList<>();
-        for (GroupEntityData groupEntityData : event.getCloudPlayer().getPermissionEntity().getGroups()) {
+        final Collection<GroupEntityData> groupEntiys = new LinkedList<>();
+        for (final GroupEntityData groupEntityData : event.getCloudPlayer().getPermissionEntity().getGroups()) {
             if (!PermissionModule.getInstance()
                                  .getPermissionPool()
                                  .getGroups()
@@ -37,11 +37,11 @@ public final class PlayerInitListener implements IEventListener<PlayerInitEvent>
             }
         }
 
-        for (GroupEntityData groupEntityData : groupEntiys) {
+        for (final GroupEntityData groupEntityData : groupEntiys) {
             event.getCloudPlayer().getPermissionEntity().getGroups().remove(groupEntityData);
         }
 
-        if (event.getCloudPlayer().getPermissionEntity().getGroups().size() == 0) {
+        if (event.getCloudPlayer().getPermissionEntity().getGroups().isEmpty()) {
             event.getCloudPlayer().getPermissionEntity().getGroups().add(new GroupEntityData(PermissionModule.getInstance()
                                                                                                              .getPermissionPool()
                                                                                                              .getDefaultGroup()

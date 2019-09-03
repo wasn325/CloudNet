@@ -16,7 +16,7 @@ import de.dytanic.cloudnetcore.CloudNet;
 public class PacketInUpdateOnlinePlayer extends PacketInHandler {
 
     @Override
-    public void handleInput(Document data, PacketSender packetSender) {
+    public void handleInput(final Document data, final PacketSender packetSender) {
         CloudNet.getInstance().getNetworkManager().handlePlayerUpdate(data.getObject("player", CloudPlayer.TYPE));
     }
 }

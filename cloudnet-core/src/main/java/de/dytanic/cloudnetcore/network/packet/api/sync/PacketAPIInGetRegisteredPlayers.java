@@ -12,7 +12,7 @@ public final class PacketAPIInGetRegisteredPlayers extends PacketAPIIO {
     }
 
     @Override
-    public void handleInput(Document data, PacketSender packetSender) {
+    public void handleInput(final Document data, final PacketSender packetSender) {
         packetSender.sendPacket(getResult(new Document().append("players",
                                                                 CloudNet.getInstance()
                                                                         .getDbHandlers()
@@ -21,7 +21,7 @@ public final class PacketAPIInGetRegisteredPlayers extends PacketAPIIO {
     }
 
     @Override
-    protected Packet getResult(Document value) {
+    protected Packet getResult(final Document value) {
         return new Packet(packetUniqueId, -5426, value);
     }
 }

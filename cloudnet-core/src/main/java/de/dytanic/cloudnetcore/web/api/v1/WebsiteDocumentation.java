@@ -31,16 +31,16 @@ public class WebsiteDocumentation extends MethodWebHandlerAdapter {
     }
 
     @Override
-    public FullHttpResponse get(ChannelHandlerContext channelHandlerContext,
-                                QueryDecoder queryDecoder,
-                                PathProvider path,
-                                HttpRequest httpRequest) throws Exception {
+    public FullHttpResponse get(final ChannelHandlerContext channelHandlerContext,
+                                final QueryDecoder queryDecoder,
+                                final PathProvider path,
+                                final HttpRequest httpRequest) throws Exception {
         CloudNet.getLogger().debug("HTTP Request from " + channelHandlerContext.channel().remoteAddress());
 
-        StringBuilder stringBuilder = new StringBuilder();
+        final StringBuilder stringBuilder = new StringBuilder();
 
-        try (InputStream inputStream = WebsiteDocumentation.class.getClassLoader()
-                                                                 .getResourceAsStream("files/api-doc.txt"); BufferedReader bufferedReader = new BufferedReader(
+        try (final InputStream inputStream = WebsiteDocumentation.class.getClassLoader()
+                                                                       .getResourceAsStream("files/api-doc.txt"); final BufferedReader bufferedReader = new BufferedReader(
             new InputStreamReader(inputStream, StandardCharsets.UTF_8))) {
             String input;
             while ((input = bufferedReader.readLine()) != null) {
@@ -48,9 +48,11 @@ public class WebsiteDocumentation extends MethodWebHandlerAdapter {
             }
         }
 
-        String output = stringBuilder.substring(0);
-        ByteBuf byteBuf = Unpooled.wrappedBuffer(output.getBytes(StandardCharsets.UTF_8));
-        FullHttpResponse fullHttpResponse = new DefaultFullHttpResponse(httpRequest.getProtocolVersion(), HttpResponseStatus.OK, byteBuf);
+        final String output = stringBuilder.substring(0);
+        final ByteBuf byteBuf = Unpooled.wrappedBuffer(output.getBytes(StandardCharsets.UTF_8));
+        final FullHttpResponse fullHttpResponse = new DefaultFullHttpResponse(httpRequest.getProtocolVersion(),
+                                                                              HttpResponseStatus.OK,
+                                                                              byteBuf);
         fullHttpResponse.headers().set("Content-Type", "text/plain");
         return fullHttpResponse;
     }

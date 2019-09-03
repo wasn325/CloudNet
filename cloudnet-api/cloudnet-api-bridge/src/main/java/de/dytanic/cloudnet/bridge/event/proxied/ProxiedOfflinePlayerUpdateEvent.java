@@ -7,9 +7,9 @@ import de.dytanic.cloudnet.lib.player.OfflinePlayer;
  */
 public class ProxiedOfflinePlayerUpdateEvent extends ProxiedCloudEvent {
 
-    private OfflinePlayer offlinePlayer;
+    private final OfflinePlayer offlinePlayer;
 
-    public ProxiedOfflinePlayerUpdateEvent(OfflinePlayer offlinePlayer) {
+    public ProxiedOfflinePlayerUpdateEvent(final OfflinePlayer offlinePlayer) {
         this.offlinePlayer = offlinePlayer;
     }
 

@@ -4,18 +4,20 @@
 
 package de.dytanic.cloudnet.lib.serverselectors.sign;
 
+import java.util.Objects;
+
 /**
  * Created by Tareko on 26.05.2017.
  */
 public class Position {
 
-    private String group;
-    private String world;
-    private double x;
-    private double y;
-    private double z;
+    private final String group;
+    private final String world;
+    private final double x;
+    private final double y;
+    private final double z;
 
-    public Position(String group, String world, double x, double y, double z) {
+    public Position(final String group, final String world, final double x, final double y, final double z) {
         this.group = group;
         this.world = world;
         this.x = x;
@@ -44,18 +46,30 @@ public class Position {
     }
 
     @Override
-    public boolean equals(Object obj) {
+    public int hashCode() {
+        int result;
+        long temp;
+        result = group != null ? group.hashCode() : 0;
+        result = 31 * result + (world != null ? world.hashCode() : 0);
+        temp = Double.doubleToLongBits(x);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(y);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(z);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        return result;
+    }
 
-        if (!(obj instanceof Position)) {
-            return false;
-        }
-        Position signPosition = (Position) obj;
-
-        if (signPosition.x == x && signPosition.y == y && signPosition.z == z && signPosition.world.equals(world) && signPosition.group.equals(
-            group)) {
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) {
             return true;
         }
-
-        return false;
+        if (!(o instanceof Position)) {
+            return false;
+        }
+        final Position position = (Position) o;
+        return Double.compare(position.x, x) == 0 && Double.compare(position.y, y) == 0 && Double.compare(position.z, z) == 0 &&
+               Objects.equals(group, position.group) && Objects.equals(world, position.world);
     }
 }

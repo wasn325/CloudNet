@@ -12,14 +12,14 @@ public class ServiceDescription {
     /**
      * Brief usage description.
      */
-    private String usage;
+    private final String usage;
 
     /**
      * Detailed description.
      */
-    private String description;
+    private final String description;
 
-    public ServiceDescription(String usage, String description) {
+    public ServiceDescription(final String usage, final String description) {
         this.usage = usage;
         this.description = description;
     }

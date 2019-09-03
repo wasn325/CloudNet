@@ -12,11 +12,11 @@ import de.dytanic.cloudnetcore.network.NetworkManager;
  */
 public class UpdateAllEvent extends Event {
 
-    private NetworkManager networkManager;
+    private final NetworkManager networkManager;
 
-    private boolean isOnlineCloudNetworkUpdate;
+    private final boolean isOnlineCloudNetworkUpdate;
 
-    public UpdateAllEvent(NetworkManager networkManager, boolean isOnlineCloudNetworkUpdate) {
+    public UpdateAllEvent(final NetworkManager networkManager, final boolean isOnlineCloudNetworkUpdate) {
         this.networkManager = networkManager;
         this.isOnlineCloudNetworkUpdate = isOnlineCloudNetworkUpdate;
     }

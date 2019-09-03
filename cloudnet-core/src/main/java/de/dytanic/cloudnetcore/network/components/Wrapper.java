@@ -45,14 +45,13 @@ public final class Wrapper implements INetworkComponent {
     private final java.util.Map<String, Quad<Integer, Integer, ServiceId, Template>> waitingServices = NetworkUtils.newConcurrentHashMap();
     private Channel channel;
     private WrapperInfo wrapperInfo;
-    private WrapperMeta networkInfo;
+    private final WrapperMeta networkInfo;
     private boolean ready;
     private double cpuUsage = -1;
-    private int maxMemory = 0;
+    private final String serverId;
+    private int maxMemory;
 
-    private String serverId;
-
-    public Wrapper(WrapperMeta networkInfo) {
+    public Wrapper(final WrapperMeta networkInfo) {
         this.serverId = networkInfo.getId();
         this.networkInfo = networkInfo;
     }
@@ -61,7 +60,7 @@ public final class Wrapper implements INetworkComponent {
         return maxMemory;
     }
 
-    public void setMaxMemory(int maxMemory) {
+    public void setMaxMemory(final int maxMemory) {
         this.maxMemory = maxMemory;
     }
 
@@ -69,7 +68,7 @@ public final class Wrapper implements INetworkComponent {
         return cpuUsage;
     }
 
-    public void setCpuUsage(double cpuUsage) {
+    public void setCpuUsage(final double cpuUsage) {
         this.cpuUsage = cpuUsage;
     }
 
@@ -89,7 +88,7 @@ public final class Wrapper implements INetworkComponent {
         return waitingServices;
     }
 
-    public void setReady(boolean ready) {
+    public void setReady(final boolean ready) {
         this.ready = ready;
     }
 
@@ -107,7 +106,7 @@ public final class Wrapper implements INetworkComponent {
         return wrapperInfo;
     }
 
-    public void setWrapperInfo(WrapperInfo wrapperInfo) {
+    public void setWrapperInfo(final WrapperInfo wrapperInfo) {
         this.wrapperInfo = wrapperInfo;
     }
 
@@ -121,11 +120,11 @@ public final class Wrapper implements INetworkComponent {
     }
 
     public int getUsedMemoryAndWaitings() {
-        AtomicInteger integer = new AtomicInteger(getUsedMemory());
+        final AtomicInteger integer = new AtomicInteger(getUsedMemory());
 
         CollectionWrapper.iterator(this.waitingServices.values(), new Runnabled<Quad<Integer, Integer, ServiceId, Template>>() {
             @Override
-            public void run(Quad<Integer, Integer, ServiceId, Template> obj) {
+            public void run(final Quad<Integer, Integer, ServiceId, Template> obj) {
                 integer.addAndGet(obj.getSecond());
             }
         });
@@ -136,45 +135,45 @@ public final class Wrapper implements INetworkComponent {
     public int getUsedMemory() {
         int mem = 0;
 
-        for (ProxyServer proxyServer : proxys.values()) {
+        for (final ProxyServer proxyServer : proxys.values()) {
             mem = mem + proxyServer.getProxyInfo().getMemory();
         }
 
-        for (MinecraftServer proxyServer : servers.values()) {
+        for (final MinecraftServer proxyServer : servers.values()) {
             mem = mem + proxyServer.getProcessMeta().getMemory();
         }
 
         return mem;
     }
 
-    public void sendCommand(String commandLine) {
+    public void sendCommand(final String commandLine) {
         sendPacket(new PacketOutExecuteCommand(commandLine));
     }
 
     public void disconnct() {
         this.wrapperInfo = null;
         this.maxMemory = 0;
-        for (MinecraftServer minecraftServer : servers.values()) {
+        for (final MinecraftServer minecraftServer : servers.values()) {
             try {
                 minecraftServer.disconnect();
-            } catch (Exception ex) {
-
+            } catch (final Exception ex) {
+                ex.printStackTrace();
             }
         }
 
-        for (CloudServer cloudServer : cloudServers.values()) {
+        for (final CloudServer cloudServer : cloudServers.values()) {
             try {
                 cloudServer.disconnect();
-            } catch (Exception ex) {
-
+            } catch (final Exception ex) {
+                ex.printStackTrace();
             }
         }
 
-        for (ProxyServer minecraftServer : proxys.values()) {
+        for (final ProxyServer minecraftServer : proxys.values()) {
             try {
                 minecraftServer.disconnect();
-            } catch (Exception ex) {
-
+            } catch (final Exception ex) {
+                ex.printStackTrace();
             }
         }
 
@@ -190,16 +189,16 @@ public final class Wrapper implements INetworkComponent {
             return this;
         }
 
-        java.util.Map<String, ServerGroup> groups = NetworkUtils.newConcurrentHashMap();
-        for (ServerGroup serverGroup : CloudNet.getInstance().getServerGroups().values()) {
+        final java.util.Map<String, ServerGroup> groups = NetworkUtils.newConcurrentHashMap();
+        for (final ServerGroup serverGroup : CloudNet.getInstance().getServerGroups().values()) {
             if (serverGroup.getWrapper().contains(networkInfo.getId())) {
                 groups.put(serverGroup.getName(), serverGroup);
                 sendPacket(new PacketOutCreateTemplate(serverGroup));
             }
         }
 
-        java.util.Map<String, ProxyGroup> proxyGroups = NetworkUtils.newConcurrentHashMap();
-        for (ProxyGroup serverGroup : CloudNet.getInstance().getProxyGroups().values()) {
+        final java.util.Map<String, ProxyGroup> proxyGroups = NetworkUtils.newConcurrentHashMap();
+        for (final ProxyGroup serverGroup : CloudNet.getInstance().getProxyGroups().values()) {
             if (serverGroup.getWrapper().contains(networkInfo.getId())) {
                 proxyGroups.put(serverGroup.getName(), serverGroup);
                 sendPacket(new PacketOutCreateTemplate(serverGroup));
@@ -207,9 +206,9 @@ public final class Wrapper implements INetworkComponent {
         }
 
         SimpledUser simpledUser = null;
-        User user = CollectionWrapper.filter(CloudNet.getInstance().getUsers(), new Acceptable<User>() {
+        final User user = CollectionWrapper.filter(CloudNet.getInstance().getUsers(), new Acceptable<User>() {
             @Override
-            public boolean isAccepted(User value) {
+            public boolean isAccepted(final User value) {
                 return networkInfo.getUser().equals(value.getName());
             }
         });
@@ -217,10 +216,10 @@ public final class Wrapper implements INetworkComponent {
             simpledUser = user.toSimple();
         }
 
-        WrapperExternal wrapperExternal = new WrapperExternal(CloudNet.getInstance().getNetworkManager().newCloudNetwork(),
-                                                              simpledUser,
-                                                              groups,
-                                                              proxyGroups);
+        final WrapperExternal wrapperExternal = new WrapperExternal(CloudNet.getInstance().getNetworkManager().newCloudNetwork(),
+                                                                    simpledUser,
+                                                                    groups,
+                                                                    proxyGroups);
         sendPacket(new PacketOutWrapperInfo(wrapperExternal));
         return this;
     }
@@ -231,41 +230,41 @@ public final class Wrapper implements INetworkComponent {
     }
 
     @Override
-    public void setChannel(Channel channel) {
+    public void setChannel(final Channel channel) {
         this.channel = channel;
     }
 
-    public void writeCommand(String commandLine) {
+    public void writeCommand(final String commandLine) {
         sendPacket(new PacketOutExecuteCommand(commandLine));
     }
 
-    public void writeServerCommand(String commandLine, ServerInfo serverInfo) {
+    public void writeServerCommand(final String commandLine, final ServerInfo serverInfo) {
         sendPacket(new PacketOutExecuteServerCommand(serverInfo, commandLine));
     }
 
-    public void writeProxyCommand(String commandLine, ProxyInfo proxyInfo) {
+    public void writeProxyCommand(final String commandLine, final ProxyInfo proxyInfo) {
         sendPacket(new PacketOutExecuteServerCommand(proxyInfo, commandLine));
     }
 
     public Collection<Integer> getBinndedPorts() {
-        Collection<Integer> ports = new ArrayList<>();
+        final Collection<Integer> ports = new ArrayList<>();
 
-        for (Quad<Integer, Integer, ServiceId, Template> serviceIdValues : waitingServices.values()) {
+        for (final Quad<Integer, Integer, ServiceId, Template> serviceIdValues : waitingServices.values()) {
             ports.add(serviceIdValues.getFirst());
         }
 
-        for (MinecraftServer minecraftServer : servers.values()) {
+        for (final MinecraftServer minecraftServer : servers.values()) {
             ports.add(minecraftServer.getProcessMeta().getPort());
         }
 
-        for (ProxyServer proxyServer : proxys.values()) {
+        for (final ProxyServer proxyServer : proxys.values()) {
             ports.add(proxyServer.getProcessMeta().getPort());
         }
 
         return ports;
     }
 
-    public void startProxy(ProxyProcessMeta proxyProcessMeta) {
+    public void startProxy(final ProxyProcessMeta proxyProcessMeta) {
         sendPacket(new PacketOutStartProxy(proxyProcessMeta));
         System.out.println("Proxy [" + proxyProcessMeta.getServiceId() + "] is now in " + serverId + " queue.");
 
@@ -276,7 +275,7 @@ public final class Wrapper implements INetworkComponent {
                                             null));
     }
 
-    public void startProxyAsync(ProxyProcessMeta proxyProcessMeta) {
+    public void startProxyAsync(final ProxyProcessMeta proxyProcessMeta) {
         sendPacket(new PacketOutStartProxy(proxyProcessMeta, true));
         System.out.println("Proxy [" + proxyProcessMeta.getServiceId() + "] is now in " + serverId + " queue.");
 
@@ -287,7 +286,7 @@ public final class Wrapper implements INetworkComponent {
                                             null));
     }
 
-    public void startGameServer(ServerProcessMeta serverProcessMeta) {
+    public void startGameServer(final ServerProcessMeta serverProcessMeta) {
         sendPacket(new PacketOutStartServer(serverProcessMeta));
         System.out.println("Server [" + serverProcessMeta.getServiceId() + "] is now in " + serverId + " queue.");
 
@@ -298,7 +297,7 @@ public final class Wrapper implements INetworkComponent {
                                             serverProcessMeta.getTemplate()));
     }
 
-    public void startGameServerAsync(ServerProcessMeta serverProcessMeta) {
+    public void startGameServerAsync(final ServerProcessMeta serverProcessMeta) {
         sendPacket(new PacketOutStartServer(serverProcessMeta, true));
         System.out.println("Server [" + serverProcessMeta.getServiceId() + "] is now in " + serverId + " queue.");
 
@@ -309,7 +308,7 @@ public final class Wrapper implements INetworkComponent {
                                             serverProcessMeta.getTemplate()));
     }
 
-    public void startCloudServer(CloudServerMeta cloudServerMeta) {
+    public void startCloudServer(final CloudServerMeta cloudServerMeta) {
         sendPacket(new PacketOutStartCloudServer(cloudServerMeta));
         System.out.println("CloudServer [" + cloudServerMeta.getServiceId() + "] is now in " + serverId + " queue.");
 
@@ -320,7 +319,7 @@ public final class Wrapper implements INetworkComponent {
                                             cloudServerMeta.getTemplate()));
     }
 
-    public void startCloudServerAsync(CloudServerMeta cloudServerMeta) {
+    public void startCloudServerAsync(final CloudServerMeta cloudServerMeta) {
         sendPacket(new PacketOutStartCloudServer(cloudServerMeta, true));
         System.out.println("CloudServer [" + cloudServerMeta.getServiceId() + "] is now in " + serverId + " queue.");
 
@@ -331,7 +330,7 @@ public final class Wrapper implements INetworkComponent {
                                             cloudServerMeta.getTemplate()));
     }
 
-    public Wrapper stopServer(MinecraftServer minecraftServer) {
+    public Wrapper stopServer(final MinecraftServer minecraftServer) {
         if (this.servers.containsKey(minecraftServer.getServerId())) {
             sendPacket(new PacketOutStopServer(minecraftServer.getServerInfo()));
         }
@@ -340,7 +339,7 @@ public final class Wrapper implements INetworkComponent {
         return this;
     }
 
-    public Wrapper stopServer(CloudServer cloudServer) {
+    public Wrapper stopServer(final CloudServer cloudServer) {
         if (this.servers.containsKey(cloudServer.getServerId())) {
             sendPacket(new PacketOutStopServer(cloudServer.getServerInfo()));
         }
@@ -349,7 +348,7 @@ public final class Wrapper implements INetworkComponent {
         return this;
     }
 
-    public Wrapper stopProxy(ProxyServer proxyServer) {
+    public Wrapper stopProxy(final ProxyServer proxyServer) {
         if (this.proxys.containsKey(proxyServer.getServerId())) {
             sendPacket(new PacketOutStopProxy(proxyServer.getProxyInfo()));
         }
@@ -358,37 +357,37 @@ public final class Wrapper implements INetworkComponent {
         return this;
     }
 
-    public Wrapper enableScreen(ServerInfo serverInfo) {
+    public Wrapper enableScreen(final ServerInfo serverInfo) {
         sendPacket(new PacketOutScreen(serverInfo, DefaultType.BUKKIT, true));
         return this;
     }
 
-    public Wrapper enableScreen(ProxyInfo serverInfo) {
+    public Wrapper enableScreen(final ProxyInfo serverInfo) {
         sendPacket(new PacketOutScreen(serverInfo, DefaultType.BUNGEE_CORD, true));
         return this;
     }
 
-    public Wrapper disableScreen(ProxyInfo serverInfo) {
+    public Wrapper disableScreen(final ProxyInfo serverInfo) {
         sendPacket(new PacketOutScreen(serverInfo, DefaultType.BUNGEE_CORD, false));
         return this;
     }
 
-    public Wrapper disableScreen(ServerInfo serverInfo) {
+    public Wrapper disableScreen(final ServerInfo serverInfo) {
         sendPacket(new PacketOutScreen(serverInfo, DefaultType.BUKKIT, false));
         return this;
     }
 
-    public Wrapper copyServer(ServerInfo serverInfo) {
+    public Wrapper copyServer(final ServerInfo serverInfo) {
         sendPacket(new PacketOutCopyServer(serverInfo));
         return this;
     }
 
-    public Wrapper copyServer(ServerInfo serverInfo, Template template) {
+    public Wrapper copyServer(final ServerInfo serverInfo, final Template template) {
         sendPacket(new PacketOutCopyServer(serverInfo, template));
         return this;
     }
 
-    public void setConfigProperties(Configuration properties) {
+    public void setConfigProperties(final Configuration properties) {
         sendPacket(new PacketOutUpdateWrapperProperties(properties));
     }
 }

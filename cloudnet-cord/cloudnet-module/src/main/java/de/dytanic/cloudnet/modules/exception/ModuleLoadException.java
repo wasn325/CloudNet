@@ -14,7 +14,7 @@ public class ModuleLoadException extends RuntimeException {
      *
      * @param message the message that details the exception
      */
-    public ModuleLoadException(String message) {
+    public ModuleLoadException(final String message) {
         super(message);
     }
 }

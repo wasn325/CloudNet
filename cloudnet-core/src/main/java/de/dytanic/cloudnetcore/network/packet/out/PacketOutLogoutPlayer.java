@@ -16,11 +16,11 @@ import java.util.UUID;
  */
 public class PacketOutLogoutPlayer extends Packet {
 
-    public PacketOutLogoutPlayer(CloudPlayer cloudPlayer) {
+    public PacketOutLogoutPlayer(final CloudPlayer cloudPlayer) {
         super(PacketRC.PLAYER_HANDLE + 2, new Document("player", cloudPlayer));
     }
 
-    public PacketOutLogoutPlayer(UUID uniqueId) {
+    public PacketOutLogoutPlayer(final UUID uniqueId) {
         super(PacketRC.PLAYER_HANDLE + 2, new Document("uniqueId", uniqueId));
     }
 }

@@ -10,33 +10,33 @@ import java.util.Map;
  */
 public class SimpleServerGroup implements Nameable {
 
-    private String name;
+    private final String name;
 
-    private boolean kickedForceFallback;
+    private final boolean kickedForceFallback;
 
-    private int joinPower;
+    private final int joinPower;
 
-    private int memory;
+    private final int memory;
 
-    private ServerGroupMode mode;
+    private final ServerGroupMode mode;
 
-    private boolean maintenance;
+    private final boolean maintenance;
 
-    private int percentForNewServerAutomatically;
+    private final int percentForNewServerAutomatically;
 
-    private Map<String, Object> settings;
+    private final Map<String, Object> settings;
 
-    private AdvancedServerConfig advancedServerConfig;
+    private final AdvancedServerConfig advancedServerConfig;
 
-    public SimpleServerGroup(String name,
-                             boolean kickedForceFallback,
-                             int joinPower,
-                             int memory,
-                             ServerGroupMode mode,
-                             boolean maintenance,
-                             int percentForNewServerAutomatically,
-                             Map<String, Object> settings,
-                             AdvancedServerConfig advancedServerConfig) {
+    public SimpleServerGroup(final String name,
+                             final boolean kickedForceFallback,
+                             final int joinPower,
+                             final int memory,
+                             final ServerGroupMode mode,
+                             final boolean maintenance,
+                             final int percentForNewServerAutomatically,
+                             final Map<String, Object> settings,
+                             final AdvancedServerConfig advancedServerConfig) {
         this.name = name;
         this.kickedForceFallback = kickedForceFallback;
         this.joinPower = joinPower;

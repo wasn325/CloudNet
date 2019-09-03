@@ -25,8 +25,8 @@ public final class CommandStatistic extends Command {
     }
 
     @Override
-    public void onExecuteCommand(CommandSender sender, String[] args) {
-        Document document = StatisticManager.getInstance().getStatistics();
+    public void onExecuteCommand(final CommandSender sender, final String[] args) {
+        final Document document = StatisticManager.getInstance().getStatistics();
         sender.sendMessage("CloudNet2 Statistics:",
                            " ",
                            "CloudStartups: " + StatisticManager.getInstance().getStatistics().getInt("cloudStartup"),

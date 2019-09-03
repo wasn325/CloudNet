@@ -8,7 +8,7 @@ public class StringUtil {
                                                                               final T collection) throws UnsupportedOperationException,
         IllegalArgumentException {
 
-        for (String string : originals) {
+        for (final String string : originals) {
             if (startsWithIgnoreCase(string, token)) {
                 collection.add(string);
             }

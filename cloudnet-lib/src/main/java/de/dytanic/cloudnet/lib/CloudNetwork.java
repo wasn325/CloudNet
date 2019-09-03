@@ -11,8 +11,8 @@ import java.util.*;
  * Created by Tareko on 19.07.2017.
  */
 public class CloudNetwork {
-    private int registeredPlayerCount = 0;
-    private int onlineCount = 0;
+    private int registeredPlayerCount;
+    private int onlineCount;
     private java.util.Map<String, SimpleServerGroup> serverGroups = new HashMap<>();
     private java.util.Map<String, ProxyGroup> proxyGroups = new HashMap<>();
     private java.util.Collection<WrapperInfo> wrappers = new LinkedList<>();
@@ -59,7 +59,7 @@ public class CloudNetwork {
         return onlineCount;
     }
 
-    public void setOnlineCount(int onlineCount) {
+    public void setOnlineCount(final int onlineCount) {
         this.onlineCount = onlineCount;
     }
 
@@ -67,7 +67,7 @@ public class CloudNetwork {
         return proxyGroups;
     }
 
-    public void setProxyGroups(Map<String, ProxyGroup> proxyGroups) {
+    public void setProxyGroups(final Map<String, ProxyGroup> proxyGroups) {
         this.proxyGroups = proxyGroups;
     }
 
@@ -75,7 +75,7 @@ public class CloudNetwork {
         return webPort;
     }
 
-    public void setWebPort(int webPort) {
+    public void setWebPort(final int webPort) {
         this.webPort = webPort;
     }
 
@@ -83,7 +83,7 @@ public class CloudNetwork {
         return wrappers;
     }
 
-    public void setWrappers(Collection<WrapperInfo> wrappers) {
+    public void setWrappers(final Collection<WrapperInfo> wrappers) {
         this.wrappers = wrappers;
     }
 
@@ -91,7 +91,7 @@ public class CloudNetwork {
         return messages;
     }
 
-    public void setMessages(Document messages) {
+    public void setMessages(final Document messages) {
         this.messages = messages;
     }
 
@@ -99,7 +99,7 @@ public class CloudNetwork {
         return modules;
     }
 
-    public void setModules(Document modules) {
+    public void setModules(final Document modules) {
         this.modules = modules;
     }
 
@@ -107,7 +107,7 @@ public class CloudNetwork {
         return registeredPlayerCount;
     }
 
-    public void setRegisteredPlayerCount(int registeredPlayerCount) {
+    public void setRegisteredPlayerCount(final int registeredPlayerCount) {
         this.registeredPlayerCount = registeredPlayerCount;
     }
 
@@ -115,7 +115,7 @@ public class CloudNetwork {
         return serverGroups;
     }
 
-    public void setServerGroups(Map<String, SimpleServerGroup> serverGroups) {
+    public void setServerGroups(final Map<String, SimpleServerGroup> serverGroups) {
         this.serverGroups = serverGroups;
     }
 }

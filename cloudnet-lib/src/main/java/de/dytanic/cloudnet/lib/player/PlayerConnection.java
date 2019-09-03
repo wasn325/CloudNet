@@ -7,21 +7,27 @@ import java.util.UUID;
  */
 public class PlayerConnection {
 
-    private UUID uniqueId;
+    private final UUID uniqueId;
 
-    private String name;
+    private final String name;
 
-    private int version;
+    private final int version;
 
-    private String host;
+    private final String host;
 
-    private int port;
+    private final int port;
 
-    private boolean onlineMode;
+    private final boolean onlineMode;
 
-    private boolean legacy;
+    private final boolean legacy;
 
-    public PlayerConnection(UUID uniqueId, String name, int version, String host, int port, boolean onlineMode, boolean legacy) {
+    public PlayerConnection(final UUID uniqueId,
+                            final String name,
+                            final int version,
+                            final String host,
+                            final int port,
+                            final boolean onlineMode,
+                            final boolean legacy) {
         this.uniqueId = uniqueId;
         this.name = name;
         this.version = version;

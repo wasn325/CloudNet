@@ -24,10 +24,10 @@ public final class CommandClearCache extends Command {
     }
 
     @Override
-    public void onExecuteCommand(CommandSender sender, String[] args) {
+    public void onExecuteCommand(final CommandSender sender, final String[] args) {
         CloudNet.getInstance().getWrappers().values().forEach(new Consumer<Wrapper>() {
             @Override
-            public void accept(Wrapper wrapper) {
+            public void accept(final Wrapper wrapper) {
                 if (wrapper.getChannel() != null) {
                     wrapper.sendCommand("clearcache");
                 }

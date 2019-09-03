@@ -13,11 +13,11 @@ import java.io.InputStream;
  */
 public final class DefaultModule {
 
-    private String moduleName;
+    private final String moduleName;
 
-    private String moduleVersion;
+    private final String moduleVersion;
 
-    public DefaultModule(String moduleName, String moduleVersion) {
+    public DefaultModule(final String moduleName, final String moduleVersion) {
         this.moduleName = moduleName;
         this.moduleVersion = moduleVersion;
     }

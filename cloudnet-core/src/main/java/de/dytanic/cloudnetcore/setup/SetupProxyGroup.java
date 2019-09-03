@@ -28,20 +28,20 @@ import java.util.List;
  */
 public class SetupProxyGroup {
 
-    private String name;
+    private final String name;
 
-    public SetupProxyGroup(CommandSender commandSender, String name) {
+    public SetupProxyGroup(final CommandSender commandSender, final String name) {
         this.name = name;
 
-        Setup setup = new Setup().setupCancel(new ISetupCancel() {
+        final Setup setup = new Setup().setupCancel(new ISetupCancel() {
             public void cancel() {
                 commandSender.sendMessage("Setup cancelled!");
             }
         }).setupComplete(new ISetupComplete() {
             @Override
-            public void complete(Document data) {
-                java.util.List<String> wrappers = (List<String>) CollectionWrapper.toCollection(data.getString("wrapper"), ",");
-                if (wrappers.size() == 0) {
+            public void complete(final Document data) {
+                final java.util.List<String> wrappers = (List<String>) CollectionWrapper.toCollection(data.getString("wrapper"), ",");
+                if (wrappers.isEmpty()) {
                     return;
                 }
                 for (short i = 0; i < wrappers.size(); i++) {
@@ -49,13 +49,13 @@ public class SetupProxyGroup {
                         wrappers.remove(wrappers.get(i));
                     }
                 }
-                if (wrappers.size() == 0) {
+                if (wrappers.isEmpty()) {
                     return;
                 }
 
                 ProxyGroupMode proxyGroupMode = null;
 
-                for (ProxyGroupMode proxyGroup : ProxyGroupMode.values()) {
+                for (final ProxyGroupMode proxyGroup : ProxyGroupMode.values()) {
                     if (proxyGroup.name().equalsIgnoreCase(data.getString("mode").toUpperCase())) {
                         proxyGroupMode = proxyGroup;
                     }
@@ -65,26 +65,26 @@ public class SetupProxyGroup {
                     proxyGroupMode = ProxyGroupMode.DYNAMIC;
                 }
 
-                ProxyGroup proxyGroup = new ProxyGroup(name,
-                                                       wrappers,
-                                                       new Template("default",
+                final ProxyGroup proxyGroup = new ProxyGroup(name,
+                                                             wrappers,
+                                                             new Template("default",
                                                                     TemplateResource.valueOf(data.getString("template")),
                                                                     null,
                                                                     new String[0],
                                                                     new ArrayList<>()),
-                                                       ProxyVersion.BUNGEECORD,
-                                                       data.getInt("startport"),
-                                                       data.getInt("startup"),
-                                                       data.getInt("memory"),
-                                                       new BasicProxyConfig(),
-                                                       proxyGroupMode,
-                                                       new WrappedMap());
+                                                             ProxyVersion.BUNGEECORD,
+                                                             data.getInt("startport"),
+                                                             data.getInt("startup"),
+                                                             data.getInt("memory"),
+                                                             new BasicProxyConfig(),
+                                                             proxyGroupMode,
+                                                             new WrappedMap());
 
                 CloudNet.getInstance().getConfig().createGroup(proxyGroup);
                 CloudNet.getInstance().getProxyGroups().put(proxyGroup.getName(), proxyGroup);
                 commandSender.sendMessage("The proxy group " + proxyGroup.getName() + " was created!");
                 CloudNet.getInstance().setupProxy(proxyGroup);
-                for (Wrapper wrapper : CloudNet.getInstance().toWrapperInstances(wrappers)) {
+                for (final Wrapper wrapper : CloudNet.getInstance().toWrapperInstances(wrappers)) {
                     wrapper.updateWrapper();
                 }
             }
@@ -94,7 +94,7 @@ public class SetupProxyGroup {
                                     SetupResponseType.NUMBER,
                                     new Catcher<Boolean, String>() {
                                         @Override
-                                        public Boolean doCatch(String key) {
+                                        public Boolean doCatch(final String key) {
                                             return NetworkUtils.checkIsNumber(key) && Integer.parseInt(key) > 64;
                                         }
                                     })).request(new SetupRequest("startport",
@@ -103,7 +103,7 @@ public class SetupProxyGroup {
                                                                  SetupResponseType.NUMBER,
                                                                  new Catcher<Boolean, String>() {
                                                                      @Override
-                                                                     public Boolean doCatch(String key) {
+                                                                     public Boolean doCatch(final String key) {
                                                                          return NetworkUtils.checkIsNumber(key) && Integer.parseInt(key) > 128 && Integer
                                                                              .parseInt(key) < 70000;
                                                                      }
@@ -118,7 +118,7 @@ public class SetupProxyGroup {
                                                                                                                               new Catcher<Boolean, String>() {
                                                                                                                                   @Override
                                                                                                                                   public Boolean doCatch(
-                                                                                                                                      String key) {
+                                                                                                                                      final String key) {
                                                                                                                                       return key
                                                                                                                                           .equalsIgnoreCase(
                                                                                                                                               "STATIC") || key
@@ -132,7 +132,7 @@ public class SetupProxyGroup {
                              SetupResponseType.STRING,
                              new Catcher<Boolean, String>() {
                                  @Override
-                                 public Boolean doCatch(String key) {
+                                 public Boolean doCatch(final String key) {
                                      return key.equals("MASTER") || key.equals("LOCAL");
                                  }
                              })).request(new SetupRequest("wrapper",
@@ -141,11 +141,11 @@ public class SetupProxyGroup {
                                                           SetupResponseType.STRING,
                                                           new Catcher<Boolean, String>() {
                                                               @Override
-                                                              public Boolean doCatch(String key) {
-                                                                  java.util.List<String> wrappers = (List<String>) CollectionWrapper.toCollection(
+                                                              public Boolean doCatch(final String key) {
+                                                                  final java.util.List<String> wrappers = (List<String>) CollectionWrapper.toCollection(
                                                                       key,
                                                                       ",");
-                                                                  if (wrappers.size() == 0) {
+                                                                  if (wrappers.isEmpty()) {
                                                                       return false;
                                                                   }
                                                                   for (short i = 0; i < wrappers.size(); i++) {
@@ -155,11 +155,7 @@ public class SetupProxyGroup {
                                                                           wrappers.remove(wrappers.get(i));
                                                                       }
                                                                   }
-                                                                  if (wrappers.size() == 0) {
-                                                                      return false;
-                                                                  } else {
-                                                                      return true;
-                                                                  }
+                                                                  return !wrappers.isEmpty();
                                                               }
                                                           }));
         setup.start(CloudNet.getLogger().getReader());

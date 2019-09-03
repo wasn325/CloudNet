@@ -48,7 +48,7 @@ import java.util.Map;
 
 public final class CloudNetWrapper implements Executable, ShutdownOnCentral {
 
-    public static volatile boolean RUNNING = false;
+    public static volatile boolean RUNNING;
 
     private static CloudNetWrapper instance;
 
@@ -69,9 +69,11 @@ public final class CloudNetWrapper implements Executable, ShutdownOnCentral {
     private SimpledUser simpledUser;
     //Sytem meta
     private int maxMemory;
-    private boolean canDeployed = false;
+    private boolean canDeployed;
 
-    public CloudNetWrapper(OptionSet optionSet, CloudNetWrapperConfig cloudNetWrapperConfig, CloudLogger cloudNetLogging) throws Exception {
+    public CloudNetWrapper(final OptionSet optionSet,
+                           final CloudNetWrapperConfig cloudNetWrapperConfig,
+                           final CloudLogger cloudNetLogging) throws Exception {
 
         if (instance == null) {
             instance = this;
@@ -85,13 +87,13 @@ public final class CloudNetWrapper implements Executable, ShutdownOnCentral {
             public void run() {
                 try {
                     onShutdownCentral();
-                } catch (Exception e) {
+                } catch (final Exception e) {
                     e.printStackTrace();
                 }
             }
         });
 
-        String key = NetworkUtils.readWrapperKey();
+        final String key = NetworkUtils.readWrapperKey();
 
         if (key == null) {
             System.out.println("Please copy the WRAPPER_KEY.cnd into the root directory of the CloudNet-Wrapper for authentication!");
@@ -123,11 +125,11 @@ public final class CloudNetWrapper implements Executable, ShutdownOnCentral {
             serverProcessQueue.setRunning(false);
         }
 
-        for (GameServer gameServer : servers.values()) {
+        for (final GameServer gameServer : servers.values()) {
             gameServer.shutdown();
         }
 
-        for (BungeeCord gameServer : proxys.values()) {
+        for (final BungeeCord gameServer : proxys.values()) {
             gameServer.shutdown();
         }
 
@@ -171,12 +173,12 @@ public final class CloudNetWrapper implements Executable, ShutdownOnCentral {
             new SetupSpigotVersion().accept(cloudNetLogging.getReader());
         }
 
-        Thread thread = new Thread(scheduler);
+        final Thread thread = new Thread(scheduler);
         thread.setPriority(Thread.MIN_PRIORITY);
         thread.setDaemon(true);
         thread.start();
 
-        Thread processQueueThread = new Thread(serverProcessQueue);
+        final Thread processQueueThread = new Thread(serverProcessQueue);
         processQueueThread.setPriority(Thread.MIN_PRIORITY);
         processQueueThread.setDaemon(true);
         processQueueThread.start();
@@ -229,8 +231,8 @@ public final class CloudNetWrapper implements Executable, ShutdownOnCentral {
         //Server Handlers
         {
             networkConnection.sendPacket(new PacketOutSetReadyWrapper(true));
-            IWrapperHandler iWrapperHandler = new StopTimeHandler();
-            IWrapperHandler readConsoleLogWrapperHandler = new ReadConsoleLogHandler();
+            final IWrapperHandler iWrapperHandler = new StopTimeHandler();
+            final IWrapperHandler readConsoleLogWrapperHandler = new ReadConsoleLogHandler();
 
             scheduler.runTaskRepeatSync(iWrapperHandler.toExecutor(), 0, iWrapperHandler.getTicks());
             scheduler.runTaskRepeatSync(readConsoleLogWrapperHandler.toExecutor(), 0, readConsoleLogWrapperHandler.getTicks());
@@ -245,7 +247,7 @@ public final class CloudNetWrapper implements Executable, ShutdownOnCentral {
 
         cloudNetLogging.getHandler().add(new ICloudLoggerHandler() {
             @Override
-            public void handleConsole(String input) {
+            public void handleConsole(final String input) {
                 if (networkConnection.isConnected()) {
                     networkConnection.sendPacket(new PacketOutWrapperScreen(input));
                 }
@@ -263,7 +265,7 @@ public final class CloudNetWrapper implements Executable, ShutdownOnCentral {
             return;
         }
 
-        String version = webClient.getNewstVersion();
+        final String version = webClient.getNewstVersion();
 
         if (version != null) {
             if (!version.equals(CloudNetWrapper.class.getPackage().getImplementationVersion())) {
@@ -305,15 +307,15 @@ public final class CloudNetWrapper implements Executable, ShutdownOnCentral {
             serverProcessQueue.setRunning(false);
         }
 
-        for (GameServer gameServer : servers.values()) {
+        for (final GameServer gameServer : servers.values()) {
             gameServer.shutdown();
         }
 
-        for (BungeeCord gameServer : proxys.values()) {
+        for (final BungeeCord gameServer : proxys.values()) {
             gameServer.shutdown();
         }
 
-        for (CloudGameServer gameServer : cloudServers.values()) {
+        for (final CloudGameServer gameServer : cloudServers.values()) {
             gameServer.shutdown();
         }
 
@@ -332,11 +334,11 @@ public final class CloudNetWrapper implements Executable, ShutdownOnCentral {
 
     public int getUsedMemory() {
         int m = 0;
-        for (GameServer gameServer : servers.values()) {
+        for (final GameServer gameServer : servers.values()) {
             m = m + gameServer.getServerProcess().getMeta().getMemory();
         }
 
-        for (BungeeCord bungeeCord : proxys.values()) {
+        for (final BungeeCord bungeeCord : proxys.values()) {
             m = m + bungeeCord.getProxyProcessMeta().getMemory();
         }
 
@@ -379,7 +381,7 @@ public final class CloudNetWrapper implements Executable, ShutdownOnCentral {
         return this.serverProcessQueue;
     }
 
-    public void setServerProcessQueue(ServerProcessQueue serverProcessQueue) {
+    public void setServerProcessQueue(final ServerProcessQueue serverProcessQueue) {
         this.serverProcessQueue = serverProcessQueue;
     }
 
@@ -387,7 +389,7 @@ public final class CloudNetWrapper implements Executable, ShutdownOnCentral {
         return this.simpledUser;
     }
 
-    public void setSimpledUser(SimpledUser simpledUser) {
+    public void setSimpledUser(final SimpledUser simpledUser) {
         this.simpledUser = simpledUser;
     }
 
@@ -395,7 +397,7 @@ public final class CloudNetWrapper implements Executable, ShutdownOnCentral {
         return this.maxMemory;
     }
 
-    public void setMaxMemory(int maxMemory) {
+    public void setMaxMemory(final int maxMemory) {
         this.maxMemory = maxMemory;
     }
 

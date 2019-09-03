@@ -11,7 +11,7 @@ import de.dytanic.cloudnet.lib.map.Maps;
  */
 public final class HelpService {
 
-    private Maps.ArrayMap<String, ServiceDescription> descriptions = new Maps.ArrayMap<>();
+    private final Maps.ArrayMap<String, ServiceDescription> descriptions = new Maps.ArrayMap<>();
 
     /**
      * Print the help directly to {@link System#out}
@@ -22,10 +22,10 @@ public final class HelpService {
 
     @Override
     public String toString() {
-        StringBuilder stringBuilder = new StringBuilder("Help service of the Cloud:").append(Character.LINE_SEPARATOR);
+        final StringBuilder stringBuilder = new StringBuilder("Help service of the Cloud:").append(Character.LINE_SEPARATOR);
         descriptions.forEach((key, value) -> {
             stringBuilder.append(key).append(':').append(Character.LINE_SEPARATOR);
-            for (ServiceDescription description : value) {
+            for (final ServiceDescription description : value) {
                 stringBuilder.append("Usage: ")
                              .append(description.getUsage())
                              .append(Character.LINE_SEPARATOR)

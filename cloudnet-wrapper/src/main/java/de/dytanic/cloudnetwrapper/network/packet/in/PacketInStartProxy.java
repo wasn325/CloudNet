@@ -14,8 +14,8 @@ import de.dytanic.cloudnetwrapper.CloudNetWrapper;
 public final class PacketInStartProxy extends PacketInHandler {
 
     @Override
-    public void handleInput(Document data, PacketSender packetSender) {
-        ProxyProcessMeta proxyProcessMeta = data.getObject("proxyProcess", new TypeToken<ProxyProcessMeta>() {}.getType());
+    public void handleInput(final Document data, final PacketSender packetSender) {
+        final ProxyProcessMeta proxyProcessMeta = data.getObject("proxyProcess", new TypeToken<ProxyProcessMeta>() {}.getType());
 
         if (!data.contains("async")) {
             System.out.println("Proxy process is now in queue [" + proxyProcessMeta.getServiceId() + ']');

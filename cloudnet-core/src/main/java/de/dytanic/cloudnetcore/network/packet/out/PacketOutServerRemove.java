@@ -14,7 +14,7 @@ import de.dytanic.cloudnet.lib.utility.document.Document;
  */
 public class PacketOutServerRemove extends Packet {
 
-    public PacketOutServerRemove(ServerInfo removed) {
+    public PacketOutServerRemove(final ServerInfo removed) {
         super(PacketRC.SERVER_HANDLE + 4, new Document("serverInfo", removed));
     }
 

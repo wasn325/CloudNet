@@ -12,16 +12,16 @@ public class EventEntity<E extends Event> {
     /**
      * The event listener that is called for events of the class {@link #eventClazz}
      */
-    private IEventListener<E> eventListener;
+    private final IEventListener<E> eventListener;
 
-    private EventKey eventKey;
+    private final EventKey eventKey;
 
     /**
      * Subclass of {@link Event} this entity should listen to.
      */
-    private Class<? extends Event> eventClazz;
+    private final Class<? extends Event> eventClazz;
 
-    public EventEntity(IEventListener<E> eventListener, EventKey eventKey, Class<? extends Event> eventClazz) {
+    public EventEntity(final IEventListener<E> eventListener, final EventKey eventKey, final Class<? extends Event> eventClazz) {
         this.eventListener = eventListener;
         this.eventKey = eventKey;
         this.eventClazz = eventClazz;

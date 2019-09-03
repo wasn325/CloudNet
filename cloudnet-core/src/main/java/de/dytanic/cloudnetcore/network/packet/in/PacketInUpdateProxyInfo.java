@@ -22,7 +22,7 @@ public class PacketInUpdateProxyInfo extends PacketInHandler {
     private static final Type type = new TypeToken<ProxyInfo>() {}.getType();
 
     @Override
-    public void handleInput(Document data, PacketSender packetSender) {
+    public void handleInput(final Document data, final PacketSender packetSender) {
         if (packetSender instanceof ProxyServer) {
             ((ProxyServer) packetSender).setLastProxyInfo(((ProxyServer) packetSender).getProxyInfo());
             ((ProxyServer) packetSender).setProxyInfo(data.getObject("proxyInfo", type));

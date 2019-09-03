@@ -36,16 +36,17 @@ public class WebsiteDownloadService extends MethodWebHandlerAdapter {
     }
 
     @Override
-    public FullHttpResponse get(ChannelHandlerContext channelHandlerContext,
-                                QueryDecoder queryDecoder,
-                                PathProvider path,
-                                HttpRequest httpRequest) throws Exception {
+    public FullHttpResponse get(final ChannelHandlerContext channelHandlerContext,
+                                final QueryDecoder queryDecoder,
+                                final PathProvider path,
+                                final HttpRequest httpRequest) throws Exception {
         CloudNet.getLogger().debug("HTTP Request from " + channelHandlerContext.channel().remoteAddress());
 
-        FullHttpResponse fullHttpResponse = new DefaultFullHttpResponse(httpRequest.getProtocolVersion(), HttpResponseStatus.UNAUTHORIZED);
+        final FullHttpResponse fullHttpResponse = new DefaultFullHttpResponse(httpRequest.getProtocolVersion(),
+                                                                              HttpResponseStatus.UNAUTHORIZED);
         fullHttpResponse.headers().set("Content-Type", "application/json");
 
-        Document dataDocument = new Document("success", false).append("reason", new ArrayList<>()).append("response", new Document());
+        final Document dataDocument = new Document("success", false).append("reason", new ArrayList<>()).append("response", new Document());
         if (!httpRequest.headers().contains("-Xcloudnet-user") || (!httpRequest.headers()
                                                                                .contains("-Xcloudnet-token") && !httpRequest.headers()
                                                                                                                             .contains(
@@ -73,9 +74,9 @@ public class WebsiteDownloadService extends MethodWebHandlerAdapter {
         switch (httpRequest.headers().get("-Xmessage")) {
             case "plugin": {
                 fullHttpResponse.setStatus(HttpResponseStatus.OK);
-                Path path1 = Paths.get("local/plugins/" + httpRequest.headers().get("-Xvalue") + ".jar");
+                final Path path1 = Paths.get("local/plugins/" + httpRequest.headers().get("-Xvalue") + ".jar");
                 if (Files.exists(path1)) {
-                    byte[] value = Files.readAllBytes(path1);
+                    final byte[] value = Files.readAllBytes(path1);
                     fullHttpResponse.headers().set("content-disposition",
                                                    "attachment; filename = " + httpRequest.headers().get("-Xvalue") + ".jar");
                     fullHttpResponse.content().writeBytes(value);
@@ -88,24 +89,25 @@ public class WebsiteDownloadService extends MethodWebHandlerAdapter {
             break;
             case "template": {
                 fullHttpResponse.setStatus(HttpResponseStatus.OK);
-                Document document = Document.load(httpRequest.headers().get("-Xvalue"));
+                final Document document = Document.load(httpRequest.headers().get("-Xvalue"));
                 if (document.contains("template") && document.contains("group") && Files.exists(Paths.get("local/templates/" + document.getString(
                     "group") + NetworkUtils.SLASH_STRING + document.getString("template")))) {
-                    String x = "local/templates/" + document.getString("group") + NetworkUtils.SLASH_STRING + document.getString("template");
+                    final String x = "local/templates/" + document.getString("group") + NetworkUtils.SLASH_STRING + document.getString(
+                        "template");
 
-                    File directory = new File(x);
+                    final File directory = new File(x);
                     directory.mkdirs();
 
                     if (directory.list() != null && directory.list().length == 0) {
                         new File(x + "/plugins").mkdirs();
 
-                        try (FileWriter fileWriter = new FileWriter(new File(x + "/eula.txt"))) {
+                        try (final FileWriter fileWriter = new FileWriter(new File(x + "/eula.txt"))) {
                             fileWriter.write("eula=true");
                             fileWriter.flush();
                         }
                     }
 
-                    byte[] value = ZipConverter.convert(new Path[] {Paths.get(x)});
+                    final byte[] value = ZipConverter.convert(new Path[] {Paths.get(x)});
                     fullHttpResponse.headers().set("content-disposition",
                                                    "attachment; filename = " + document.getString("template") + ".zip");
                     fullHttpResponse.content().writeBytes(value);
@@ -118,13 +120,13 @@ public class WebsiteDownloadService extends MethodWebHandlerAdapter {
             break;
             case "custom": {
                 fullHttpResponse.setStatus(HttpResponseStatus.OK);
-                String server = httpRequest.headers().get("-Xvalue");
-                String x = "local/servers/" + server;
+                final String server = httpRequest.headers().get("-Xvalue");
+                final String x = "local/servers/" + server;
 
                 if (!Files.exists(Paths.get(x))) {
                     Files.createDirectories(Paths.get(x + "/plugins"));
                 }
-                byte[] value = ZipConverter.convert(new Path[] {Paths.get(x)});
+                final byte[] value = ZipConverter.convert(new Path[] {Paths.get(x)});
 
                 fullHttpResponse.headers().set("content-disposition", "attachment; filename = " + server + ".zip");
                 fullHttpResponse.content().writeBytes(value);

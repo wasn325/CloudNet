@@ -52,9 +52,9 @@ public final class MobSelector {
 
     private MobConfig mobConfig;
 
-    private Map<String, ServerInfo> servers = NetworkUtils.newConcurrentHashMap();
+    private final Map<String, ServerInfo> servers = NetworkUtils.newConcurrentHashMap();
 
-    public MobSelector(MobConfig mobConfig) {
+    public MobSelector(final MobConfig mobConfig) {
         instance = this;
         this.mobConfig = mobConfig;
     }
@@ -67,7 +67,7 @@ public final class MobSelector {
         return mobs;
     }
 
-    public void setMobs(Map<UUID, MobImpl> mobs) {
+    public void setMobs(final Map<UUID, MobImpl> mobs) {
         this.mobs = mobs;
     }
 
@@ -75,7 +75,7 @@ public final class MobSelector {
         return mobConfig;
     }
 
-    public void setMobConfig(MobConfig mobConfig) {
+    public void setMobConfig(final MobConfig mobConfig) {
         this.mobConfig = mobConfig;
     }
 
@@ -93,14 +93,14 @@ public final class MobSelector {
                                     MapWrapper.collectionCatcherHashMap(CloudAPI.getInstance().getServers(),
                                                                         new Catcher<String, ServerInfo>() {
                                                                             @Override
-                                                                            public String doCatch(ServerInfo key) {
+                                                                            public String doCatch(final ServerInfo key) {
                                                                                 return key.getServiceId().getServerId();
                                                                             }
                                                                         }));
                 Bukkit.getScheduler().runTaskAsynchronously(CloudServer.getInstance().getPlugin(), new Runnable() {
                     @Override
                     public void run() {
-                        for (ServerInfo serverInfo : servers.values()) {
+                        for (final ServerInfo serverInfo : servers.values()) {
                             handleUpdate(serverInfo);
                         }
                     }
@@ -113,7 +113,7 @@ public final class MobSelector {
                 Bukkit.getPluginManager().registerEvents((Listener) ReflectionUtil.forName(
                     "de.dytanic.cloudnet.bridge.internal.listener.v18_112.ArmorStandListener").newInstance(),
                                                          CloudServer.getInstance().getPlugin());
-            } catch (InstantiationException | IllegalAccessException e) {
+            } catch (final InstantiationException | IllegalAccessException e) {
                 e.printStackTrace();
             }
         }
@@ -121,12 +121,12 @@ public final class MobSelector {
         Bukkit.getPluginManager().registerEvents(new ListenrImpl(), CloudServer.getInstance().getPlugin());
     }
 
-    public void handleUpdate(ServerInfo serverInfo) {
+    public void handleUpdate(final ServerInfo serverInfo) {
         if (serverInfo.getServiceId().getGroup() == null) {
             return;
         }
 
-        for (MobImpl mob : this.mobs.values()) {
+        for (final MobImpl mob : this.mobs.values()) {
             if (mob.getMob().getTargetGroup().equals(serverInfo.getServiceId().getGroup())) {
                 mob.getEntity().setTicksLived(Integer.MAX_VALUE);
                 updateCustom(mob.getMob(), mob.getDisplayMessage());
@@ -134,13 +134,13 @@ public final class MobSelector {
 
                 mob.getServerPosition().clear();
                 filter(serverInfo.getServiceId().getGroup());
-                Collection<ServerInfo> serverInfos = filter(serverInfo.getServiceId().getGroup());
+                final Collection<ServerInfo> serverInfos = filter(serverInfo.getServiceId().getGroup());
 
                 final Value<Integer> index = new Value<>(0);
 
-                for (ServerInfo server : serverInfos) {
-                    if (server.isOnline() && server.getServerState().equals(ServerState.LOBBY) && !server.getServerConfig()
-                                                                                                         .isHideServer() && !server.getServerConfig()
+                for (final ServerInfo server : serverInfos) {
+                    if (server.isOnline() && server.getServerState() == ServerState.LOBBY && !server.getServerConfig().isHideServer() &&
+                        !server.getServerConfig()
                                                                                                                                    .getProperties()
                                                                                                                                    .contains(
                                                                                                                                        NetworkUtils.DEV_PROPERTY)) {
@@ -174,8 +174,8 @@ public final class MobSelector {
         }
     }
 
-    public void updateCustom(ServerMob serverMob, Object armorStand) {
-        Return<Integer, Integer> x = getOnlineCount(serverMob.getTargetGroup());
+    public void updateCustom(final ServerMob serverMob, final Object armorStand) {
+        final Return<Integer, Integer> x = getOnlineCount(serverMob.getTargetGroup());
         if (armorStand != null) {
             try {
 
@@ -188,35 +188,36 @@ public final class MobSelector {
                                                                                                         serverMob.getTargetGroup())
                                                                                                .replace("%group_online%",
                                                                                                         x.getFirst() + NetworkUtils.EMPTY_STRING));
-            } catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
+            } catch (final IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
+                e.printStackTrace();
             }
         }
     }
 
-    private Collection<ServerInfo> filter(String group) {
+    private Collection<ServerInfo> filter(final String group) {
         return CollectionWrapper.filterMany(servers.values(), new Acceptable<ServerInfo>() {
             @Override
-            public boolean isAccepted(ServerInfo value) {
+            public boolean isAccepted(final ServerInfo value) {
                 return value.getServiceId().getGroup().equals(group);
             }
         });
     }
 
-    private ItemStack transform(MobItemLayout mobItemLayout, ServerInfo serverInfo) {
-        Material material = ItemStackBuilder.getMaterialIgnoreVersion(mobItemLayout.getItemName(), mobItemLayout.getItemId());
+    private ItemStack transform(final MobItemLayout mobItemLayout, final ServerInfo serverInfo) {
+        final Material material = ItemStackBuilder.getMaterialIgnoreVersion(mobItemLayout.getItemName(), mobItemLayout.getItemId());
         return material == null ? null : ItemStackBuilder.builder(material, 1, mobItemLayout.getSubId()).lore(new ArrayList<>(
             CollectionWrapper.transform(mobItemLayout.getLore(), new Catcher<String, String>() {
                 @Override
-                public String doCatch(String key) {
+                public String doCatch(final String key) {
                     return initPatterns(ChatColor.translateAlternateColorCodes('&', key), serverInfo);
                 }
             }))).displayName(initPatterns(ChatColor.translateAlternateColorCodes('&', mobItemLayout.getDisplay()), serverInfo)).build();
     }
 
-    public Return<Integer, Integer> getOnlineCount(String group) {
+    public Return<Integer, Integer> getOnlineCount(final String group) {
         int atomicInteger = 0;
         int atomicInteger1 = 0;
-        for (ServerInfo serverInfo : this.servers.values()) {
+        for (final ServerInfo serverInfo : this.servers.values()) {
             if (serverInfo.getServiceId().getGroup().equalsIgnoreCase(group)) {
                 atomicInteger = atomicInteger + serverInfo.getOnlineCount();
                 atomicInteger1 = atomicInteger1 + serverInfo.getMaxPlayers();
@@ -225,7 +226,7 @@ public final class MobSelector {
         return new Return<>(atomicInteger, atomicInteger1);
     }
 
-    private String initPatterns(String x, ServerInfo serverInfo) {
+    private String initPatterns(final String x, final ServerInfo serverInfo) {
         return x.replace("%server%", serverInfo.getServiceId().getServerId())
                 .replace("%id%",
                          serverInfo.getServiceId()
@@ -245,15 +246,16 @@ public final class MobSelector {
 
     @Deprecated
     public void shutdown() {
-        for (MobImpl mobImpl : this.mobs.values()) {
+        for (final MobImpl mobImpl : this.mobs.values()) {
             if (mobImpl.displayMessage != null) {
                 try {
-                    Entity entity = (Entity) mobImpl.displayMessage;
+                    final Entity entity = (Entity) mobImpl.displayMessage;
                     if (entity.getPassenger() != null) {
                         entity.getPassenger().remove();
                     }
                     mobImpl.displayMessage.getClass().getMethod("remove").invoke(mobImpl.displayMessage);
-                } catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
+                } catch (final IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
+                    e.printStackTrace();
                 }
             }
             mobImpl.entity.remove();
@@ -262,7 +264,7 @@ public final class MobSelector {
         mobs.clear();
     }
 
-    public Location toLocation(MobPosition position) {
+    public Location toLocation(final MobPosition position) {
         return new Location(Bukkit.getWorld(position.getWorld()),
                             position.getX(),
                             position.getY(),
@@ -271,7 +273,7 @@ public final class MobSelector {
                             position.getPitch());
     }
 
-    public MobPosition toPosition(String group, Location location) {
+    public MobPosition toPosition(final String group, final Location location) {
         return new MobPosition(group,
                                location.getWorld().getName(),
                                location.getX(),
@@ -281,58 +283,55 @@ public final class MobSelector {
                                location.getPitch());
     }
 
-    public Inventory create(MobConfig mobConfig, ServerMob mob) {
-        Inventory inventory = Bukkit.createInventory(null,
-                                                     mobConfig.getInventorySize(),
-                                                     ChatColor.translateAlternateColorCodes('&',
+    public Inventory create(final MobConfig mobConfig, final ServerMob mob) {
+        final Inventory inventory = Bukkit.createInventory(null, mobConfig.getInventorySize(), ChatColor.translateAlternateColorCodes('&',
                                                                                             mob.getDisplay() + NetworkUtils.SPACE_STRING));
 
-        for (Map.Entry<Integer, MobItemLayout> mobItem : mobConfig.getDefaultItemInventory().entrySet()) {
+        for (final Map.Entry<Integer, MobItemLayout> mobItem : mobConfig.getDefaultItemInventory().entrySet()) {
             inventory.setItem(mobItem.getKey() - 1, transform(mobItem.getValue()));
         }
         return inventory;
     }
 
-    private ItemStack transform(MobItemLayout mobItemLayout) {
-        Material material = ItemStackBuilder.getMaterialIgnoreVersion(mobItemLayout.getItemName(), mobItemLayout.getItemId());
+    private ItemStack transform(final MobItemLayout mobItemLayout) {
+        final Material material = ItemStackBuilder.getMaterialIgnoreVersion(mobItemLayout.getItemName(), mobItemLayout.getItemId());
         return material == null ? null : ItemStackBuilder.builder(material, 1, mobItemLayout.getSubId()).lore(new ArrayList<>(
             CollectionWrapper.transform(mobItemLayout.getLore(), new Catcher<String, String>() {
                 @Override
-                public String doCatch(String key) {
+                public String doCatch(final String key) {
                     return ChatColor.translateAlternateColorCodes('&', key);
                 }
             }))).displayName(ChatColor.translateAlternateColorCodes('&', mobItemLayout.getDisplay())).build();
     }
 
-    private List<ServerInfo> getServers(String group) {
-        List<ServerInfo> groups = new ArrayList<>(CollectionWrapper.filterMany(this.servers.values(), new Acceptable<ServerInfo>() {
+    private List<ServerInfo> getServers(final String group) {
+
+        return new ArrayList<>(CollectionWrapper.filterMany(this.servers.values(), new Acceptable<ServerInfo>() {
             @Override
-            public boolean isAccepted(ServerInfo serverInfo) {
+            public boolean isAccepted(final ServerInfo serverInfo) {
                 return serverInfo.getServiceId().getGroup() != null && serverInfo.getServiceId().getGroup().equalsIgnoreCase(group);
             }
         }));
-
-        return groups;
     }
 
     @Deprecated
-    public void unstableEntity(Entity entity) {
+    public void unstableEntity(final Entity entity) {
         try {
-            Class<?> nbt = ReflectionUtil.reflectNMSClazz(".NBTTagCompound");
-            Class<?> entityClazz = ReflectionUtil.reflectNMSClazz(".Entity");
-            Object object = nbt.newInstance();
+            final Class<?> nbt = ReflectionUtil.reflectNMSClazz(".NBTTagCompound");
+            final Class<?> entityClazz = ReflectionUtil.reflectNMSClazz(".Entity");
+            final Object object = nbt.newInstance();
 
-            Object nmsEntity = entity.getClass().getMethod("getHandle", new Class[] {}).invoke(entity);
+            final Object nmsEntity = entity.getClass().getMethod("getHandle", new Class[] {}).invoke(entity);
             try {
                 entityClazz.getMethod("e", nbt).invoke(nmsEntity, object);
-            } catch (Exception ex) {
+            } catch (final Exception ex) {
                 entityClazz.getMethod("save", nbt).invoke(nmsEntity, object);
             }
 
             object.getClass().getMethod("setInt", String.class, int.class).invoke(object, "NoAI", 1);
             object.getClass().getMethod("setInt", String.class, int.class).invoke(object, "Silent", 1);
             entityClazz.getMethod("f", nbt).invoke(nmsEntity, object);
-        } catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
+        } catch (final InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
             e.printStackTrace();
             System.out.println("[CLOUD] Disabling NoAI and Silent support for " + entity.getEntityId());
             ((LivingEntity) entity).addPotionEffect(new PotionEffect(PotionEffectType.SLOW, Integer.MAX_VALUE, 100));
@@ -342,16 +341,16 @@ public final class MobSelector {
     public Collection<Inventory> inventories() {
         return CollectionWrapper.getCollection(this.mobs, new Catcher<Inventory, MobImpl>() {
             @Override
-            public Inventory doCatch(MobImpl key) {
+            public Inventory doCatch(final MobImpl key) {
                 return key.getInventory();
             }
         });
     }
 
-    public MobImpl find(Inventory inventory) {
+    public MobImpl find(final Inventory inventory) {
         return CollectionWrapper.filter(this.mobs.values(), new Acceptable<MobImpl>() {
             @Override
-            public boolean isAccepted(MobImpl value) {
+            public boolean isAccepted(final MobImpl value) {
                 return value.getInventory().equals(inventory);
             }
         });
@@ -372,12 +371,12 @@ public final class MobSelector {
 
         private Object displayMessage;
 
-        public MobImpl(UUID uniqueId,
-                       ServerMob mob,
-                       Entity entity,
-                       Inventory inventory,
-                       Map<Integer, String> serverPosition,
-                       Object displayMessage) {
+        public MobImpl(final UUID uniqueId,
+                       final ServerMob mob,
+                       final Entity entity,
+                       final Inventory inventory,
+                       final Map<Integer, String> serverPosition,
+                       final Object displayMessage) {
             this.uniqueId = uniqueId;
             this.mob = mob;
             this.entity = entity;
@@ -390,7 +389,7 @@ public final class MobSelector {
             return uniqueId;
         }
 
-        public void setUniqueId(UUID uniqueId) {
+        public void setUniqueId(final UUID uniqueId) {
             this.uniqueId = uniqueId;
         }
 
@@ -398,7 +397,7 @@ public final class MobSelector {
             return entity;
         }
 
-        public void setEntity(Entity entity) {
+        public void setEntity(final Entity entity) {
             this.entity = entity;
         }
 
@@ -406,7 +405,7 @@ public final class MobSelector {
             return inventory;
         }
 
-        public void setInventory(Inventory inventory) {
+        public void setInventory(final Inventory inventory) {
             this.inventory = inventory;
         }
 
@@ -414,7 +413,7 @@ public final class MobSelector {
             return serverPosition;
         }
 
-        public void setServerPosition(Map<Integer, String> serverPosition) {
+        public void setServerPosition(final Map<Integer, String> serverPosition) {
             this.serverPosition = serverPosition;
         }
 
@@ -422,7 +421,7 @@ public final class MobSelector {
             return displayMessage;
         }
 
-        public void setDisplayMessage(Object displayMessage) {
+        public void setDisplayMessage(final Object displayMessage) {
             this.displayMessage = displayMessage;
         }
 
@@ -430,7 +429,7 @@ public final class MobSelector {
             return mob;
         }
 
-        public void setMob(ServerMob mob) {
+        public void setMob(final ServerMob mob) {
             this.mob = mob;
         }
     }
@@ -438,19 +437,19 @@ public final class MobSelector {
     private class NetworkHandlerAdapterImplx extends NetworkHandlerAdapter {
 
         @Override
-        public void onServerAdd(ServerInfo serverInfo) {
+        public void onServerAdd(final ServerInfo serverInfo) {
             servers.put(serverInfo.getServiceId().getServerId(), serverInfo);
             handleUpdate(serverInfo);
         }
 
         @Override
-        public void onServerInfoUpdate(ServerInfo serverInfo) {
+        public void onServerInfoUpdate(final ServerInfo serverInfo) {
             servers.put(serverInfo.getServiceId().getServerId(), serverInfo);
             handleUpdate(serverInfo);
         }
 
         @Override
-        public void onServerRemove(ServerInfo serverInfo) {
+        public void onServerRemove(final ServerInfo serverInfo) {
             servers.remove(serverInfo.getServiceId().getServerId());
             handleUpdate(serverInfo);
         }
@@ -459,10 +458,10 @@ public final class MobSelector {
     private class ListenrImpl implements Listener {
 
         @EventHandler
-        public void handleRightClick(PlayerInteractEntityEvent e) {
-            MobImpl mobImpl = CollectionWrapper.filter(mobs.values(), new Acceptable<MobImpl>() {
+        public void handleRightClick(final PlayerInteractEntityEvent e) {
+            final MobImpl mobImpl = CollectionWrapper.filter(mobs.values(), new Acceptable<MobImpl>() {
                 @Override
-                public boolean isAccepted(MobImpl value) {
+                public boolean isAccepted(final MobImpl value) {
                     return value.getEntity().getUniqueId().equals(e.getRightClicked().getUniqueId());
                 }
             });
@@ -471,12 +470,12 @@ public final class MobSelector {
                 e.setCancelled(true);
                 if (!CloudAPI.getInstance().getServerGroupData(mobImpl.getMob().getTargetGroup()).isMaintenance()) {
                     if (mobImpl.getMob().getAutoJoin() != null && mobImpl.getMob().getAutoJoin()) {
-                        ByteArrayDataOutput byteArrayDataOutput = ByteStreams.newDataOutput();
+                        final ByteArrayDataOutput byteArrayDataOutput = ByteStreams.newDataOutput();
                         byteArrayDataOutput.writeUTF("Connect");
 
-                        List<ServerInfo> serverInfos = getServers(mobImpl.getMob().getTargetGroup());
+                        final List<ServerInfo> serverInfos = getServers(mobImpl.getMob().getTargetGroup());
 
-                        for (ServerInfo serverInfo : serverInfos) {
+                        for (final ServerInfo serverInfo : serverInfos) {
                             if (serverInfo.getOnlineCount() < serverInfo.getMaxPlayers() && serverInfo.getServerState()
                                                                                                       .equals(ServerState.LOBBY)) {
                                 byteArrayDataOutput.writeUTF(serverInfo.getServiceId().getServerId());
@@ -500,10 +499,10 @@ public final class MobSelector {
         }
 
         @EventHandler
-        public void entityDamage(EntityDamageEvent e) {
-            MobImpl mob = CollectionWrapper.filter(mobs.values(), new Acceptable<MobImpl>() {
+        public void entityDamage(final EntityDamageEvent e) {
+            final MobImpl mob = CollectionWrapper.filter(mobs.values(), new Acceptable<MobImpl>() {
                 @Override
-                public boolean isAccepted(MobImpl value) {
+                public boolean isAccepted(final MobImpl value) {
                     return e.getEntity().getUniqueId().equals(value.getEntity().getUniqueId());
                 }
             });
@@ -514,7 +513,7 @@ public final class MobSelector {
         }
 
         @EventHandler
-        public void handleInventoryClick(InventoryClickEvent e) {
+        public void handleInventoryClick(final InventoryClickEvent e) {
             if (!(e.getWhoClicked() instanceof Player)) {
                 return;
             }
@@ -523,12 +522,12 @@ public final class MobSelector {
                 e.setCancelled(true);
                 if (ItemStackBuilder.getMaterialIgnoreVersion(mobConfig.getItemLayout().getItemName(),
                                                               mobConfig.getItemLayout().getItemId()) == e.getCurrentItem().getType()) {
-                    MobImpl mob = find(e.getInventory());
+                    final MobImpl mob = find(e.getInventory());
                     if (mob.getServerPosition().containsKey(e.getSlot())) {
                         if (CloudAPI.getInstance().getServerId().equalsIgnoreCase(mob.getServerPosition().get(e.getSlot()))) {
                             return;
                         }
-                        ByteArrayDataOutput byteArrayDataOutput = ByteStreams.newDataOutput();
+                        final ByteArrayDataOutput byteArrayDataOutput = ByteStreams.newDataOutput();
                         byteArrayDataOutput.writeUTF("Connect");
                         byteArrayDataOutput.writeUTF(mob.getServerPosition().get(e.getSlot()));
                         ((Player) e.getWhoClicked()).sendPluginMessage(CloudServer.getInstance().getPlugin(),
@@ -540,15 +539,15 @@ public final class MobSelector {
         }
 
         @EventHandler
-        public void onSave(WorldSaveEvent e) {
-            Map<UUID, ServerMob> filteredMobs = MapWrapper.transform(MobSelector.this.mobs, new Catcher<UUID, UUID>() {
+        public void onSave(final WorldSaveEvent e) {
+            final Map<UUID, ServerMob> filteredMobs = MapWrapper.transform(MobSelector.this.mobs, new Catcher<UUID, UUID>() {
                 @Override
-                public UUID doCatch(UUID key) {
+                public UUID doCatch(final UUID key) {
                     return key;
                 }
             }, new Catcher<ServerMob, MobImpl>() {
                 @Override
-                public ServerMob doCatch(MobImpl key) {
+                public ServerMob doCatch(final MobImpl key) {
                     return key.getMob();
                 }
             });
@@ -561,30 +560,31 @@ public final class MobSelector {
                 public void run() {
                     MobSelector.getInstance().setMobs(MapWrapper.transform(filteredMobs, new Catcher<UUID, UUID>() {
                         @Override
-                        public UUID doCatch(UUID key) {
+                        public UUID doCatch(final UUID key) {
                             return key;
                         }
                     }, new Catcher<MobImpl, ServerMob>() {
                         @Override
-                        public MobImpl doCatch(ServerMob key) {
+                        public MobImpl doCatch(final ServerMob key) {
                             MobSelector.getInstance().toLocation(key.getPosition()).getChunk().load();
-                            Entity entity = MobSelector.getInstance()
-                                                       .toLocation(key.getPosition())
-                                                       .getWorld()
-                                                       .spawnEntity(MobSelector.getInstance().toLocation(key.getPosition()),
-                                                                    EntityType.valueOf(key.getType()));
-                            Object armorStand = ReflectionUtil.armorstandCreation(MobSelector.getInstance().toLocation(key.getPosition()),
-                                                                                  entity,
-                                                                                  key);
+                            final Entity entity = MobSelector.getInstance().toLocation(key.getPosition()).getWorld().spawnEntity(MobSelector
+                                                                                                                                     .getInstance()
+                                                                                                                                     .toLocation(
+                                                                                                                                         key.getPosition()),
+                                                                                                                                 EntityType.valueOf(key.getType()));
+                            final Object armorStand = ReflectionUtil.armorstandCreation(MobSelector.getInstance()
+                                                                                                   .toLocation(key.getPosition()),
+                                                                                        entity,
+                                                                                        key);
 
                             if (armorStand != null) {
                                 MobSelector.getInstance().updateCustom(key, armorStand);
-                                Entity armor = (Entity) armorStand;
+                                final Entity armor = (Entity) armorStand;
                                 if (armor.getPassenger() == null && key.getItemId() != null) {
-                                    Material material = ItemStackBuilder.getMaterialIgnoreVersion(key.getItemName(), key.getItemId());
+                                    final Material material = ItemStackBuilder.getMaterialIgnoreVersion(key.getItemName(), key.getItemId());
                                     if (material != null) {
-                                        Item item = Bukkit.getWorld(key.getPosition().getWorld()).dropItem(armor.getLocation(),
-                                                                                                           new ItemStack(material));
+                                        final Item item = Bukkit.getWorld(key.getPosition().getWorld()).dropItem(armor.getLocation(),
+                                                                                                                 new ItemStack(material));
                                         item.setPickupDelay(Integer.MAX_VALUE);
                                         item.setTicksLived(Integer.MAX_VALUE);
                                         armor.setPassenger(item);
@@ -599,12 +599,12 @@ public final class MobSelector {
                             MobSelector.getInstance().unstableEntity(entity);
                             entity.setCustomNameVisible(true);
                             entity.setCustomName(ChatColor.translateAlternateColorCodes('&', key.getDisplay()));
-                            MobImpl mob = new MobImpl(key.getUniqueId(),
-                                                      key,
-                                                      entity,
-                                                      MobSelector.getInstance().create(mobConfig, key),
-                                                      new HashMap<>(),
-                                                      armorStand);
+                            final MobImpl mob = new MobImpl(key.getUniqueId(),
+                                                            key,
+                                                            entity,
+                                                            MobSelector.getInstance().create(mobConfig, key),
+                                                            new HashMap<>(),
+                                                            armorStand);
                             Bukkit.getPluginManager().callEvent(new BukkitMobInitEvent(mob));
                             return mob;
                         }
@@ -612,7 +612,7 @@ public final class MobSelector {
                     Bukkit.getScheduler().runTaskAsynchronously(CloudServer.getInstance().getPlugin(), new Runnable() {
                         @Override
                         public void run() {
-                            for (ServerInfo serverInfo : getServers().values()) {
+                            for (final ServerInfo serverInfo : getServers().values()) {
                                 MobSelector.getInstance().handleUpdate(serverInfo);
                             }
                         }

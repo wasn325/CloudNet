@@ -12,11 +12,11 @@ import org.bukkit.event.HandlerList;
  */
 public class BukkitMobUpdateEvent extends BukkitCloudEvent {
 
-    private static HandlerList handlerList = new HandlerList();
+    private static final HandlerList handlerList = new HandlerList();
 
-    private ServerMob serverMob;
+    private final ServerMob serverMob;
 
-    public BukkitMobUpdateEvent(ServerMob serverMob) {
+    public BukkitMobUpdateEvent(final ServerMob serverMob) {
         this.serverMob = serverMob;
     }
 

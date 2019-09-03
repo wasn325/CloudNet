@@ -35,20 +35,21 @@ public class WebsiteDeployment extends MethodWebHandlerAdapter {
     }
 
     @Override
-    public FullHttpResponse post(ChannelHandlerContext channelHandlerContext,
-                                 QueryDecoder queryDecoder,
-                                 PathProvider path,
-                                 HttpRequest httpRequest) throws Exception {
+    public FullHttpResponse post(final ChannelHandlerContext channelHandlerContext,
+                                 final QueryDecoder queryDecoder,
+                                 final PathProvider path,
+                                 final HttpRequest httpRequest) throws Exception {
         CloudNet.getLogger().debug("HTTP Request from " + channelHandlerContext.channel().remoteAddress());
 
         if (!(httpRequest instanceof FullHttpRequest)) {
             return null;
         }
 
-        FullHttpRequest fullHttpRequest = ((FullHttpRequest) httpRequest);
-        FullHttpResponse fullHttpResponse = new DefaultFullHttpResponse(httpRequest.getProtocolVersion(), HttpResponseStatus.UNAUTHORIZED);
+        final FullHttpRequest fullHttpRequest = ((FullHttpRequest) httpRequest);
+        final FullHttpResponse fullHttpResponse = new DefaultFullHttpResponse(httpRequest.getProtocolVersion(),
+                                                                              HttpResponseStatus.UNAUTHORIZED);
 
-        Document dataDocument = new Document("success", false).append("reason", new ArrayList<>()).append("response", new Document());
+        final Document dataDocument = new Document("success", false).append("reason", new ArrayList<>()).append("response", new Document());
         if (!httpRequest.headers().contains("-Xcloudnet-user") || (!httpRequest.headers()
                                                                                .contains("-Xcloudnet-token") && !httpRequest.headers()
                                                                                                                             .contains(
@@ -74,12 +75,12 @@ public class WebsiteDeployment extends MethodWebHandlerAdapter {
         switch (httpRequest.headers().get("-Xmessage").toLowerCase()) {
             case "plugin": {
                 fullHttpResponse.setStatus(HttpResponseStatus.OK);
-                String pluginName = httpRequest.headers().get("-Xvalue");
-                File file = new File(new StringBuilder("local/plugins/").append(pluginName).append(".jar").substring(0));
+                final String pluginName = httpRequest.headers().get("-Xvalue");
+                final File file = new File(new StringBuilder("local/plugins/").append(pluginName).append(".jar").substring(0));
                 if (file.getParentFile().mkdirs()) {
                 }
                 file.createNewFile();
-                try (FileOutputStream fileOutputStream = new FileOutputStream(file)) {
+                try (final FileOutputStream fileOutputStream = new FileOutputStream(file)) {
                     fileOutputStream.write(fullHttpRequest.content().array());
                 }
                 System.out.println("Plugin deployed [\"" + pluginName + "\"]");
@@ -87,23 +88,24 @@ public class WebsiteDeployment extends MethodWebHandlerAdapter {
             break;
             case "template": {
                 fullHttpResponse.setStatus(HttpResponseStatus.OK);
-                Document document = Document.load(httpRequest.headers().get("-Xvalue"));
+                final Document document = Document.load(httpRequest.headers().get("-Xvalue"));
                 if (document.contains("template") && document.contains("group")) {
-                    File file = new File("local/templates/" + document.getString("group") + NetworkUtils.SLASH_STRING + document.getString(
+                    final File file = new File(
+                        "local/templates/" + document.getString("group") + NetworkUtils.SLASH_STRING + document.getString(
                         "template") + NetworkUtils.SLASH_STRING + document.getString("template") + ".zip");
 
                     file.getParentFile().mkdirs();
                     file.createNewFile();
 
-                    try (FileOutputStream fileOutputStream = new FileOutputStream(file)) {
+                    try (final FileOutputStream fileOutputStream = new FileOutputStream(file)) {
                         fileOutputStream.write(fullHttpRequest.content().readBytes(fullHttpRequest.content().readableBytes()).array());
                         fileOutputStream.flush();
                     }
 
-                    ZipFile zipFile = new ZipFile(file);
-                    StringBuilder stringBuilder = new StringBuilder("local/templates/").append(document.getString("group")).append(
+                    final ZipFile zipFile = new ZipFile(file);
+                    final StringBuilder stringBuilder = new StringBuilder("local/templates/").append(document.getString("group")).append(
                         NetworkUtils.SLASH_STRING).append(document.getString("template"));
-                    for (ZipEntry zipEntry : Collections.list(zipFile.entries())) {
+                    for (final ZipEntry zipEntry : Collections.list(zipFile.entries())) {
                         extractEntry(zipFile, zipEntry, stringBuilder.toString());
                     }
                     file.delete();
@@ -114,19 +116,19 @@ public class WebsiteDeployment extends MethodWebHandlerAdapter {
             break;
             case "custom": {
                 fullHttpResponse.setStatus(HttpResponseStatus.OK);
-                String payload = fullHttpRequest.headers().get("-Xvalue");
-                File file = new File("local/servers/" + payload + "/payload.zip");
+                final String payload = fullHttpRequest.headers().get("-Xvalue");
+                final File file = new File("local/servers/" + payload + "/payload.zip");
 
                 file.getParentFile().mkdirs();
                 file.createNewFile();
 
-                try (FileOutputStream fileOutputStream = new FileOutputStream(file)) {
+                try (final FileOutputStream fileOutputStream = new FileOutputStream(file)) {
                     fileOutputStream.write(fullHttpRequest.content().readBytes(fullHttpRequest.content().readableBytes()).array());
                     fileOutputStream.flush();
                 }
 
-                ZipFile zipFile = new ZipFile(file);
-                for (ZipEntry zipEntry : Collections.list(zipFile.entries())) {
+                final ZipFile zipFile = new ZipFile(file);
+                for (final ZipEntry zipEntry : Collections.list(zipFile.entries())) {
                     extractEntry(zipFile, zipEntry, "local/servers/" + payload);
                 }
                 file.delete();
@@ -137,7 +139,7 @@ public class WebsiteDeployment extends MethodWebHandlerAdapter {
         return fullHttpResponse;
     }
 
-    private void extractEntry(ZipFile zipFile, ZipEntry entry, String destDir) throws IOException {
+    private void extractEntry(final ZipFile zipFile, final ZipEntry entry, final String destDir) throws IOException {
         final String path = entry.getName();
         if (entry.isDirectory()) {
             Files.createDirectories(Paths.get(destDir, path));

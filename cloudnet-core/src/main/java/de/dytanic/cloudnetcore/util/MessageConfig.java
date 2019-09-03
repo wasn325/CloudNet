@@ -15,7 +15,7 @@ import java.nio.file.Paths;
  */
 public class MessageConfig {
 
-    private Path path = Paths.get("local/ingame_messages.json");
+    private final Path path = Paths.get("local/ingame_messages.json");
 
     public MessageConfig() {
         if (!Files.exists(path)) {
@@ -38,7 +38,7 @@ public class MessageConfig {
     public Document load() {
 
         boolean resave = false;
-        Document document = Document.loadDocument(path);
+        final Document document = Document.loadDocument(path);
 
         if (!document.contains("server-kick-proxy-disallow")) {
             document.append("server-kick-proxy-disallow", "§cYou have to connect from a internal proxy server!");

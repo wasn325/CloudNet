@@ -11,27 +11,27 @@ import java.util.Collection;
  */
 public class ProxyProcessMeta {
 
-    private ServiceId serviceId;
+    private final ServiceId serviceId;
 
-    private int memory;
+    private final int memory;
 
-    private int port;
+    private final int port;
 
-    private String[] processParameters;
+    private final String[] processParameters;
 
-    private String url;
+    private final String url;
 
-    private Collection<ServerInstallablePlugin> downloadablePlugins;
+    private final Collection<ServerInstallablePlugin> downloadablePlugins;
 
-    private Document properties;
+    private final Document properties;
 
-    public ProxyProcessMeta(ServiceId serviceId,
-                            int memory,
-                            int port,
-                            String[] processParameters,
-                            String url,
-                            Collection<ServerInstallablePlugin> downloadablePlugins,
-                            Document properties) {
+    public ProxyProcessMeta(final ServiceId serviceId,
+                            final int memory,
+                            final int port,
+                            final String[] processParameters,
+                            final String url,
+                            final Collection<ServerInstallablePlugin> downloadablePlugins,
+                            final Document properties) {
         this.serviceId = serviceId;
         this.memory = memory;
         this.port = port;

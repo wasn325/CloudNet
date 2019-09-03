@@ -16,7 +16,7 @@ import java.util.Map;
  */
 public class DatabaseManager {
 
-    private Map<String, Database> databaseMap = NetworkUtils.newConcurrentHashMap();
+    private final Map<String, Database> databaseMap = NetworkUtils.newConcurrentHashMap();
 
     public DatabaseManager() {
 
@@ -26,7 +26,7 @@ public class DatabaseManager {
         return databaseMap.values();
     }
 
-    public Database getDatabase(String name) {
+    public Database getDatabase(final String name) {
         return new DatabaseImpl(name);
     }
 }

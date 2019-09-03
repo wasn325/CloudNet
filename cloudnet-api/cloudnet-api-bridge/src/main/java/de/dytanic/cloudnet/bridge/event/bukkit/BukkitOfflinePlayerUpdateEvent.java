@@ -7,9 +7,9 @@ public class BukkitOfflinePlayerUpdateEvent extends BukkitCloudEvent {
 
     private static final HandlerList handlerList = new HandlerList();
 
-    private OfflinePlayer offlinePlayer;
+    private final OfflinePlayer offlinePlayer;
 
-    public BukkitOfflinePlayerUpdateEvent(OfflinePlayer offlinePlayer) {
+    public BukkitOfflinePlayerUpdateEvent(final OfflinePlayer offlinePlayer) {
         this.offlinePlayer = offlinePlayer;
     }
 

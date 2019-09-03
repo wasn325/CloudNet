@@ -14,13 +14,13 @@ import de.dytanic.cloudnetcore.network.components.ProxyServer;
  */
 public class LoginRequestEvent extends Event implements Cancelable {
 
-    private PlayerConnection cloudPlayerConnection;
+    private final PlayerConnection cloudPlayerConnection;
 
-    private ProxyServer proxyServer;
+    private final ProxyServer proxyServer;
 
-    private boolean cancelled = false;
+    private boolean cancelled;
 
-    public LoginRequestEvent(ProxyServer proxyServer, PlayerConnection cloudPlayerConnection) {
+    public LoginRequestEvent(final ProxyServer proxyServer, final PlayerConnection cloudPlayerConnection) {
         this.cloudPlayerConnection = cloudPlayerConnection;
         this.proxyServer = proxyServer;
 
@@ -40,7 +40,7 @@ public class LoginRequestEvent extends Event implements Cancelable {
     }
 
     @Override
-    public void setCancelled(boolean cancelled) {
+    public void setCancelled(final boolean cancelled) {
         this.cancelled = cancelled;
     }
 }

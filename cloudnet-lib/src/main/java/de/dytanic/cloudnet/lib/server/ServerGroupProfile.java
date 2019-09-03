@@ -8,13 +8,13 @@ import de.dytanic.cloudnet.lib.server.template.Template;
  */
 public class ServerGroupProfile implements Nameable {
 
-    private String name;
+    private final String name;
 
-    private int maxPlayerCount;
+    private final int maxPlayerCount;
 
-    private Template config;
+    private final Template config;
 
-    public ServerGroupProfile(String name, int maxPlayerCount, Template config) {
+    public ServerGroupProfile(final String name, final int maxPlayerCount, final Template config) {
         this.name = name;
         this.maxPlayerCount = maxPlayerCount;
         this.config = config;

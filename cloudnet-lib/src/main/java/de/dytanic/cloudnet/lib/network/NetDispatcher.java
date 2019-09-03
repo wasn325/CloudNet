@@ -12,13 +12,13 @@ import io.netty.channel.SimpleChannelInboundHandler;
 
 import java.io.IOException;
 
-public class NetDispatcher extends SimpleChannelInboundHandler {
+public class NetDispatcher extends SimpleChannelInboundHandler<Packet> {
 
     private final NetworkConnection networkConnection;
 
-    private boolean shutdownOnInactive;
+    private final boolean shutdownOnInactive;
 
-    public NetDispatcher(NetworkConnection networkConnection, boolean shutdownOnInactive) {
+    public NetDispatcher(final NetworkConnection networkConnection, final boolean shutdownOnInactive) {
         this.networkConnection = networkConnection;
         this.shutdownOnInactive = shutdownOnInactive;
     }
@@ -32,7 +32,7 @@ public class NetDispatcher extends SimpleChannelInboundHandler {
     }
 
     @Override
-    public void channelInactive(ChannelHandlerContext ctx) throws Exception {
+    public void channelInactive(final ChannelHandlerContext ctx) throws Exception {
         if ((!ctx.channel().isActive() || !ctx.channel().isOpen() || !ctx.channel().isWritable())) {
             networkConnection.setChannel(null);
             ctx.channel().close().syncUninterruptibly();
@@ -46,36 +46,26 @@ public class NetDispatcher extends SimpleChannelInboundHandler {
     }
 
     @Override
-    public void channelReadComplete(ChannelHandlerContext ctx) throws Exception {
+    public void channelReadComplete(final ChannelHandlerContext ctx) throws Exception {
         ctx.flush();
     }
 
     @Override
-    public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
+    public void exceptionCaught(final ChannelHandlerContext ctx, final Throwable cause) throws Exception {
         if (!(cause instanceof IOException)) {
             cause.printStackTrace();
         }
     }
 
     @Override
-    protected void channelRead0(ChannelHandlerContext channelHandlerContext, Object o) throws Exception {
-        if (o instanceof Packet) {
-            TaskScheduler.runtimeScheduler().schedule(new Runnable() {
-                @Override
-                public void run() {
-                    networkConnection.getPacketManager().dispatchPacket(((Packet) o), networkConnection);
-                }
+    protected void channelRead0(final ChannelHandlerContext channelHandlerContext, final Packet o) throws Exception {
+        if (o instanceof FileDeploy) {
+            final FileDeploy deploy = ((FileDeploy) o);
+            TaskScheduler.runtimeScheduler().schedule(deploy::toWrite);
+        } else if (o != null) {
+            TaskScheduler.runtimeScheduler().schedule(() -> {
+                networkConnection.getPacketManager().dispatchPacket(o, networkConnection);
             });
-        } else {
-            if (o instanceof FileDeploy) {
-                FileDeploy deploy = ((FileDeploy) o);
-                TaskScheduler.runtimeScheduler().schedule(new Runnable() {
-                    @Override
-                    public void run() {
-                        deploy.toWrite();
-                    }
-                });
-            }
         }
     }
 }

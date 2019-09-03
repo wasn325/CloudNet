@@ -19,20 +19,21 @@ public final class FileUtility {
     private FileUtility() {
     }
 
-    public static void copy(InputStream inputStream, OutputStream outputStream) throws IOException {
-        byte[] buffer = new byte[8192];
+    public static void copy(final InputStream inputStream, final OutputStream outputStream) throws IOException {
+        final byte[] buffer = new byte[8192];
         copy(inputStream, outputStream, buffer);
 
         try {
 
-            Method method = byte[].class.getMethod("finalize");
+            final Method method = byte[].class.getMethod("finalize");
             method.setAccessible(true);
             method.invoke(buffer);
-        } catch (Exception ex) {
+        } catch (final Exception ex) {
+            ex.printStackTrace();
         }
     }
 
-    public static void copy(InputStream inputStream, OutputStream outputStream, byte[] buffer) throws IOException {
+    public static void copy(final InputStream inputStream, final OutputStream outputStream, final byte[] buffer) throws IOException {
         int len;
 
         while ((len = inputStream.read(buffer, 0, buffer.length)) != -1) {
@@ -41,15 +42,15 @@ public final class FileUtility {
         }
     }
 
-    public static void copyFileToDirectory(File from, File to) throws IOException {
+    public static void copyFileToDirectory(final File from, final File to) throws IOException {
         copy(from.toPath(), new File(to.getPath(), from.getName()).toPath());
     }
 
-    public static void copy(Path from, Path to) throws IOException {
+    public static void copy(final Path from, final Path to) throws IOException {
         copy(from, to, new byte[16384]);
     }
 
-    public static void copy(Path from, Path to, byte[] buffer) throws IOException {
+    public static void copy(final Path from, final Path to, final byte[] buffer) throws IOException {
         if (from == null || to == null || !Files.exists(from)) {
             return;
         }
@@ -61,12 +62,12 @@ public final class FileUtility {
             Files.createFile(to);
         }
 
-        try (InputStream inputStream = Files.newInputStream(from); OutputStream outputStream = Files.newOutputStream(to)) {
+        try (final InputStream inputStream = Files.newInputStream(from); final OutputStream outputStream = Files.newOutputStream(to)) {
             copy(inputStream, outputStream, buffer);
         }
     }
 
-    public static void copyFilesInDirectory(File from, File to) throws IOException {
+    public static void copyFilesInDirectory(final File from, final File to) throws IOException {
         if (to == null || from == null || !from.exists()) {
             return;
         }
@@ -79,10 +80,10 @@ public final class FileUtility {
             return;
         }
 
-        File[] list = from.listFiles();
-        byte[] buffer = new byte[16384];
+        final File[] list = from.listFiles();
+        final byte[] buffer = new byte[16384];
         if (list != null) {
-            for (File file : list) {
+            for (final File file : list) {
                 if (file == null) {
                     continue;
                 }
@@ -90,33 +91,34 @@ public final class FileUtility {
                 if (file.isDirectory()) {
                     copyFilesInDirectory(file, new File(to.getAbsolutePath() + '/' + file.getName()));
                 } else {
-                    File n = new File(to.getAbsolutePath() + '/' + file.getName());
+                    final File n = new File(to.getAbsolutePath() + '/' + file.getName());
                     copy(file.toPath(), n.toPath(), buffer);
                 }
             }
         }
     }
 
-    public static void insertData(String paramString1, String paramString2) {
-        File file = new File(paramString2);
+    public static void insertData(final String paramString1, final String paramString2) {
+        final File file = new File(paramString2);
         file.delete();
 
-        try (InputStream localInputStream = FileUtility.class.getClassLoader().getResourceAsStream(paramString1)) {
+        try (final InputStream localInputStream = FileUtility.class.getClassLoader().getResourceAsStream(paramString1)) {
             Files.copy(localInputStream, Paths.get(paramString2), StandardCopyOption.REPLACE_EXISTING);
-        } catch (IOException e) {
+        } catch (final IOException e) {
+            e.printStackTrace();
         }
     }
 
-    public static void deleteDirectory(File file) {
+    public static void deleteDirectory(final File file) {
         if (file == null) {
             return;
         }
 
         if (file.isDirectory()) {
-            File[] files = file.listFiles();
+            final File[] files = file.listFiles();
 
             if (files != null) {
-                for (File entry : files) {
+                for (final File entry : files) {
                     if (entry.isDirectory()) {
                         deleteDirectory(entry);
                     } else {
@@ -129,11 +131,11 @@ public final class FileUtility {
         file.delete();
     }
 
-    public static void rewriteFileUtils(File file, String host) throws Exception {
+    public static void rewriteFileUtils(final File file, final String host) throws Exception {
         file.setReadable(true);
-        FileInputStream in = new FileInputStream(file);
-        List<String> liste = new CopyOnWriteArrayList<>();
-        BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+        final FileInputStream in = new FileInputStream(file);
+        final List<String> liste = new CopyOnWriteArrayList<>();
+        final BufferedReader reader = new BufferedReader(new InputStreamReader(in));
         String input;
         boolean value = false;
         while ((input = reader.readLine()) != null) {
@@ -152,9 +154,9 @@ public final class FileUtility {
         file.delete();
         file.createNewFile();
         file.setReadable(true);
-        FileOutputStream out = new FileOutputStream(file);
-        PrintWriter w = new PrintWriter(out);
-        for (String wert : liste) {
+        final FileOutputStream out = new FileOutputStream(file);
+        final PrintWriter w = new PrintWriter(out);
+        for (final String wert : liste) {
             w.write(wert);
             w.flush();
         }

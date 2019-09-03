@@ -21,24 +21,24 @@ import java.util.UUID;
 public final class PacketInLogoutPlayer extends PacketInHandlerDefault {
 
     @Override
-    public void handleInput(Document data, PacketSender packetSender) {
-        CloudPlayer cloudPlayer = data.getObject("player", new TypeToken<CloudPlayer>() {}.getType());
+    public void handleInput(final Document data, final PacketSender packetSender) {
+        final CloudPlayer cloudPlayer = data.getObject("player", new TypeToken<CloudPlayer>() {}.getType());
 
         if (cloudPlayer != null) {
             if (CloudAPI.getInstance() != null) {
                 CloudAPI.getInstance().getNetworkHandlerProvider().iterator(new Runnabled<NetworkHandler>() {
                     @Override
-                    public void run(NetworkHandler obj) {
+                    public void run(final NetworkHandler obj) {
                         obj.onPlayerDisconnectNetwork(cloudPlayer);
                     }
                 });
             }
         } else {
-            UUID uuid = data.getObject("uniqueId", UUID.class);
+            final UUID uuid = data.getObject("uniqueId", UUID.class);
             if (CloudAPI.getInstance() != null) {
                 CloudAPI.getInstance().getNetworkHandlerProvider().iterator(new Runnabled<NetworkHandler>() {
                     @Override
-                    public void run(NetworkHandler obj) {
+                    public void run(final NetworkHandler obj) {
                         obj.onPlayerDisconnectNetwork(uuid);
                     }
                 });

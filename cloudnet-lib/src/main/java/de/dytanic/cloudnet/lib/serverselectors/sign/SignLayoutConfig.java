@@ -7,24 +7,24 @@ import java.util.Collection;
  */
 public class SignLayoutConfig {
 
-    private boolean fullServerHide;
+    private final boolean fullServerHide;
 
-    private boolean knockbackOnSmallDistance;
+    private final boolean knockbackOnSmallDistance;
 
-    private double distance;
+    private final double distance;
 
-    private double strength;
+    private final double strength;
 
-    private Collection<SignGroupLayouts> groupLayouts;
+    private final Collection<SignGroupLayouts> groupLayouts;
 
-    private SearchingAnimation searchingAnimation;
+    private final SearchingAnimation searchingAnimation;
 
-    public SignLayoutConfig(boolean fullServerHide,
-                            boolean knockbackOnSmallDistance,
-                            double distance,
-                            double strength,
-                            Collection<SignGroupLayouts> groupLayouts,
-                            SearchingAnimation searchingAnimation) {
+    public SignLayoutConfig(final boolean fullServerHide,
+                            final boolean knockbackOnSmallDistance,
+                            final double distance,
+                            final double strength,
+                            final Collection<SignGroupLayouts> groupLayouts,
+                            final SearchingAnimation searchingAnimation) {
         this.fullServerHide = fullServerHide;
         this.knockbackOnSmallDistance = knockbackOnSmallDistance;
         this.distance = distance;

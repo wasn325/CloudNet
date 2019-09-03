@@ -20,12 +20,12 @@ public final class CommandClear extends Command {
     }
 
     @Override
-    public void onExecuteCommand(CommandSender sender, String[] args) {
+    public void onExecuteCommand(final CommandSender sender, final String[] args) {
         try {
             // Can't close the reader, we need it later
             //noinspection resource
             CloudNet.getLogger().getReader().clearScreen();
-        } catch (IOException e) {
+        } catch (final IOException e) {
             e.printStackTrace();
         }
     }

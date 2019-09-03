@@ -5,7 +5,7 @@ public class PaperMCProjectBuilds {
     private final String latest;
     private final String[] all;
 
-    public PaperMCProjectBuilds(String latest, String[] all) {
+    public PaperMCProjectBuilds(final String latest, final String[] all) {
         this.latest = latest;
         this.all = all;
     }

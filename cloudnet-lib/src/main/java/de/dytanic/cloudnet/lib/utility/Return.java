@@ -5,10 +5,10 @@ package de.dytanic.cloudnet.lib.utility;
  */
 public class Return<F, S> {
 
-    private F first;
-    private S second;
+    private final F first;
+    private final S second;
 
-    public Return(F first, S second) {
+    public Return(final F first, final S second) {
         this.first = first;
         this.second = second;
     }

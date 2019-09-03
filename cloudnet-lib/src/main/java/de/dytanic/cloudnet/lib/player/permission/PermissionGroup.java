@@ -21,18 +21,19 @@ public class PermissionGroup {
     protected Map<String, List<String>> serverGroupPermissions;
     protected Map<String, Object> options;
     protected List<String> implementGroups;
-    public PermissionGroup(String name,
-                           String color,
-                           String prefix,
-                           String suffix,
-                           String display,
-                           int tagId,
-                           int joinPower,
-                           boolean defaultGroup,
-                           Map<String, Boolean> permissions,
-                           Map<String, List<String>> serverGroupPermissions,
-                           Map<String, Object> options,
-                           List<String> implementGroups) {
+
+    public PermissionGroup(final String name,
+                           final String color,
+                           final String prefix,
+                           final String suffix,
+                           final String display,
+                           final int tagId,
+                           final int joinPower,
+                           final boolean defaultGroup,
+                           final Map<String, Boolean> permissions,
+                           final Map<String, List<String>> serverGroupPermissions,
+                           final Map<String, Object> options,
+                           final List<String> implementGroups) {
         this.name = name;
         this.color = color;
         this.prefix = prefix;
@@ -92,7 +93,7 @@ public class PermissionGroup {
         return name;
     }
 
-    public void setName(String name) {
+    public void setName(final String name) {
         this.name = name;
     }
 
@@ -100,7 +101,7 @@ public class PermissionGroup {
         return display;
     }
 
-    public void setDisplay(String display) {
+    public void setDisplay(final String display) {
         this.display = display;
     }
 
@@ -108,7 +109,7 @@ public class PermissionGroup {
         return joinPower;
     }
 
-    public void setJoinPower(int joinPower) {
+    public void setJoinPower(final int joinPower) {
         this.joinPower = joinPower;
     }
 
@@ -116,7 +117,7 @@ public class PermissionGroup {
         return prefix;
     }
 
-    public void setPrefix(String prefix) {
+    public void setPrefix(final String prefix) {
         this.prefix = prefix;
     }
 
@@ -124,7 +125,7 @@ public class PermissionGroup {
         return suffix;
     }
 
-    public void setSuffix(String suffix) {
+    public void setSuffix(final String suffix) {
         this.suffix = suffix;
     }
 
@@ -132,7 +133,7 @@ public class PermissionGroup {
         return permissions;
     }
 
-    public void setPermissions(Map<String, Boolean> permissions) {
+    public void setPermissions(final Map<String, Boolean> permissions) {
         this.permissions = permissions;
     }
 
@@ -140,7 +141,7 @@ public class PermissionGroup {
         return tagId;
     }
 
-    public void setTagId(int tagId) {
+    public void setTagId(final int tagId) {
         this.tagId = tagId;
     }
 
@@ -148,7 +149,7 @@ public class PermissionGroup {
         return implementGroups;
     }
 
-    public void setImplementGroups(List<String> implementGroups) {
+    public void setImplementGroups(final List<String> implementGroups) {
         this.implementGroups = implementGroups;
     }
 
@@ -156,7 +157,7 @@ public class PermissionGroup {
         return serverGroupPermissions;
     }
 
-    public void setServerGroupPermissions(Map<String, List<String>> serverGroupPermissions) {
+    public void setServerGroupPermissions(final Map<String, List<String>> serverGroupPermissions) {
         this.serverGroupPermissions = serverGroupPermissions;
     }
 
@@ -164,7 +165,7 @@ public class PermissionGroup {
         return options;
     }
 
-    public void setOptions(Map<String, Object> options) {
+    public void setOptions(final Map<String, Object> options) {
         this.options = options;
     }
 
@@ -172,7 +173,7 @@ public class PermissionGroup {
         return color;
     }
 
-    public void setColor(String color) {
+    public void setColor(final String color) {
         this.color = color;
     }
 
@@ -180,7 +181,7 @@ public class PermissionGroup {
         return defaultGroup;
     }
 
-    public void setDefaultGroup(boolean defaultGroup) {
+    public void setDefaultGroup(final boolean defaultGroup) {
         this.defaultGroup = defaultGroup;
     }
 }

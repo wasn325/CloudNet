@@ -6,11 +6,11 @@ package de.dytanic.cloudnet.lib.proxylayout;
 
 public class Motd {
 
-    private String firstLine;
+    private final String firstLine;
 
-    private String secondLine;
+    private final String secondLine;
 
-    public Motd(String firstLine, String secondLine) {
+    public Motd(final String firstLine, final String secondLine) {
         this.firstLine = firstLine;
         this.secondLine = secondLine;
     }

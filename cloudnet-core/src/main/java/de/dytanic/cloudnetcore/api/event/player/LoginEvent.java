@@ -13,9 +13,9 @@ import de.dytanic.cloudnet.lib.player.CloudPlayer;
  */
 public class LoginEvent extends AsyncEvent<LoginEvent> {
 
-    private CloudPlayer cloudPlayer;
+    private final CloudPlayer cloudPlayer;
 
-    public LoginEvent(CloudPlayer cloudPlayer) {
+    public LoginEvent(final CloudPlayer cloudPlayer) {
         super(new AsyncPosterAdapter<>());
         this.cloudPlayer = cloudPlayer;
     }

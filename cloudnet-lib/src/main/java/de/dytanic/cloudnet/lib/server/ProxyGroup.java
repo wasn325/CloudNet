@@ -28,16 +28,16 @@ public class ProxyGroup implements Nameable {
     protected ProxyGroupMode proxyGroupMode;
     protected WrappedMap settings;
 
-    public ProxyGroup(String name,
-                      Collection<String> wrapper,
-                      Template template,
-                      ProxyVersion proxyVersion,
-                      int startPort,
-                      int startup,
-                      int memory,
-                      ProxyConfig proxyConfig,
-                      ProxyGroupMode proxyGroupMode,
-                      WrappedMap settings) {
+    public ProxyGroup(final String name,
+                      final Collection<String> wrapper,
+                      final Template template,
+                      final ProxyVersion proxyVersion,
+                      final int startPort,
+                      final int startup,
+                      final int memory,
+                      final ProxyConfig proxyConfig,
+                      final ProxyGroupMode proxyGroupMode,
+                      final WrappedMap settings) {
         this.name = name;
         this.wrapper = wrapper;
         this.template = template;

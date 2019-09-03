@@ -14,10 +14,10 @@ import io.netty.handler.codec.http.HttpRequest;
 public abstract class MethodDynamicWebHandler extends DynamicWebHandler {
 
     @Override
-    public final FullHttpResponse handleRequest(ChannelHandlerContext channelHandlerContext,
-                                                QueryDecoder queryDecoder,
-                                                PathProvider path,
-                                                HttpRequest httpRequest) throws Exception {
+    public final FullHttpResponse handleRequest(final ChannelHandlerContext channelHandlerContext,
+                                                final QueryDecoder queryDecoder,
+                                                final PathProvider path,
+                                                final HttpRequest httpRequest) throws Exception {
         if (httpRequest.method().equals(HttpMethod.CONNECT)) {
             return connect(channelHandlerContext, queryDecoder, path, httpRequest);
         }

@@ -5,7 +5,7 @@ final class NetorSet<VF, VS> {
     private VF valueF;
     private VS valueS;
 
-    public NetorSet(VF valueF, VS valueS) {
+    public NetorSet(final VF valueF, final VS valueS) {
         this.valueF = valueF;
         this.valueS = valueS;
     }
@@ -18,11 +18,11 @@ final class NetorSet<VF, VS> {
         return valueS;
     }
 
-    public void updateFirst(VF value) {
+    public void updateFirst(final VF value) {
         this.valueF = value;
     }
 
-    public void updateSecond(VS value) {
+    public void updateSecond(final VS value) {
         this.valueS = value;
     }
 

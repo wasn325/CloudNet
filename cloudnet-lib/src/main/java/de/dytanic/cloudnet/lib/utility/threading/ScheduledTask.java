@@ -14,11 +14,11 @@ public class ScheduledTask implements Runnable {
     protected int delayTime;
     protected int repeatTime;
 
-    public ScheduledTask(long taskId, Runnable runnable, int delay, int repeatDelay) {
+    public ScheduledTask(final long taskId, final Runnable runnable, final int delay, final int repeatDelay) {
         this.taskId = taskId;
         this.runnable = runnable;
         this.delay = delay != -1 && delay != 0 ? delay : 0;
-        this.repeatDelay = repeatDelay != -1 ? repeatDelay : 0;
+        this.repeatDelay = repeatDelay == -1 ? 0 : repeatDelay;
         this.interrupted = false;
 
         this.delayTime = this.delay;
@@ -73,7 +73,7 @@ public class ScheduledTask implements Runnable {
         } else {
             try {
                 runnable.run();
-            } catch (Exception ex) {
+            } catch (final Exception ex) {
                 ex.printStackTrace();
             }
 

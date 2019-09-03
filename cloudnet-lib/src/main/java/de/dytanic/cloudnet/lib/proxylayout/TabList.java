@@ -6,13 +6,13 @@ package de.dytanic.cloudnet.lib.proxylayout;
 
 public class TabList {
 
-    private boolean enabled;
+    private final boolean enabled;
 
-    private String header;
+    private final String header;
 
-    private String footer;
+    private final String footer;
 
-    public TabList(boolean enabled, String header, String footer) {
+    public TabList(final boolean enabled, final String header, final String footer) {
         this.enabled = enabled;
         this.header = header;
         this.footer = footer;

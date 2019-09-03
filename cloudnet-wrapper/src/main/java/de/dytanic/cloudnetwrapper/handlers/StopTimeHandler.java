@@ -12,8 +12,8 @@ import de.dytanic.cloudnetwrapper.server.GameServer;
 public final class StopTimeHandler implements IWrapperHandler {
 
     @Override
-    public void run(CloudNetWrapper wrapper) {
-        for (GameServer gameServer : CloudNetWrapper.getInstance().getServers().values()) {
+    public void run(final CloudNetWrapper wrapper) {
+        for (final GameServer gameServer : CloudNetWrapper.getInstance().getServers().values()) {
             try {
                 if (!gameServer.isAlive()) {
                     if (System.currentTimeMillis() > (gameServer.getStartupTimeStamp() + 1600)) {
@@ -22,27 +22,27 @@ public final class StopTimeHandler implements IWrapperHandler {
                         gameServer.restart();
                     }
                 }
-            } catch (Exception ex) {
+            } catch (final Exception ex) {
                 ex.printStackTrace();
             }
         }
 
-        for (CloudGameServer gameServer : CloudNetWrapper.getInstance().getCloudServers().values()) {
+        for (final CloudGameServer gameServer : CloudNetWrapper.getInstance().getCloudServers().values()) {
             try {
                 if (!gameServer.isAlive()) {
                     gameServer.shutdown();
                 }
-            } catch (Exception ex) {
+            } catch (final Exception ex) {
                 ex.printStackTrace();
             }
         }
 
-        for (BungeeCord bungeeCord : CloudNetWrapper.getInstance().getProxys().values()) {
+        for (final BungeeCord bungeeCord : CloudNetWrapper.getInstance().getProxys().values()) {
             try {
                 if (!bungeeCord.isAlive()) {
                     bungeeCord.shutdown();
                 }
-            } catch (Exception ex) {
+            } catch (final Exception ex) {
                 ex.printStackTrace();
             }
         }

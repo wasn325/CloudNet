@@ -51,13 +51,13 @@ public class CloudProxy implements ICloudService, PlayerChatExecutor {
 
     private static CloudProxy instance;
 
-    private ProxiedBootstrap proxiedBootstrap;
-    private ProxyProcessMeta proxyProcessMeta;
+    private final ProxiedBootstrap proxiedBootstrap;
+    private final ProxyProcessMeta proxyProcessMeta;
 
-    private Map<String, ServerInfo> cachedServers = NetworkUtils.newConcurrentHashMap();
-    private Map<UUID, CloudPlayer> cloudPlayers = NetworkUtils.newConcurrentHashMap();
+    private final Map<String, ServerInfo> cachedServers = NetworkUtils.newConcurrentHashMap();
+    private final Map<UUID, CloudPlayer> cloudPlayers = NetworkUtils.newConcurrentHashMap();
 
-    public CloudProxy(ProxiedBootstrap proxiedBootstrap, CloudAPI cloudAPI) {
+    public CloudProxy(final ProxiedBootstrap proxiedBootstrap, final CloudAPI cloudAPI) {
         instance = this;
 
         this.proxiedBootstrap = proxiedBootstrap;
@@ -69,7 +69,7 @@ public class CloudProxy implements ICloudService, PlayerChatExecutor {
                 NetworkUtils.addAll(cachedServers,
                                     MapWrapper.collectionCatcherHashMap(cloudAPI.getServers(), new Catcher<String, ServerInfo>() {
                                         @Override
-                                        public String doCatch(ServerInfo key) {
+                                        public String doCatch(final ServerInfo key) {
                                             ProxyServer.getInstance().getServers().put(key.getServiceId().getServerId(),
                                                                                        ProxyServer.getInstance()
                                                                                                   .constructServerInfo(key.getServiceId()
@@ -86,7 +86,7 @@ public class CloudProxy implements ICloudService, PlayerChatExecutor {
                                                 CollectionWrapper.iterator(ProxyServer.getInstance().getConfig().getListeners(),
                                                                            new Runnabled<ListenerInfo>() {
                                                                                @Override
-                                                                               public void run(ListenerInfo obj) {
+                                                                               public void run(final ListenerInfo obj) {
                                                                                    obj.getServerPriority().add(key.getServiceId()
                                                                                                                   .getServerId());
                                                                                }
@@ -106,13 +106,13 @@ public class CloudProxy implements ICloudService, PlayerChatExecutor {
         return CloudAPI.getInstance().getProxyGroupData(CloudAPI.getInstance().getServiceId().getGroup());
     }
 
-    public String fallback(ProxiedPlayer cloudPlayer) {
+    public String fallback(final ProxiedPlayer cloudPlayer) {
 
-        for (ServerFallback serverFallback : CloudProxy.getInstance()
-                                                       .getProxyGroup()
-                                                       .getProxyConfig()
-                                                       .getDynamicFallback()
-                                                       .getFallbacks()) {
+        for (final ServerFallback serverFallback : CloudProxy.getInstance()
+                                                             .getProxyGroup()
+                                                             .getProxyConfig()
+                                                             .getDynamicFallback()
+                                                             .getFallbacks()) {
             if (serverFallback.getGroup().equals(CloudProxy.getInstance()
                                                            .getProxyGroup()
                                                            .getProxyConfig()
@@ -126,22 +126,22 @@ public class CloudProxy implements ICloudService, PlayerChatExecutor {
                     continue;
                 }
 
-                List<String> servers = CloudProxy.getInstance().getServers(serverFallback.getGroup());
-                if (servers.size() != 0) {
+                final List<String> servers = CloudProxy.getInstance().getServers(serverFallback.getGroup());
+                if (!servers.isEmpty()) {
                     return servers.get(NetworkUtils.RANDOM.nextInt(servers.size()));
                 }
             }
         }
 
-        String fallback = getProxyGroup().getProxyConfig().getDynamicFallback().getDefaultFallback();
-        List<String> liste = new ArrayList<>(MapWrapper.filter(cachedServers, new Acceptable<ServerInfo>() {
+        final String fallback = getProxyGroup().getProxyConfig().getDynamicFallback().getDefaultFallback();
+        final List<String> liste = new ArrayList<>(MapWrapper.filter(cachedServers, new Acceptable<ServerInfo>() {
             @Override
-            public boolean isAccepted(ServerInfo value) {
+            public boolean isAccepted(final ServerInfo value) {
                 return value.getServiceId().getGroup().equalsIgnoreCase(fallback);
             }
         }).keySet());
 
-        if (liste.size() == 0) {
+        if (liste.isEmpty()) {
             return null;
         } else {
             return liste.get(NetworkUtils.RANDOM.nextInt(liste.size()));
@@ -157,9 +157,9 @@ public class CloudProxy implements ICloudService, PlayerChatExecutor {
         return instance;
     }
 
-    public List<String> getServers(String group) {
-        List<String> x = new ArrayList<>();
-        for (ServerInfo server : this.getCachedServers().values()) {
+    public List<String> getServers(final String group) {
+        final List<String> x = new ArrayList<>();
+        for (final ServerInfo server : this.getCachedServers().values()) {
             if (server.getServiceId().getGroup().equalsIgnoreCase(group)) {
                 x.add(server.getServiceId().getServerId());
             }
@@ -176,13 +176,13 @@ public class CloudProxy implements ICloudService, PlayerChatExecutor {
         return cachedServers;
     }
 
-    public String fallback(ProxiedPlayer cloudPlayer, String kickedFrom) {
+    public String fallback(final ProxiedPlayer cloudPlayer, final String kickedFrom) {
 
-        for (ServerFallback serverFallback : CloudProxy.getInstance()
-                                                       .getProxyGroup()
-                                                       .getProxyConfig()
-                                                       .getDynamicFallback()
-                                                       .getFallbacks()) {
+        for (final ServerFallback serverFallback : CloudProxy.getInstance()
+                                                             .getProxyGroup()
+                                                             .getProxyConfig()
+                                                             .getDynamicFallback()
+                                                             .getFallbacks()) {
             if (serverFallback.getGroup().equals(CloudProxy.getInstance()
                                                            .getProxyGroup()
                                                            .getProxyConfig()
@@ -196,37 +196,37 @@ public class CloudProxy implements ICloudService, PlayerChatExecutor {
                     continue;
                 }
 
-                List<String> servers = CloudProxy.getInstance().getServers(serverFallback.getGroup());
+                final List<String> servers = CloudProxy.getInstance().getServers(serverFallback.getGroup());
                 servers.remove(kickedFrom);
-                if (servers.size() != 0) {
+                if (!servers.isEmpty()) {
                     return servers.get(NetworkUtils.RANDOM.nextInt(servers.size()));
                 }
             }
         }
 
-        String fallback = getProxyGroup().getProxyConfig().getDynamicFallback().getDefaultFallback();
-        List<String> liste = new ArrayList<>(MapWrapper.filter(cachedServers, new Acceptable<ServerInfo>() {
+        final String fallback = getProxyGroup().getProxyConfig().getDynamicFallback().getDefaultFallback();
+        final List<String> liste = new ArrayList<>(MapWrapper.filter(cachedServers, new Acceptable<ServerInfo>() {
             @Override
-            public boolean isAccepted(ServerInfo value) {
+            public boolean isAccepted(final ServerInfo value) {
                 return value.getServiceId().getGroup().equalsIgnoreCase(fallback);
             }
         }).keySet());
         liste.remove(kickedFrom);
 
-        if (liste.size() == 0) {
+        if (liste.isEmpty()) {
             return null;
         } else {
             return liste.get(NetworkUtils.RANDOM.nextInt(liste.size()));
         }
     }
 
-    public String fallbackOnEnabledKick(ProxiedPlayer cloudPlayer, String group, String kickedFrom) {
+    public String fallbackOnEnabledKick(final ProxiedPlayer cloudPlayer, final String group, final String kickedFrom) {
 
-        for (ServerFallback serverFallback : CloudProxy.getInstance()
-                                                       .getProxyGroup()
-                                                       .getProxyConfig()
-                                                       .getDynamicFallback()
-                                                       .getFallbacks()) {
+        for (final ServerFallback serverFallback : CloudProxy.getInstance()
+                                                             .getProxyGroup()
+                                                             .getProxyConfig()
+                                                             .getDynamicFallback()
+                                                             .getFallbacks()) {
             if (serverFallback.getGroup().equals(CloudProxy.getInstance()
                                                            .getProxyGroup()
                                                            .getProxyConfig()
@@ -240,36 +240,36 @@ public class CloudProxy implements ICloudService, PlayerChatExecutor {
                     continue;
                 }
 
-                List<String> servers = CloudProxy.getInstance().getServers(serverFallback.getGroup());
+                final List<String> servers = CloudProxy.getInstance().getServers(serverFallback.getGroup());
                 servers.remove(kickedFrom);
-                if (servers.size() != 0) {
+                if (!servers.isEmpty()) {
                     return servers.get(NetworkUtils.RANDOM.nextInt(servers.size()));
                 }
             }
         }
 
         {
-            List<String> liste = new ArrayList<>(MapWrapper.filter(cachedServers, new Acceptable<ServerInfo>() {
+            final List<String> liste = new ArrayList<>(MapWrapper.filter(cachedServers, new Acceptable<ServerInfo>() {
                 @Override
-                public boolean isAccepted(ServerInfo value) {
+                public boolean isAccepted(final ServerInfo value) {
                     return value.getServiceId().getGroup().equalsIgnoreCase(group);
                 }
             }).keySet());
             liste.remove(kickedFrom);
-            if (liste.size() != 0) {
+            if (!liste.isEmpty()) {
                 return liste.get(NetworkUtils.RANDOM.nextInt(liste.size()));
             }
         }
 
-        String fallback = getProxyGroup().getProxyConfig().getDynamicFallback().getDefaultFallback();
-        List<String> liste = new ArrayList<>(MapWrapper.filter(cachedServers, new Acceptable<ServerInfo>() {
+        final String fallback = getProxyGroup().getProxyConfig().getDynamicFallback().getDefaultFallback();
+        final List<String> liste = new ArrayList<>(MapWrapper.filter(cachedServers, new Acceptable<ServerInfo>() {
             @Override
-            public boolean isAccepted(ServerInfo value) {
+            public boolean isAccepted(final ServerInfo value) {
                 return value.getServiceId().getGroup().equalsIgnoreCase(fallback);
             }
         }).keySet());
         liste.remove(kickedFrom);
-        if (liste.size() == 0) {
+        if (liste.isEmpty()) {
             return null;
         } else {
             return liste.get(NetworkUtils.RANDOM.nextInt(liste.size()));
@@ -286,21 +286,20 @@ public class CloudProxy implements ICloudService, PlayerChatExecutor {
     }
 
     public void update() {
-        ProxyInfo proxyInfo = new ProxyInfo(CloudAPI.getInstance().getServiceId(),
-                                            CloudAPI.getInstance().getConfig().getString("host"),
-                                            0,
-                                            true,
-                                            new ArrayList<>(CollectionWrapper.transform(ProxyServer.getInstance().getPlayers(),
+        final ProxyInfo proxyInfo = new ProxyInfo(CloudAPI.getInstance().getServiceId(),
+                                                  CloudAPI.getInstance().getConfig().getString("host"),
+                                                  0,
+                                                  true,
+                                                  new ArrayList<>(CollectionWrapper.transform(ProxyServer.getInstance().getPlayers(),
                                                                                         new Catcher<MultiValue<UUID, String>, ProxiedPlayer>() {
                                                                                             @Override
-                                                                                            public MultiValue<UUID, String> doCatch(
-                                                                                                ProxiedPlayer key) {
+                                                                                            public MultiValue<UUID, String> doCatch(final ProxiedPlayer key) {
                                                                                                 return new MultiValue<>(key.getUniqueId(),
                                                                                                                         key.getName());
                                                                                             }
                                                                                         })),
-                                            proxyProcessMeta.getMemory(),
-                                            ProxyServer.getInstance().getOnlineCount());
+                                                  proxyProcessMeta.getMemory(),
+                                                  ProxyServer.getInstance().getOnlineCount());
         CloudAPI.getInstance().update(proxyInfo);
     }
 
@@ -323,14 +322,14 @@ public class CloudProxy implements ICloudService, PlayerChatExecutor {
     }
 
     @Override
-    public CloudPlayer getCachedPlayer(UUID uniqueId) {
+    public CloudPlayer getCachedPlayer(final UUID uniqueId) {
         return cloudPlayers.get(uniqueId);
     }
 
-    public CloudPlayer getCachedPlayer(String name) {
+    public CloudPlayer getCachedPlayer(final String name) {
         return CollectionWrapper.filter(this.cloudPlayers.values(), new Acceptable<CloudPlayer>() {
             @Override
-            public boolean isAccepted(CloudPlayer cloudPlayer) {
+            public boolean isAccepted(final CloudPlayer cloudPlayer) {
                 return cloudPlayer.getName().equalsIgnoreCase(name);
             }
         });
@@ -348,7 +347,7 @@ public class CloudProxy implements ICloudService, PlayerChatExecutor {
 
     private class NetworkHandlerImpl implements NetworkHandler {
         @Override
-        public void onServerAdd(ServerInfo serverInfo) {
+        public void onServerAdd(final ServerInfo serverInfo) {
             if (serverInfo == null) {
                 return;
             }
@@ -366,7 +365,7 @@ public class CloudProxy implements ICloudService, PlayerChatExecutor {
                                                                                      .getDefaultFallback())) {
                 CollectionWrapper.iterator(ProxyServer.getInstance().getConfig().getListeners(), new Runnabled<ListenerInfo>() {
                     @Override
-                    public void run(ListenerInfo obj) {
+                    public void run(final ListenerInfo obj) {
                         obj.getServerPriority().add(serverInfo.getServiceId().getServerId());
                     }
                 });
@@ -376,7 +375,7 @@ public class CloudProxy implements ICloudService, PlayerChatExecutor {
             if (CloudAPI.getInstance().getModuleProperties().contains("notifyService") && CloudAPI.getInstance()
                                                                                                   .getModuleProperties()
                                                                                                   .getBoolean("notifyService")) {
-                for (ProxiedPlayer proxiedPlayer : ProxyServer.getInstance().getPlayers()) {
+                for (final ProxiedPlayer proxiedPlayer : ProxyServer.getInstance().getPlayers()) {
                     if (proxiedPlayer.hasPermission("cloudnet.notify")) {
                         proxiedPlayer.sendMessage(ChatColor.translateAlternateColorCodes('&',
                                                                                          CloudAPI.getInstance()
@@ -393,7 +392,7 @@ public class CloudProxy implements ICloudService, PlayerChatExecutor {
         }
 
         @Override
-        public void onServerInfoUpdate(ServerInfo serverInfo) {
+        public void onServerInfoUpdate(final ServerInfo serverInfo) {
             if (serverInfo == null) {
                 return;
             }
@@ -403,7 +402,7 @@ public class CloudProxy implements ICloudService, PlayerChatExecutor {
         }
 
         @Override
-        public void onServerRemove(ServerInfo serverInfo) {
+        public void onServerRemove(final ServerInfo serverInfo) {
             if (serverInfo == null) {
                 return;
             }
@@ -412,7 +411,7 @@ public class CloudProxy implements ICloudService, PlayerChatExecutor {
 
             try {
                 ProxyServer.getInstance().getServers().remove(serverInfo.getServiceId().getServerId());
-            } catch (Throwable ignored) {
+            } catch (final Throwable ignored) {
             }
 
             cachedServers.remove(serverInfo.getServiceId().getServerId());
@@ -422,7 +421,7 @@ public class CloudProxy implements ICloudService, PlayerChatExecutor {
                                                                                      .getDefaultFallback())) {
                 CollectionWrapper.iterator(ProxyServer.getInstance().getConfig().getListeners(), new Runnabled<ListenerInfo>() {
                     @Override
-                    public void run(ListenerInfo obj) {
+                    public void run(final ListenerInfo obj) {
                         obj.getServerPriority().remove(serverInfo.getServiceId().getServerId());
                     }
                 });
@@ -431,7 +430,7 @@ public class CloudProxy implements ICloudService, PlayerChatExecutor {
             if (CloudAPI.getInstance().getModuleProperties().contains("notifyService") && CloudAPI.getInstance()
                                                                                                   .getModuleProperties()
                                                                                                   .getBoolean("notifyService")) {
-                for (ProxiedPlayer proxiedPlayer : ProxyServer.getInstance().getPlayers()) {
+                for (final ProxiedPlayer proxiedPlayer : ProxyServer.getInstance().getPlayers()) {
                     if (proxiedPlayer.hasPermission("cloudnet.notify")) {
                         proxiedPlayer.sendMessage(ChatColor.translateAlternateColorCodes('&',
                                                                                          CloudAPI.getInstance()
@@ -447,28 +446,28 @@ public class CloudProxy implements ICloudService, PlayerChatExecutor {
         }
 
         @Override
-        public void onProxyAdd(ProxyInfo proxyInfo) {
+        public void onProxyAdd(final ProxyInfo proxyInfo) {
             ProxyServer.getInstance().getPluginManager().callEvent(new ProxiedProxyAddEvent(proxyInfo));
         }
 
         @Override
-        public void onProxyInfoUpdate(ProxyInfo proxyInfo) {
+        public void onProxyInfoUpdate(final ProxyInfo proxyInfo) {
             ProxyServer.getInstance().getPluginManager().callEvent(new ProxiedProxyInfoUpdateEvent(proxyInfo));
         }
 
         @Override
-        public void onProxyRemove(ProxyInfo proxyInfo) {
+        public void onProxyRemove(final ProxyInfo proxyInfo) {
             ProxyServer.getInstance().getPluginManager().callEvent(new ProxiedProxyRemoveEvent(proxyInfo));
         }
 
         @Override
-        public void onCloudNetworkUpdate(CloudNetwork cloudNetwork) {
+        public void onCloudNetworkUpdate(final CloudNetwork cloudNetwork) {
             ProxyServer.getInstance().getPluginManager().callEvent(new ProxiedCloudNetworkUpdateEvent(cloudNetwork));
 
             if (cloudNetwork.getProxyGroups().containsKey(CloudAPI.getInstance().getGroup())) {
-                ProxyGroup proxyGroup = cloudNetwork.getProxyGroups().get(CloudAPI.getInstance().getGroup());
+                final ProxyGroup proxyGroup = cloudNetwork.getProxyGroups().get(CloudAPI.getInstance().getGroup());
                 if (proxyGroup.getProxyConfig().isEnabled() && proxyGroup.getProxyConfig().isMaintenance()) {
-                    for (ProxiedPlayer proxiedPlayer : ProxyServer.getInstance().getPlayers()) {
+                    for (final ProxiedPlayer proxiedPlayer : ProxyServer.getInstance().getPlayers()) {
                         if (!proxyGroup.getProxyConfig().getWhitelist().contains(proxiedPlayer.getName()) && !proxiedPlayer.hasPermission(
                             "cloudnet.maintenance")) {
                             proxiedPlayer.disconnect(ChatColor.translateAlternateColorCodes('&',
@@ -486,9 +485,9 @@ public class CloudProxy implements ICloudService, PlayerChatExecutor {
                                                                               .getProxyConfig()
                                                                               .getTabList()
                                                                               .isEnabled()) {
-                TabList tabList = CloudProxy.getInstance().getProxyGroup().getProxyConfig().getTabList();
+                final TabList tabList = CloudProxy.getInstance().getProxyGroup().getProxyConfig().getTabList();
 
-                for (ProxiedPlayer proxiedPlayer : ProxyServer.getInstance().getPlayers()) {
+                for (final ProxiedPlayer proxiedPlayer : ProxyServer.getInstance().getPlayers()) {
                     proxiedPlayer.setTabHeader(new TextComponent(ChatColor.translateAlternateColorCodes('&', tabList.getHeader()
                                                                                                                     .replace("%proxy%",
                                                                                                                              CloudAPI.getInstance()
@@ -581,7 +580,7 @@ public class CloudProxy implements ICloudService, PlayerChatExecutor {
         }
 
         @Override
-        public void onCustomChannelMessageReceive(String channel, String message, Document document) {
+        public void onCustomChannelMessageReceive(final String channel, final String message, final Document document) {
             if (handle(channel, message, document)) {
                 return;
             }
@@ -589,7 +588,7 @@ public class CloudProxy implements ICloudService, PlayerChatExecutor {
         }
 
         @Override
-        public void onCustomSubChannelMessageReceive(String channel, String message, Document document) {
+        public void onCustomSubChannelMessageReceive(final String channel, final String message, final Document document) {
             if (handle(channel, message, document)) {
                 return;
             }
@@ -597,24 +596,24 @@ public class CloudProxy implements ICloudService, PlayerChatExecutor {
         }
 
         @Override
-        public void onPlayerLoginNetwork(CloudPlayer cloudPlayer) {
+        public void onPlayerLoginNetwork(final CloudPlayer cloudPlayer) {
             ProxyServer.getInstance().getPluginManager().callEvent(new ProxiedPlayerLoginEvent(cloudPlayer));
         }
 
         @Override
-        public void onPlayerDisconnectNetwork(CloudPlayer cloudPlayer) {
+        public void onPlayerDisconnectNetwork(final CloudPlayer cloudPlayer) {
             ProxyServer.getInstance().getPluginManager().callEvent(new ProxiedPlayerLogoutEvent(cloudPlayer));
             cloudPlayers.remove(cloudPlayer.getUniqueId());
         }
 
         @Override
-        public void onPlayerDisconnectNetwork(UUID uniqueId) {
+        public void onPlayerDisconnectNetwork(final UUID uniqueId) {
             ProxyServer.getInstance().getPluginManager().callEvent(new ProxiedPlayerLogoutUniqueEvent(uniqueId));
             cloudPlayers.remove(uniqueId);
         }
 
         @Override
-        public void onPlayerUpdate(CloudPlayer cloudPlayer) {
+        public void onPlayerUpdate(final CloudPlayer cloudPlayer) {
             if (cloudPlayers.containsKey(cloudPlayer.getUniqueId())) {
                 cloudPlayers.put(cloudPlayer.getUniqueId(), cloudPlayer);
             }
@@ -622,16 +621,16 @@ public class CloudProxy implements ICloudService, PlayerChatExecutor {
         }
 
         @Override
-        public void onOfflinePlayerUpdate(OfflinePlayer offlinePlayer) {
+        public void onOfflinePlayerUpdate(final OfflinePlayer offlinePlayer) {
             ProxyServer.getInstance().getPluginManager().callEvent(new ProxiedOfflinePlayerUpdateEvent(offlinePlayer));
         }
 
         @Override
-        public void onUpdateOnlineCount(int onlineCount) {
+        public void onUpdateOnlineCount(final int onlineCount) {
             ProxyServer.getInstance().getPluginManager().callEvent(new ProxiedOnlineCountUpdateEvent(onlineCount));
         }
 
-        private boolean handle(String channel, String message, Document document) {
+        private boolean handle(final String channel, final String message, final Document document) {
 
             if (channel.equalsIgnoreCase("cloudnet_internal")) {
 
@@ -640,9 +639,9 @@ public class CloudProxy implements ICloudService, PlayerChatExecutor {
                 }
 
                 if (message.equalsIgnoreCase("sendMessage")) {
-                    UUID uniqueId = document.getObject("uniqueId", UUID.class);
+                    final UUID uniqueId = document.getObject("uniqueId", UUID.class);
                     if (uniqueId != null) {
-                        ProxiedPlayer proxiedPlayer = ProxyServer.getInstance().getPlayer(uniqueId);
+                        final ProxiedPlayer proxiedPlayer = ProxyServer.getInstance().getPlayer(uniqueId);
 
                         if (proxiedPlayer != null) {
                             proxiedPlayer.sendMessage(new TextComponent(TextComponent.fromLegacyText(document.getString("message"))));
@@ -653,9 +652,9 @@ public class CloudProxy implements ICloudService, PlayerChatExecutor {
 
 
                 if (message.equalsIgnoreCase("sendMessage_basecomponent")) {
-                    UUID uniqueId = document.getObject("uniqueId", UUID.class);
+                    final UUID uniqueId = document.getObject("uniqueId", UUID.class);
                     if (uniqueId != null) {
-                        ProxiedPlayer proxiedPlayer = ProxyServer.getInstance().getPlayer(uniqueId);
+                        final ProxiedPlayer proxiedPlayer = ProxyServer.getInstance().getPlayer(uniqueId);
 
                         if (proxiedPlayer != null) {
                             proxiedPlayer.sendMessage(document.getObject("baseComponent", BaseComponent.class));
@@ -664,9 +663,9 @@ public class CloudProxy implements ICloudService, PlayerChatExecutor {
                 }
 
                 if (message.equalsIgnoreCase("kickPlayer")) {
-                    UUID uniqueId = document.getObject("uniqueId", UUID.class);
+                    final UUID uniqueId = document.getObject("uniqueId", UUID.class);
                     if (uniqueId != null) {
-                        ProxiedPlayer proxiedPlayer = ProxyServer.getInstance().getPlayer(uniqueId);
+                        final ProxiedPlayer proxiedPlayer = ProxyServer.getInstance().getPlayer(uniqueId);
 
                         if (proxiedPlayer != null) {
                             proxiedPlayer.disconnect(document.getString("reason"));
@@ -676,9 +675,9 @@ public class CloudProxy implements ICloudService, PlayerChatExecutor {
                 }
 
                 if (message.equalsIgnoreCase("sendActionbar")) {
-                    UUID uniqueId = document.getObject("uniqueId", UUID.class);
+                    final UUID uniqueId = document.getObject("uniqueId", UUID.class);
                     if (uniqueId != null) {
-                        ProxiedPlayer proxiedPlayer = ProxyServer.getInstance().getPlayer(uniqueId);
+                        final ProxiedPlayer proxiedPlayer = ProxyServer.getInstance().getPlayer(uniqueId);
 
                         if (proxiedPlayer != null) {
                             proxiedPlayer.sendMessage(ChatMessageType.ACTION_BAR,
@@ -694,11 +693,11 @@ public class CloudProxy implements ICloudService, PlayerChatExecutor {
                         return true;
                     }
 
-                    UUID uniqueId = document.getObject("uniqueId", UUID.class);
-                    ProxiedPlayer proxiedPlayer = ProxyServer.getInstance().getPlayer(uniqueId);
+                    final UUID uniqueId = document.getObject("uniqueId", UUID.class);
+                    final ProxiedPlayer proxiedPlayer = ProxyServer.getInstance().getPlayer(uniqueId);
 
                     if (proxiedPlayer != null) {
-                        Title title = ProxyServer.getInstance().createTitle();
+                        final Title title = ProxyServer.getInstance().createTitle();
 
                         if (document.contains("title")) {
                             title.title(TextComponent.fromLegacyText(document.getString("title")));
@@ -716,10 +715,10 @@ public class CloudProxy implements ICloudService, PlayerChatExecutor {
                 }
 
                 if (message.equalsIgnoreCase("sendPlayer")) {
-                    net.md_5.bungee.api.config.ServerInfo serverInfo = ProxyServer.getInstance()
-                                                                                  .getServerInfo(document.getString("server"));
+                    final net.md_5.bungee.api.config.ServerInfo serverInfo = ProxyServer.getInstance().getServerInfo(document.getString(
+                        "server"));
                     if (serverInfo != null) {
-                        ProxiedPlayer proxiedPlayer = ProxyServer.getInstance().getPlayer(document.getObject("uniqueId", UUID.class));
+                        final ProxiedPlayer proxiedPlayer = ProxyServer.getInstance().getPlayer(document.getObject("uniqueId", UUID.class));
                         if (proxiedPlayer != null) {
                             proxiedPlayer.connect(serverInfo);
                         }

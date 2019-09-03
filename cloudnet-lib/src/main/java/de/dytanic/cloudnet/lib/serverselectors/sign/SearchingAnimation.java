@@ -8,13 +8,13 @@ import java.util.Collection;
 
 public class SearchingAnimation {
 
-    private int animations;
+    private final int animations;
 
-    private int animationsPerSecond;
+    private final int animationsPerSecond;
 
-    private Collection<SignLayout> searchingLayouts;
+    private final Collection<SignLayout> searchingLayouts;
 
-    public SearchingAnimation(int animations, int animationsPerSecond, Collection<SignLayout> searchingLayouts) {
+    public SearchingAnimation(final int animations, final int animationsPerSecond, final Collection<SignLayout> searchingLayouts) {
         this.animations = animations;
         this.animationsPerSecond = animationsPerSecond;
         this.searchingLayouts = searchingLayouts;

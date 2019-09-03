@@ -17,13 +17,13 @@ import java.util.Objects;
  */
 public class CloudServer implements INetworkComponent {
 
-    private ServiceId serviceId;
+    private final ServiceId serviceId;
 
-    private CloudServerMeta cloudServerMeta;
+    private final CloudServerMeta cloudServerMeta;
 
-    private Wrapper wrapper;
+    private final Wrapper wrapper;
 
-    private ServerGroupType serverGroupType;
+    private final ServerGroupType serverGroupType;
 
     private ServerInfo serverInfo;
 
@@ -31,7 +31,7 @@ public class CloudServer implements INetworkComponent {
 
     private Channel channel;
 
-    public CloudServer(Wrapper wrapper, ServerInfo serverInfo, CloudServerMeta cloudServerMeta) {
+    public CloudServer(final Wrapper wrapper, final ServerInfo serverInfo, final CloudServerMeta cloudServerMeta) {
         this.serverInfo = serverInfo;
         this.serviceId = cloudServerMeta.getServiceId();
         this.lastServerInfo = serverInfo;
@@ -44,7 +44,7 @@ public class CloudServer implements INetworkComponent {
         return serverInfo;
     }
 
-    public void setServerInfo(ServerInfo serverInfo) {
+    public void setServerInfo(final ServerInfo serverInfo) {
         this.serverInfo = serverInfo;
     }
 
@@ -54,7 +54,7 @@ public class CloudServer implements INetworkComponent {
     }
 
     @Override
-    public void setChannel(Channel channel) {
+    public void setChannel(final Channel channel) {
         this.channel = channel;
     }
 
@@ -70,7 +70,7 @@ public class CloudServer implements INetworkComponent {
         return lastServerInfo;
     }
 
-    public void setLastServerInfo(ServerInfo lastServerInfo) {
+    public void setLastServerInfo(final ServerInfo lastServerInfo) {
         this.lastServerInfo = lastServerInfo;
     }
 

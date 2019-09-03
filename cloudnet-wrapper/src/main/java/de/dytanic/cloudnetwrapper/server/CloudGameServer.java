@@ -43,13 +43,13 @@ import java.util.zip.ZipFile;
  */
 public class CloudGameServer extends AbstractScreenService implements ServerDispatcher {
 
-    private CloudServerMeta cloudServerMeta;
-    private Path dir;
-    private String path;
+    private final CloudServerMeta cloudServerMeta;
+    private final Path dir;
+    private final String path;
     private ServerInfo serverInfo;
     private Process instance;
 
-    public CloudGameServer(CloudServerMeta cloudServerMeta) {
+    public CloudGameServer(final CloudServerMeta cloudServerMeta) {
         this.cloudServerMeta = cloudServerMeta;
         this.path = CloudNetWrapper.getInstance()
                                    .getWrapperConfig()
@@ -111,18 +111,18 @@ public class CloudGameServer extends AbstractScreenService implements ServerDisp
     @Override
     public boolean bootstrap() throws Exception {
 
-        long startupTime = System.currentTimeMillis();
+        final long startupTime = System.currentTimeMillis();
 
-        for (ServerInstallablePlugin url : cloudServerMeta.getPlugins()) {
+        for (final ServerInstallablePlugin url : cloudServerMeta.getPlugins()) {
             switch (url.getPluginResourceType()) {
                 case URL: {
                     if (!Files.exists(Paths.get("local/cache/web_plugins/" + url.getName() + ".jar"))) {
                         try {
-                            URLConnection urlConnection = new java.net.URL(url.getUrl()).openConnection();
+                            final URLConnection urlConnection = new java.net.URL(url.getUrl()).openConnection();
                             urlConnection.setRequestProperty("User-Agent",
                                                              "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.95 Safari/537.11");
                             Files.copy(urlConnection.getInputStream(), Paths.get("local/cache/web_plugins/" + url.getName() + ".jar"));
-                        } catch (Exception ex) {
+                        } catch (final Exception ex) {
                             ex.printStackTrace();
                         }
                     }
@@ -132,9 +132,11 @@ public class CloudGameServer extends AbstractScreenService implements ServerDisp
                     if (!Files.exists(Paths.get("local/cache/web_plugins/" + url.getName() + ".jar")) && CloudNetWrapper.getInstance()
                                                                                                                         .getSimpledUser() != null) {
                         try {
-                            URLConnection urlConnection = new java.net.URL(new StringBuilder(CloudNetWrapper.getInstance()
-                                                                                                            .getOptionSet()
-                                                                                                            .has("ssl") ? "https://" : "http://")
+                            final URLConnection urlConnection = new java.net.URL(new StringBuilder(CloudNetWrapper.getInstance()
+                                                                                                                  .getOptionSet()
+                                                                                                                  .has("ssl")
+                                                                                                   ? "https://"
+                                                                                                   : "http://")
                                                                                .append(CloudNetWrapper.getInstance()
                                                                                                       .getWrapperConfig()
                                                                                                       .getCloudnetHost())
@@ -147,7 +149,7 @@ public class CloudGameServer extends AbstractScreenService implements ServerDisp
                             urlConnection.setRequestProperty("User-Agent",
                                                              "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.95 Safari/537.11");
 
-                            SimpledUser simpledUser = CloudNetWrapper.getInstance().getSimpledUser();
+                            final SimpledUser simpledUser = CloudNetWrapper.getInstance().getSimpledUser();
                             urlConnection.setRequestProperty("-Xcloudnet-user", simpledUser.getUserName());
                             urlConnection.setRequestProperty("-Xcloudnet-token", simpledUser.getApiToken());
                             urlConnection.setRequestProperty("-Xmessage", "plugin");
@@ -157,7 +159,7 @@ public class CloudGameServer extends AbstractScreenService implements ServerDisp
                             System.out.println("Downloading " + url.getName() + ".jar");
                             Files.copy(urlConnection.getInputStream(), Paths.get("local/cache/web_plugins/" + url.getName() + ".jar"));
                             System.out.println("Download was completed successfully!");
-                        } catch (Exception ex) {
+                        } catch (final Exception ex) {
                             ex.printStackTrace();
                         }
                     }
@@ -171,9 +173,11 @@ public class CloudGameServer extends AbstractScreenService implements ServerDisp
         Files.createDirectories(this.dir);
 
         //Template
-        MasterTemplateLoader templateLoader = new MasterTemplateLoader(new StringBuilder(CloudNetWrapper.getInstance()
-                                                                                                        .getOptionSet()
-                                                                                                        .has("ssl") ? "https://" : "http://")
+        final MasterTemplateLoader templateLoader = new MasterTemplateLoader(new StringBuilder(CloudNetWrapper.getInstance()
+                                                                                                              .getOptionSet()
+                                                                                                              .has("ssl")
+                                                                                               ? "https://"
+                                                                                               : "http://")
                                                                            .append(CloudNetWrapper.getInstance()
                                                                                                   .getWrapperConfig()
                                                                                                   .getCloudnetHost())
@@ -183,22 +187,22 @@ public class CloudGameServer extends AbstractScreenService implements ServerDisp
                                                                                                   .getWebPort())
                                                                            .append("/cloudnet/api/v1/download")
                                                                            .toString(),
-                                                                       dir.toString() + "/template.zip",
-                                                                       CloudNetWrapper.getInstance().getSimpledUser(),
-                                                                       null,
-                                                                       null,
-                                                                       cloudServerMeta.getTemplateName());
+                                                                             dir.toString() + "/template.zip",
+                                                                             CloudNetWrapper.getInstance().getSimpledUser(),
+                                                                             null,
+                                                                             null,
+                                                                             cloudServerMeta.getTemplateName());
         System.out.println("Downloading cloud server for " + this.cloudServerMeta.getServiceId());
         templateLoader.load();
         templateLoader.unZip(dir.toString());
 
         FileUtility.copyFilesInDirectory(new File(dir.toString()), new File(path));
 
-        if (cloudServerMeta.getServerGroupType().equals(ServerGroupType.CAULDRON)) {
+        if (cloudServerMeta.getServerGroupType() == ServerGroupType.CAULDRON) {
             try {
                 System.out.println("Downloading cauldron.zip...");
-                File file = new File(path + "/cauldron.zip");
-                URLConnection connection = new URL("https://yivesmirror.com/files/cauldron/cauldron-1.7.10-2.1403.1.54.zip").openConnection();
+                final File file = new File(path + "/cauldron.zip");
+                final URLConnection connection = new URL("https://yivesmirror.com/files/cauldron/cauldron-1.7.10-2.1403.1.54.zip").openConnection();
                 connection.setUseCaches(false);
                 connection.setRequestProperty("User-Agent",
                                               "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.95 Safari/537.11");
@@ -207,10 +211,10 @@ public class CloudGameServer extends AbstractScreenService implements ServerDisp
                 ((HttpURLConnection) connection).disconnect();
                 System.out.println("Download was completed successfully!");
 
-                ZipFile zip = new ZipFile(file);
-                Enumeration<? extends ZipEntry> entryEnumeration = zip.entries();
+                final ZipFile zip = new ZipFile(file);
+                final Enumeration<? extends ZipEntry> entryEnumeration = zip.entries();
                 while (entryEnumeration.hasMoreElements()) {
-                    ZipEntry entry = entryEnumeration.nextElement();
+                    final ZipEntry entry = entryEnumeration.nextElement();
 
                     if (!entry.isDirectory()) {
                         extractEntry(zip, entry, path);
@@ -222,20 +226,20 @@ public class CloudGameServer extends AbstractScreenService implements ServerDisp
 
                 new File(path + "/cauldron-1.7.10-2.1403.1.54-server.jar").renameTo(new File(path + "/cauldron.jar"));
 
-                try (FileWriter fileWriter = new FileWriter(path + "/eula.txt")) {
+                try (final FileWriter fileWriter = new FileWriter(path + "/eula.txt")) {
                     fileWriter.write("eula=true");
                     fileWriter.flush();
                 }
-            } catch (Exception e) {
+            } catch (final Exception e) {
                 e.printStackTrace();
             }
         }
 
-        if (cloudServerMeta.getServerGroupType().equals(ServerGroupType.GLOWSTONE)) {
-            Path path = Paths.get(this.path + "/glowstone.jar");
+        if (cloudServerMeta.getServerGroupType() == ServerGroupType.GLOWSTONE) {
+            final Path path = Paths.get(this.path + "/glowstone.jar");
             if (!Files.exists(path)) {
                 try {
-                    URLConnection connection = new URL("https://yivesmirror.com/grab/glowstone/Glowstone-latest.jar").openConnection();
+                    final URLConnection connection = new URL("https://yivesmirror.com/grab/glowstone/Glowstone-latest.jar").openConnection();
                     connection.setUseCaches(false);
                     connection.setRequestProperty("User-Agent",
                                                   "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.95 Safari/537.11");
@@ -244,28 +248,28 @@ public class CloudGameServer extends AbstractScreenService implements ServerDisp
                     Files.copy(connection.getInputStream(), path);
                     System.out.println("Download was completed successfully");
                     ((HttpURLConnection) connection).disconnect();
-                } catch (Exception ex) {
+                } catch (final Exception ex) {
                     ex.printStackTrace();
                 }
             }
         }
 
         //Init
-        for (ServerInstallablePlugin plugin : cloudServerMeta.getPlugins()) {
+        for (final ServerInstallablePlugin plugin : cloudServerMeta.getPlugins()) {
             FileUtility.copyFileToDirectory(new File("local/cache/web_plugins/" + plugin.getName() + ".jar"), new File(path + "/plugins"));
         }
 
-        for (ServerInstallablePlugin plugin : cloudServerMeta.getPlugins()) {
+        for (final ServerInstallablePlugin plugin : cloudServerMeta.getPlugins()) {
             FileUtility.copyFileToDirectory(new File("local/cache/web_plugins/" + plugin.getName() + ".jar"), new File(path + "/plugins"));
         }
 
-        if (cloudServerMeta.getServerGroupType().equals(ServerGroupType.BUKKIT)) {
+        if (cloudServerMeta.getServerGroupType() == ServerGroupType.BUKKIT) {
             if (!Files.exists(Paths.get(path + "/spigot.jar"))) {
                 FileUtility.copyFileToDirectory(new File("local/spigot.jar"), new File(path));
             }
         }
 
-        if (cloudServerMeta.getServerGroupType().equals(ServerGroupType.GLOWSTONE)) {
+        if (cloudServerMeta.getServerGroupType() == ServerGroupType.GLOWSTONE) {
             if (!Files.exists(Paths.get(path + "/config"))) {
                 Files.createDirectories(Paths.get(path + "/config"));
             }
@@ -299,22 +303,24 @@ public class CloudGameServer extends AbstractScreenService implements ServerDisp
 
         try {
             FileUtility.copyFilesInDirectory(new File("local/global_cloudserver"), new File(path));
-        } catch (Exception ex) {
+        } catch (final IOException ex) {
+            ex.printStackTrace();
         }
 
         if (CloudNetWrapper.getInstance().getWrapperConfig().isViaVersion()) {
             if (!Files.exists(Paths.get("local/viaversion.jar"))) {
                 try {
                     System.out.println("Downloading ViaVersion...");
-                    URLConnection url = new URL("https://ci.viaversion.com/job/ViaVersion/177/artifact/jar/target/ViaVersion-1.2.0.jar").openConnection();
+                    final URLConnection url = new URL(
+                        "https://ci.viaversion.com/job/ViaVersion/177/artifact/jar/target/ViaVersion-1.2.0.jar").openConnection();
                     url.setRequestProperty("User-Agent",
                                            "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.95 Safari/537.11");
                     url.connect();
                     Files.copy(url.getInputStream(), Paths.get("local/viaversion.jar"));
                     ((HttpURLConnection) url).disconnect();
                     System.out.println("Download was completed successfully!");
-                } catch (Exception ex) {
-
+                } catch (final Exception ex) {
+                    ex.printStackTrace();
                 }
             }
             FileUtility.copyFileToDirectory(new File("local/viaversion.jar"), new File(path + "/plugins"));
@@ -325,24 +331,26 @@ public class CloudGameServer extends AbstractScreenService implements ServerDisp
         String motd = "Default Motd";
         int maxPlayers = 0;
 
-        if (!cloudServerMeta.getServerGroupType().equals(ServerGroupType.GLOWSTONE)) {
-            Properties properties = new Properties();
-            try (InputStreamReader inputStreamReader = new InputStreamReader(Files.newInputStream(Paths.get(path + "/server.properties")))) {
+        if (cloudServerMeta.getServerGroupType() != ServerGroupType.GLOWSTONE) {
+            final Properties properties = new Properties();
+            try (final InputStreamReader inputStreamReader = new InputStreamReader(Files.newInputStream(Paths.get(
+                path + "/server.properties")))) {
                 properties.load(inputStreamReader);
             }
 
             if (properties.isEmpty() || !properties.contains("max-players")) {
                 properties.setProperty("max-players", "100");
                 FileUtility.insertData("files/server.properties", path + "/server.properties");
-                try (InputStreamReader inputStreamReader = new InputStreamReader(Files.newInputStream(Paths.get(path + "/server.properties")))) {
+                try (final InputStreamReader inputStreamReader = new InputStreamReader(Files.newInputStream(Paths.get(
+                    path + "/server.properties")))) {
                     properties.load(inputStreamReader);
                 }
                 System.err.println("Filled empty server.properties (or missing \"max-players\" entry) of server [" + this.cloudServerMeta.getServiceId() + "], please fix this error in the server.properties");
             }
 
-            Enumeration enumeration = this.cloudServerMeta.getServerProperties().keys();
+            final Enumeration enumeration = this.cloudServerMeta.getServerProperties().keys();
             while (enumeration.hasMoreElements()) {
-                String x = enumeration.nextElement().toString();
+                final String x = enumeration.nextElement().toString();
                 properties.setProperty(x, this.cloudServerMeta.getServerProperties().getProperty(x));
             }
 
@@ -354,18 +362,18 @@ public class CloudGameServer extends AbstractScreenService implements ServerDisp
             motd = properties.getProperty("motd");
             try {
                 maxPlayers = Integer.parseInt(properties.getProperty("max-players"));
-            } catch (NumberFormatException e) {
+            } catch (final NumberFormatException e) {
                 maxPlayers = 100;
             }
 
-            try (OutputStream outputStream = Files.newOutputStream(Paths.get(path + "/server.properties"))) {
+            try (final OutputStream outputStream = Files.newOutputStream(Paths.get(path + "/server.properties"))) {
                 properties.store(outputStream, "CloudNet-Wrapper EDIT");
             }
         } else {
-            try (InputStreamReader inputStreamReader = new InputStreamReader(Files.newInputStream(Paths.get(path + "/config/glowstone.yml")),
-                                                                             StandardCharsets.UTF_8)) {
-                Configuration configuration = ConfigurationProvider.getProvider(YamlConfiguration.class).load(inputStreamReader);
-                Configuration section = configuration.getSection("server");
+            try (final InputStreamReader inputStreamReader = new InputStreamReader(Files.newInputStream(Paths.get(
+                path + "/config/glowstone.yml")), StandardCharsets.UTF_8)) {
+                final Configuration configuration = ConfigurationProvider.getProvider(YamlConfiguration.class).load(inputStreamReader);
+                final Configuration section = configuration.getSection("server");
                 section.set("ip", CloudNetWrapper.getInstance().getWrapperConfig().getInternalIP());
                 section.set("port", cloudServerMeta.getPort());
 
@@ -374,8 +382,8 @@ public class CloudGameServer extends AbstractScreenService implements ServerDisp
 
                 configuration.set("server", section);
                 configuration.set("console.use-jline", false);
-                try (OutputStreamWriter outputStreamWriter = new OutputStreamWriter(Files.newOutputStream(Paths.get(path + "/config/glowstone.yml")),
-                                                                                    StandardCharsets.UTF_8)) {
+                try (final OutputStreamWriter outputStreamWriter = new OutputStreamWriter(Files.newOutputStream(Paths.get(
+                    path + "/config/glowstone.yml")), StandardCharsets.UTF_8)) {
                     ConfigurationProvider.getProvider(YamlConfiguration.class).save(configuration, outputStreamWriter);
                 }
             }
@@ -413,9 +421,9 @@ public class CloudGameServer extends AbstractScreenService implements ServerDisp
         Files.deleteIfExists(Paths.get(path + "/plugins/CloudNetAPI.jar"));
         FileUtility.insertData("files/CloudNetAPI.jar", path + "/plugins/CloudNetAPI.jar");
 
-        StringBuilder commandBuilder = new StringBuilder();
+        final StringBuilder commandBuilder = new StringBuilder();
         commandBuilder.append("java ");
-        for (String command : cloudServerMeta.getProcessParameters()) {
+        for (final String command : cloudServerMeta.getProcessParameters()) {
             commandBuilder.append(command).append(NetworkUtils.SPACE_STRING);
         }
 
@@ -458,7 +466,8 @@ public class CloudGameServer extends AbstractScreenService implements ServerDisp
             executeCommand("stop");
             try {
                 Thread.sleep(1000);
-            } catch (InterruptedException e) {
+            } catch (final InterruptedException e) {
+                e.printStackTrace();
             }
         }
 
@@ -466,25 +475,29 @@ public class CloudGameServer extends AbstractScreenService implements ServerDisp
 
         try {
             Files.deleteIfExists(Paths.get(path + "/plugins/CloudNetAPI.jar"));
-        } catch (IOException e) {
+        } catch (final IOException e) {
+            e.printStackTrace();
         }
 
         if (CloudNetWrapper.getInstance().isCanDeployed()) {
-            MasterTemplateDeploy masterTemplateDeploy = new MasterTemplateDeploy(path,
-                                                                                 new ConnectableAddress(CloudNetWrapper.getInstance()
+            final MasterTemplateDeploy masterTemplateDeploy = new MasterTemplateDeploy(path,
+                                                                                       new ConnectableAddress(CloudNetWrapper.getInstance()
                                                                                                                        .getWrapperConfig()
                                                                                                                        .getCloudnetHost(),
                                                                                                         CloudNetWrapper.getInstance()
                                                                                                                        .getWrapperConfig()
                                                                                                                        .getWebPort()),
-                                                                                 CloudNetWrapper.getInstance().getSimpledUser(),
-                                                                                 CloudNetWrapper.getInstance().getOptionSet().has("ssl"),
-                                                                                 cloudServerMeta.getTemplate(),
-                                                                                 null,
-                                                                                 cloudServerMeta.getTemplateName());
+                                                                                       CloudNetWrapper.getInstance().getSimpledUser(),
+                                                                                       CloudNetWrapper.getInstance()
+                                                                                                      .getOptionSet()
+                                                                                                      .has("ssl"),
+                                                                                       cloudServerMeta.getTemplate(),
+                                                                                       null,
+                                                                                       cloudServerMeta.getTemplateName());
             try {
                 masterTemplateDeploy.deploy();
-            } catch (Exception e) {
+            } catch (final Exception e) {
+                e.printStackTrace();
             }
         }
 
@@ -506,7 +519,7 @@ public class CloudGameServer extends AbstractScreenService implements ServerDisp
         return instance;
     }
 
-    private void extractEntry(ZipFile zipFile, ZipEntry entry, String destDir) throws IOException {
+    private void extractEntry(final ZipFile zipFile, final ZipEntry entry, final String destDir) throws IOException {
         final String path = entry.getName();
         if (entry.isDirectory()) {
             Files.createDirectories(Paths.get(destDir, path));

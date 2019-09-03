@@ -15,11 +15,11 @@ import de.dytanic.cloudnet.lib.utility.document.Document;
  */
 public class PacketOutCopyServer extends Packet {
 
-    public PacketOutCopyServer(ServerInfo serverInfo) {
+    public PacketOutCopyServer(final ServerInfo serverInfo) {
         super(PacketRC.CN_CORE + 10, new Document("serverInfo", serverInfo));
     }
 
-    public PacketOutCopyServer(ServerInfo serverInfo, Template template) {
+    public PacketOutCopyServer(final ServerInfo serverInfo, final Template template) {
         super(PacketRC.CN_CORE + 10, new Document("serverInfo", serverInfo).append("template", template));
     }
 }

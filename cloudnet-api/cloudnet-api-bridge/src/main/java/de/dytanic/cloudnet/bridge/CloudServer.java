@@ -60,36 +60,36 @@ public class CloudServer implements ICloudService {
 
     private static CloudServer instance;
 
-    private BukkitBootstrap bukkitBootstrap;
+    private final BukkitBootstrap bukkitBootstrap;
 
-    private Map<UUID, CloudPlayer> cloudPlayers = NetworkUtils.newConcurrentHashMap();
+    private final Map<UUID, CloudPlayer> cloudPlayers = NetworkUtils.newConcurrentHashMap();
 
     /*=================================================*/
     private int maxPlayers;
 
     private String motd;
 
-    private String hostAdress;
+    private final String hostAdress;
 
-    private int port;
+    private final int port;
 
     private ServerState serverState;
 
     private ServerConfig serverConfig;
 
-    private Template template;
+    private final Template template;
 
-    private int memory;
+    private final int memory;
 
     private boolean allowAutoStart = true;
     /*=================================================*/
 
-    public CloudServer(BukkitBootstrap bukkitBootstrap, CloudAPI cloudAPI) {
+    public CloudServer(final BukkitBootstrap bukkitBootstrap, final CloudAPI cloudAPI) {
         instance = this;
         cloudAPI.setCloudService(this);
 
         this.bukkitBootstrap = bukkitBootstrap;
-        ServerInfo serverInfo = cloudAPI.getConfig().getObject("serverInfo", new TypeToken<ServerInfo>() {}.getType());
+        final ServerInfo serverInfo = cloudAPI.getConfig().getObject("serverInfo", new TypeToken<ServerInfo>() {}.getType());
 
         cloudAPI.getNetworkHandlerProvider().registerHandler(new NetworkHandlerImpl());
         this.allowAutoStart = !cloudAPI.getConfig().contains("cloudProcess");
@@ -113,24 +113,24 @@ public class CloudServer implements ICloudService {
     }
 
     public void updateDisable() {
-        List<String> list = new CopyOnWriteArrayList<>();
+        final List<String> list = new CopyOnWriteArrayList<>();
 
-        for (Player all : Bukkit.getOnlinePlayers()) {
+        for (final Player all : Bukkit.getOnlinePlayers()) {
             list.add(all.getName());
         }
 
-        ServerInfo serverInfo = new ServerInfo(CloudAPI.getInstance().getServiceId(),
-                                               hostAdress,
-                                               port,
-                                               false,
-                                               list,
-                                               memory,
-                                               motd,
-                                               Bukkit.getOnlinePlayers().size(),
-                                               maxPlayers,
-                                               serverState,
-                                               serverConfig,
-                                               template);
+        final ServerInfo serverInfo = new ServerInfo(CloudAPI.getInstance().getServiceId(),
+                                                     hostAdress,
+                                                     port,
+                                                     false,
+                                                     list,
+                                                     memory,
+                                                     motd,
+                                                     Bukkit.getOnlinePlayers().size(),
+                                                     maxPlayers,
+                                                     serverState,
+                                                     serverConfig,
+                                                     template);
         CloudAPI.getInstance().getNetworkConnection().sendPacketSynchronized(new PacketOutUpdateServerInfo(serverInfo));
     }
 
@@ -141,23 +141,23 @@ public class CloudServer implements ICloudService {
         bukkitBootstrap.getServer().getScheduler().runTaskAsynchronously(bukkitBootstrap, new Runnable() {
             @Override
             public void run() {
-                List<String> list = new CopyOnWriteArrayList<>();
-                for (Player all : Bukkit.getOnlinePlayers()) {
+                final List<String> list = new CopyOnWriteArrayList<>();
+                for (final Player all : Bukkit.getOnlinePlayers()) {
                     list.add(all.getName());
                 }
 
-                ServerInfo serverInfo = new ServerInfo(CloudAPI.getInstance().getServiceId(),
-                                                       hostAdress,
-                                                       port,
-                                                       true,
-                                                       list,
-                                                       memory,
-                                                       motd,
-                                                       Bukkit.getOnlinePlayers().size(),
-                                                       maxPlayers,
-                                                       serverState,
-                                                       serverConfig,
-                                                       template);
+                final ServerInfo serverInfo = new ServerInfo(CloudAPI.getInstance().getServiceId(),
+                                                             hostAdress,
+                                                             port,
+                                                             true,
+                                                             list,
+                                                             memory,
+                                                             motd,
+                                                             Bukkit.getOnlinePlayers().size(),
+                                                             maxPlayers,
+                                                             serverState,
+                                                             serverConfig,
+                                                             template);
                 CloudAPI.getInstance().update(serverInfo);
             }
         });
@@ -170,7 +170,7 @@ public class CloudServer implements ICloudService {
         setServerState(ServerState.INGAME);
 
         if (isAllowAutoStart()) {
-            SimpleServerGroup simpleServerGroup = CloudAPI.getInstance().getServerGroupData(CloudAPI.getInstance().getGroup());
+            final SimpleServerGroup simpleServerGroup = CloudAPI.getInstance().getServerGroupData(CloudAPI.getInstance().getGroup());
             CloudAPI.getInstance().startGameServer(simpleServerGroup, template);
             setAllowAutoStart(false);
 
@@ -195,27 +195,12 @@ public class CloudServer implements ICloudService {
     }
 
     /**
-     * Updates the ServerInfo
+     * Set the serverState INGAME, LOBBY, OFFLINE for switching Signs or your API thinks
+     *
+     * @param serverState
      */
-    public void update() {
-        List<String> list = new CopyOnWriteArrayList<>();
-        for (Player all : Bukkit.getOnlinePlayers()) {
-            list.add(all.getName());
-        }
-
-        ServerInfo serverInfo = new ServerInfo(CloudAPI.getInstance().getServiceId(),
-                                               hostAdress,
-                                               port,
-                                               true,
-                                               list,
-                                               memory,
-                                               motd,
-                                               Bukkit.getOnlinePlayers().size(),
-                                               maxPlayers,
-                                               serverState,
-                                               serverConfig,
-                                               template);
-        CloudAPI.getInstance().update(serverInfo);
+    public void setServerState(final ServerState serverState) {
+        this.serverState = serverState;
     }
 
     /**
@@ -223,22 +208,41 @@ public class CloudServer implements ICloudService {
      *
      * @param allowAutoStart
      */
-    public void setAllowAutoStart(boolean allowAutoStart) {
+    public void setAllowAutoStart(final boolean allowAutoStart) {
         this.allowAutoStart = allowAutoStart;
     }
 
+    /**
+     * Updates the ServerInfo
+     */
+    public void update() {
+        final List<String> list = new CopyOnWriteArrayList<>();
+        for (final Player all : Bukkit.getOnlinePlayers()) {
+            list.add(all.getName());
+        }
+
+        final ServerInfo serverInfo = new ServerInfo(CloudAPI.getInstance().getServiceId(),
+                                                     hostAdress,
+                                                     port,
+                                                     true,
+                                                     list,
+                                                     memory,
+                                                     motd,
+                                                     Bukkit.getOnlinePlayers().size(),
+                                                     maxPlayers,
+                                                     serverState,
+                                                     serverConfig,
+                                                     template);
+        CloudAPI.getInstance().update(serverInfo);
+    }
+
     @Deprecated
-    public void getPlayerAndCache(UUID uniqueId) {
-        CloudPlayer cloudPlayer = CloudAPI.getInstance().getOnlinePlayer(uniqueId);
+    public void getPlayerAndCache(final UUID uniqueId) {
+        final CloudPlayer cloudPlayer = CloudAPI.getInstance().getOnlinePlayer(uniqueId);
         if (cloudPlayer != null) {
             cloudPlayer.setPlayerExecutor(new PlayerExecutorBridge());
             this.cloudPlayers.put(uniqueId, cloudPlayer);
         }
-    }
-
-    public void setServerStateAndUpdate(ServerState serverStateAndUpdate) {
-        this.serverState = serverStateAndUpdate;
-        update();
     }
 
     public int getPort() {
@@ -258,13 +262,9 @@ public class CloudServer implements ICloudService {
         return serverConfig;
     }
 
-    /**
-     * Sets the serverConfig in a new default style
-     *
-     * @param serverConfig
-     */
-    public void setServerConfig(ServerConfig serverConfig) {
-        this.serverConfig = serverConfig;
+    public void setServerStateAndUpdate(final ServerState serverStateAndUpdate) {
+        this.serverState = serverStateAndUpdate;
+        update();
     }
 
     /**
@@ -277,12 +277,12 @@ public class CloudServer implements ICloudService {
     }
 
     /**
-     * Set the serverState INGAME, LOBBY, OFFLINE for switching Signs or your API thinks
+     * Sets the serverConfig in a new default style
      *
-     * @param serverState
+     * @param serverConfig
      */
-    public void setServerState(ServerState serverState) {
-        this.serverState = serverState;
+    public void setServerConfig(final ServerConfig serverConfig) {
+        this.serverConfig = serverConfig;
     }
 
     /**
@@ -299,16 +299,16 @@ public class CloudServer implements ICloudService {
      *
      * @param maxPlayers
      */
-    public void setMaxPlayers(int maxPlayers) {
+    public void setMaxPlayers(final int maxPlayers) {
         this.maxPlayers = maxPlayers;
     }
 
-    public void setMaxPlayersAndUpdate(int maxPlayers) {
+    public void setMaxPlayersAndUpdate(final int maxPlayers) {
         this.maxPlayers = maxPlayers;
         update();
     }
 
-    public void setMotdAndUpdate(String motd) {
+    public void setMotdAndUpdate(final String motd) {
         this.motd = motd;
         update();
     }
@@ -327,7 +327,7 @@ public class CloudServer implements ICloudService {
      *
      * @param motd
      */
-    public void setMotd(String motd) {
+    public void setMotd(final String motd) {
         this.motd = motd;
     }
 
@@ -343,17 +343,17 @@ public class CloudServer implements ICloudService {
      *
      * @param command
      */
-    public void registerCommand(Command command) {
+    public void registerCommand(final Command command) {
         try {
-            Class<?> clazz = ReflectionUtil.reflectCraftClazz(".CraftServer");
-            CommandMap commandMap;
+            final Class<?> clazz = ReflectionUtil.reflectCraftClazz(".CraftServer");
+            final CommandMap commandMap;
             if (clazz != null) {
                 commandMap = (CommandMap) clazz.getMethod("getCommandMap").invoke(Bukkit.getServer());
             } else {
                 commandMap = (CommandMap) Class.forName("net.glowstone.GlowServer").getMethod("getCommandMap").invoke(Bukkit.getServer());
             }
             commandMap.register("cloudnet", command);
-        } catch (IllegalAccessException | NoSuchMethodException | InvocationTargetException | ClassNotFoundException e) {
+        } catch (final IllegalAccessException | NoSuchMethodException | InvocationTargetException | ClassNotFoundException e) {
             e.printStackTrace();
         }
     }
@@ -392,29 +392,30 @@ public class CloudServer implements ICloudService {
     /**
      * @param player
      */
-    public void updateNameTags(Player player) {
+    public void updateNameTags(final Player player) {
         this.updateNameTags(player, null);
     }
 
-    public void updateNameTags(Player player, Function<Player, PermissionGroup> playerPermissionGroupFunction) {
+    public void updateNameTags(final Player player, final Function<Player, PermissionGroup> playerPermissionGroupFunction) {
         this.updateNameTags(player, playerPermissionGroupFunction, null);
     }
 
-    public void updateNameTags(Player player,
-                               Function<Player, PermissionGroup> playerPermissionGroupFunction,
-                               Function<Player, PermissionGroup> allOtherPlayerPermissionGroupFunction) {
+    public void updateNameTags(final Player player,
+                               final Function<Player, PermissionGroup> playerPermissionGroupFunction,
+                               final Function<Player, PermissionGroup> allOtherPlayerPermissionGroupFunction) {
         if (CloudAPI.getInstance().getPermissionPool() == null || !CloudAPI.getInstance().getPermissionPool().isAvailable()) {
             return;
         }
 
-        PermissionGroup playerPermissionGroup = playerPermissionGroupFunction != null ? playerPermissionGroupFunction.apply(player) : getCloudPlayers()
+        final PermissionGroup playerPermissionGroup =
+            playerPermissionGroupFunction != null ? playerPermissionGroupFunction.apply(player) : getCloudPlayers()
             .get(player.getUniqueId())
             .getPermissionEntity()
             .getHighestPermissionGroup(CloudAPI.getInstance().getPermissionPool());
 
         initScoreboard(player);
 
-        for (Player all : player.getServer().getOnlinePlayers()) {
+        for (final Player all : player.getServer().getOnlinePlayers()) {
             initScoreboard(all);
 
             if (playerPermissionGroup != null) {
@@ -446,13 +447,13 @@ public class CloudServer implements ICloudService {
         return cloudPlayers;
     }
 
-    private void initScoreboard(Player all) {
+    private void initScoreboard(final Player all) {
         if (all.getScoreboard() == null) {
             all.setScoreboard(all.getServer().getScoreboardManager().getNewScoreboard());
         }
     }
 
-    private void addTeamEntry(Player target, Player all, PermissionGroup permissionGroup) {
+    private void addTeamEntry(final Player target, final Player all, final PermissionGroup permissionGroup) {
         String teamName = permissionGroup.getTagId() + permissionGroup.getName();
         if (teamName.length() > 16) {
             teamName = teamName.substring(0, 16);
@@ -488,17 +489,17 @@ public class CloudServer implements ICloudService {
         }
 
         try {
-            Method setColor = team.getClass().getDeclaredMethod("setColor", ChatColor.class);
+            final Method setColor = team.getClass().getDeclaredMethod("setColor", ChatColor.class);
             setColor.setAccessible(true);
-            if (permissionGroup.getColor().length() != 0) {
+            if (!permissionGroup.getColor().isEmpty()) {
                 setColor.invoke(team, ChatColor.getByChar(permissionGroup.getColor().replaceAll("&", "").replaceAll("§", "")));
             } else {
                 setColor.invoke(team, ChatColor.getByChar(ChatColor.getLastColors(permissionGroup.getPrefix().replace('&', '§'))
                                                                    .replaceAll("&", "")
                                                                    .replaceAll("§", "")));
             }
-        } catch (NoSuchMethodException ignored) {
-        } catch (IllegalAccessException | InvocationTargetException e) {
+        } catch (final NoSuchMethodException ignored) {
+        } catch (final IllegalAccessException | InvocationTargetException e) {
             e.printStackTrace();
         }
 
@@ -511,14 +512,14 @@ public class CloudServer implements ICloudService {
         target.setDisplayName(ChatColor.translateAlternateColorCodes('&', permissionGroup.getDisplay() + target.getName()));
     }
 
-    public CloudPlayer getCachedPlayer(UUID uniqueId) {
+    public CloudPlayer getCachedPlayer(final UUID uniqueId) {
         return cloudPlayers.get(uniqueId);
     }
 
-    public CloudPlayer getCachedPlayer(String name) {
+    public CloudPlayer getCachedPlayer(final String name) {
         return CollectionWrapper.filter(this.cloudPlayers.values(), new Acceptable<CloudPlayer>() {
             @Override
-            public boolean isAccepted(CloudPlayer cloudPlayer) {
+            public boolean isAccepted(final CloudPlayer cloudPlayer) {
                 return cloudPlayer.getName().equalsIgnoreCase(name);
             }
         });
@@ -543,69 +544,69 @@ public class CloudServer implements ICloudService {
     private class NetworkHandlerImpl implements NetworkHandler {
 
         @Override
-        public void onServerAdd(ServerInfo serverInfo) {
+        public void onServerAdd(final ServerInfo serverInfo) {
             Bukkit.getPluginManager().callEvent(new BukkitServerAddEvent(serverInfo));
         }
 
         @Override
-        public void onServerInfoUpdate(ServerInfo serverInfo) {
+        public void onServerInfoUpdate(final ServerInfo serverInfo) {
             Bukkit.getPluginManager().callEvent(new BukkitServerInfoUpdateEvent(serverInfo));
         }
 
         @Override
-        public void onServerRemove(ServerInfo serverInfo) {
+        public void onServerRemove(final ServerInfo serverInfo) {
             Bukkit.getPluginManager().callEvent(new BukkitServerRemoveEvent(serverInfo));
         }
 
         @Override
-        public void onProxyAdd(ProxyInfo proxyInfo) {
+        public void onProxyAdd(final ProxyInfo proxyInfo) {
             Bukkit.getPluginManager().callEvent(new BukkitProxyAddEvent(proxyInfo));
         }
 
         @Override
-        public void onProxyInfoUpdate(ProxyInfo proxyInfo) {
+        public void onProxyInfoUpdate(final ProxyInfo proxyInfo) {
             Bukkit.getPluginManager().callEvent(new BukkitProxyInfoUpdateEvent(proxyInfo));
         }
 
         @Override
-        public void onProxyRemove(ProxyInfo proxyInfo) {
+        public void onProxyRemove(final ProxyInfo proxyInfo) {
             Bukkit.getPluginManager().callEvent(new BukkitProxyRemoveEvent(proxyInfo));
         }
 
         @Override
-        public void onCloudNetworkUpdate(CloudNetwork cloudNetwork) {
+        public void onCloudNetworkUpdate(final CloudNetwork cloudNetwork) {
             Bukkit.getPluginManager().callEvent(new BukkitCloudNetworkUpdateEvent(cloudNetwork));
         }
 
         @Override
-        public void onCustomChannelMessageReceive(String channel, String message, Document document) {
+        public void onCustomChannelMessageReceive(final String channel, final String message, final Document document) {
             Bukkit.getPluginManager().callEvent(new BukkitCustomChannelMessageReceiveEvent(channel, message, document));
         }
 
         @Override
-        public void onCustomSubChannelMessageReceive(String channel, String message, Document document) {
+        public void onCustomSubChannelMessageReceive(final String channel, final String message, final Document document) {
             Bukkit.getPluginManager().callEvent(new BukkitSubChannelMessageEvent(channel, message, document));
 
             if (channel.equalsIgnoreCase("cloudnet_internal")) {
                 if (message.equalsIgnoreCase("install_plugin")) {
-                    String url = document.getString("url");
+                    final String url = document.getString("url");
                     try {
-                        URLConnection urlConnection = new URL(url).openConnection();
+                        final URLConnection urlConnection = new URL(url).openConnection();
                         urlConnection.setRequestProperty("User-Agent",
                                                          "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.95 Safari/537.11");
                         urlConnection.connect();
                         Files.copy(urlConnection.getInputStream(), Paths.get("plugins/" + document.getString("name") + ".jar"));
-                        File file = new File("plugins/" + document.getString("name") + ".jar");
+                        final File file = new File("plugins/" + document.getString("name") + ".jar");
 
                         Bukkit.getScheduler().runTask(CloudServer.this.getPlugin(), () -> {
                             try {
-                                Plugin plugin = Bukkit.getPluginManager().loadPlugin(file);
+                                final Plugin plugin = Bukkit.getPluginManager().loadPlugin(file);
                                 Bukkit.getPluginManager().enablePlugin(plugin);
-                            } catch (InvalidPluginException | InvalidDescriptionException e) {
+                            } catch (final InvalidPluginException | InvalidDescriptionException e) {
                                 e.printStackTrace();
                             }
                         });
-                    } catch (IOException e) {
+                    } catch (final IOException e) {
                         e.printStackTrace();
                     }
                 }
@@ -614,23 +615,23 @@ public class CloudServer implements ICloudService {
         }
 
         @Override
-        public void onPlayerLoginNetwork(CloudPlayer cloudPlayer) {
+        public void onPlayerLoginNetwork(final CloudPlayer cloudPlayer) {
             //cloudPlayers.put(cloudPlayer.getUniqueId(), cloudPlayer);
             Bukkit.getPluginManager().callEvent(new BukkitPlayerLoginNetworkEvent(cloudPlayer));
         }
 
         @Override
-        public void onPlayerDisconnectNetwork(CloudPlayer cloudPlayer) {
+        public void onPlayerDisconnectNetwork(final CloudPlayer cloudPlayer) {
             Bukkit.getPluginManager().callEvent(new BukkitPlayerDisconnectEvent(cloudPlayer));
         }
 
         @Override
-        public void onPlayerDisconnectNetwork(UUID uniqueId) {
+        public void onPlayerDisconnectNetwork(final UUID uniqueId) {
 
         }
 
         @Override
-        public void onPlayerUpdate(CloudPlayer cloudPlayer) {
+        public void onPlayerUpdate(final CloudPlayer cloudPlayer) {
             if (cloudPlayers.containsKey(cloudPlayer.getUniqueId())) {
                 cloudPlayers.put(cloudPlayer.getUniqueId(), cloudPlayer);
             }
@@ -638,12 +639,12 @@ public class CloudServer implements ICloudService {
         }
 
         @Override
-        public void onOfflinePlayerUpdate(OfflinePlayer offlinePlayer) {
+        public void onOfflinePlayerUpdate(final OfflinePlayer offlinePlayer) {
             Bukkit.getPluginManager().callEvent(new BukkitOfflinePlayerUpdateEvent(offlinePlayer));
         }
 
         @Override
-        public void onUpdateOnlineCount(int onlineCount) {
+        public void onUpdateOnlineCount(final int onlineCount) {
             Bukkit.getPluginManager().callEvent(new BukkitOnlineCountUpdateEvent(onlineCount));
         }
     }

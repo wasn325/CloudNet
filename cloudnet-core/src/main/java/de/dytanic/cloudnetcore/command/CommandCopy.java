@@ -29,10 +29,10 @@ public final class CommandCopy extends Command {
     }
 
     @Override
-    public void onExecuteCommand(CommandSender sender, String[] args) {
+    public void onExecuteCommand(final CommandSender sender, final String[] args) {
         switch (args.length) {
             case 1: {
-                MinecraftServer minecraftServer = CloudNet.getInstance().getServer(args[0]);
+                final MinecraftServer minecraftServer = CloudNet.getInstance().getServer(args[0]);
                 if (minecraftServer != null) {
                     minecraftServer.getWrapper().copyServer(minecraftServer.getServerInfo());
                     sender.sendMessage("The server " + args[0] + " was copied");
@@ -42,13 +42,13 @@ public final class CommandCopy extends Command {
             }
             break;
             case 2: {
-                MinecraftServer minecraftServer = CloudNet.getInstance().getServer(args[0]);
+                final MinecraftServer minecraftServer = CloudNet.getInstance().getServer(args[0]);
                 if (minecraftServer != null) {
-                    ServerGroup serverGroup = minecraftServer.getGroup();
+                    final ServerGroup serverGroup = minecraftServer.getGroup();
                     if (serverGroup != null) {
                         Template template = CollectionWrapper.filter(serverGroup.getTemplates(), new Acceptable<Template>() {
                             @Override
-                            public boolean isAccepted(Template template) {
+                            public boolean isAccepted(final Template template) {
                                 return template.getName().equalsIgnoreCase(args[1]);
                             }
                         });
@@ -61,7 +61,7 @@ public final class CommandCopy extends Command {
                             serverGroup.getTemplates().add(template);
                             CloudNet.getInstance().getConfig().createGroup(serverGroup);
                             CloudNet.getInstance().getNetworkManager().updateAll();
-                            for (Wrapper wrapper : CloudNet.getInstance().getWrappers().values()) {
+                            for (final Wrapper wrapper : CloudNet.getInstance().getWrappers().values()) {
                                 wrapper.updateWrapper();
                             }
                         }

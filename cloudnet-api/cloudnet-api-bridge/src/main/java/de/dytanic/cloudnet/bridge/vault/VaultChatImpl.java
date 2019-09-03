@@ -12,7 +12,7 @@ import net.milkbowl.vault.permission.Permission;
  */
 public class VaultChatImpl extends Chat {
 
-    public VaultChatImpl(Permission perms) {
+    public VaultChatImpl(final Permission perms) {
         super(perms);
     }
 
@@ -27,8 +27,8 @@ public class VaultChatImpl extends Chat {
     }
 
     @Override
-    public String getPlayerPrefix(String s, String s1) {
-        OfflinePlayer offlinePlayer = getPlayer(s1);
+    public String getPlayerPrefix(final String s, final String s1) {
+        final OfflinePlayer offlinePlayer = getPlayer(s1);
         return offlinePlayer.getPermissionEntity().getPrefix() != null ? offlinePlayer.getPermissionEntity()
                                                                                       .getPrefix() : offlinePlayer.getPermissionEntity()
                                                                                                                   .getHighestPermissionGroup(
@@ -38,15 +38,15 @@ public class VaultChatImpl extends Chat {
     }
 
     @Override
-    public void setPlayerPrefix(String s, String s1, String s2) {
-        OfflinePlayer offlinePlayer = getPlayer(s1);
+    public void setPlayerPrefix(final String s, final String s1, final String s2) {
+        final OfflinePlayer offlinePlayer = getPlayer(s1);
         offlinePlayer.getPermissionEntity().setPrefix(s2);
         update(offlinePlayer);
     }
 
     @Override
-    public String getPlayerSuffix(String s, String s1) {
-        OfflinePlayer offlinePlayer = getPlayer(s1);
+    public String getPlayerSuffix(final String s, final String s1) {
+        final OfflinePlayer offlinePlayer = getPlayer(s1);
         return offlinePlayer.getPermissionEntity().getSuffix() != null ? offlinePlayer.getPermissionEntity()
                                                                                       .getSuffix() : offlinePlayer.getPermissionEntity()
                                                                                                                   .getHighestPermissionGroup(
@@ -56,15 +56,15 @@ public class VaultChatImpl extends Chat {
     }
 
     @Override
-    public void setPlayerSuffix(String s, String s1, String s2) {
-        OfflinePlayer offlinePlayer = getPlayer(s1);
+    public void setPlayerSuffix(final String s, final String s1, final String s2) {
+        final OfflinePlayer offlinePlayer = getPlayer(s1);
         offlinePlayer.getPermissionEntity().setSuffix(s2);
         update(offlinePlayer);
     }
 
     @Override
-    public String getGroupPrefix(String s, String s1) {
-        PermissionGroup permissionGroup = CloudAPI.getInstance().getPermissionPool().getGroups().get(s1);
+    public String getGroupPrefix(final String s, final String s1) {
+        final PermissionGroup permissionGroup = CloudAPI.getInstance().getPermissionPool().getGroups().get(s1);
         if (permissionGroup != null) {
             return permissionGroup.getPrefix();
         } else {
@@ -73,8 +73,8 @@ public class VaultChatImpl extends Chat {
     }
 
     @Override
-    public void setGroupPrefix(String s, String s1, String s2) {
-        PermissionGroup permissionGroup = CloudAPI.getInstance().getPermissionPool().getGroups().get(s1);
+    public void setGroupPrefix(final String s, final String s1, final String s2) {
+        final PermissionGroup permissionGroup = CloudAPI.getInstance().getPermissionPool().getGroups().get(s1);
         if (permissionGroup != null) {
             permissionGroup.setPrefix(s2);
             CloudAPI.getInstance().updatePermissionGroup(permissionGroup);
@@ -82,8 +82,8 @@ public class VaultChatImpl extends Chat {
     }
 
     @Override
-    public String getGroupSuffix(String s, String s1) {
-        PermissionGroup permissionGroup = CloudAPI.getInstance().getPermissionPool().getGroups().get(s1);
+    public String getGroupSuffix(final String s, final String s1) {
+        final PermissionGroup permissionGroup = CloudAPI.getInstance().getPermissionPool().getGroups().get(s1);
         if (permissionGroup != null) {
             return permissionGroup.getSuffix();
         } else {
@@ -92,8 +92,8 @@ public class VaultChatImpl extends Chat {
     }
 
     @Override
-    public void setGroupSuffix(String s, String s1, String s2) {
-        PermissionGroup permissionGroup = CloudAPI.getInstance().getPermissionPool().getGroups().get(s1);
+    public void setGroupSuffix(final String s, final String s1, final String s2) {
+        final PermissionGroup permissionGroup = CloudAPI.getInstance().getPermissionPool().getGroups().get(s1);
         if (permissionGroup != null) {
             permissionGroup.setSuffix(s2);
             CloudAPI.getInstance().updatePermissionGroup(permissionGroup);
@@ -101,90 +101,90 @@ public class VaultChatImpl extends Chat {
     }
 
     @Override
-    public int getPlayerInfoInteger(String s, String s1, String s2, int i) {
+    public int getPlayerInfoInteger(final String s, final String s1, final String s2, final int i) {
         return 0;
     }
 
     @Override
-    public void setPlayerInfoInteger(String s, String s1, String s2, int i) {
+    public void setPlayerInfoInteger(final String s, final String s1, final String s2, final int i) {
 
     }
 
     @Override
-    public int getGroupInfoInteger(String s, String s1, String s2, int i) {
+    public int getGroupInfoInteger(final String s, final String s1, final String s2, final int i) {
         return 0;
     }
 
     @Override
-    public void setGroupInfoInteger(String s, String s1, String s2, int i) {
+    public void setGroupInfoInteger(final String s, final String s1, final String s2, final int i) {
 
     }
 
     @Override
-    public double getPlayerInfoDouble(String s, String s1, String s2, double v) {
+    public double getPlayerInfoDouble(final String s, final String s1, final String s2, final double v) {
         return 0;
     }
 
     @Override
-    public void setPlayerInfoDouble(String s, String s1, String s2, double v) {
+    public void setPlayerInfoDouble(final String s, final String s1, final String s2, final double v) {
 
     }
 
     @Override
-    public double getGroupInfoDouble(String s, String s1, String s2, double v) {
+    public double getGroupInfoDouble(final String s, final String s1, final String s2, final double v) {
         return 0;
     }
 
     @Override
-    public void setGroupInfoDouble(String s, String s1, String s2, double v) {
+    public void setGroupInfoDouble(final String s, final String s1, final String s2, final double v) {
 
     }
 
     @Override
-    public boolean getPlayerInfoBoolean(String s, String s1, String s2, boolean b) {
+    public boolean getPlayerInfoBoolean(final String s, final String s1, final String s2, final boolean b) {
         return false;
     }
 
     @Override
-    public void setPlayerInfoBoolean(String s, String s1, String s2, boolean b) {
+    public void setPlayerInfoBoolean(final String s, final String s1, final String s2, final boolean b) {
 
     }
 
     @Override
-    public boolean getGroupInfoBoolean(String s, String s1, String s2, boolean b) {
+    public boolean getGroupInfoBoolean(final String s, final String s1, final String s2, final boolean b) {
         return false;
     }
 
     @Override
-    public void setGroupInfoBoolean(String s, String s1, String s2, boolean b) {
+    public void setGroupInfoBoolean(final String s, final String s1, final String s2, final boolean b) {
 
     }
 
     @Override
-    public String getPlayerInfoString(String s, String s1, String s2, String s3) {
+    public String getPlayerInfoString(final String s, final String s1, final String s2, final String s3) {
         return null;
     }
 
     @Override
-    public void setPlayerInfoString(String s, String s1, String s2, String s3) {
+    public void setPlayerInfoString(final String s, final String s1, final String s2, final String s3) {
 
     }
 
     @Override
-    public String getGroupInfoString(String s, String s1, String s2, String s3) {
+    public String getGroupInfoString(final String s, final String s1, final String s2, final String s3) {
         return null;
     }
 
     @Override
-    public void setGroupInfoString(String s, String s1, String s2, String s3) {
+    public void setGroupInfoString(final String s, final String s1, final String s2, final String s3) {
 
     }
 
-    private void update(OfflinePlayer offlinePlayer) {
+    private void update(final OfflinePlayer offlinePlayer) {
         CloudAPI.getInstance().updatePlayer(offlinePlayer);
     }
 
-    private OfflinePlayer getPlayer(String name) {
+    private OfflinePlayer getPlayer(final String name) {
         OfflinePlayer offlinePlayer = CloudServer.getInstance().getCachedPlayer(name);
 
         if (offlinePlayer == null) {

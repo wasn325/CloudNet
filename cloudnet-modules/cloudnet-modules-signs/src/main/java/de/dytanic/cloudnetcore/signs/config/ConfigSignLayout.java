@@ -260,46 +260,46 @@ public class ConfigSignLayout {
         }
     }
 
-    public ConfigSignLayout saveLayout(de.dytanic.cloudnet.lib.serverselectors.sign.SignLayoutConfig signLayoutConfig) {
-        Document document = Document.loadDocument(path);
+    public ConfigSignLayout saveLayout(final de.dytanic.cloudnet.lib.serverselectors.sign.SignLayoutConfig signLayoutConfig) {
+        final Document document = Document.loadDocument(path);
         document.append("layout_config", signLayoutConfig);
         document.saveAsConfig(path);
         return this;
     }
 
     public de.dytanic.cloudnet.lib.serverselectors.sign.SignLayoutConfig loadLayout() {
-        Document document = Document.loadDocument(path);
+        final Document document = Document.loadDocument(path);
 
         if (!document.getDocument("layout_config").contains("knockbackOnSmallDistance")) {
-            Document document1 = document.getDocument("layout_config").append("knockbackOnSmallDistance", false);
+            final Document document1 = document.getDocument("layout_config").append("knockbackOnSmallDistance", false);
             document.append("layout_config", document1);
             document.saveAsConfig(path);
         }
 
         if (!document.getDocument("layout_config").contains("distance")) {
-            Document document1 = document.getDocument("layout_config").append("distance", 1D);
+            final Document document1 = document.getDocument("layout_config").append("distance", 1D);
             document.append("layout_config", document1);
             document.saveAsConfig(path);
         }
 
         if (!document.getDocument("layout_config").contains("strength")) {
-            Document document1 = document.getDocument("layout_config").append("strength", 0.8D);
+            final Document document1 = document.getDocument("layout_config").append("strength", 0.8D);
             document.append("layout_config", document1);
             document.saveAsConfig(path);
         }
 
-        SignLayoutConfig signLayoutConfig = document.getObject("layout_config",
-                                                               new TypeToken<de.dytanic.cloudnet.lib.serverselectors.sign.SignLayoutConfig>() {}
+        final SignLayoutConfig signLayoutConfig = document.getObject("layout_config",
+                                                                     new TypeToken<de.dytanic.cloudnet.lib.serverselectors.sign.SignLayoutConfig>() {}
                                                                    .getType());
 
         boolean injectable = false;
 
-        for (SignGroupLayouts groupLayouts : signLayoutConfig.getGroupLayouts()) {
+        for (final SignGroupLayouts groupLayouts : signLayoutConfig.getGroupLayouts()) {
 
             {
-                SignLayout signLayout = CollectionWrapper.filter(groupLayouts.getLayouts(), new Acceptable<SignLayout>() {
+                final SignLayout signLayout = CollectionWrapper.filter(groupLayouts.getLayouts(), new Acceptable<SignLayout>() {
                     @Override
-                    public boolean isAccepted(SignLayout signLayout) {
+                    public boolean isAccepted(final SignLayout signLayout) {
                         return signLayout.getName().equalsIgnoreCase("empty");
                     }
                 });

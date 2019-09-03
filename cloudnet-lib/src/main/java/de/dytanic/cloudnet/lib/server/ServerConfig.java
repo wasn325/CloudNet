@@ -10,9 +10,9 @@ public class ServerConfig {
     private boolean hideServer;
     private String extra;
     private Document properties;
-    private long startup;
+    private final long startup;
 
-    public ServerConfig(boolean hideServer, String extra, Document properties, long startup) {
+    public ServerConfig(final boolean hideServer, final String extra, final Document properties, final long startup) {
         this.hideServer = hideServer;
         this.extra = extra;
         this.properties = properties;
@@ -28,7 +28,7 @@ public class ServerConfig {
         return properties;
     }
 
-    public void setProperties(Document properties) {
+    public void setProperties(final Document properties) {
         this.properties = properties;
     }
 
@@ -40,7 +40,7 @@ public class ServerConfig {
         return extra;
     }
 
-    public void setExtra(String extra) {
+    public void setExtra(final String extra) {
         this.extra = extra;
     }
 
@@ -48,7 +48,7 @@ public class ServerConfig {
         return hideServer;
     }
 
-    public void setHideServer(boolean hideServer) {
+    public void setHideServer(final boolean hideServer) {
         this.hideServer = hideServer;
     }
 }

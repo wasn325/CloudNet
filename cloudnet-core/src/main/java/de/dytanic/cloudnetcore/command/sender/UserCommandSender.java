@@ -16,10 +16,10 @@ import java.util.UUID;
  */
 public class UserCommandSender implements CommandSender {
 
-    private User user;
+    private final User user;
     private PermissionEntity permissionEntity;
 
-    public UserCommandSender(User user) {
+    public UserCommandSender(final User user) {
         this.user = user;
     }
 
@@ -33,14 +33,14 @@ public class UserCommandSender implements CommandSender {
     }
 
     @Override
-    public void sendMessage(String... message) {
-        for (String m : message) {
+    public void sendMessage(final String... message) {
+        for (final String m : message) {
             System.out.println(m);
         }
     }
 
     @Override
-    public boolean hasPermission(String permission) {
+    public boolean hasPermission(final String permission) {
         return ((UserablePermissionEntity) getPermissionEntity()).hasPermission(permission);
     }
 

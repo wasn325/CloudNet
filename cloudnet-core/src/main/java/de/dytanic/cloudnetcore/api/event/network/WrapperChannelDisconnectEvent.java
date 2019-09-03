@@ -13,9 +13,9 @@ import de.dytanic.cloudnetcore.network.components.Wrapper;
  */
 public class WrapperChannelDisconnectEvent extends AsyncEvent<WrapperChannelDisconnectEvent> {
 
-    private Wrapper wrapper;
+    private final Wrapper wrapper;
 
-    public WrapperChannelDisconnectEvent(Wrapper wrapper) {
+    public WrapperChannelDisconnectEvent(final Wrapper wrapper) {
         super(new AsyncPosterAdapter<>());
         this.wrapper = wrapper;
     }

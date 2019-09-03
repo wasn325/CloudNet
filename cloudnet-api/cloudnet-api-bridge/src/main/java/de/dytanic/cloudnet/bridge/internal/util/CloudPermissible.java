@@ -23,11 +23,11 @@ import java.util.stream.Stream;
  */
 public class CloudPermissible extends PermissibleBase {
 
-    private UUID uniqueId;
+    private final UUID uniqueId;
 
     private Map<String, PermissionAttachmentInfo> permissions = new ConcurrentHashMap<>();
 
-    public CloudPermissible(Player player) {
+    public CloudPermissible(final Player player) {
         super(player);
         this.uniqueId = player.getUniqueId();
 
@@ -41,27 +41,27 @@ public class CloudPermissible extends PermissibleBase {
     }
 
     @Override
-    public boolean isPermissionSet(String name) {
+    public boolean isPermissionSet(final String name) {
         return hasPermission(name);
     }
 
     @Override
-    public boolean isPermissionSet(Permission perm) {
+    public boolean isPermissionSet(final Permission perm) {
         return hasPermission(perm.getName());
     }
 
     @Override
-    public boolean hasPermission(String inName) {
+    public boolean hasPermission(final String inName) {
         if (inName.equalsIgnoreCase("bukkit.broadcast.user")) {
             return true;
         }
 
-        CloudPlayer cloudPlayer = CloudServer.getInstance().getCloudPlayers().get(this.uniqueId);
+        final CloudPlayer cloudPlayer = CloudServer.getInstance().getCloudPlayers().get(this.uniqueId);
 
         if (cloudPlayer != null) {
-            boolean hasPermission = cloudPlayer.getPermissionEntity().hasPermission(CloudAPI.getInstance().getPermissionPool(),
-                                                                                    inName,
-                                                                                    CloudAPI.getInstance().getGroup());
+            final boolean hasPermission = cloudPlayer.getPermissionEntity().hasPermission(CloudAPI.getInstance().getPermissionPool(),
+                                                                                          inName,
+                                                                                          CloudAPI.getInstance().getGroup());
             CloudAPI.getInstance().getLogger().finest(cloudPlayer.getName() + " hasPermission \"" + inName + "\": " + hasPermission);
             return hasPermission;
 
@@ -71,7 +71,7 @@ public class CloudPermissible extends PermissibleBase {
     }
 
     @Override
-    public boolean hasPermission(Permission perm) {
+    public boolean hasPermission(final Permission perm) {
         return hasPermission(perm.getName());
     }
 
@@ -87,10 +87,10 @@ public class CloudPermissible extends PermissibleBase {
             return;
         }
 
-        PermissionEntity permissionEntity = CloudServer.getInstance().getCloudPlayers().get(this.uniqueId).getPermissionEntity();
+        final PermissionEntity permissionEntity = CloudServer.getInstance().getCloudPlayers().get(this.uniqueId).getPermissionEntity();
         final Map<String, Boolean> playerPermissions = permissionEntity.getPermissions();
         playerPermissions.forEach((key, value) -> {
-            PermissionAttachmentInfo permissionAttachmentInfo = new PermissionAttachmentInfo(this, key, null, value);
+            final PermissionAttachmentInfo permissionAttachmentInfo = new PermissionAttachmentInfo(this, key, null, value);
             permissions.put(key, permissionAttachmentInfo);
         });
         permissionEntity.getGroups()
@@ -111,7 +111,10 @@ public class CloudPermissible extends PermissibleBase {
                         })
                         .forEach(g -> {
                             g.getPermissions().forEach((key, value) -> {
-                                PermissionAttachmentInfo permissionAttachmentInfo = new PermissionAttachmentInfo(this, key, null, value);
+                                final PermissionAttachmentInfo permissionAttachmentInfo = new PermissionAttachmentInfo(this,
+                                                                                                                       key,
+                                                                                                                       null,
+                                                                                                                       value);
                                 permissions.put(key, permissionAttachmentInfo);
                             });
                         });

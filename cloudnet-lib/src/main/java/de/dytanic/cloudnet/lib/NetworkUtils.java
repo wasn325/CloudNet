@@ -53,7 +53,7 @@ public final class NetworkUtils {
     public static final ThreadLocalRandom RANDOM = ThreadLocalRandom.current();
     public static final DecimalFormat DECIMAL_FORMAT = new DecimalFormat("##.##");
     public static final String DEV_PROPERTY = "_CLOUDNET_DEV_SERVICE_UNIQUEID_", EMPTY_STRING = "", SPACE_STRING = " ", SLASH_STRING = "/";
-    private static final char[] VALUES = new char[] {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'};
+    private static final char[] VALUES = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'};
 
     private NetworkUtils() {
     }
@@ -61,7 +61,7 @@ public final class NetworkUtils {
     public static String getHostName() {
         try {
             return InetAddress.getLocalHost().getHostAddress();
-        } catch (Exception ex) {
+        } catch (final Exception ex) {
             return "127.0.0.1";
         }
     }
@@ -98,23 +98,23 @@ public final class NetworkUtils {
         return eventLoopGroup(Runtime.getRuntime().availableProcessors());
     }
 
-    public static EventLoopGroup eventLoopGroup(int threads) {
+    public static EventLoopGroup eventLoopGroup(final int threads) {
         return EPOLL ? new EpollEventLoopGroup(threads) : KQueue.isAvailable() ? new KQueueEventLoopGroup(threads) : new NioEventLoopGroup(
             threads);
     }
 
-    public static EventLoopGroup eventLoopGroup(ThreadFactory threadFactory) {
+    public static EventLoopGroup eventLoopGroup(final ThreadFactory threadFactory) {
         return eventLoopGroup(0, threadFactory);
     }
 
-    public static EventLoopGroup eventLoopGroup(int threads, ThreadFactory threadFactory) {
+    public static EventLoopGroup eventLoopGroup(final int threads, final ThreadFactory threadFactory) {
         return EPOLL ? new EpollEventLoopGroup(threads, threadFactory) : KQueue.isAvailable() ? new KQueueEventLoopGroup(threads,
                                                                                                                          threadFactory) : new NioEventLoopGroup(
             threads,
             threadFactory);
     }
 
-    public static <T> void addAll(Collection<T> key, Collection<T> value) {
+    public static <T> void addAll(final Collection<T> key, final Collection<T> value) {
         if (key == null || value == null) {
             return;
         }
@@ -122,33 +122,33 @@ public final class NetworkUtils {
         key.addAll(value);
     }
 
-    public static <T, V> void addAll(java.util.Map<T, V> key, java.util.Map<T, V> value) {
-        for (T key_ : value.keySet()) {
+    public static <T, V> void addAll(final java.util.Map<T, V> key, final java.util.Map<T, V> value) {
+        for (final T key_ : value.keySet()) {
             key.put(key_, value.get(key_));
         }
     }
 
-    public static void addAll(Document key, Document value) {
-        for (String keys : value.keys()) {
+    public static void addAll(final Document key, final Document value) {
+        for (final String keys : value.keys()) {
             key.append(keys, value.get(keys));
         }
     }
 
-    public static <T, V> void addAll(java.util.Map<T, V> map, List<V> list, Catcher<T, V> catcher) {
-        for (V ke : list) {
+    public static <T, V> void addAll(final java.util.Map<T, V> map, final List<V> list, final Catcher<T, V> catcher) {
+        for (final V ke : list) {
             map.put(catcher.doCatch(ke), ke);
         }
     }
 
-    public static <T, V> void addAll(java.util.Map<T, V> key, java.util.Map<T, V> value, Acceptable<V> handle) {
-        for (T key_ : value.keySet()) {
+    public static <T, V> void addAll(final java.util.Map<T, V> key, final java.util.Map<T, V> value, final Acceptable<V> handle) {
+        for (final T key_ : value.keySet()) {
             if (handle.isAccepted(value.get(key_))) {
                 key.put(key_, value.get(key_));
             }
         }
     }
 
-    public static Channel initChannel(Channel channel) {
+    public static Channel initChannel(final Channel channel) {
         channel.pipeline().addLast(new ProtocolLengthDeserializer(),
                                    new ProtocolInDecoder(),
                                    new ProtocolLengthSerializer(),
@@ -156,22 +156,22 @@ public final class NetworkUtils {
         return channel;
     }
 
-    public static boolean checkIsNumber(String input) {
+    public static boolean checkIsNumber(final String input) {
         try {
             Integer.parseInt(input);
             return true;
-        } catch (Exception ex) {
+        } catch (final Exception ex) {
             return false;
         }
     }
 
-    public static ConnectableAddress fromString(String input) {
-        String[] x = input.split(":");
+    public static ConnectableAddress fromString(final String input) {
+        final String[] x = input.split(":");
         return new ConnectableAddress(x[0], Integer.parseInt(x[1]));
     }
 
-    public static String randomString(int size) {
-        StringBuilder stringBuilder = new StringBuilder();
+    public static String randomString(final int size) {
+        final StringBuilder stringBuilder = new StringBuilder();
         for (short i = 0; i < size; i++) {
             stringBuilder.append(VALUES[RANDOM.nextInt(VALUES.length)]);
         }
@@ -179,22 +179,23 @@ public final class NetworkUtils {
     }
 
     public static void writeWrapperKey() {
-        Random random = new Random();
+        final Random random = new Random();
 
-        Path path = Paths.get("WRAPPER_KEY.cnd");
+        final Path path = Paths.get("WRAPPER_KEY.cnd");
         if (!Files.exists(path)) {
-            StringBuilder stringBuilder = new StringBuilder();
+            final StringBuilder stringBuilder = new StringBuilder();
             for (short i = 0; i < 4096; i++) {
                 stringBuilder.append(VALUES[random.nextInt(VALUES.length)]);
             }
 
             try {
                 Files.createFile(path);
-                try (OutputStreamWriter outputStreamWriter = new OutputStreamWriter(Files.newOutputStream(path), StandardCharsets.UTF_8)) {
+                try (final OutputStreamWriter outputStreamWriter = new OutputStreamWriter(Files.newOutputStream(path),
+                                                                                          StandardCharsets.UTF_8)) {
                     outputStreamWriter.write(stringBuilder.substring(0) + '\n');
                     outputStreamWriter.flush();
                 }
-            } catch (IOException e) {
+            } catch (final IOException e) {
                 e.printStackTrace();
             }
         }
@@ -202,28 +203,29 @@ public final class NetworkUtils {
     }
 
     public static String readWrapperKey() {
-        Path path = Paths.get("WRAPPER_KEY.cnd");
+        final Path path = Paths.get("WRAPPER_KEY.cnd");
         if (!Files.exists(path)) {
             return null;
         }
 
-        StringBuilder builder = new StringBuilder();
+        final StringBuilder builder = new StringBuilder();
 
         try {
-            for (String string : Files.readAllLines(path, StandardCharsets.UTF_8)) {
+            for (final String string : Files.readAllLines(path, StandardCharsets.UTF_8)) {
                 builder.append(string);
             }
             return builder.substring(0);
-        } catch (IOException e) {
+        } catch (final IOException e) {
             e.printStackTrace();
         }
         return builder.substring(0);
     }
 
-    public static void sleepUninterruptedly(long time) {
+    public static void sleepUninterruptedly(final long time) {
         try {
             Thread.sleep(time);
-        } catch (InterruptedException e) {
+        } catch (final InterruptedException e) {
+            e.printStackTrace();
         }
     }
 

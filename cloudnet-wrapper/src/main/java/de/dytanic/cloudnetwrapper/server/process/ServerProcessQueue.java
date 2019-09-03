@@ -26,11 +26,11 @@ public class ServerProcessQueue implements Runnable {
     private final int process_queue_size;
     private volatile boolean running = true;
 
-    public ServerProcessQueue(int process_queue_size) {
+    public ServerProcessQueue(final int process_queue_size) {
         this.process_queue_size = process_queue_size;
     }
 
-    public void setRunning(boolean running) {
+    public void setRunning(final boolean running) {
         this.running = running;
     }
 
@@ -50,15 +50,15 @@ public class ServerProcessQueue implements Runnable {
         return cloudServers;
     }
 
-    public void putProcess(ServerProcessMeta serverProcessMeta) {
+    public void putProcess(final ServerProcessMeta serverProcessMeta) {
         this.servers.offer(new ServerProcess(serverProcessMeta, ServerStage.SETUP));
     }
 
-    public void putProcess(CloudServerMeta serverProcessMeta) {
+    public void putProcess(final CloudServerMeta serverProcessMeta) {
         this.cloudServers.offer(serverProcessMeta);
     }
 
-    public void putProcess(ProxyProcessMeta proxyProcessMeta) {
+    public void putProcess(final ProxyProcessMeta proxyProcessMeta) {
         this.proxys.offer(proxyProcessMeta);
     }
 
@@ -81,9 +81,9 @@ public class ServerProcessQueue implements Runnable {
                         break;
                     }
 
-                    int memory = CloudNetWrapper.getInstance().getUsedMemory();
+                    final int memory = CloudNetWrapper.getInstance().getUsedMemory();
 
-                    ServerProcess serverProcess = servers.poll();
+                    final ServerProcess serverProcess = servers.poll();
 
                     if (!CloudNetWrapper.getInstance().getServerGroups().containsKey(serverProcess.getMeta().getServiceId().getGroup())) {
                         this.servers.add(serverProcess);
@@ -102,7 +102,7 @@ public class ServerProcessQueue implements Runnable {
                             if (!gameServer.bootstrap()) {
                                 this.servers.add(serverProcess);
                             }
-                        } catch (Exception e) {
+                        } catch (final Exception e) {
                             e.printStackTrace();
                             this.servers.add(serverProcess);
                         }
@@ -124,9 +124,9 @@ public class ServerProcessQueue implements Runnable {
                     if (i == 3) {
                         break;
                     }
-                    int memory = CloudNetWrapper.getInstance().getUsedMemory();
+                    final int memory = CloudNetWrapper.getInstance().getUsedMemory();
 
-                    ProxyProcessMeta serverProcess = proxys.poll();
+                    final ProxyProcessMeta serverProcess = proxys.poll();
 
                     if (!CloudNetWrapper.getInstance().getProxyGroups().containsKey(serverProcess.getServiceId().getGroup())) {
                         this.proxys.add(serverProcess);
@@ -135,17 +135,16 @@ public class ServerProcessQueue implements Runnable {
 
                     if ((memory + serverProcess.getMemory()) < CloudNetWrapper.getInstance().getMaxMemory()) {
 
-                        BungeeCord gameServer = new BungeeCord(serverProcess,
-                                                               CloudNetWrapper.getInstance()
-                                                                              .getProxyGroups()
-                                                                              .get(serverProcess.getServiceId().getGroup()));
+                        final BungeeCord gameServer = new BungeeCord(serverProcess, CloudNetWrapper.getInstance()
+                                                                                                   .getProxyGroups()
+                                                                                                   .get(serverProcess.getServiceId().getGroup()));
 
                         try {
                             System.out.println("Fetching entry [" + gameServer.getServiceId() + ']');
                             if (!gameServer.bootstrap()) {
                                 this.proxys.add(serverProcess);
                             }
-                        } catch (Exception e) {
+                        } catch (final Exception e) {
                             e.printStackTrace();
                             this.proxys.add(serverProcess);
                         }
@@ -157,43 +156,44 @@ public class ServerProcessQueue implements Runnable {
         }
     }
 
-    public void patchAsync(ServerProcessMeta process) {
+    public void patchAsync(final ServerProcessMeta process) {
         if (!CloudNetWrapper.getInstance().getServerGroups().containsKey(process.getServiceId().getGroup())) {
             this.servers.add(new ServerProcess(process, ServerStage.SETUP));
             return;
         }
-        GameServer gameServer = new GameServer(new ServerProcess(process, ServerStage.SETUP),
-                                               ServerStage.SETUP,
-                                               CloudNetWrapper.getInstance().getServerGroups().get(process.getServiceId().getGroup()));
+        final GameServer gameServer = new GameServer(new ServerProcess(process, ServerStage.SETUP),
+                                                     ServerStage.SETUP,
+                                                     CloudNetWrapper.getInstance()
+                                                                    .getServerGroups()
+                                                                    .get(process.getServiceId().getGroup()));
         TaskScheduler.runtimeScheduler().schedule(new Runnable() {
             @Override
             public void run() {
                 try {
                     gameServer.bootstrap();
-                } catch (Exception e) {
+                } catch (final Exception e) {
                     e.printStackTrace();
                 }
             }
         });
     }
 
-    public void patchAsync(CloudServerMeta cloudServerMeta) {
-        CloudGameServer cloudGameServer = new CloudGameServer(cloudServerMeta);
+    public void patchAsync(final CloudServerMeta cloudServerMeta) {
+        final CloudGameServer cloudGameServer = new CloudGameServer(cloudServerMeta);
         TaskScheduler.runtimeScheduler().schedule(new Runnable() {
             @Override
             public void run() {
                 try {
                     cloudGameServer.bootstrap();
-                } catch (Exception e) {
+                } catch (final Exception e) {
                     e.printStackTrace();
                 }
             }
         });
     }
 
-    public void patchAsync(ProxyProcessMeta proxyProcessMeta) {
-        BungeeCord bungeeCord = new BungeeCord(proxyProcessMeta,
-                                               CloudNetWrapper.getInstance()
+    public void patchAsync(final ProxyProcessMeta proxyProcessMeta) {
+        final BungeeCord bungeeCord = new BungeeCord(proxyProcessMeta, CloudNetWrapper.getInstance()
                                                               .getProxyGroups()
                                                               .get(proxyProcessMeta.getServiceId().getGroup()));
 
@@ -207,7 +207,7 @@ public class ServerProcessQueue implements Runnable {
             public void run() {
                 try {
                     bungeeCord.bootstrap();
-                } catch (Exception e) {
+                } catch (final Exception e) {
                     e.printStackTrace();
                 }
             }

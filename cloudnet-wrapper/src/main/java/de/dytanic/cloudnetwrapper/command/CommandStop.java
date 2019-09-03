@@ -15,7 +15,7 @@ public class CommandStop extends Command {
     }
 
     @Override
-    public void onExecuteCommand(CommandSender sender, String[] args) {
+    public void onExecuteCommand(final CommandSender sender, final String[] args) {
         CloudNetWrapper.getInstance().shutdown();
     }
 }

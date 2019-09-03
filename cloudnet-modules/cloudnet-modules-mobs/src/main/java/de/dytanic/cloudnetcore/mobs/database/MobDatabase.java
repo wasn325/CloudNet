@@ -19,7 +19,7 @@ import java.util.UUID;
  */
 public class MobDatabase extends DatabaseUsable {
 
-    public MobDatabase(Database database) {
+    public MobDatabase(final Database database) {
         super(database);
         Document document = database.getDocument("server_selector_mobs");
         if (document == null) {
@@ -28,23 +28,24 @@ public class MobDatabase extends DatabaseUsable {
         database.insert(document);
     }
 
-    public void append(ServerMob serverMob) {
-        Document document = database.getDocument("server_selector_mobs").getDocument("mobs").append(serverMob.getUniqueId().toString(),
-                                                                                                    serverMob);
+    public void append(final ServerMob serverMob) {
+        final Document document = database.getDocument("server_selector_mobs").getDocument("mobs").append(serverMob.getUniqueId()
+                                                                                                                   .toString(), serverMob);
         database.insert(document);
     }
 
-    public void remove(ServerMob serverMob) {
-        Document document = database.getDocument("server_selector_mobs").getDocument("mobs").remove(serverMob.getUniqueId().toString());
+    public void remove(final ServerMob serverMob) {
+        final Document document = database.getDocument("server_selector_mobs").getDocument("mobs").remove(serverMob.getUniqueId()
+                                                                                                                   .toString());
         database.insert(document);
     }
 
     public Map<UUID, ServerMob> loadAll() {
         boolean injectable = false;
-        Map<UUID, ServerMob> mobMap = database.getDocument("server_selector_mobs").getObject("mobs",
-                                                                                             new TypeToken<Map<UUID, ServerMob>>() {}.getType());
+        final Map<UUID, ServerMob> mobMap = database.getDocument("server_selector_mobs").getObject("mobs",
+                                                                                                   new TypeToken<Map<UUID, ServerMob>>() {}.getType());
 
-        for (ServerMob serverMob : mobMap.values()) {
+        for (final ServerMob serverMob : mobMap.values()) {
             if (serverMob.getItemId() == null) {
                 serverMob.setItemId(138);
                 injectable = true;
@@ -56,7 +57,7 @@ public class MobDatabase extends DatabaseUsable {
         }
 
         if (injectable) {
-            Document document = database.getDocument("server_selector_mobs");
+            final Document document = database.getDocument("server_selector_mobs");
             document.append("mobs", mobMap);
             database.insert(document);
         }

@@ -5,10 +5,10 @@ package de.dytanic.cloudnet.lib.player.permission;
  */
 public class PermissionFallback {
 
-    private boolean enabled;
-    private String fallback;
+    private final boolean enabled;
+    private final String fallback;
 
-    public PermissionFallback(boolean enabled, String fallback) {
+    public PermissionFallback(final boolean enabled, final String fallback) {
         this.enabled = enabled;
         this.fallback = fallback;
     }

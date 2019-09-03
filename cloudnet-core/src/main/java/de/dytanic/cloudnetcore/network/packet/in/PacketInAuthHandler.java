@@ -27,21 +27,21 @@ import io.netty.channel.Channel;
 public final class PacketInAuthHandler extends PacketInAuthReader {
 
     @Override
-    public void handleAuth(Auth auth, AuthType authType, Document authData, PacketSender packetSender) {
+    public void handleAuth(final Auth auth, final AuthType authType, final Document authData, final PacketSender packetSender) {
         if (!(packetSender instanceof CloudNetClientAuth)) {
             return;
         }
-        CloudNetClientAuth client = (CloudNetClientAuth) packetSender;
+        final CloudNetClientAuth client = (CloudNetClientAuth) packetSender;
         switch (authType) {
             case CLOUD_NET: {
-                String key = authData.getString("key");
-                String id = authData.getString("id");
+                final String key = authData.getString("key");
+                final String id = authData.getString("id");
 
                 if (CloudNet.getInstance().getWrappers().containsKey(id)) {
-                    Wrapper cn = CloudNet.getInstance().getWrappers().get(id);
-                    String wrapperKey = CloudNet.getInstance().getConfig().getWrapperKey();
+                    final Wrapper cn = CloudNet.getInstance().getWrappers().get(id);
+                    final String wrapperKey = CloudNet.getInstance().getConfig().getWrapperKey();
                     if (wrapperKey != null && cn.getChannel() == null && wrapperKey.equals(key)) {
-                        Channel channel = client.getChannel();
+                        final Channel channel = client.getChannel();
                         channel.pipeline().remove("client");
                         client.getChannel().writeAndFlush(new PacketOutAuthResult(new AuthLoginResult(true))).syncUninterruptibly();
                         channel.pipeline().addLast(new CloudNetClient(cn, channel));
@@ -57,33 +57,33 @@ public final class PacketInAuthHandler extends PacketInAuthReader {
             }
             return;
             case GAMESERVER_OR_BUNGEE: {
-                ServiceId serviceId = authData.getObject("serviceId", ServiceId.class);
+                final ServiceId serviceId = authData.getObject("serviceId", ServiceId.class);
                 if (CloudNet.getInstance().getWrappers().containsKey(serviceId.getWrapperId())) {
 
-                    Wrapper wrapper = CloudNet.getInstance().getWrappers().get(serviceId.getWrapperId());
+                    final Wrapper wrapper = CloudNet.getInstance().getWrappers().get(serviceId.getWrapperId());
                     if (wrapper.getServers().containsKey(serviceId.getServerId())) {
-                        MinecraftServer minecraftServer = wrapper.getServers().get(serviceId.getServerId());
+                        final MinecraftServer minecraftServer = wrapper.getServers().get(serviceId.getServerId());
                         if (minecraftServer.getChannel() == null && minecraftServer.getServerInfo().getServiceId().getUniqueId().equals(
                             serviceId.getUniqueId())) {
-                            Channel channel = client.getChannel();
+                            final Channel channel = client.getChannel();
                             channel.pipeline().remove("client");
                             channel.pipeline().addLast(new CloudNetClient(minecraftServer, channel));
                             return;
                         }
                     } else if (wrapper.getCloudServers().containsKey(serviceId.getServerId())) {
-                        CloudServer minecraftServer = wrapper.getCloudServers().get(serviceId.getServerId());
+                        final CloudServer minecraftServer = wrapper.getCloudServers().get(serviceId.getServerId());
                         if (minecraftServer.getChannel() == null && minecraftServer.getServerInfo().getServiceId().getUniqueId().equals(
                             serviceId.getUniqueId())) {
-                            Channel channel = client.getChannel();
+                            final Channel channel = client.getChannel();
                             channel.pipeline().remove("client");
                             channel.pipeline().addLast(new CloudNetClient(minecraftServer, channel));
                             return;
                         }
                     } else if (wrapper.getProxys().containsKey(serviceId.getServerId())) {
-                        ProxyServer minecraftServer = wrapper.getProxys().get(serviceId.getServerId());
+                        final ProxyServer minecraftServer = wrapper.getProxys().get(serviceId.getServerId());
                         if (minecraftServer.getChannel() == null && minecraftServer.getProxyInfo().getServiceId().getUniqueId().equals(
                             serviceId.getUniqueId())) {
-                            Channel channel = client.getChannel();
+                            final Channel channel = client.getChannel();
                             channel.pipeline().remove("client");
                             channel.pipeline().addLast(new CloudNetClient(minecraftServer, channel));
                             return;

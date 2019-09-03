@@ -30,7 +30,7 @@ public final class WebServerProvider {
      *
      * @return this provider
      */
-    public WebServerProvider registerHandler(WebHandler httpHandler) {
+    public WebServerProvider registerHandler(final WebHandler httpHandler) {
         handlers.add(httpHandler);
         return this;
     }
@@ -42,7 +42,7 @@ public final class WebServerProvider {
      *
      * @return this provider
      */
-    public WebServerProvider registerDynamicHandler(DynamicWebHandler dynamicWebHandler) {
+    public WebServerProvider registerDynamicHandler(final DynamicWebHandler dynamicWebHandler) {
         dynamicWebHandlers.add(dynamicWebHandler);
         return this;
     }
@@ -69,7 +69,7 @@ public final class WebServerProvider {
      *
      * @return a new list containing the currently registered web handlers
      */
-    public List<WebHandler> getHandlers(String path) {
+    public List<WebHandler> getHandlers(final String path) {
         return handlers.stream().filter(webHandler -> {
             if ((path.equals(NetworkUtils.SLASH_STRING) || path.isEmpty()) && webHandler.getPath().equals("/")) {
                 return true;

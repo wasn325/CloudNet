@@ -25,7 +25,7 @@ public class ItemStackBuilder {
     protected ItemMeta itemMeta;
     protected ItemStack itemStack;
 
-    public ItemStackBuilder(Material material) {
+    public ItemStackBuilder(final Material material) {
         this.itemStack = new ItemStack(material);
         this.itemMeta = itemStack.getItemMeta();
     }
@@ -34,12 +34,12 @@ public class ItemStackBuilder {
      * @deprecated will only work in versions lower than 1.13
      */
     @Deprecated
-    public ItemStackBuilder(int material) {
+    public ItemStackBuilder(final int material) {
         this.itemStack = new ItemStack(Material.getMaterial(material));
         this.itemMeta = itemStack.getItemMeta();
     }
 
-    public ItemStackBuilder(Material material, int amount) {
+    public ItemStackBuilder(final Material material, final int amount) {
         this.itemStack = new ItemStack(material, amount);
         this.itemMeta = itemStack.getItemMeta();
     }
@@ -48,12 +48,12 @@ public class ItemStackBuilder {
      * @deprecated will only work in versions lower than 1.13
      */
     @Deprecated
-    public ItemStackBuilder(int material, int amount) {
+    public ItemStackBuilder(final int material, final int amount) {
         this.itemStack = new ItemStack(material, amount);
         this.itemMeta = itemStack.getItemMeta();
     }
 
-    public ItemStackBuilder(Material material, int amount, int sub) {
+    public ItemStackBuilder(final Material material, final int amount, final int sub) {
         this.itemStack = new ItemStack(material, amount, (short) sub);
         this.itemMeta = itemStack.getItemMeta();
     }
@@ -62,7 +62,7 @@ public class ItemStackBuilder {
      * @deprecated will only work in versions lower than 1.13
      */
     @Deprecated
-    public ItemStackBuilder(int material, int amount, int sub) {
+    public ItemStackBuilder(final int material, final int amount, final int sub) {
         this.itemStack = new ItemStack(material, amount, (short) sub);
         this.itemMeta = itemStack.getItemMeta();
     }
@@ -75,11 +75,11 @@ public class ItemStackBuilder {
      *
      * @return the material or null if not existing
      */
-    public static Material getMaterialIgnoreVersion(String name, int id) {
+    public static Material getMaterialIgnoreVersion(final String name, final int id) {
         if (name == null) {
             try {
                 return Material.getMaterial(id);
-            } catch (ExceptionInInitializerError | NoSuchMethodError exception) {
+            } catch (final ExceptionInInitializerError | NoSuchMethodError exception) {
                 CloudAPI.getInstance().getLogger().logp(Level.WARNING,
                                                         ItemStackBuilder.class.getSimpleName(),
                                                         "getMaterialIgnoreVersion",
@@ -93,15 +93,15 @@ public class ItemStackBuilder {
         return Material.getMaterial(name);
     }
 
-    public static ItemStackBuilder builder(Material material) {
+    public static ItemStackBuilder builder(final Material material) {
         return new ItemStackBuilder(material);
     }
 
-    public static ItemStackBuilder builder(Material material, int amount) {
+    public static ItemStackBuilder builder(final Material material, final int amount) {
         return new ItemStackBuilder(material, amount);
     }
 
-    public static ItemStackBuilder builder(Material material, int amount, int sub) {
+    public static ItemStackBuilder builder(final Material material, final int amount, final int sub) {
         return new ItemStackBuilder(material, amount, sub);
     }
 
@@ -109,7 +109,7 @@ public class ItemStackBuilder {
      * @deprecated will only work in versions lower than 1.13
      */
     @Deprecated
-    public static ItemStackBuilder builder(int material) {
+    public static ItemStackBuilder builder(final int material) {
         return new ItemStackBuilder(material);
     }
 
@@ -117,7 +117,7 @@ public class ItemStackBuilder {
      * @deprecated will only work in versions lower than 1.13
      */
     @Deprecated
-    public static ItemStackBuilder builder(int material, int amount) {
+    public static ItemStackBuilder builder(final int material, final int amount) {
         return new ItemStackBuilder(material, amount);
     }
 
@@ -125,41 +125,41 @@ public class ItemStackBuilder {
      * @deprecated will only work in versions lower than 1.13
      */
     @Deprecated
-    public static ItemStackBuilder builder(int material, int amount, int sub) {
+    public static ItemStackBuilder builder(final int material, final int amount, final int sub) {
         return new ItemStackBuilder(material, amount, sub);
     }
 
 
-    public ItemStackBuilder enchantment(Enchantment enchantment, int value) {
+    public ItemStackBuilder enchantment(final Enchantment enchantment, final int value) {
         itemMeta.addEnchant(enchantment, value, true);
         return this;
     }
 
-    public ItemStackBuilder color(Color color) {
+    public ItemStackBuilder color(final Color color) {
         if (itemMeta instanceof LeatherArmorMeta) {
             ((LeatherArmorMeta) itemMeta).setColor(color);
         }
         return this;
     }
 
-    public ItemStackBuilder owner(String name) {
+    public ItemStackBuilder owner(final String name) {
         if (itemMeta instanceof SkullMeta) {
             ((SkullMeta) itemMeta).setOwner(name);
         }
         return this;
     }
 
-    public ItemStackBuilder displayName(String name) {
+    public ItemStackBuilder displayName(final String name) {
         itemMeta.setDisplayName(name);
         return this;
     }
 
-    public ItemStackBuilder lore(String... lore) {
+    public ItemStackBuilder lore(final String... lore) {
         itemMeta.setLore(Arrays.asList(lore));
         return this;
     }
 
-    public ItemStackBuilder lore(List<String> lore) {
+    public ItemStackBuilder lore(final List<String> lore) {
         itemMeta.setLore(lore);
         return this;
     }

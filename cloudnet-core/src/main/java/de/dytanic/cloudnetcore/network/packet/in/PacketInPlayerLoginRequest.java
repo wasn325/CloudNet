@@ -15,12 +15,12 @@ import de.dytanic.cloudnetcore.network.components.ProxyServer;
 public final class PacketInPlayerLoginRequest extends PacketInHandler {
 
     @Override
-    public void handleInput(Document data, PacketSender packetSender) {
+    public void handleInput(final Document data, final PacketSender packetSender) {
         if (!(packetSender instanceof ProxyServer) && packetUniqueId != null) {
             return;
         }
 
-        PlayerConnection playerConnection = data.getObject("playerConnection", new TypeToken<PlayerConnection>() {}.getType());
+        final PlayerConnection playerConnection = data.getObject("playerConnection", new TypeToken<PlayerConnection>() {}.getType());
         CloudNet.getInstance().getNetworkManager().handlePlayerLoginRequest(((ProxyServer) packetSender), playerConnection, packetUniqueId);
     }
 }

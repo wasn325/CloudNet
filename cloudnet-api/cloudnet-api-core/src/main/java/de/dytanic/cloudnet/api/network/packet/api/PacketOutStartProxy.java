@@ -17,24 +17,24 @@ import java.util.Collection;
  */
 public class PacketOutStartProxy extends Packet {
 
-    public PacketOutStartProxy(ProxyGroup proxyGroup,
-                               int memory,
-                               String[] paramters,
-                               String url,
-                               Collection<ServerInstallablePlugin> plugins,
-                               Document document) {
+    public PacketOutStartProxy(final ProxyGroup proxyGroup,
+                               final int memory,
+                               final String[] paramters,
+                               final String url,
+                               final Collection<ServerInstallablePlugin> plugins,
+                               final Document document) {
         super(PacketRC.SERVER_HANDLE + 6, new Document("group", proxyGroup.getName()).append("memory", memory).append("url", url).append(
             "processParameters",
             paramters).append("plugins", plugins).append("properties", document));
     }
 
-    public PacketOutStartProxy(String wrapper,
-                               ProxyGroup proxyGroup,
-                               int memory,
-                               String[] paramters,
-                               String url,
-                               Collection<ServerInstallablePlugin> plugins,
-                               Document document) {
+    public PacketOutStartProxy(final String wrapper,
+                               final ProxyGroup proxyGroup,
+                               final int memory,
+                               final String[] paramters,
+                               final String url,
+                               final Collection<ServerInstallablePlugin> plugins,
+                               final Document document) {
         super(PacketRC.SERVER_HANDLE + 6, new Document("group", proxyGroup.getName()).append("wrapper", wrapper)
                                                                                      .append("memory", memory)
                                                                                      .append("url", url)

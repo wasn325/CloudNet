@@ -14,7 +14,7 @@ import de.dytanic.cloudnet.lib.utility.document.Document;
  */
 public class PacketOutPlayerLoginRequest extends Packet {
 
-    public PacketOutPlayerLoginRequest(PlayerConnection playerConnection) {
+    public PacketOutPlayerLoginRequest(final PlayerConnection playerConnection) {
         super(PacketRC.PLAYER_HANDLE + 1, new Document("playerConnection", playerConnection));
     }
 }

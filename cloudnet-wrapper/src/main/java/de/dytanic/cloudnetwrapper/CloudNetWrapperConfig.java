@@ -30,9 +30,9 @@ public class CloudNetWrapperConfig {
 
     private double percentOfCPUForANewServer, percentOfCPUForANewCloudServer, percentOfCPUForANewProxy;
 
-    public CloudNetWrapperConfig(ConsoleReader reader) throws Exception {
+    public CloudNetWrapperConfig(final ConsoleReader reader) throws Exception {
 
-        for (File directory : new File[] {new File("local/servers"), new File("local/templates"), new File("local/cache/web_templates"), new File(
+        for (final File directory : new File[] {new File("local/servers"), new File("local/templates"), new File("local/cache/web_templates"), new File(
             "local/cache/web_plugins"), new File("local/records"), new File("local/plugins"), new File("local/records"), new File(
             "local/global_cloudserver"), new File("local/global/plugins"), new File("local/proxy_versions"), new File("temp"), new File(
             "temp/cloudserver"), new File("modules")}) {
@@ -95,12 +95,12 @@ public class CloudNetWrapperConfig {
                 }
             }
 
-            long memory = ((NetworkUtils.systemMemory() / 1048576) - 2048);
+            final long memory = ((NetworkUtils.systemMemory() / 1048576) - 2048);
             if (memory < 1024) {
                 System.out.println("WARNING: YOU CAN'T USE THE CLOUD NETWORK SOFTWARE WITH SUCH A SMALL MEMORY SIZE!");
             }
 
-            Configuration configuration = new Configuration();
+            final Configuration configuration = new Configuration();
             configuration.set("connection.cloudnet-host", cloudNetHost);
             configuration.set("connection.cloudnet-port", 1410);
             configuration.set("connection.cloudnet-web", 1420);
@@ -119,7 +119,8 @@ public class CloudNetWrapperConfig {
             configuration.set("general.percentOfCPUForANewCloudServer", 100D);
             configuration.set("general.percentOfCPUForANewProxy", 100D);
 
-            try (OutputStreamWriter outputStreamWriter = new OutputStreamWriter(Files.newOutputStream(path), StandardCharsets.UTF_8)) {
+            try (final OutputStreamWriter outputStreamWriter = new OutputStreamWriter(Files.newOutputStream(path),
+                                                                                      StandardCharsets.UTF_8)) {
                 ConfigurationProvider.getProvider(YamlConfiguration.class).save(configuration, outputStreamWriter);
             }
         }
@@ -127,8 +128,9 @@ public class CloudNetWrapperConfig {
     }
 
     public CloudNetWrapperConfig load() {
-        try (InputStream inputStream = Files.newInputStream(path); InputStreamReader inputStreamReader = new InputStreamReader(inputStream,
-                                                                                                                               StandardCharsets.UTF_8)) {
+        try (final InputStream inputStream = Files.newInputStream(path); final InputStreamReader inputStreamReader = new InputStreamReader(
+            inputStream,
+            StandardCharsets.UTF_8)) {
             this.configuration = ConfigurationProvider.getProvider(YamlConfiguration.class).load(inputStreamReader);
 
             this.internalIP = configuration.getString("general.internalIp");
@@ -162,17 +164,17 @@ public class CloudNetWrapperConfig {
                 Files.createDirectories(Paths.get(devServicePath));
             }
 
-        } catch (IOException e) {
+        } catch (final IOException e) {
             e.printStackTrace();
         }
         return this;
     }
 
     public void save() {
-        try (OutputStream outputStream = Files.newOutputStream(path); OutputStreamWriter outputStreamWriter = new OutputStreamWriter(
+        try (final OutputStream outputStream = Files.newOutputStream(path); final OutputStreamWriter outputStreamWriter = new OutputStreamWriter(
             outputStream)) {
             ConfigurationProvider.getProvider(YamlConfiguration.class).save(configuration, outputStreamWriter);
-        } catch (IOException e) {
+        } catch (final IOException e) {
             e.printStackTrace();
         }
     }

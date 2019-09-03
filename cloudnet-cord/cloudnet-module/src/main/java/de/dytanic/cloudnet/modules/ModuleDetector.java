@@ -28,32 +28,32 @@ public class ModuleDetector {
      * @return a set containing all found and valid modules, an empty set, if
      * the given {@code dir} is not a directory
      */
-    public Set<ModuleConfig> detectAvailable(File dir) {
-        Set<ModuleConfig> moduleConfigs = new HashSet<>();
+    public Set<ModuleConfig> detectAvailable(final File dir) {
+        final Set<ModuleConfig> moduleConfigs = new HashSet<>();
 
-        File[] files = dir.listFiles(pathname -> pathname.isFile() && pathname.exists() && pathname.getName().endsWith(".jar"));
+        final File[] files = dir.listFiles(pathname -> pathname.isFile() && pathname.exists() && pathname.getName().endsWith(".jar"));
         if (files == null) {
             return moduleConfigs;
         }
-        for (File file : files) {
-            try (JarFile jarFile = new JarFile(file)) {
-                JarEntry jarEntry = jarFile.getJarEntry("module.properties");
+        for (final File file : files) {
+            try (final JarFile jarFile = new JarFile(file)) {
+                final JarEntry jarEntry = jarFile.getJarEntry("module.properties");
                 if (jarEntry == null) {
                     throw new ModuleLoadException("Cannot find \"module.properties\" file");
                 }
 
-                try (InputStreamReader reader = new InputStreamReader(jarFile.getInputStream(jarEntry), StandardCharsets.UTF_8)) {
-                    Properties properties = new Properties();
+                try (final InputStreamReader reader = new InputStreamReader(jarFile.getInputStream(jarEntry), StandardCharsets.UTF_8)) {
+                    final Properties properties = new Properties();
                     properties.load(reader);
-                    ModuleConfig moduleConfig = new ModuleConfig(file,
-                                                                 properties.getProperty("name"),
-                                                                 properties.getProperty("version"),
-                                                                 properties.getProperty("author"),
-                                                                 properties.getProperty("main"));
+                    final ModuleConfig moduleConfig = new ModuleConfig(file,
+                                                                       properties.getProperty("name"),
+                                                                       properties.getProperty("version"),
+                                                                       properties.getProperty("author"),
+                                                                       properties.getProperty("main"));
                     moduleConfigs.add(moduleConfig);
                 }
 
-            } catch (Exception ex) {
+            } catch (final Exception ex) {
                 ex.printStackTrace();
             }
         }

@@ -13,9 +13,9 @@ import de.dytanic.cloudnetcore.network.components.ProxyServer;
  */
 public class ProxyAddEvent extends AsyncEvent<ProxyAddEvent> {
 
-    private ProxyServer proxyServer;
+    private final ProxyServer proxyServer;
 
-    public ProxyAddEvent(ProxyServer proxyServer) {
+    public ProxyAddEvent(final ProxyServer proxyServer) {
         super(new AsyncPosterAdapter<>());
         this.proxyServer = proxyServer;
     }

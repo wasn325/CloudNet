@@ -12,18 +12,18 @@ import java.util.Map;
  */
 public class WrapperExternal {
 
-    private CloudNetwork cloudNetwork;
+    private final CloudNetwork cloudNetwork;
 
-    private SimpledUser user;
+    private final SimpledUser user;
 
-    private java.util.Map<String, ServerGroup> serverGroups;
+    private final java.util.Map<String, ServerGroup> serverGroups;
 
-    private java.util.Map<String, ProxyGroup> proxyGroups;
+    private final java.util.Map<String, ProxyGroup> proxyGroups;
 
-    public WrapperExternal(CloudNetwork cloudNetwork,
-                           SimpledUser user,
-                           Map<String, ServerGroup> serverGroups,
-                           Map<String, ProxyGroup> proxyGroups) {
+    public WrapperExternal(final CloudNetwork cloudNetwork,
+                           final SimpledUser user,
+                           final Map<String, ServerGroup> serverGroups,
+                           final Map<String, ProxyGroup> proxyGroups) {
         this.cloudNetwork = cloudNetwork;
         this.user = user;
         this.serverGroups = serverGroups;

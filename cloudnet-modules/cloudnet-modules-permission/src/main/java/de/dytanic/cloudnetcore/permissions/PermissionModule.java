@@ -44,7 +44,7 @@ public class PermissionModule extends CoreModule {
     public void onBootstrap() {
         try {
             configPermission = new ConfigPermissions();
-        } catch (Exception e) {
+        } catch (final Exception e) {
             e.printStackTrace();
         }
         permissionPool = new PermissionPool();

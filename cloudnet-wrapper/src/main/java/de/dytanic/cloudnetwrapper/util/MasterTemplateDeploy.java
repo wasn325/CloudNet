@@ -23,27 +23,27 @@ import java.nio.file.Paths;
  */
 public class MasterTemplateDeploy {
 
-    private String dir;
+    private final String dir;
 
-    private ConnectableAddress connectableAddress;
+    private final ConnectableAddress connectableAddress;
 
-    private SimpledUser simpledUser;
+    private final SimpledUser simpledUser;
 
-    private boolean ssl;
+    private final boolean ssl;
 
-    private Template template;
+    private final Template template;
 
-    private String group;
+    private final String group;
 
-    private String customName;
+    private final String customName;
 
-    public MasterTemplateDeploy(String dir,
-                                ConnectableAddress connectableAddress,
-                                SimpledUser simpledUser,
-                                boolean ssl,
-                                Template template,
-                                String group,
-                                String customName) {
+    public MasterTemplateDeploy(final String dir,
+                                final ConnectableAddress connectableAddress,
+                                final SimpledUser simpledUser,
+                                final boolean ssl,
+                                final Template template,
+                                final String group,
+                                final String customName) {
         this.dir = dir;
         this.connectableAddress = connectableAddress;
         this.simpledUser = simpledUser;
@@ -83,13 +83,15 @@ public class MasterTemplateDeploy {
 
     public void deploy() throws Exception {
         System.out.println("Trying to setup the new template... [" + template.getName() + ']');
-        Path dir = Paths.get("local/cache/" + NetworkUtils.randomString(10));
+        final Path dir = Paths.get("local/cache/" + NetworkUtils.randomString(10));
         try {
             FileUtility.copyFilesInDirectory(new File(this.dir), dir.toFile());
             new File(dir.toString() + "/plugins/CloudNetAPI.jar").delete();
-        } catch (Exception ex) {
+        } catch (final Exception ex) {
+            ex.printStackTrace();
         }
-        HttpURLConnection urlConnection = (HttpURLConnection) new URL((ssl ? "https" : "http") + "://" + connectableAddress.getHostName() + ':' + connectableAddress
+        final HttpURLConnection urlConnection = (HttpURLConnection) new URL(
+            (ssl ? "https" : "http") + "://" + connectableAddress.getHostName() + ':' + connectableAddress
             .getPort() + "/cloudnet/api/v1/deployment").openConnection();
         urlConnection.setRequestMethod("POST");
         urlConnection.setRequestProperty("-Xcloudnet-user", simpledUser.getUserName());
@@ -103,12 +105,12 @@ public class MasterTemplateDeploy {
         urlConnection.connect();
         System.out.println("Connected and deployed template... [" + template.getName() + ']');
 
-        try (OutputStream outputStream = urlConnection.getOutputStream()) {
+        try (final OutputStream outputStream = urlConnection.getOutputStream()) {
             outputStream.write(ZipConverter.convert(new Path[] {dir}));
             outputStream.flush();
         }
 
-        try (InputStream inputStream = urlConnection.getInputStream(); BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(
+        try (final InputStream inputStream = urlConnection.getInputStream(); final BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(
             inputStream,
             StandardCharsets.UTF_8))) {
             String input;
@@ -119,7 +121,7 @@ public class MasterTemplateDeploy {
         urlConnection.disconnect();
         try {
             FileUtility.deleteDirectory(dir.toFile());
-        } catch (Exception ignored) {
+        } catch (final Exception ignored) {
 
         }
     }

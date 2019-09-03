@@ -9,13 +9,13 @@ import java.util.UUID;
  */
 public class Sign {
 
-    private UUID uniqueId;
-    private String targetGroup;
-    private Position position;
+    private final UUID uniqueId;
+    private final String targetGroup;
+    private final Position position;
 
     private volatile ServerInfo serverInfo;
 
-    public Sign(String targetGroup, Position signPosition) {
+    public Sign(final String targetGroup, final Position signPosition) {
         this.uniqueId = UUID.randomUUID();
         this.targetGroup = targetGroup;
         this.position = signPosition;
@@ -25,7 +25,7 @@ public class Sign {
         return serverInfo;
     }
 
-    public void setServerInfo(ServerInfo serverInfo) {
+    public void setServerInfo(final ServerInfo serverInfo) {
         this.serverInfo = serverInfo;
     }
 

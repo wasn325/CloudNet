@@ -25,7 +25,7 @@ public final class PacketManager {
     private final Queue<Packet> packetQueue = new ConcurrentLinkedQueue<>();
     private final TaskScheduler executorService = new TaskScheduler(1);
 
-    public void registerHandler(int id, Class<? extends PacketInHandler> packetHandlerClass) {
+    public void registerHandler(final int id, final Class<? extends PacketInHandler> packetHandlerClass) {
         if (!packetHandlers.containsKey(id)) {
             packetHandlers.put(id, new ArrayList<>());
         }
@@ -37,12 +37,12 @@ public final class PacketManager {
         packetHandlers.clear();
     }
 
-    public PacketManager queuePacket(Packet packet) {
+    public PacketManager queuePacket(final Packet packet) {
         this.packetQueue.offer(packet);
         return this;
     }
 
-    public PacketManager dispatchQueue(PacketSender packetSender) {
+    public PacketManager dispatchQueue(final PacketSender packetSender) {
         while (!this.packetQueue.isEmpty()) {
             packetSender.sendPacket(this.packetQueue.remove());
         }
@@ -50,10 +50,10 @@ public final class PacketManager {
         return this;
     }
 
-    public Result sendQuery(Packet packet, PacketSender packetSender) {
-        UUID uniqueId = UUID.randomUUID();
+    public Result sendQuery(final Packet packet, final PacketSender packetSender) {
+        final UUID uniqueId = UUID.randomUUID();
         packet.uniqueId = uniqueId;
-        Value<Result> handled = new Value<>(null);
+        final Value<Result> handled = new Value<>(null);
         synchronizedHandlers.put(uniqueId, handled);
         executorService.schedule(new Runnable() {
             @Override
@@ -67,7 +67,7 @@ public final class PacketManager {
         while (synchronizedHandlers.get(uniqueId).getValue() == null && i++ < 5000) {
             try {
                 Thread.sleep(0, 500000);
-            } catch (InterruptedException ignored) {
+            } catch (final InterruptedException ignored) {
             }
         }
 
@@ -75,23 +75,23 @@ public final class PacketManager {
             synchronizedHandlers.get(uniqueId).setValue(new Result(uniqueId, new Document()));
         }
 
-        Value<Result> values = synchronizedHandlers.get(uniqueId);
+        final Value<Result> values = synchronizedHandlers.get(uniqueId);
         synchronizedHandlers.remove(uniqueId);
         return values.getValue();
     }
 
-    public boolean dispatchPacket(Packet incoming, PacketSender packetSender) {
+    public boolean dispatchPacket(final Packet incoming, final PacketSender packetSender) {
         if (incoming.uniqueId != null && synchronizedHandlers.containsKey(incoming.uniqueId)) {
-            Result result = new Result(incoming.uniqueId, incoming.data);
-            Value<Result> x = synchronizedHandlers.get(incoming.uniqueId);
+            final Result result = new Result(incoming.uniqueId, incoming.data);
+            final Value<Result> x = synchronizedHandlers.get(incoming.uniqueId);
             x.setValue(result);
             return false;
         }
 
-        Collection<PacketInHandler> handlers = buildHandlers(incoming.id);
+        final Collection<PacketInHandler> handlers = buildHandlers(incoming.id);
         CollectionWrapper.iterator(handlers, new Runnabled<PacketInHandler>() {
             @Override
-            public void run(PacketInHandler handler) {
+            public void run(final PacketInHandler handler) {
                 if (incoming.uniqueId != null) {
                     handler.packetUniqueId = incoming.uniqueId;
                 }
@@ -103,13 +103,13 @@ public final class PacketManager {
         return true;
     }
 
-    public Collection<PacketInHandler> buildHandlers(int id) {
-        Collection<PacketInHandler> packetIn = new LinkedList<>();
+    public Collection<PacketInHandler> buildHandlers(final int id) {
+        final Collection<PacketInHandler> packetIn = new LinkedList<>();
         if (packetHandlers.containsKey(id)) {
-            for (Class<? extends PacketInHandler> handlers : packetHandlers.get(id)) {
+            for (final Class<? extends PacketInHandler> handlers : packetHandlers.get(id)) {
                 try {
                     packetIn.add(handlers.newInstance());
-                } catch (InstantiationException | IllegalAccessException e) {
+                } catch (final InstantiationException | IllegalAccessException e) {
                     return null;
                 }
             }
@@ -117,20 +117,20 @@ public final class PacketManager {
         return packetIn;
     }
 
-    public UUID uniqueId(Packet packet) {
+    public UUID uniqueId(final Packet packet) {
         return packet.uniqueId;
     }
 
-    public PacketManager injectUniqueId(Packet packet, UUID uniqueId) {
+    public PacketManager injectUniqueId(final Packet packet, final UUID uniqueId) {
         packet.uniqueId = uniqueId;
         return this;
     }
 
-    public int packetId(Packet packet) {
+    public int packetId(final Packet packet) {
         return packet.id;
     }
 
-    public Document packetData(Packet packet) {
+    public Document packetData(final Packet packet) {
         return packet.data;
     }
 

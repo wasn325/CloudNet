@@ -12,11 +12,11 @@ import org.bukkit.event.HandlerList;
  */
 public class BukkitProxyAddEvent extends BukkitCloudEvent {
 
-    private static HandlerList handlerList = new HandlerList();
+    private static final HandlerList handlerList = new HandlerList();
 
-    private ProxyInfo serverInfo;
+    private final ProxyInfo serverInfo;
 
-    public BukkitProxyAddEvent(ProxyInfo serverInfo) {
+    public BukkitProxyAddEvent(final ProxyInfo serverInfo) {
         this.serverInfo = serverInfo;
     }
 

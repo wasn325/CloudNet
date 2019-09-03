@@ -20,38 +20,38 @@ import java.util.Properties;
  */
 public class CloudServerMeta {
 
-    private ServiceId serviceId;
+    private final ServiceId serviceId;
 
-    private int memory;
+    private final int memory;
 
-    private boolean priorityStop;
+    private final boolean priorityStop;
 
-    private String[] processParameters;
+    private final String[] processParameters;
 
-    private Collection<ServerInstallablePlugin> plugins;
+    private final Collection<ServerInstallablePlugin> plugins;
 
-    private ServerConfig serverConfig;
+    private final ServerConfig serverConfig;
 
-    private int port;
+    private final int port;
 
-    private String templateName;
+    private final String templateName;
 
-    private Properties serverProperties;
+    private final Properties serverProperties;
 
-    private ServerGroupType serverGroupType;
+    private final ServerGroupType serverGroupType;
 
-    private Template template;
+    private final Template template;
 
-    public CloudServerMeta(ServiceId serviceId,
-                           int memory,
-                           boolean priorityStop,
-                           String[] processParameters,
-                           Collection<ServerInstallablePlugin> plugins,
-                           ServerConfig serverConfig,
-                           int port,
-                           String templateName,
-                           Properties properties,
-                           ServerGroupType serverGroupType) {
+    public CloudServerMeta(final ServiceId serviceId,
+                           final int memory,
+                           final boolean priorityStop,
+                           final String[] processParameters,
+                           final Collection<ServerInstallablePlugin> plugins,
+                           final ServerConfig serverConfig,
+                           final int port,
+                           final String templateName,
+                           final Properties properties,
+                           final ServerGroupType serverGroupType) {
         this.serviceId = serviceId;
         this.memory = memory;
         this.priorityStop = priorityStop;

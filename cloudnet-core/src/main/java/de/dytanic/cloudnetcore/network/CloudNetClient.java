@@ -31,9 +31,9 @@ import java.util.UUID;
 public class CloudNetClient extends SimpleChannelInboundHandler {
 
     private Channel channel;
-    private INetworkComponent networkComponent;
+    private final INetworkComponent networkComponent;
 
-    public CloudNetClient(INetworkComponent iNetworkComponent, Channel channel) {
+    public CloudNetClient(final INetworkComponent iNetworkComponent, final Channel channel) {
         this.networkComponent = iNetworkComponent;
         this.networkComponent.setChannel(channel);
         this.channel = channel;
@@ -51,7 +51,7 @@ public class CloudNetClient extends SimpleChannelInboundHandler {
             ((Wrapper) networkComponent).updateWrapper();
         }
 
-        CloudNetwork cloudNetwork = CloudNet.getInstance().getNetworkManager().newCloudNetwork();
+        final CloudNetwork cloudNetwork = CloudNet.getInstance().getNetworkManager().newCloudNetwork();
         channel.writeAndFlush(new PacketOutCloudNetwork(cloudNetwork));
 
         if (networkComponent instanceof MinecraftServer) {
@@ -65,7 +65,7 @@ public class CloudNetClient extends SimpleChannelInboundHandler {
         init(cloudNetwork);
     }
 
-    public void init(CloudNetwork cloudNetwork) {
+    public void init(final CloudNetwork cloudNetwork) {
         CloudNet.getInstance().getScheduler().runTaskAsync(new Runnable() {
             @Override
             public void run() {
@@ -79,12 +79,12 @@ public class CloudNetClient extends SimpleChannelInboundHandler {
     }
 
     @Override
-    public void channelActive(ChannelHandlerContext ctx) throws Exception {
+    public void channelActive(final ChannelHandlerContext ctx) throws Exception {
         this.channel = ctx.channel();
     }
 
     @Override
-    public void channelInactive(ChannelHandlerContext ctx) throws Exception {
+    public void channelInactive(final ChannelHandlerContext ctx) throws Exception {
         if ((!channel.isActive() || !channel.isOpen() || !channel.isWritable())) {
             System.out.println("Channel disconnected [" + channel.remoteAddress()
                                                                  .toString() + "/serverId=" + networkComponent.getServerId() + ']');
@@ -98,7 +98,7 @@ public class CloudNetClient extends SimpleChannelInboundHandler {
             if (networkComponent instanceof Wrapper) {
                 try {
                     ((Wrapper) networkComponent).disconnct();
-                } catch (Exception ex) {
+                } catch (final Exception ex) {
 
                     ((Wrapper) networkComponent).getServers().clear();
                     ((Wrapper) networkComponent).getProxys().clear();
@@ -113,12 +113,12 @@ public class CloudNetClient extends SimpleChannelInboundHandler {
     }
 
     @Override
-    public void channelReadComplete(ChannelHandlerContext ctx) throws Exception {
+    public void channelReadComplete(final ChannelHandlerContext ctx) throws Exception {
         ctx.flush();
     }
 
     @Override
-    public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
+    public void exceptionCaught(final ChannelHandlerContext ctx, final Throwable cause) throws Exception {
 
         if (!(cause instanceof IOException)) {
             cause.printStackTrace();
@@ -128,13 +128,13 @@ public class CloudNetClient extends SimpleChannelInboundHandler {
     }
 
     @Override
-    protected void channelRead0(ChannelHandlerContext channelHandlerContext, Object obj) throws Exception {
+    protected void channelRead0(final ChannelHandlerContext channelHandlerContext, final Object obj) throws Exception {
 
         if (!(obj instanceof Packet)) {
             return;
         }
 
-        Packet packet = (Packet) obj;
+        final Packet packet = (Packet) obj;
         CloudNet.getLogger().debug("Receiving Packet (id=" + CloudNet.getInstance()
                                                                      .getPacketManager()
                                                                      .packetId(packet) + ";dataLength=" + CloudNet.getInstance()

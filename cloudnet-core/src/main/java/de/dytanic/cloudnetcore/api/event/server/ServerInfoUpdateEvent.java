@@ -13,10 +13,10 @@ import de.dytanic.cloudnetcore.network.components.INetworkComponent;
  */
 public class ServerInfoUpdateEvent extends Event {
 
-    private INetworkComponent minecraftServer;
-    private ServerInfo serverInfo;
+    private final INetworkComponent minecraftServer;
+    private final ServerInfo serverInfo;
 
-    public ServerInfoUpdateEvent(INetworkComponent minecraftServer, ServerInfo serverInfo) {
+    public ServerInfoUpdateEvent(final INetworkComponent minecraftServer, final ServerInfo serverInfo) {
         this.serverInfo = serverInfo;
         this.minecraftServer = minecraftServer;
     }

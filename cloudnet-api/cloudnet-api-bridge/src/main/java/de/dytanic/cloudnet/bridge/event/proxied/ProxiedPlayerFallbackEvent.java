@@ -8,15 +8,18 @@ import net.md_5.bungee.api.connection.ProxiedPlayer;
  */
 public class ProxiedPlayerFallbackEvent extends ProxiedCloudEvent {
 
-    private ProxiedPlayer proxiedPlayer;
+    private final ProxiedPlayer proxiedPlayer;
 
-    private CloudPlayer cloudPlayer;
+    private final CloudPlayer cloudPlayer;
 
-    private FallbackType fallbackType;
+    private final FallbackType fallbackType;
 
     private String fallback;
 
-    public ProxiedPlayerFallbackEvent(ProxiedPlayer proxiedPlayer, CloudPlayer cloudPlayer, FallbackType fallbackType, String fallback) {
+    public ProxiedPlayerFallbackEvent(final ProxiedPlayer proxiedPlayer,
+                                      final CloudPlayer cloudPlayer,
+                                      final FallbackType fallbackType,
+                                      final String fallback) {
         this.proxiedPlayer = proxiedPlayer;
         this.cloudPlayer = cloudPlayer;
         this.fallbackType = fallbackType;
@@ -27,7 +30,7 @@ public class ProxiedPlayerFallbackEvent extends ProxiedCloudEvent {
         return fallback;
     }
 
-    public void setFallback(String fallback) {
+    public void setFallback(final String fallback) {
         this.fallback = fallback;
     }
 

@@ -9,18 +9,18 @@ package de.dytanic.cloudnet.lib.server.advanced;
  */
 public class AdvancedServerConfig {
 
-    private boolean notifyPlayerUpdatesFromNoCurrentPlayer;
+    private final boolean notifyPlayerUpdatesFromNoCurrentPlayer;
 
-    private boolean notifyProxyUpdates;
+    private final boolean notifyProxyUpdates;
 
-    private boolean notifyServerUpdates;
+    private final boolean notifyServerUpdates;
 
-    private boolean disableAutoSavingForWorlds;
+    private final boolean disableAutoSavingForWorlds;
 
-    public AdvancedServerConfig(boolean notifyPlayerUpdatesFromNoCurrentPlayer,
-                                boolean notifyProxyUpdates,
-                                boolean notifyServerUpdates,
-                                boolean disableAutoSavingForWorlds) {
+    public AdvancedServerConfig(final boolean notifyPlayerUpdatesFromNoCurrentPlayer,
+                                final boolean notifyProxyUpdates,
+                                final boolean notifyServerUpdates,
+                                final boolean disableAutoSavingForWorlds) {
         this.notifyPlayerUpdatesFromNoCurrentPlayer = notifyPlayerUpdatesFromNoCurrentPlayer;
         this.notifyProxyUpdates = notifyProxyUpdates;
         this.notifyServerUpdates = notifyServerUpdates;

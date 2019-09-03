@@ -11,22 +11,22 @@ import java.util.UUID;
  */
 public class ProxyInfo {
 
-    private ServiceId serviceId;
+    private final ServiceId serviceId;
 
-    private String host;
-    private int port;
-    private boolean online;
-    private List<MultiValue<UUID, String>> players;
-    private int memory;
-    private int onlineCount;
+    private final String host;
+    private final int port;
+    private final boolean online;
+    private final List<MultiValue<UUID, String>> players;
+    private final int memory;
+    private final int onlineCount;
 
-    public ProxyInfo(ServiceId serviceId,
-                     String host,
-                     int port,
-                     boolean online,
-                     List<MultiValue<UUID, String>> players,
-                     int memory,
-                     int onlineCount) {
+    public ProxyInfo(final ServiceId serviceId,
+                     final String host,
+                     final int port,
+                     final boolean online,
+                     final List<MultiValue<UUID, String>> players,
+                     final int memory,
+                     final int onlineCount) {
         this.serviceId = serviceId;
         this.host = host;
         this.port = port;

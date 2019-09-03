@@ -18,11 +18,11 @@ import de.dytanic.cloudnetwrapper.server.GameServer;
 public final class PacketInScreen extends PacketInHandler {
 
     @Override
-    public void handleInput(Document data, PacketSender packetSender) {
+    public void handleInput(final Document data, final PacketSender packetSender) {
         if (data.getObject("type", DefaultType.class) != DefaultType.BUNGEE_CORD) {
-            ServerInfo server = data.getObject("serverInfo", new TypeToken<ServerInfo>() {}.getType());
+            final ServerInfo server = data.getObject("serverInfo", new TypeToken<ServerInfo>() {}.getType());
             if (CloudNetWrapper.getInstance().getServers().containsKey(server.getServiceId().getServerId())) {
-                GameServer gameServer = CloudNetWrapper.getInstance().getServers().get(server.getServiceId().getServerId());
+                final GameServer gameServer = CloudNetWrapper.getInstance().getServers().get(server.getServiceId().getServerId());
 
                 if (data.getBoolean("enable")) {
                     gameServer.enableScreenSystem();
@@ -31,9 +31,9 @@ public final class PacketInScreen extends PacketInHandler {
                 }
             }
         } else {
-            ProxyInfo server = data.getObject("proxyInfo", new TypeToken<ProxyInfo>() {}.getType());
+            final ProxyInfo server = data.getObject("proxyInfo", new TypeToken<ProxyInfo>() {}.getType());
             if (CloudNetWrapper.getInstance().getProxys().containsKey(server.getServiceId().getServerId())) {
-                BungeeCord bungee = CloudNetWrapper.getInstance().getProxys().get(server.getServiceId().getServerId());
+                final BungeeCord bungee = CloudNetWrapper.getInstance().getProxys().get(server.getServiceId().getServerId());
                 if (data.getBoolean("enable")) {
                     bungee.enableScreenSystem();
                 } else {

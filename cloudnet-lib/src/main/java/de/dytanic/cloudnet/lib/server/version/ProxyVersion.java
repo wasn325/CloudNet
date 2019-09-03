@@ -16,7 +16,7 @@ public enum ProxyVersion {
     WATERFALL,
     HEXACORD;
 
-    public static MultiValue<String, String> url(ProxyVersion proxyVersion) {
+    public static MultiValue<String, String> url(final ProxyVersion proxyVersion) {
         switch (proxyVersion) {
             /*
             case TRAVERTINE:

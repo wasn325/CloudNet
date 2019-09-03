@@ -18,12 +18,12 @@ import de.dytanic.cloudnet.lib.utility.threading.Runnabled;
  */
 public final class PacketInProxyRemove extends PacketInHandlerDefault {
     @Override
-    public void handleInput(Document data, PacketSender packetSender) {
-        ProxyInfo proxyInfo = data.getObject("proxyInfo", new TypeToken<ProxyInfo>() {}.getType());
+    public void handleInput(final Document data, final PacketSender packetSender) {
+        final ProxyInfo proxyInfo = data.getObject("proxyInfo", new TypeToken<ProxyInfo>() {}.getType());
         if (CloudAPI.getInstance() != null) {
             CloudAPI.getInstance().getNetworkHandlerProvider().iterator(new Runnabled<NetworkHandler>() {
                 @Override
-                public void run(NetworkHandler obj) {
+                public void run(final NetworkHandler obj) {
                     obj.onProxyRemove(proxyInfo);
                 }
             });

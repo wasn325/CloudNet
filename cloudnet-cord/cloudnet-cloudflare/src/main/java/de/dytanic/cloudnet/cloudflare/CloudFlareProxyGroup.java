@@ -13,13 +13,13 @@ public class CloudFlareProxyGroup {
     /**
      * Name of the BungeeCord group
      */
-    private String name;
+    private final String name;
     /**
      * Name of the sub-domain
      */
-    private String sub;
+    private final String sub;
 
-    public CloudFlareProxyGroup(String name, String sub) {
+    public CloudFlareProxyGroup(final String name, final String sub) {
         this.name = name;
         this.sub = sub;
     }

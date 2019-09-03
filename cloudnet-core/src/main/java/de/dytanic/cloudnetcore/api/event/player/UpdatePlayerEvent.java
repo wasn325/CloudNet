@@ -13,9 +13,9 @@ import de.dytanic.cloudnet.lib.player.OfflinePlayer;
  */
 public class UpdatePlayerEvent extends AsyncEvent<UpdatePlayerEvent> {
 
-    private OfflinePlayer offlinePlayer;
+    private final OfflinePlayer offlinePlayer;
 
-    public UpdatePlayerEvent(OfflinePlayer offlinePlayer) {
+    public UpdatePlayerEvent(final OfflinePlayer offlinePlayer) {
         super(new AsyncPosterAdapter<>());
         this.offlinePlayer = offlinePlayer;
     }

@@ -17,13 +17,13 @@ public class CommandIp extends Command {
     }
 
     @Override
-    public void execute(CommandSender commandSender, String[] args) {
+    public void execute(final CommandSender commandSender, final String[] args) {
         if (args.length < 1) {
             commandSender.sendMessage(new TextComponent(TextComponent.fromLegacyText(ChatColor.RED + "Please follow this command by a user name")));
             return;
         }
 
-        OfflinePlayer user = CloudAPI.getInstance().getOfflinePlayer(args[0]);
+        final OfflinePlayer user = CloudAPI.getInstance().getOfflinePlayer(args[0]);
 
         if (user == null) {
             commandSender.sendMessage(new TextComponent(TextComponent.fromLegacyText(ChatColor.RED + "That user is not registered!")));

@@ -25,15 +25,15 @@ public class SRVRecord extends DNSRecord {
      * @param port     the port this record points at
      * @param target   the target this records points to
      */
-    public SRVRecord(String name,
-                     String content,
-                     String service,
-                     String proto,
-                     String name_,
-                     int priority,
-                     int weight,
-                     int port,
-                     String target) {
+    public SRVRecord(final String name,
+                     final String content,
+                     final String service,
+                     final String proto,
+                     final String name_,
+                     final int priority,
+                     final int weight,
+                     final int port,
+                     final String target) {
         super(DNSType.SRV.name(), name, content, 1, false, new Document().append("service", service)
                                                                          .append("proto", proto)
                                                                          .append("name",

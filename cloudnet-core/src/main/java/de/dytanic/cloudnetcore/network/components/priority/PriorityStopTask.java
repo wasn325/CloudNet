@@ -16,15 +16,15 @@ import de.dytanic.cloudnetcore.network.components.Wrapper;
  */
 public final class PriorityStopTask implements Runnable {
 
-    private String wrapper;
+    private final String wrapper;
 
-    private INetworkComponent iNetworkComponent;
+    private final INetworkComponent iNetworkComponent;
 
     private int time;
 
     private ScheduledTask scheduledTask;
 
-    public PriorityStopTask(Wrapper wrapper, INetworkComponent iNetworkComponent, int time) {
+    public PriorityStopTask(final Wrapper wrapper, final INetworkComponent iNetworkComponent, final int time) {
         this.wrapper = wrapper.getServerId();
         this.iNetworkComponent = iNetworkComponent;
         this.time = time;
@@ -90,7 +90,7 @@ public final class PriorityStopTask implements Runnable {
         return scheduledTask;
     }
 
-    public void setScheduledTask(ScheduledTask scheduledTask) {
+    public void setScheduledTask(final ScheduledTask scheduledTask) {
         this.scheduledTask = scheduledTask;
     }
 
