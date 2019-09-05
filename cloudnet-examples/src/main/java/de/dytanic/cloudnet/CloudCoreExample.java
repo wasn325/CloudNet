@@ -41,22 +41,22 @@ public class CloudCoreExample extends CoreModule { //extend the CoreModule class
 
     }
 
-    private class EventListenerExample implements IEventListener<ServerAddEvent> {
+    private static class EventListenerExample implements IEventListener<ServerAddEvent> {
 
         @Override
-        public void onCall(ServerAddEvent event) {
+        public void onCall(final ServerAddEvent event) {
             System.out.println(event.getMinecraftServer().getServiceId());
         }
     }
 
-    private class CommandTest extends Command { //Creates a command with the specified constructor
+    private static class CommandTest extends Command { //Creates a command with the specified constructor
 
         public CommandTest() {
             super("test", "cloudnet.command.test", "te");
         }
 
         @Override
-        public void onExecuteCommand(CommandSender sender, String[] args) {
+        public void onExecuteCommand(final CommandSender sender, final String[] args) {
             CloudNet.getInstance().startGameServer(CloudNet.getInstance().getServerGroup("Lobby"));
         }
     }
