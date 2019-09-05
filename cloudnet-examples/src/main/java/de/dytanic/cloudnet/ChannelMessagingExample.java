@@ -8,12 +8,13 @@ import de.dytanic.cloudnet.api.CloudAPI;
 import de.dytanic.cloudnet.api.network.packet.out.PacketOutCustomChannelMessage;
 import de.dytanic.cloudnet.bridge.event.proxied.ProxiedSubChannelMessageEvent;
 import de.dytanic.cloudnet.lib.utility.document.Document;
+import net.md_5.bungee.api.plugin.Listener;
 import net.md_5.bungee.event.EventHandler;
 
 /**
  * Created by Tareko on 15.10.2017.
  */
-public class ChannelMessagingExample {
+public class ChannelMessagingExample implements Listener {
 
     public void sendCustomMessage() {
         CloudAPI.getInstance().getNetworkConnection().sendPacket(new PacketOutCustomChannelMessage("some-sub-channel-for-proxy",
@@ -26,7 +27,7 @@ public class ChannelMessagingExample {
     }
 
     @EventHandler
-    public void channelSubReceive(ProxiedSubChannelMessageEvent e) //handle the received channel message
+    public void channelSubReceive(final ProxiedSubChannelMessageEvent e) //handle the received channel message
     {
         if (e.getChannel().equalsIgnoreCase("some-sub-channel-for-proxy")) {
             if (e.getMessage().equalsIgnoreCase("handle")) {

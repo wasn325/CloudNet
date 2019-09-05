@@ -7,11 +7,12 @@ import de.dytanic.cloudnet.lib.server.ServerConfig;
 import de.dytanic.cloudnet.lib.server.info.ServerInfo;
 import de.dytanic.cloudnet.lib.utility.document.Document;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
 
 /**
  * Created by Tareko on 16.12.2017.
  */
-public class ServerGetExample {
+public class ServerGetExample implements Listener {
 
 
     public void handle(final ProxiedServerAddEvent e) {
