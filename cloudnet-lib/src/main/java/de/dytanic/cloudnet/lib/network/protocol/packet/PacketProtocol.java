@@ -7,8 +7,8 @@ package de.dytanic.cloudnet.lib.network.protocol.packet;
 import de.dytanic.cloudnet.lib.network.protocol.IProtocol;
 import de.dytanic.cloudnet.lib.network.protocol.ProtocolStream;
 
-import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 
 /**
  * Created by Tareko on 09.09.2017.
@@ -22,7 +22,7 @@ public class PacketProtocol implements IProtocol {
 
     @Override
     public Collection<Class<?>> getAvailableClasses() {
-        return Arrays.asList(Packet.class);
+        return Collections.singletonList(Packet.class);
     }
 
     @Override

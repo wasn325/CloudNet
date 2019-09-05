@@ -18,6 +18,7 @@ import joptsimple.OptionParser;
 import joptsimple.OptionSet;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -43,8 +44,8 @@ public final class CloudBootstrap {
         optionParser.allowsUnrecognizedOptions();
         optionParser.acceptsAll(Arrays.asList("version", "v"));
         optionParser.acceptsAll(Arrays.asList("help", "?"));
-        optionParser.acceptsAll(Arrays.asList("notifyWrappers"));
-        optionParser.acceptsAll(Arrays.asList("disable-autoupdate"));
+        optionParser.acceptsAll(Collections.singletonList("notifyWrappers"));
+        optionParser.acceptsAll(Collections.singletonList("disable-autoupdate"));
         optionParser.accepts("debug");
         optionParser.accepts("noconsole");
         optionParser.accepts("ssl");

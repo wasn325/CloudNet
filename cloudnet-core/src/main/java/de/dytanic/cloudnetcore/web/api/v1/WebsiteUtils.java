@@ -22,7 +22,7 @@ import io.netty.handler.codec.http.HttpResponseStatus;
 
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Collections;
 
 /**
  * Created by Tareko on 24.09.2017.
@@ -46,7 +46,7 @@ public class WebsiteUtils extends MethodWebHandlerAdapter {
         if (!httpRequest.headers().contains("-Xcloudnet-user") ||
             (!httpRequest.headers().contains("-Xcloudnet-token") && !httpRequest.headers().contains("-Xcloudnet-password")) ||
             !httpRequest.headers().contains("-Xmessage")) {
-            dataDocument.append("reason", Arrays.asList("-Xcloudnet-user, -Xcloudnet-token or -Xmessage not found!"));
+            dataDocument.append("reason", Collections.singletonList("-Xcloudnet-user, -Xcloudnet-token or -Xmessage not found!"));
             fullHttpResponse.content().writeBytes(dataDocument.convertToJsonString().getBytes(StandardCharsets.UTF_8));
             return fullHttpResponse;
         }
@@ -56,7 +56,7 @@ public class WebsiteUtils extends MethodWebHandlerAdapter {
                                                     httpRequest.headers().get("-Xcloudnet-token"))
             : !CloudNet.getInstance().authorizationPassword(httpRequest.headers().get("-Xcloudnet-user"),
                                                             httpRequest.headers().get("-Xcloudnet-password"))) {
-            dataDocument.append("reason", Arrays.asList("failed authorization!"));
+            dataDocument.append("reason", Collections.singletonList("failed authorization!"));
             fullHttpResponse.content().writeBytes(dataDocument.convertToJsonString().getBytes(StandardCharsets.UTF_8));
             return fullHttpResponse;
         }
@@ -67,7 +67,7 @@ public class WebsiteUtils extends MethodWebHandlerAdapter {
             case "serverinfos": {
 
                 if (!user.getPermissions().contains("cloudnet.web.serverinfos") && !user.getPermissions().contains("*")) {
-                    dataDocument.append("reason", Arrays.asList("permission denied!"));
+                    dataDocument.append("reason", Collections.singletonList("permission denied!"));
                     fullHttpResponse.content().writeBytes(dataDocument.convertToJsonString().getBytes(StandardCharsets.UTF_8));
                     fullHttpResponse.setStatus(HttpResponseStatus.FORBIDDEN);
                     return fullHttpResponse;
@@ -86,7 +86,7 @@ public class WebsiteUtils extends MethodWebHandlerAdapter {
             case "proxyinfos": {
 
                 if (!user.getPermissions().contains("cloudnet.web.proxyinfos") && !user.getPermissions().contains("*")) {
-                    dataDocument.append("reason", Arrays.asList("permission denied!"));
+                    dataDocument.append("reason", Collections.singletonList("permission denied!"));
                     fullHttpResponse.content().writeBytes(dataDocument.convertToJsonString().getBytes(StandardCharsets.UTF_8));
                     fullHttpResponse.setStatus(HttpResponseStatus.FORBIDDEN);
                     return fullHttpResponse;
@@ -105,7 +105,7 @@ public class WebsiteUtils extends MethodWebHandlerAdapter {
             case "onlineplayers":
 
                 if (!user.getPermissions().contains("cloudnet.web.onlineplayers") && !user.getPermissions().contains("*")) {
-                    dataDocument.append("reason", Arrays.asList("permission denied!"));
+                    dataDocument.append("reason", Collections.singletonList("permission denied!"));
                     fullHttpResponse.content().writeBytes(dataDocument.convertToJsonString().getBytes(StandardCharsets.UTF_8));
                     fullHttpResponse.setStatus(HttpResponseStatus.FORBIDDEN);
                     return fullHttpResponse;
@@ -123,7 +123,7 @@ public class WebsiteUtils extends MethodWebHandlerAdapter {
             case "statistic":
 
                 if (!user.getPermissions().contains("cloudnet.web.statistic") && !user.getPermissions().contains("*")) {
-                    dataDocument.append("reason", Arrays.asList("permission denied!"));
+                    dataDocument.append("reason", Collections.singletonList("permission denied!"));
                     fullHttpResponse.content().writeBytes(dataDocument.convertToJsonString().getBytes(StandardCharsets.UTF_8));
                     fullHttpResponse.setStatus(HttpResponseStatus.FORBIDDEN);
                     return fullHttpResponse;
@@ -136,7 +136,7 @@ public class WebsiteUtils extends MethodWebHandlerAdapter {
             case "cloudnetwork":
 
                 if (!user.getPermissions().contains("cloudnet.web.cloudnetwork") && !user.getPermissions().contains("*")) {
-                    dataDocument.append("reason", Arrays.asList("permission denied!"));
+                    dataDocument.append("reason", Collections.singletonList("permission denied!"));
                     fullHttpResponse.content().writeBytes(dataDocument.convertToJsonString().getBytes(StandardCharsets.UTF_8));
                     fullHttpResponse.setStatus(HttpResponseStatus.FORBIDDEN);
                     return fullHttpResponse;
@@ -149,7 +149,7 @@ public class WebsiteUtils extends MethodWebHandlerAdapter {
             case "startserver":
 
                 if (!user.getPermissions().contains("cloudnet.web.startserver") && !user.getPermissions().contains("*")) {
-                    dataDocument.append("reason", Arrays.asList("permission denied!"));
+                    dataDocument.append("reason", Collections.singletonList("permission denied!"));
                     fullHttpResponse.content().writeBytes(dataDocument.convertToJsonString().getBytes(StandardCharsets.UTF_8));
                     fullHttpResponse.setStatus(HttpResponseStatus.FORBIDDEN);
                     return fullHttpResponse;
@@ -173,7 +173,7 @@ public class WebsiteUtils extends MethodWebHandlerAdapter {
             case "startproxy":
 
                 if (!user.getPermissions().contains("cloudnet.web.startproxy") && !user.getPermissions().contains("*")) {
-                    dataDocument.append("reason", Arrays.asList("permission denied!"));
+                    dataDocument.append("reason", Collections.singletonList("permission denied!"));
                     fullHttpResponse.content().writeBytes(dataDocument.convertToJsonString().getBytes(StandardCharsets.UTF_8));
                     fullHttpResponse.setStatus(HttpResponseStatus.FORBIDDEN);
                     return fullHttpResponse;
@@ -195,7 +195,7 @@ public class WebsiteUtils extends MethodWebHandlerAdapter {
 
                 return fullHttpResponse;
             default: {
-                dataDocument.append("success", true).append("reason", Arrays.asList("No available -Xmessage command found!"));
+                dataDocument.append("success", true).append("reason", Collections.singletonList("No available -Xmessage command found!"));
                 fullHttpResponse.setStatus(HttpResponseStatus.OK);
                 fullHttpResponse.content().writeBytes(dataDocument.convertToJsonString().getBytes(StandardCharsets.UTF_8));
                 return fullHttpResponse;

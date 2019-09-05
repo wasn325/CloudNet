@@ -1074,9 +1074,7 @@ public final class CloudNet implements Executable, Runnable, Reloadable {
         final ProxyProcessMeta proxyProcessMeta = new ProxyProcessMeta(newServiceId(proxyGroup, wrapper),
                                                                        proxyGroup.getMemory(),
                                                                        startport,
-                                                                       PROCESS_PARAMETERS,
-                                                                       null,
-                                                                       Arrays.asList(),
+                                                                       PROCESS_PARAMETERS, null, Collections.emptyList(),
                                                                        new Document());
         wrapper.startProxy(proxyProcessMeta);
     }
@@ -1090,7 +1088,7 @@ public final class CloudNet implements Executable, Runnable, Reloadable {
     }
 
     public void startProxy(final ProxyGroup proxyGroup, final int memory, final UUID uniqueId) {
-        startProxy(proxyGroup, memory, PROCESS_PARAMETERS, null, Arrays.asList(), new Document(), uniqueId);
+        startProxy(proxyGroup, memory, PROCESS_PARAMETERS, null, Collections.emptyList(), new Document(), uniqueId);
     }
 
     public ServiceId newServiceId(final ProxyGroup proxyGroup, final Wrapper wrapper) {
@@ -1206,11 +1204,11 @@ public final class CloudNet implements Executable, Runnable, Reloadable {
     }
 
     public void startProxy(final ProxyGroup proxyGroup, final int memory) {
-        startProxy(proxyGroup, memory, null, Arrays.asList(), new Document());
+        startProxy(proxyGroup, memory, null, Collections.emptyList(), new Document());
     }
 
     public void startProxy(final ProxyGroup proxyGroup, final int memory, final int id, final UUID uniqueId) {
-        startProxy(proxyGroup, memory, PROCESS_PARAMETERS, null, Arrays.asList(), new Document(), id, uniqueId);
+        startProxy(proxyGroup, memory, PROCESS_PARAMETERS, null, Collections.emptyList(), new Document(), id, uniqueId);
     }
 
     public void startProxy(final ProxyGroup proxyGroup,
@@ -1257,15 +1255,15 @@ public final class CloudNet implements Executable, Runnable, Reloadable {
     }
 
     public void startProxy(final ProxyGroup proxyGroup, final String urlTemplate) {
-        startProxy(proxyGroup, proxyGroup.getMemory(), urlTemplate, Arrays.asList(), new Document());
+        startProxy(proxyGroup, proxyGroup.getMemory(), urlTemplate, Collections.emptyList(), new Document());
     }
 
     public void startProxy(final ProxyGroup proxyGroup, final String urlTemplate, final Document document) {
-        startProxy(proxyGroup, proxyGroup.getMemory(), urlTemplate, Arrays.asList(), document);
+        startProxy(proxyGroup, proxyGroup.getMemory(), urlTemplate, Collections.emptyList(), document);
     }
 
     public void startProxy(final ProxyGroup proxyGroup, final int memory, final String urlTemplate, final int id, final UUID uniqueId) {
-        startProxy(proxyGroup, memory, PROCESS_PARAMETERS, urlTemplate, Arrays.asList(), new Document(), id, uniqueId);
+        startProxy(proxyGroup, memory, PROCESS_PARAMETERS, urlTemplate, Collections.emptyList(), new Document(), id, uniqueId);
     }
 
     public void startProxy(final ProxyGroup proxyGroup,
@@ -1559,9 +1557,7 @@ public final class CloudNet implements Executable, Runnable, Reloadable {
                                    serverGroup.getDynamicMemory(),
                                    getServers(serverGroup.getName()).size(),
                                    (int) globalUsedMemory()),
-                        false, null, PROCESS_PARAMETERS,
-                        false,
-                        Arrays.asList(),
+                        false, null, PROCESS_PARAMETERS, false, Collections.emptyList(),
                         null,
                         serverProperties);
     }
@@ -1697,9 +1693,7 @@ public final class CloudNet implements Executable, Runnable, Reloadable {
                         calcMemory(serverGroup.getMemory(),
                                    serverGroup.getDynamicMemory(),
                                    getServers(serverGroup.getName()).size(),
-                                   (int) globalUsedMemory()), false, null, processProperties,
-                        false,
-                        Arrays.asList(),
+                                   (int) globalUsedMemory()), false, null, processProperties, false, Collections.emptyList(),
                         null,
                         serverProperties);
     }
@@ -1710,9 +1704,7 @@ public final class CloudNet implements Executable, Runnable, Reloadable {
                         calcMemory(serverGroup.getMemory(),
                                    serverGroup.getDynamicMemory(),
                                    getServers(serverGroup.getName()).size(),
-                                   (int) globalUsedMemory()), false, null, PROCESS_PARAMETERS,
-                        false,
-                        Arrays.asList(),
+                                   (int) globalUsedMemory()), false, null, PROCESS_PARAMETERS, false, Collections.emptyList(),
                         null,
                         serverProperties);
     }
@@ -1856,9 +1848,7 @@ public final class CloudNet implements Executable, Runnable, Reloadable {
                                    (int) globalUsedMemory()),
                         false,
                         null,
-                        processProperties,
-                        false,
-                        Arrays.asList(),
+                        processProperties, false, Collections.emptyList(),
                         null,
                         serverProperties);
     }
@@ -1873,9 +1863,7 @@ public final class CloudNet implements Executable, Runnable, Reloadable {
                                    (int) globalUsedMemory()),
                         false,
                         null,
-                        processProperties,
-                        false,
-                        Arrays.asList(),
+                        processProperties, false, Collections.emptyList(),
                         null,
                         serverProperties);
     }
@@ -1887,9 +1875,7 @@ public final class CloudNet implements Executable, Runnable, Reloadable {
                         calcMemory(serverGroup.getMemory(),
                                    serverGroup.getDynamicMemory(),
                                    getServers(serverGroup.getName()).size(),
-                                   (int) globalUsedMemory()), false, null, processProperties,
-                        false,
-                        Arrays.asList(),
+                                   (int) globalUsedMemory()), false, null, processProperties, false, Collections.emptyList(),
                         null,
                         serverProperties);
     }
@@ -1900,9 +1886,7 @@ public final class CloudNet implements Executable, Runnable, Reloadable {
                         calcMemory(serverGroup.getMemory(),
                                    serverGroup.getDynamicMemory(),
                                    getServers(serverGroup.getName()).size(),
-                                   (int) globalUsedMemory()), false, null, PROCESS_PARAMETERS,
-                        false,
-                        Arrays.asList(),
+                                   (int) globalUsedMemory()), false, null, PROCESS_PARAMETERS, false, Collections.emptyList(),
                         null,
                         serverProperties);
     }
@@ -1913,9 +1897,7 @@ public final class CloudNet implements Executable, Runnable, Reloadable {
                         calcMemory(serverGroup.getMemory(),
                                    serverGroup.getDynamicMemory(),
                                    getServers(serverGroup.getName()).size(),
-                                   (int) globalUsedMemory()), false, null, PROCESS_PARAMETERS,
-                        false,
-                        Arrays.asList(),
+                                   (int) globalUsedMemory()), false, null, PROCESS_PARAMETERS, false, Collections.emptyList(),
                         null,
                         serverProperties);
     }
@@ -1929,9 +1911,7 @@ public final class CloudNet implements Executable, Runnable, Reloadable {
                         calcMemory(serverGroup.getMemory(),
                                    serverGroup.getDynamicMemory(),
                                    getServers(serverGroup.getName()).size(),
-                                   (int) globalUsedMemory()), priorityStop, null, processProperties,
-                        false,
-                        Arrays.asList(),
+                                   (int) globalUsedMemory()), priorityStop, null, processProperties, false, Collections.emptyList(),
                         null,
                         new Properties());
     }
@@ -1945,9 +1925,7 @@ public final class CloudNet implements Executable, Runnable, Reloadable {
                         calcMemory(serverGroup.getMemory(),
                                    serverGroup.getDynamicMemory(),
                                    getServers(serverGroup.getName()).size(),
-                                   (int) globalUsedMemory()), priorityStop, null, processProperties,
-                        false,
-                        Arrays.asList(),
+                                   (int) globalUsedMemory()), priorityStop, null, processProperties, false, Collections.emptyList(),
                         null,
                         new Properties());
     }
@@ -1958,9 +1936,7 @@ public final class CloudNet implements Executable, Runnable, Reloadable {
                         calcMemory(serverGroup.getMemory(),
                                    serverGroup.getDynamicMemory(),
                                    getServers(serverGroup.getName()).size(),
-                                   (int) globalUsedMemory()), priorityStop, null, PROCESS_PARAMETERS,
-                        false,
-                        Arrays.asList(),
+                                   (int) globalUsedMemory()), priorityStop, null, PROCESS_PARAMETERS, false, Collections.emptyList(),
                         null,
                         new Properties());
     }
@@ -1975,9 +1951,7 @@ public final class CloudNet implements Executable, Runnable, Reloadable {
                         calcMemory(serverGroup.getMemory(),
                                    serverGroup.getDynamicMemory(),
                                    getServers(serverGroup.getName()).size(),
-                                   (int) globalUsedMemory()), priorityStop, null, PROCESS_PARAMETERS,
-                        false,
-                        Arrays.asList(),
+                                   (int) globalUsedMemory()), priorityStop, null, PROCESS_PARAMETERS, false, Collections.emptyList(),
                         null,
                         new Properties());
     }
@@ -2026,9 +2000,7 @@ public final class CloudNet implements Executable, Runnable, Reloadable {
                         calcMemory(serverGroup.getMemory(),
                                    serverGroup.getDynamicMemory(),
                                    getServers(serverGroup.getName()).size(),
-                                   (int) globalUsedMemory()), false, null, PROCESS_PARAMETERS,
-                        false,
-                        Arrays.asList(),
+                                   (int) globalUsedMemory()), false, null, PROCESS_PARAMETERS, false, Collections.emptyList(),
                         null,
                         new Properties());
     }
@@ -2040,9 +2012,7 @@ public final class CloudNet implements Executable, Runnable, Reloadable {
                         calcMemory(serverGroup.getMemory(),
                                    serverGroup.getDynamicMemory(),
                                    getServers(serverGroup.getName()).size(),
-                                   (int) globalUsedMemory()), false, null, PROCESS_PARAMETERS,
-                        false,
-                        Arrays.asList(),
+                                   (int) globalUsedMemory()), false, null, PROCESS_PARAMETERS, false, Collections.emptyList(),
                         null,
                         new Properties());
     }
@@ -2053,9 +2023,7 @@ public final class CloudNet implements Executable, Runnable, Reloadable {
                         calcMemory(serverGroup.getMemory(),
                                    serverGroup.getDynamicMemory(),
                                    getServers(serverGroup.getName()).size(),
-                                   (int) globalUsedMemory()), priorityStop, null, PROCESS_PARAMETERS,
-                        false,
-                        Arrays.asList(),
+                                   (int) globalUsedMemory()), priorityStop, null, PROCESS_PARAMETERS, false, Collections.emptyList(),
                         null,
                         new Properties());
     }
@@ -2491,15 +2459,13 @@ public final class CloudNet implements Executable, Runnable, Reloadable {
         final ProxyProcessMeta proxyProcessMeta = new ProxyProcessMeta(newServiceId(proxyGroup, wrapper),
                                                                        proxyGroup.getMemory(),
                                                                        startport,
-                                                                       PROCESS_PARAMETERS,
-                                                                       null,
-                                                                       Arrays.asList(),
+                                                                       PROCESS_PARAMETERS, null, Collections.emptyList(),
                                                                        new Document());
         wrapper.startProxyAsync(proxyProcessMeta);
     }
 
     public void startProxyAsync(final ProxyGroup proxyGroup, final int memory) {
-        startProxyAsync(proxyGroup, memory, null, Arrays.asList(), new Document());
+        startProxyAsync(proxyGroup, memory, null, Collections.emptyList(), new Document());
     }
 
     public void startProxyAsync(final ProxyGroup proxyGroup,
@@ -2547,15 +2513,15 @@ public final class CloudNet implements Executable, Runnable, Reloadable {
     }
 
     public void startProxyAsync(final ProxyGroup proxyGroup, final String urlTemplate) {
-        startProxyAsync(proxyGroup, proxyGroup.getMemory(), urlTemplate, Arrays.asList(), new Document());
+        startProxyAsync(proxyGroup, proxyGroup.getMemory(), urlTemplate, Collections.emptyList(), new Document());
     }
 
     public void startProxyAsync(final ProxyGroup proxyGroup, final String urlTemplate, final Document document) {
-        startProxyAsync(proxyGroup, proxyGroup.getMemory(), urlTemplate, Arrays.asList(), document);
+        startProxyAsync(proxyGroup, proxyGroup.getMemory(), urlTemplate, Collections.emptyList(), document);
     }
 
     public void startProxyAsync(final ProxyGroup proxyGroup, final int memory, final UUID uniqueId) {
-        startProxyAsync(proxyGroup, memory, PROCESS_PARAMETERS, null, Arrays.asList(), new Document(), uniqueId);
+        startProxyAsync(proxyGroup, memory, PROCESS_PARAMETERS, null, Collections.emptyList(), new Document(), uniqueId);
     }
 
     public void startProxyAsync(final ProxyGroup proxyGroup,
@@ -2592,7 +2558,7 @@ public final class CloudNet implements Executable, Runnable, Reloadable {
     }
 
     public void startProxyAsync(final ProxyGroup proxyGroup, final int memory, final int id, final UUID uniqueId) {
-        startProxyAsync(proxyGroup, memory, PROCESS_PARAMETERS, null, Arrays.asList(), new Document(), id, uniqueId);
+        startProxyAsync(proxyGroup, memory, PROCESS_PARAMETERS, null, Collections.emptyList(), new Document(), id, uniqueId);
     }
 
     public void startProxyAsync(final ProxyGroup proxyGroup,
@@ -2634,7 +2600,7 @@ public final class CloudNet implements Executable, Runnable, Reloadable {
                                 final String urlTemplate,
                                 final int id,
                                 final UUID uniqueId) {
-        startProxyAsync(proxyGroup, memory, PROCESS_PARAMETERS, urlTemplate, Arrays.asList(), new Document(), id, uniqueId);
+        startProxyAsync(proxyGroup, memory, PROCESS_PARAMETERS, urlTemplate, Collections.emptyList(), new Document(), id, uniqueId);
     }
 
     public void startProxyAsync(final ProxyGroup proxyGroup,
@@ -2686,9 +2652,7 @@ public final class CloudNet implements Executable, Runnable, Reloadable {
                              calcMemory(serverGroup.getMemory(),
                                         serverGroup.getDynamicMemory(),
                                         getServers(serverGroup.getName()).size(),
-                                        (int) globalUsedMemory()), false, null, PROCESS_PARAMETERS,
-                             false,
-                             Arrays.asList(),
+                                        (int) globalUsedMemory()), false, null, PROCESS_PARAMETERS, false, Collections.emptyList(),
                              null,
                              serverProperties);
     }
@@ -2809,9 +2773,7 @@ public final class CloudNet implements Executable, Runnable, Reloadable {
                                         (int) globalUsedMemory()),
                              false,
                              null,
-                             processProperties,
-                             false,
-                             Arrays.asList(),
+                             processProperties, false, Collections.emptyList(),
                              null,
                              serverProperties);
     }
@@ -2822,9 +2784,7 @@ public final class CloudNet implements Executable, Runnable, Reloadable {
                              calcMemory(serverGroup.getMemory(),
                                         serverGroup.getDynamicMemory(),
                                         getServers(serverGroup.getName()).size(),
-                                        (int) globalUsedMemory()), false, null, PROCESS_PARAMETERS,
-                             false,
-                             Arrays.asList(),
+                                        (int) globalUsedMemory()), false, null, PROCESS_PARAMETERS, false, Collections.emptyList(),
                              null,
                              serverProperties);
     }
@@ -2842,9 +2802,7 @@ public final class CloudNet implements Executable, Runnable, Reloadable {
                                         (int) globalUsedMemory()),
                              false,
                              null,
-                             processProperties,
-                             false,
-                             Arrays.asList(),
+                             processProperties, false, Collections.emptyList(),
                              null,
                              serverProperties);
     }
@@ -2967,9 +2925,7 @@ public final class CloudNet implements Executable, Runnable, Reloadable {
                              calcMemory(serverGroup.getMemory(),
                                         serverGroup.getDynamicMemory(),
                                         getServers(serverGroup.getName()).size(),
-                                        (int) globalUsedMemory()), false, null, processProperties,
-                             false,
-                             Arrays.asList(),
+                                        (int) globalUsedMemory()), false, null, processProperties, false, Collections.emptyList(),
                              null,
                              serverProperties);
     }
@@ -2986,9 +2942,7 @@ public final class CloudNet implements Executable, Runnable, Reloadable {
                                         (int) globalUsedMemory()),
                              false,
                              null,
-                             processProperties,
-                             false,
-                             Arrays.asList(),
+                             processProperties, false, Collections.emptyList(),
                              null,
                              serverProperties);
     }
@@ -3002,8 +2956,7 @@ public final class CloudNet implements Executable, Runnable, Reloadable {
                                         serverGroup.getDynamicMemory(),
                                         getServers(serverGroup.getName()).size(),
                                         (int) globalUsedMemory()),
-                             false,
-                             null, PROCESS_PARAMETERS, false, Arrays.asList(), null, serverProperties);
+                             false, null, PROCESS_PARAMETERS, false, Collections.emptyList(), null, serverProperties);
     }
 
     public void startGameServerAsync(final Wrapper wrapper,
@@ -3020,9 +2973,7 @@ public final class CloudNet implements Executable, Runnable, Reloadable {
                                         (int) globalUsedMemory()),
                              false,
                              null,
-                             PROCESS_PARAMETERS,
-                             false,
-                             Arrays.asList(),
+                             PROCESS_PARAMETERS, false, Collections.emptyList(),
                              null,
                              serverProperties);
     }
@@ -3036,9 +2987,7 @@ public final class CloudNet implements Executable, Runnable, Reloadable {
                              calcMemory(serverGroup.getMemory(),
                                         serverGroup.getDynamicMemory(),
                                         getServers(serverGroup.getName()).size(),
-                                        (int) globalUsedMemory()), priorityStop, null, processProperties,
-                             false,
-                             Arrays.asList(),
+                                        (int) globalUsedMemory()), priorityStop, null, processProperties, false, Collections.emptyList(),
                              null,
                              new Properties());
     }
@@ -3052,9 +3001,7 @@ public final class CloudNet implements Executable, Runnable, Reloadable {
                              calcMemory(serverGroup.getMemory(),
                                         serverGroup.getDynamicMemory(),
                                         getServers(serverGroup.getName()).size(),
-                                        (int) globalUsedMemory()), priorityStop, null, processProperties,
-                             false,
-                             Arrays.asList(),
+                                        (int) globalUsedMemory()), priorityStop, null, processProperties, false, Collections.emptyList(),
                              null,
                              new Properties());
     }
@@ -3065,9 +3012,7 @@ public final class CloudNet implements Executable, Runnable, Reloadable {
                              calcMemory(serverGroup.getMemory(),
                                         serverGroup.getDynamicMemory(),
                                         getServers(serverGroup.getName()).size(),
-                                        (int) globalUsedMemory()), priorityStop, null, PROCESS_PARAMETERS,
-                             false,
-                             Arrays.asList(),
+                                        (int) globalUsedMemory()), priorityStop, null, PROCESS_PARAMETERS, false, Collections.emptyList(),
                              null,
                              new Properties());
     }
@@ -3082,9 +3027,7 @@ public final class CloudNet implements Executable, Runnable, Reloadable {
                              calcMemory(serverGroup.getMemory(),
                                         serverGroup.getDynamicMemory(),
                                         getServers(serverGroup.getName()).size(),
-                                        (int) globalUsedMemory()), priorityStop, null, PROCESS_PARAMETERS,
-                             false,
-                             Arrays.asList(),
+                                        (int) globalUsedMemory()), priorityStop, null, PROCESS_PARAMETERS, false, Collections.emptyList(),
                              null,
                              new Properties());
     }
@@ -3133,9 +3076,7 @@ public final class CloudNet implements Executable, Runnable, Reloadable {
                              calcMemory(serverGroup.getMemory(),
                                         serverGroup.getDynamicMemory(),
                                         getServers(serverGroup.getName()).size(),
-                                        (int) globalUsedMemory()), false, null, PROCESS_PARAMETERS,
-                             false,
-                             Arrays.asList(),
+                                        (int) globalUsedMemory()), false, null, PROCESS_PARAMETERS, false, Collections.emptyList(),
                              null,
                              new Properties());
     }
@@ -3147,9 +3088,7 @@ public final class CloudNet implements Executable, Runnable, Reloadable {
                              calcMemory(serverGroup.getMemory(),
                                         serverGroup.getDynamicMemory(),
                                         getServers(serverGroup.getName()).size(),
-                                        (int) globalUsedMemory()), false, null, PROCESS_PARAMETERS,
-                             false,
-                             Arrays.asList(),
+                                        (int) globalUsedMemory()), false, null, PROCESS_PARAMETERS, false, Collections.emptyList(),
                              null,
                              new Properties());
     }

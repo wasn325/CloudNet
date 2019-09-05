@@ -20,7 +20,7 @@ import de.dytanic.cloudnetcore.CloudNet;
 import de.dytanic.cloudnetcore.network.components.Wrapper;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -84,12 +84,13 @@ public class SetupServerGroup {
                                                                 data.getInt("percent"),
                                                                 serverGroupType,
                                                                 serverGroupMode,
-                                                                Arrays.asList(new Template("default",
-                                                                                           TemplateResource
-                                                                                               .valueOf(data.getString("template")),
-                                                                                           null,
-                                                                                           PROCESS_PRE_PARAMETERS,
-                                                                                           new ArrayList<>())),
+                                                                Collections.singletonList(new Template("default",
+                                                                                                       TemplateResource
+                                                                                                           .valueOf(data.getString(
+                                                                                                               "template")),
+                                                                                                       null,
+                                                                                                       PROCESS_PRE_PARAMETERS,
+                                                                                                       new ArrayList<>())),
                                                                 new AdvancedServerConfig(false,
                                                                                          false,
                                                                                          false,

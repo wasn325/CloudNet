@@ -20,7 +20,7 @@ import de.dytanic.cloudnetcore.setup.SetupProxyGroup;
 import de.dytanic.cloudnetcore.setup.SetupServerGroup;
 import de.dytanic.cloudnetcore.setup.SetupWrapper;
 
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.function.Consumer;
 
 public final class CommandCreate extends Command {
@@ -118,7 +118,7 @@ public final class CommandCreate extends Command {
                 }
                 if (args[0].equalsIgnoreCase("user")) {
                     if (!CloudNet.getInstance().getUsers().contains(args[1])) {
-                        final User user = new BasicUser(args[1], args[2], Arrays.asList());
+                        final User user = new BasicUser(args[1], args[2], Collections.emptyList());
                         CloudNet.getInstance().getUsers().add(user);
                         CloudNet.getInstance().getConfig().save(CloudNet.getInstance().getUsers());
                         sender.sendMessage("The user was created!");
@@ -170,7 +170,7 @@ public final class CommandCreate extends Command {
                         if (args[3].equalsIgnoreCase("LOCAL")) {
                             final ServerGroup serverGroup = CloudNet.getInstance().getServerGroups().get(args[2]);
                             serverGroup.getTemplates().add(new Template(args[1], TemplateResource.LOCAL, null, PROCESS_PRE_PARAMETERS,
-                                                                        Arrays.asList()));
+                                                                        Collections.emptyList()));
                             CloudNet.getInstance().getConfig().createGroup(serverGroup);
 
                             NetworkUtils.addAll(CloudNet.getInstance().getServerGroups(),
@@ -201,7 +201,7 @@ public final class CommandCreate extends Command {
                         if (args[3].equalsIgnoreCase("MASTER")) {
                             final ServerGroup serverGroup = CloudNet.getInstance().getServerGroups().get(args[2]);
                             serverGroup.getTemplates().add(new Template(args[1], TemplateResource.MASTER, null, PROCESS_PRE_PARAMETERS,
-                                                                        Arrays.asList()));
+                                                                        Collections.emptyList()));
                             CloudNet.getInstance().getConfig().createGroup(serverGroup);
 
                             NetworkUtils.addAll(CloudNet.getInstance().getServerGroups(),
@@ -241,9 +241,7 @@ public final class CommandCreate extends Command {
                             final ServerGroup serverGroup = CloudNet.getInstance().getServerGroups().get(args[2]);
                             serverGroup.getTemplates().add(new Template(args[1],
                                                                         TemplateResource.URL,
-                                                                        args[4],
-                                                                        new String[] {("-Dtest=true")},
-                                                                        Arrays.asList()));
+                                                                        args[4], new String[] {("-Dtest=true")}, Collections.emptyList()));
                             CloudNet.getInstance().getConfig().createGroup(serverGroup);
 
                             NetworkUtils.addAll(CloudNet.getInstance().getServerGroups(),

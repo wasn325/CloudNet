@@ -23,9 +23,7 @@ public class PermissionsExample {
     public void handlePermissions() {
         final PermissionPool permissionPool = CloudAPI.getInstance()
                                                       .getPermissionPool(); //Returns the permission pool with all permissions groups etc.
-        final PermissionGroup permissionGroup = new Boolean(true)
-                                                ? CloudAPI.getInstance().getPermissionGroup("Admin")
-                                                : permissionPool.getGroups().get("Admin"); //Options for got the permission group
+        final PermissionGroup permissionGroup = CloudAPI.getInstance().getPermissionGroup("Admin"); //Options for got the permission group
         permissionGroup.getOptions(); //custom api options
         permissionGroup.getJoinPower(); //returns the joinpower
         permissionGroup.getPermissions(); //a map with all permissions of the group

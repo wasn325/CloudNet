@@ -5,7 +5,7 @@ import de.dytanic.cloudnet.lib.player.OfflinePlayer;
 import de.dytanic.cloudnet.lib.player.PlayerConnection;
 
 import java.lang.reflect.Type;
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -21,9 +21,7 @@ public class PermissionPool {
     public PermissionEntity getNewPermissionEntity(final PlayerConnection playerWhereAmI) {
         return new PermissionEntity(playerWhereAmI.getUniqueId(),
                                     new HashMap<>(),
-                                    null,
-                                    null,
-                                    Arrays.asList(new GroupEntityData(getDefaultGroup().getName(), 0L)));
+                                    null, null, Collections.singletonList(new GroupEntityData(getDefaultGroup().getName(), 0L)));
     }
 
     public PermissionGroup getDefaultGroup() {
@@ -38,9 +36,7 @@ public class PermissionPool {
     public PermissionEntity getNewPermissionEntity(final OfflinePlayer playerWhereAmI) {
         return new PermissionEntity(playerWhereAmI.getUniqueId(),
                                     new HashMap<>(),
-                                    null,
-                                    null,
-                                    Arrays.asList(new GroupEntityData(getDefaultGroup().getName(), 0L)));
+                                    null, null, Collections.singletonList(new GroupEntityData(getDefaultGroup().getName(), 0L)));
     }
 
     public Map<String, PermissionGroup> getGroups() {

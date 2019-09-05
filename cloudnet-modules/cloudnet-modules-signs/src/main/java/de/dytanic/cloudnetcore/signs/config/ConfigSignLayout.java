@@ -17,6 +17,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
+import java.util.Collections;
 
 /**
  * Created by Tareko on 22.07.2017.
@@ -32,30 +33,33 @@ public class ConfigSignLayout {
                                                                                                     false,
                                                                                                     1D,
                                                                                                     0.8D,
-                                                                                                    Arrays.asList(new SignGroupLayouts(
-                                                                                                        "default",
-                                                                                                        Arrays
-                                                                                                            .asList(new SignLayout("empty",
-                                                                                                                                   new String[] {"%server%", "&e%state%", "%online_players%/%max_players%", "%motd%"},
-                                                                                                                                   159,
-                                                                                                                                   "BROWN_TERRACOTTA",
-                                                                                                                                   0),
-                                                                                                                    new SignLayout("online",
-                                                                                                                                   new String[] {"%server%", "&e%state%", "%online_players%/%max_players%", "%motd%"},
-                                                                                                                                   159,
-                                                                                                                                   "BROWN_TERRACOTTA",
-                                                                                                                                   0),
-                                                                                                                    new SignLayout("full",
-                                                                                                                                   new String[] {"%server%", "&ePREMIUM", "%online_players%/%max_players%", "%motd%"},
-                                                                                                                                   159,
-                                                                                                                                   "BROWN_TERRACOTTA",
-                                                                                                                                   0),
-                                                                                                                    new SignLayout(
-                                                                                                                        "maintenance",
-                                                                                                                        new String[] {"§8§m---------", "maintenance", "§cmode", "§8§m---------"},
-                                                                                                                        159,
-                                                                                                                        "BROWN_TERRACOTTA",
-                                                                                                                        0)))),
+                                                                                                    Collections
+                                                                                                        .singletonList(new SignGroupLayouts(
+                                                                                                            "default",
+                                                                                                            Arrays.asList(new SignLayout(
+                                                                                                                              "empty",
+                                                                                                                              new String[] {"%server%", "&e%state%", "%online_players%/%max_players%", "%motd%"},
+                                                                                                                              159,
+                                                                                                                              "BROWN_TERRACOTTA",
+                                                                                                                              0),
+                                                                                                                          new SignLayout(
+                                                                                                                              "online",
+                                                                                                                              new String[] {"%server%", "&e%state%", "%online_players%/%max_players%", "%motd%"},
+                                                                                                                              159,
+                                                                                                                              "BROWN_TERRACOTTA",
+                                                                                                                              0),
+                                                                                                                          new SignLayout(
+                                                                                                                              "full",
+                                                                                                                              new String[] {"%server%", "&ePREMIUM", "%online_players%/%max_players%", "%motd%"},
+                                                                                                                              159,
+                                                                                                                              "BROWN_TERRACOTTA",
+                                                                                                                              0),
+                                                                                                                          new SignLayout(
+                                                                                                                              "maintenance",
+                                                                                                                              new String[] {"§8§m---------", "maintenance", "§cmode", "§8§m---------"},
+                                                                                                                              159,
+                                                                                                                              "BROWN_TERRACOTTA",
+                                                                                                                              0)))),
                                                                                                     new SearchingAnimation(33,
                                                                                                                            11,
                                                                                                                            Arrays

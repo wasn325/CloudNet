@@ -174,7 +174,7 @@ public class CloudLogger extends Logger {
             }
 
             return ConsoleReader.RESET_LINE + "[" + format.format(record.getMillis()) + "] " + record.getLevel().getName() + ": " +
-                   formatMessage(record) + '\n' + builder.toString();
+                   formatMessage(record) + '\n' + builder;
         }
     }
 

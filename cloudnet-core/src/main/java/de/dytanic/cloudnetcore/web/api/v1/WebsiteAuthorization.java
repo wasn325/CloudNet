@@ -17,7 +17,7 @@ import io.netty.handler.codec.http.HttpResponseStatus;
 
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Collections;
 
 /**
  * Created by Tareko on 25.09.2017.
@@ -43,7 +43,7 @@ public class WebsiteAuthorization extends MethodWebHandlerAdapter {
         final Document dataDocument = new Document("success", false).append("reason", new ArrayList<>()).append("response", new Document());
         if (!httpRequest.headers().contains("-Xcloudnet-user") ||
             (!httpRequest.headers().contains("-Xcloudnet-token") && !httpRequest.headers().contains("-Xcloudnet-password"))) {
-            dataDocument.append("reason", Arrays.asList("-Xcloudnet-user, -Xcloudnet-token or -Xmessage not found!"));
+            dataDocument.append("reason", Collections.singletonList("-Xcloudnet-user, -Xcloudnet-token or -Xmessage not found!"));
             fullHttpResponse.content().writeBytes(dataDocument.convertToJsonString().getBytes(StandardCharsets.UTF_8));
             return fullHttpResponse;
         }
@@ -53,7 +53,7 @@ public class WebsiteAuthorization extends MethodWebHandlerAdapter {
                                                     httpRequest.headers().get("-Xcloudnet-token"))
             : !CloudNet.getInstance().authorizationPassword(httpRequest.headers().get("-Xcloudnet-user"),
                                                             httpRequest.headers().get("-Xcloudnet-password"))) {
-            dataDocument.append("reason", Arrays.asList("failed authorization!"));
+            dataDocument.append("reason", Collections.singletonList("failed authorization!"));
             fullHttpResponse.content().writeBytes(dataDocument.convertToJsonString().getBytes(StandardCharsets.UTF_8));
             return fullHttpResponse;
         }

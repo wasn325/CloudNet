@@ -265,8 +265,9 @@ public class ProxiedListener implements Listener {
                     !proxyConfig.getWhitelist().contains(e.getConnection().getUniqueId().toString()) &&
                     !ProxyServer.getInstance().getPluginManager().callEvent(permissionCheckEvent).hasPermission()) {
                     e.setCancelled(true);
-                    e.setCancelReason(ChatColor.translateAlternateColorCodes('&', CloudAPI.getInstance().getCloudNetwork().getMessages()
-                                                                                          .getString("kick-maintenance")));
+                    e.setCancelReason(ChatColor.translateAlternateColorCodes('&',
+                                                                             CloudAPI.getInstance().getCloudNetwork().getMessages()
+                                                                                     .getString("kick-maintenance")));
                     return;
                 }
             }
@@ -283,8 +284,9 @@ public class ProxiedListener implements Listener {
 
                     if (!ProxyServer.getInstance().getPluginManager().callEvent(permissionCheckEvent).hasPermission()) {
                         e.setCancelled(true);
-                        e.setCancelReason(ChatColor.translateAlternateColorCodes('&', CloudAPI.getInstance().getCloudNetwork().getMessages()
-                                                                                              .getString("full-join")));
+                        e.setCancelReason(ChatColor.translateAlternateColorCodes('&',
+                                                                                 CloudAPI.getInstance().getCloudNetwork().getMessages()
+                                                                                         .getString("full-join")));
                         return;
                     }
                 }
@@ -329,7 +331,8 @@ public class ProxiedListener implements Listener {
                 channel.pipeline().addAfter("packet-encoder", "cloudConnection", new MessageToMessageEncoder<DefinedPacket>() {
                     @Override
                     protected void encode(final ChannelHandlerContext channelHandlerContext,
-                                          final DefinedPacket definedPacket, final List<Object> out) throws Exception {
+                                          final DefinedPacket definedPacket,
+                                          final List<Object> out) throws Exception {
                         if (definedPacket instanceof Respawn) {
                             if (((Respawn) definedPacket).getDimension() != ((UserConnection) e.getPlayer()).getDimension()) {
                                 ((Respawn) definedPacket).setDimension(((UserConnection) e.getPlayer()).getDimension());

@@ -403,8 +403,8 @@ public class BungeeCord extends AbstractScreenService implements ServerDispatche
         }
 
         commandBuilder.append(
-            "-XX:+UseG1GC -XX:MaxGCPauseMillis=50 -XX:MaxPermSize=256M -XX:-UseAdaptiveSizePolicy -XX:CompileThreshold=100 -Dio.netty.leakDetectionLevel=DISABLED -Dfile.encoding=UTF-8 -Dio.netty.maxDirectMemory=0 -Dio.netty.recycler.maxCapacity=0 -Dio.netty.recycler.maxCapacity.default=0 -Djline.terminal=jline.UnsupportedTerminal -DIReallyKnowWhatIAmDoingISwear=true -Xmx" +
-            proxyProcessMeta.getMemory() + "M -jar BungeeCord.jar -o true -p");
+            "-XX:+UseG1GC -XX:MaxGCPauseMillis=50 -XX:MaxPermSize=256M -XX:-UseAdaptiveSizePolicy -XX:CompileThreshold=100 -Dio.netty.leakDetectionLevel=DISABLED -Dfile.encoding=UTF-8 -Dio.netty.maxDirectMemory=0 -Dio.netty.recycler.maxCapacity=0 -Dio.netty.recycler.maxCapacity.default=0 -Djline.terminal=jline.UnsupportedTerminal -DIReallyKnowWhatIAmDoingISwear=true -Xmx")
+                      .append(proxyProcessMeta.getMemory()).append("M -jar BungeeCord.jar -o true -p");
 
         CloudNetWrapper.getInstance().getNetworkConnection().sendPacket(new PacketOutAddProxy(proxyInfo, proxyProcessMeta));
         System.out.println("Proxy " + toString() + " started in [" + (System.currentTimeMillis() - startupTime) + " milliseconds]");
