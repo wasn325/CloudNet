@@ -35,8 +35,8 @@ public final class BukkitBootstrap extends JavaPlugin implements Runnable {
     @Override
     public void onLoad() {
         final CloudAPI cloudAPI = new CloudAPI(new CloudConfigLoader(Paths.get("CLOUD/connection.json"),
-                                                                     Paths.get("CLOUD/config.json"),
-                                                                     ConfigTypeLoader.INTERNAL), this);
+            Paths.get("CLOUD/config.json"),
+            ConfigTypeLoader.INTERNAL), this);
         cloudAPI.getNetworkConnection().getPacketManager().registerHandler(PacketRC.SERVER_SELECTORS + 1, PacketInSignSelector.class);
         cloudAPI.getNetworkConnection().getPacketManager().registerHandler(PacketRC.SERVER_SELECTORS + 2, PacketInMobSelector.class);
 
@@ -92,69 +92,66 @@ public final class BukkitBootstrap extends JavaPlugin implements Runnable {
     }
 
     private void enableTasks() {
-        Bukkit.getScheduler().runTask(this, new Runnable() {
-            @Override
-            public void run() {
-                if (CloudServer.getInstance().getGroupData() != null) {
-                    if (CloudAPI.getInstance().getServerGroupData(CloudAPI.getInstance().getGroup()).getMode() == ServerGroupMode.LOBBY ||
-                        CloudAPI.getInstance().getServerGroupData(CloudAPI.getInstance().getGroup()).getMode() ==
-                        ServerGroupMode.STATIC_LOBBY) {
-                        final CommandCloudServer server = new CommandCloudServer();
+        Bukkit.getScheduler().runTask(this, () -> {
+            if (CloudServer.getInstance().getGroupData() != null) {
+                if (CloudAPI.getInstance().getServerGroupData(CloudAPI.getInstance().getGroup()).getMode() == ServerGroupMode.LOBBY ||
+                    CloudAPI.getInstance().getServerGroupData(CloudAPI.getInstance().getGroup()).getMode() ==
+                    ServerGroupMode.STATIC_LOBBY) {
+                    final CommandCloudServer server = new CommandCloudServer();
 
-                        getCommand("cloudserver").setExecutor(server);
-                        getCommand("cloudserver").setPermission("cloudnet.command.cloudserver");
-                        getCommand("cloudserver").setTabCompleter(server);
-                    }
-
-                    Bukkit.getPluginManager().callEvent(new BukkitCloudServerInitEvent(CloudServer.getInstance()));
-                    CloudServer.getInstance().update();
-
-                    if (CloudAPI.getInstance().getServerGroupData(CloudAPI.getInstance().getGroup()).getAdvancedServerConfig()
-                                .isDisableAutoSavingForWorlds()) {
-                        for (final World world : Bukkit.getWorlds()) {
-                            world.setAutoSave(false);
-                        }
-                    }
+                    getCommand("cloudserver").setExecutor(server);
+                    getCommand("cloudserver").setPermission("cloudnet.command.cloudserver");
+                    getCommand("cloudserver").setTabCompleter(server);
                 }
 
-                if (CloudServer.getInstance().getGroupData() != null) {
-                    getServer().getScheduler().runTaskTimer(BukkitBootstrap.this, new Runnable() {
-                        @Override
-                        public void run() {
-                            try {
-                                final ServerListPingEvent serverListPingEvent = new ServerListPingEvent(new InetSocketAddress("127.0.0.1",
-                                                                                                                              53345)
-                                                                                                            .getAddress(),
-                                                                                                        CloudServer.getInstance().getMotd(),
-                                                                                                        Bukkit.getOnlinePlayers().size(),
-                                                                                                        CloudServer.getInstance()
-                                                                                                                   .getMaxPlayers());
-                                Bukkit.getPluginManager().callEvent(serverListPingEvent);
-                                if (!serverListPingEvent.getMotd().equalsIgnoreCase(CloudServer.getInstance().getMotd()) ||
-                                    serverListPingEvent.getMaxPlayers() != CloudServer.getInstance().getMaxPlayers()) {
-                                    CloudServer.getInstance().setMotd(serverListPingEvent.getMotd());
-                                    CloudServer.getInstance().setMaxPlayers(serverListPingEvent.getMaxPlayers());
-                                    if (serverListPingEvent.getMotd().toLowerCase().contains("running") ||
-                                        serverListPingEvent.getMotd().toLowerCase().contains("ingame")) {
-                                        CloudServer.getInstance().changeToIngame();
-                                    } else {
-                                        CloudServer.getInstance().update();
-                                    }
+                Bukkit.getPluginManager().callEvent(new BukkitCloudServerInitEvent(CloudServer.getInstance()));
+                CloudServer.getInstance().update();
+
+                if (CloudAPI.getInstance().getServerGroupData(CloudAPI.getInstance().getGroup()).getAdvancedServerConfig()
+                    .isDisableAutoSavingForWorlds()) {
+                    for (final World world : Bukkit.getWorlds()) {
+                        world.setAutoSave(false);
+                    }
+                }
+            }
+
+            if (CloudServer.getInstance().getGroupData() != null) {
+                getServer().getScheduler().runTaskTimer(BukkitBootstrap.this, new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            final ServerListPingEvent serverListPingEvent = new ServerListPingEvent(new InetSocketAddress("127.0.0.1",
+                                53345)
+                                .getAddress(),
+                                CloudServer.getInstance().getMotd(),
+                                Bukkit.getOnlinePlayers().size(),
+                                CloudServer.getInstance()
+                                    .getMaxPlayers());
+                            Bukkit.getPluginManager().callEvent(serverListPingEvent);
+                            if (!serverListPingEvent.getMotd().equalsIgnoreCase(CloudServer.getInstance().getMotd()) ||
+                                serverListPingEvent.getMaxPlayers() != CloudServer.getInstance().getMaxPlayers()) {
+                                CloudServer.getInstance().setMotd(serverListPingEvent.getMotd());
+                                CloudServer.getInstance().setMaxPlayers(serverListPingEvent.getMaxPlayers());
+                                if (serverListPingEvent.getMotd().toLowerCase().contains("running") ||
+                                    serverListPingEvent.getMotd().toLowerCase().contains("ingame")) {
+                                    CloudServer.getInstance().changeToIngame();
+                                } else {
+                                    CloudServer.getInstance().update();
                                 }
-                            } catch (final Exception ex) {
-                                ex.printStackTrace();
                             }
+                        } catch (final Exception ex) {
+                            ex.printStackTrace();
                         }
-                    }, 0, 5);
-                }
-
-                if (CloudAPI.getInstance().getPermissionPool() != null && (getServer().getPluginManager().isPluginEnabled("VaultAPI") ||
-                                                                           getServer().getPluginManager().isPluginEnabled("Vault"))) {
-                    try {
-                        Class.forName("de.dytanic.cloudnet.bridge.vault.VaultInvoker").getMethod("invoke").invoke(null);
-                    } catch (final IllegalAccessException | ClassNotFoundException | NoSuchMethodException | InvocationTargetException e) {
-                        e.printStackTrace();
                     }
+                }, 0, 5);
+            }
+
+            if (CloudAPI.getInstance().getPermissionPool() != null && (getServer().getPluginManager().isPluginEnabled("VaultAPI") ||
+                                                                       getServer().getPluginManager().isPluginEnabled("Vault"))) {
+                try {
+                    Class.forName("de.dytanic.cloudnet.bridge.vault.VaultInvoker").getMethod("invoke").invoke(null);
+                } catch (final IllegalAccessException | ClassNotFoundException | NoSuchMethodException | InvocationTargetException e) {
+                    e.printStackTrace();
                 }
             }
         });

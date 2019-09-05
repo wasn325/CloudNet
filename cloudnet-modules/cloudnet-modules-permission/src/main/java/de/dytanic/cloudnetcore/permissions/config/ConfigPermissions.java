@@ -37,47 +37,47 @@ public class ConfigPermissions {
 
             if (!Files.exists(Paths.get("local/permissions.yml"))) {
                 final PermissionGroup member = new PermissionGroup("default",
-                                                                   "&8",
-                                                                   "§eMember §7▎ ",
-                                                                   "§f",
-                                                                   "§e",
-                                                                   9999,
-                                                                   0,
-                                                                   true,
-                                                                   new HashMap<>(),
-                                                                   MapWrapper.valueableHashMap(new Return<>("Lobby",
-                                                                                                            Collections.singletonList(
-                                                                                                                "test.permission.for.group.Lobby"))),
-                                                                   new HashMap<>(),
-                                                                   new ArrayList<>());
+                    "&8",
+                    "§eMember §7▎ ",
+                    "§f",
+                    "§e",
+                    9999,
+                    0,
+                    true,
+                    new HashMap<>(),
+                    MapWrapper.valueableHashMap(new Return<>("Lobby",
+                        Collections.singletonList(
+                            "test.permission.for.group.Lobby"))),
+                    new HashMap<>(),
+                    new ArrayList<>());
                 write(member, configuration);
 
                 final PermissionGroup admin = new PermissionGroup("Admin",
-                                                                  "&c",
-                                                                  "§cAdmin §7▎ ",
-                                                                  "§f",
-                                                                  "§c",
-                                                                  0,
-                                                                  100,
-                                                                  false,
-                                                                  MapWrapper.valueableHashMap(new Return<>("*", true)),
-                                                                  MapWrapper.valueableHashMap(new Return<>("Lobby",
-                                                                                                           Collections.singletonList(
-                                                                                                               "test.permission.for.group.Lobby"))),
-                                                                  new HashMap<>(),
-                                                                  new ArrayList<>());
+                    "&c",
+                    "§cAdmin §7▎ ",
+                    "§f",
+                    "§c",
+                    0,
+                    100,
+                    false,
+                    MapWrapper.valueableHashMap(new Return<>("*", true)),
+                    MapWrapper.valueableHashMap(new Return<>("Lobby",
+                        Collections.singletonList(
+                            "test.permission.for.group.Lobby"))),
+                    new HashMap<>(),
+                    new ArrayList<>());
                 write(admin, configuration);
             } else {
                 final Document document = Document.loadDocument(Paths.get("local/permissions.yml"));
                 final Collection<PermissionGroup> groups = document.getObject("groups",
-                                                                              new TypeToken<Collection<PermissionGroup>>() {}.getType());
+                    new TypeToken<Collection<PermissionGroup>>() {}.getType());
                 final Map<String, PermissionGroup> maps = MapWrapper.collectionCatcherHashMap(groups,
-                                                                                              new Catcher<String, PermissionGroup>() {
-                                                                                                  @Override
-                                                                                                  public String doCatch(final PermissionGroup key) {
-                                                                                                      return key.getName();
-                                                                                                  }
-                                                                                              });
+                    new Catcher<String, PermissionGroup>() {
+                        @Override
+                        public String doCatch(final PermissionGroup key) {
+                            return key.getName();
+                        }
+                    });
 
                 configuration.set("enabled", document.getBoolean("enabled"));
 
@@ -91,7 +91,7 @@ public class ConfigPermissions {
 
             try (final OutputStream outputStream = Files
                 .newOutputStream(path); final OutputStreamWriter outputStreamWriter = new OutputStreamWriter(outputStream,
-                                                                                                             StandardCharsets.UTF_8)) {
+                StandardCharsets.UTF_8)) {
                 ConfigurationProvider.getProvider(YamlConfiguration.class).save(configuration, outputStreamWriter);
             }
         }
@@ -192,17 +192,17 @@ public class ConfigPermissions {
             }
 
             final PermissionGroup permissionGroup = new PermissionGroup(key,
-                                                                        group.getString("color"),
-                                                                        group.getString("prefix"),
-                                                                        group.getString("suffix"),
-                                                                        group.getString("display"),
-                                                                        group.getInt("tagId"),
-                                                                        group.getInt("joinPower"),
-                                                                        group.getBoolean("defaultGroup"),
-                                                                        permissions,
-                                                                        permissionsGroups,
-                                                                        group.getSection("options").self,
-                                                                        group.getStringList("implements"));
+                group.getString("color"),
+                group.getString("prefix"),
+                group.getString("suffix"),
+                group.getString("display"),
+                group.getInt("tagId"),
+                group.getInt("joinPower"),
+                group.getBoolean("defaultGroup"),
+                permissions,
+                permissionsGroups,
+                group.getSection("options").self,
+                group.getStringList("implements"));
             maps.put(permissionGroup.getName(), permissionGroup);
         }
 

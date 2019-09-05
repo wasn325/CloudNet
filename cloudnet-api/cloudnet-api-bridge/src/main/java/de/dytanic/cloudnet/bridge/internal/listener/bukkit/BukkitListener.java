@@ -40,14 +40,14 @@ public final class BukkitListener implements Listener {
     @EventHandler(priority = EventPriority.HIGHEST)
     public void handle0(final AsyncPlayerPreLoginEvent e) {
         CloudAPI.getInstance().getLogger().logp(Level.FINEST,
-                                                this.getClass().getSimpleName(),
-                                                "handle0",
-                                                String.format("Handling async player pre login event: %s", e));
+            this.getClass().getSimpleName(),
+            "handle0",
+            String.format("Handling async player pre login event: %s", e));
         for (final Player all : Bukkit.getOnlinePlayers()) {
             if (all.getUniqueId().equals(e.getUniqueId())) {
                 e.disallow(AsyncPlayerPreLoginEvent.Result.KICK_BANNED,
-                           ChatColor.translateAlternateColorCodes('&', CloudAPI.getInstance().getCloudNetwork().getMessages()
-                                                                               .getString("server-kick-proxy-disallow")));
+                    ChatColor.translateAlternateColorCodes('&', CloudAPI.getInstance().getCloudNetwork().getMessages()
+                        .getString("server-kick-proxy-disallow")));
                 return;
             }
         }
@@ -58,19 +58,14 @@ public final class BukkitListener implements Listener {
     @EventHandler
     public void handle(final BukkitSubChannelMessageEvent event) {
         CloudAPI.getInstance().getLogger().logp(Level.FINEST,
-                                                this.getClass().getSimpleName(),
-                                                "handle",
-                                                String.format("Handling bukkit sub channel message event: %s", event));
+            this.getClass().getSimpleName(),
+            "handle",
+            String.format("Handling bukkit sub channel message event: %s", event));
         if (event.getChannel().equalsIgnoreCase("cloudnet_internal") || event.getMessage().equalsIgnoreCase("server_connect_request")) {
             final UUID uniqueId = event.getDocument().getObject("uniqueId", UUID.class);
             if (uniqueId != null) {
                 requests.add(uniqueId);
-                Bukkit.getScheduler().runTaskLater(CloudServer.getInstance().getPlugin(), new Runnable() {
-                    @Override
-                    public void run() {
-                        requests.remove(uniqueId);
-                    }
-                }, 20L);
+                Bukkit.getScheduler().runTaskLater(CloudServer.getInstance().getPlugin(), () -> requests.remove(uniqueId), 20L);
             }
         }
     }
@@ -78,26 +73,26 @@ public final class BukkitListener implements Listener {
     @EventHandler(priority = EventPriority.HIGHEST)
     public void handleLast(final PlayerLoginEvent event) {
         CloudAPI.getInstance().getLogger().logp(Level.FINEST,
-                                                this.getClass().getSimpleName(),
-                                                "handleLast",
-                                                String.format("Handling player login event: %s", event));
+            this.getClass().getSimpleName(),
+            "handleLast",
+            String.format("Handling player login event: %s", event));
         if (this.kicks.contains(event.getPlayer().getUniqueId())) {
             this.kicks.remove(event.getPlayer().getUniqueId());
 
             event.disallow(PlayerLoginEvent.Result.KICK_BANNED,
-                           ChatColor.translateAlternateColorCodes('&', CloudAPI.getInstance().getCloudNetwork().getMessages()
-                                                                               .getString("server-kick-proxy-disallow")));
+                ChatColor.translateAlternateColorCodes('&', CloudAPI.getInstance().getCloudNetwork().getMessages()
+                    .getString("server-kick-proxy-disallow")));
         }
     }
 
     @EventHandler(priority = EventPriority.LOWEST)
     public void handleFirst(final PlayerLoginEvent event) {
         CloudAPI.getInstance().getLogger().logp(Level.FINEST,
-                                                this.getClass().getSimpleName(),
-                                                "handleFirst",
-                                                String.format("Handling player login event: %s", event));
+            this.getClass().getSimpleName(),
+            "handleFirst",
+            String.format("Handling player login event: %s", event));
         if (CloudServer.getInstance().getCloudPlayers().containsKey(event.getPlayer().getUniqueId()) && requests.contains(event.getPlayer()
-                                                                                                                               .getUniqueId())) {
+            .getUniqueId())) {
             requests.remove(event.getPlayer().getUniqueId());
             if (CloudAPI.getInstance().getPermissionPool() != null && CloudAPI.getInstance().getPermissionPool().isAvailable()) {
                 try {
@@ -127,8 +122,8 @@ public final class BukkitListener implements Listener {
             if (CloudAPI.getInstance().getServerGroupData(CloudAPI.getInstance().getGroup()).isMaintenance()) {
                 if (!event.getPlayer().hasPermission("cloudnet.group.maintenance")) {
                     event.disallow(PlayerLoginEvent.Result.KICK_BANNED,
-                                   ChatColor.translateAlternateColorCodes('&', CloudAPI.getInstance().getCloudNetwork().getMessages()
-                                                                                       .getString("server-group-maintenance-kick")));
+                        ChatColor.translateAlternateColorCodes('&', CloudAPI.getInstance().getCloudNetwork().getMessages()
+                            .getString("server-group-maintenance-kick")));
                     return;
                 }
             }
@@ -160,8 +155,8 @@ public final class BukkitListener implements Listener {
                 if (!acceptLogin) {
                     CloudServer.getInstance().getCloudPlayers().remove(event.getPlayer().getUniqueId());
                     event.disallow(PlayerLoginEvent.Result.KICK_BANNED,
-                                   ChatColor.translateAlternateColorCodes('&', CloudAPI.getInstance().getCloudNetwork().getMessages()
-                                                                                       .getString("joinpower-deny")));
+                        ChatColor.translateAlternateColorCodes('&', CloudAPI.getInstance().getCloudNetwork().getMessages()
+                            .getString("joinpower-deny")));
                 }
             }
         }
@@ -181,17 +176,13 @@ public final class BukkitListener implements Listener {
             CloudServer.getInstance().getGroupData().getMode() != ServerGroupMode.STATIC && CloudServer.getInstance().isAllowAutoStart() &&
             CloudServer.getInstance().getGroupData().getPercentForNewServerAutomatically() > 0) {
             CloudAPI.getInstance().startGameServer(CloudServer.getInstance().getGroupData(),
-                                                   new ServerConfig(false, "null", new Document(), System.currentTimeMillis()),
-                                                   true,
-                                                   CloudServer.getInstance().getTemplate());
+                new ServerConfig(false, "null", new Document(), System.currentTimeMillis()),
+                true,
+                CloudServer.getInstance().getTemplate());
             CloudServer.getInstance().setAllowAutoStart(false);
 
-            Bukkit.getScheduler().runTaskLater(CloudServer.getInstance().getPlugin(), new Runnable() {
-                @Override
-                public void run() {
-                    CloudServer.getInstance().setAllowAutoStart(true);
-                }
-            }, 6000);
+            Bukkit.getScheduler().runTaskLater(CloudServer.getInstance().getPlugin(),
+                () -> CloudServer.getInstance().setAllowAutoStart(true), 6000);
         }
 
     }

@@ -25,19 +25,10 @@ public class PacketInCopyServer extends PacketInHandler {
         final GameServer gameServer = CloudNetWrapper.getInstance().getServers().get(serverInfo.getServiceId().getServerId());
         if (gameServer != null) {
             if (!data.contains("template")) {
-                CloudNetWrapper.getInstance().getScheduler().runTaskAsync(new Runnable() {
-                    @Override
-                    public void run() {
-                        gameServer.copy();
-                    }
-                });
+                CloudNetWrapper.getInstance().getScheduler().runTaskAsync(gameServer::copy);
             } else {
-                CloudNetWrapper.getInstance().getScheduler().runTaskAsync(new Runnable() {
-                    @Override
-                    public void run() {
-                        gameServer.copy(data.getObject("template", new TypeToken<Template>() {}.getType()));
-                    }
-                });
+                CloudNetWrapper.getInstance().getScheduler().runTaskAsync(() -> gameServer
+                    .copy(data.getObject("template", new TypeToken<Template>() {}.getType())));
             }
         }
     }

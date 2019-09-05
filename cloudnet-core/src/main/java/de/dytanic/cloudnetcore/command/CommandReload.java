@@ -13,8 +13,6 @@ import de.dytanic.cloudnet.lib.utility.Acceptable;
 import de.dytanic.cloudnetcore.CloudNet;
 import de.dytanic.cloudnetcore.network.components.Wrapper;
 
-import java.util.function.Consumer;
-
 public final class CommandReload extends Command {
 
     public CommandReload() {
@@ -74,12 +72,7 @@ public final class CommandReload extends Command {
 
                 CloudNet.getInstance().getNetworkManager().reload();
                 CloudNet.getInstance().getNetworkManager().updateAll();
-                CloudNet.getInstance().getWrappers().values().forEach(new Consumer<Wrapper>() {
-                    @Override
-                    public void accept(final Wrapper wrapper) {
-                        wrapper.updateWrapper();
-                    }
-                });
+                CloudNet.getInstance().getWrappers().values().forEach(Wrapper::updateWrapper);
                 sender.sendMessage("[RELOAD] Reloading was completed successfully");
             }
             if (args[0].equalsIgnoreCase("wrapper")) {

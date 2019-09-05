@@ -7,9 +7,6 @@ package de.dytanic.cloudnetcore.command;
 import de.dytanic.cloudnet.command.Command;
 import de.dytanic.cloudnet.command.CommandSender;
 import de.dytanic.cloudnetcore.CloudNet;
-import de.dytanic.cloudnetcore.network.components.Wrapper;
-
-import java.util.function.Consumer;
 
 /**
  * Created by Tareko on 23.08.2017.
@@ -25,12 +22,9 @@ public final class CommandClearCache extends Command {
 
     @Override
     public void onExecuteCommand(final CommandSender sender, final String[] args) {
-        CloudNet.getInstance().getWrappers().values().forEach(new Consumer<Wrapper>() {
-            @Override
-            public void accept(final Wrapper wrapper) {
-                if (wrapper.getChannel() != null) {
-                    wrapper.sendCommand("clearcache");
-                }
+        CloudNet.getInstance().getWrappers().values().forEach(wrapper -> {
+            if (wrapper.getChannel() != null) {
+                wrapper.sendCommand("clearcache");
             }
         });
         sender.sendMessage("The caches of all wrappers were cleared");

@@ -9,7 +9,6 @@ import de.dytanic.cloudnet.help.ServiceDescription;
 import de.dytanic.cloudnet.lib.NetworkUtils;
 import de.dytanic.cloudnet.lib.SystemTimer;
 import de.dytanic.cloudnet.logging.CloudLogger;
-import de.dytanic.cloudnet.logging.handler.ICloudLoggerHandler;
 import de.dytanic.cloudnet.logging.util.HeaderFunction;
 import de.dytanic.cloudnetcore.CloudConfig;
 import de.dytanic.cloudnetcore.CloudNet;
@@ -116,12 +115,9 @@ public final class CloudBootstrap {
             cloudNetLogging.setDebugging(true);
         }
 
-        cloudNetLogging.getHandler().add(new ICloudLoggerHandler() {
-            @Override
-            public void handleConsole(final String input) {
-                if (!CloudNet.RUNNING) {
-                    consolePreInit.add(input);
-                }
+        cloudNetLogging.getHandler().add(input -> {
+            if (!CloudNet.RUNNING) {
+                consolePreInit.add(input);
             }
         });
 

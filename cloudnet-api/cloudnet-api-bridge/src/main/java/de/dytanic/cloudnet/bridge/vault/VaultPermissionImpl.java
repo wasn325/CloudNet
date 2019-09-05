@@ -100,8 +100,8 @@ public class VaultPermissionImpl extends Permission {
         final PermissionEntity permissionEntity = offlinePlayer.getPermissionEntity();
 
         final Optional<GroupEntityData> groupEntityData = permissionEntity.getGroups().stream().filter(ged -> ged.getGroup()
-                                                                                                                 .equalsIgnoreCase(group))
-                                                                          .findFirst();
+            .equalsIgnoreCase(group))
+            .findFirst();
         groupEntityData.ifPresent(entityData -> permissionEntity.getGroups().remove(entityData));
 
         permissionEntity.getGroups().add(new GroupEntityData(group, 0));
@@ -115,9 +115,10 @@ public class VaultPermissionImpl extends Permission {
     public boolean playerRemoveGroup(final String world, final String player, final String group) {
         final OfflinePlayer offlinePlayer = getPlayer(player);
         final PermissionEntity permissionEntity = offlinePlayer.getPermissionEntity();
-        permissionEntity.getGroups().stream().filter(ged -> ged.getGroup().equalsIgnoreCase(group)).findFirst().ifPresent(ged -> {
-            permissionEntity.getGroups().remove(ged);
-        });
+        permissionEntity.getGroups().stream()
+            .filter(ged -> ged.getGroup().equalsIgnoreCase(group))
+            .findFirst()
+            .ifPresent(ged -> permissionEntity.getGroups().remove(ged));
 
         offlinePlayer.setPermissionEntity(permissionEntity);
         updatePlayer(offlinePlayer);

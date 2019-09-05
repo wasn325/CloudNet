@@ -452,7 +452,7 @@ public class TaskScheduler {
 
     public <V> Collection<TaskEntryFuture<V>> schedule(final Collection<TaskEntry<V>> threadEntries) {
 
-        final Collection<TaskEntryFuture<V>> TaskEntryFutures = new ArrayList<TaskEntryFuture<V>>();
+        final Collection<TaskEntryFuture<V>> TaskEntryFutures = new ArrayList<>();
         for (final TaskEntry<V> entry : threadEntries) {
             TaskEntryFutures.add(offerEntry(entry));
         }

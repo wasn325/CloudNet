@@ -21,7 +21,6 @@ import de.dytanic.cloudnetcore.setup.SetupServerGroup;
 import de.dytanic.cloudnetcore.setup.SetupWrapper;
 
 import java.util.Collections;
-import java.util.function.Consumer;
 
 public final class CommandCreate extends Command {
 
@@ -190,12 +189,7 @@ public final class CommandCreate extends Command {
                                                         return true;
                                                     }
                                                 });
-                            CloudNet.getInstance().getWrappers().values().forEach(new Consumer<Wrapper>() {
-                                @Override
-                                public void accept(final Wrapper wrapper) {
-                                    wrapper.updateWrapper();
-                                }
-                            });
+                            CloudNet.getInstance().getWrappers().values().forEach(Wrapper::updateWrapper);
                             sender.sendMessage("The template was created and all wrappers were updated!");
                         }
                         if (args[3].equalsIgnoreCase("MASTER")) {
@@ -221,12 +215,7 @@ public final class CommandCreate extends Command {
                                                         return true;
                                                     }
                                                 });
-                            CloudNet.getInstance().getWrappers().values().forEach(new Consumer<Wrapper>() {
-                                @Override
-                                public void accept(final Wrapper wrapper) {
-                                    wrapper.updateWrapper();
-                                }
-                            });
+                            CloudNet.getInstance().getWrappers().values().forEach(Wrapper::updateWrapper);
                             sender.sendMessage("The template was created and all wrappers were updated!");
                         }
                     } else {
@@ -261,12 +250,7 @@ public final class CommandCreate extends Command {
                                                         return true;
                                                     }
                                                 });
-                            CloudNet.getInstance().getWrappers().values().forEach(new Consumer<Wrapper>() {
-                                @Override
-                                public void accept(final Wrapper wrapper) {
-                                    wrapper.updateWrapper();
-                                }
-                            });
+                            CloudNet.getInstance().getWrappers().values().forEach(Wrapper::updateWrapper);
                             sender.sendMessage("The template was created and all wrappers were updated!");
                         }
                     } else {

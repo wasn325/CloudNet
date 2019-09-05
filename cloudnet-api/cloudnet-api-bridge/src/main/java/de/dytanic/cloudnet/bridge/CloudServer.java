@@ -52,6 +52,7 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 /**
  * Cloud-Server represents
@@ -129,61 +130,14 @@ public class CloudServer implements ICloudService {
      * Updates the ServerInfo on a asynchronized BukkitScheduler Task
      */
     public void updateAsync() {
-        bukkitBootstrap.getServer().getScheduler().runTaskAsynchronously(bukkitBootstrap, new Runnable() {
-            @Override
-            public void run() {
-                final List<String> list = new CopyOnWriteArrayList<>();
-                for (final Player all : Bukkit.getOnlinePlayers()) {
-                    list.add(all.getName());
-                }
-
-                final ServerInfo serverInfo = new ServerInfo(CloudAPI.getInstance().getServiceId(),
-                    hostAdress,
-                    port,
-                    true,
-                    list,
-                    memory,
-                    motd,
-                    Bukkit.getOnlinePlayers().size(),
-                    maxPlayers,
-                    serverState,
-                    serverConfig,
-                    template);
-                CloudAPI.getInstance().update(serverInfo);
-            }
-        });
-    }
-
-    /**
-     * Changed the State to INGAME and Start a gameserver
-     */
-    public void changeToIngame() {
-        serverState = ServerState.INGAME;
-
-        if (allowAutoStart) {
-            final SimpleServerGroup simpleServerGroup = CloudAPI.getInstance().getServerGroupData(CloudAPI.getInstance().getGroup());
-            CloudAPI.getInstance().startGameServer(simpleServerGroup, template);
-            allowAutoStart = false;
-
-            Bukkit.getScheduler().runTaskLater(bukkitBootstrap, new Runnable() {
-                @Override
-                public void run() {
-                    setAllowAutoStart(true);
-                }
-            }, 6000);
-        }
-
-        update();
+        bukkitBootstrap.getServer().getScheduler().runTaskAsynchronously(bukkitBootstrap, this::update);
     }
 
     /**
      * Updates the ServerInfo
      */
     public void update() {
-        final List<String> list = new CopyOnWriteArrayList<>();
-        for (final Player all : Bukkit.getOnlinePlayers()) {
-            list.add(all.getName());
-        }
+        final List<String> list = Bukkit.getOnlinePlayers().stream().map(Player::getName).collect(Collectors.toList());
 
         final ServerInfo serverInfo = new ServerInfo(CloudAPI.getInstance().getServiceId(),
             hostAdress,
@@ -198,6 +152,23 @@ public class CloudServer implements ICloudService {
             serverConfig,
             template);
         CloudAPI.getInstance().update(serverInfo);
+    }
+
+    /**
+     * Changed the State to INGAME and Start a gameserver
+     */
+    public void changeToIngame() {
+        serverState = ServerState.INGAME;
+
+        if (allowAutoStart) {
+            final SimpleServerGroup simpleServerGroup = CloudAPI.getInstance().getServerGroupData(CloudAPI.getInstance().getGroup());
+            CloudAPI.getInstance().startGameServer(simpleServerGroup, template);
+            allowAutoStart = false;
+
+            Bukkit.getScheduler().runTaskLater(bukkitBootstrap, () -> allowAutoStart = true, 6000);
+        }
+
+        update();
     }
 
     /**

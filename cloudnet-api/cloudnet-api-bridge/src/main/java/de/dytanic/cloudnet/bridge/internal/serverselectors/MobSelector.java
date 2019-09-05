@@ -83,26 +83,23 @@ public final class MobSelector {
     public void init() {
         CloudAPI.getInstance().getNetworkHandlerProvider().registerHandler(new NetworkHandlerAdapterImplx());
 
-        Bukkit.getScheduler().runTask(CloudServer.getInstance().getPlugin(), new Runnable() {
-            @Override
-            public void run() {
-                NetworkUtils.addAll(servers,
-                                    MapWrapper
-                                        .collectionCatcherHashMap(CloudAPI.getInstance().getServers(), new Catcher<String, ServerInfo>() {
-                                            @Override
-                                            public String doCatch(final ServerInfo key) {
-                                                return key.getServiceId().getServerId();
-                                            }
-                                        }));
-                Bukkit.getScheduler().runTaskAsynchronously(CloudServer.getInstance().getPlugin(), new Runnable() {
-                    @Override
-                    public void run() {
-                        for (final ServerInfo serverInfo : servers.values()) {
-                            handleUpdate(serverInfo);
+        Bukkit.getScheduler().runTask(CloudServer.getInstance().getPlugin(), () -> {
+            NetworkUtils.addAll(servers,
+                MapWrapper
+                    .collectionCatcherHashMap(CloudAPI.getInstance().getServers(), new Catcher<String, ServerInfo>() {
+                        @Override
+                        public String doCatch(final ServerInfo key) {
+                            return key.getServiceId().getServerId();
                         }
+                    }));
+            Bukkit.getScheduler().runTaskAsynchronously(CloudServer.getInstance().getPlugin(), new Runnable() {
+                @Override
+                public void run() {
+                    for (final ServerInfo serverInfo : servers.values()) {
+                        handleUpdate(serverInfo);
                     }
-                });
-            }
+                }
+            });
         });
 
         if (ReflectionUtil.forName("org.bukkit.entity.ArmorStand") != null) {
@@ -147,12 +144,9 @@ public final class MobSelector {
                         }
 
                         final int value = index.getValue();
-                        Bukkit.getScheduler().runTask(CloudServer.getInstance().getPlugin(), new Runnable() {
-                            @Override
-                            public void run() {
-                                mob.getInventory().setItem(value, transform(mobConfig.getItemLayout(), server));
-                                mob.getServerPosition().put(value, server.getServiceId().getServerId());
-                            }
+                        Bukkit.getScheduler().runTask(CloudServer.getInstance().getPlugin(), () -> {
+                            mob.getInventory().setItem(value, transform(mobConfig.getItemLayout(), server));
+                            mob.getServerPosition().put(value, server.getServiceId().getServerId());
                         });
                         index.setValue(index.getValue() + 1);
                     }

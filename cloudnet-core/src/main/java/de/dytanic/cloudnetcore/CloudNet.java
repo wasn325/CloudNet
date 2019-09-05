@@ -307,13 +307,10 @@ public final class CloudNet implements Executable, Runnable, Reloadable {
             scheduler.runTaskRepeatSync(cloudStopCheck, 0, cloudStopCheck.getTicks());
             scheduler.runTaskRepeatSync(serverLogManager, 0, 2000);
 
-            scheduler.runTaskRepeatSync(new Runnable() {
-                @Override
-                public void run() {
-                    for (final CloudPlayer cloudPlayer : networkManager.getWaitingPlayers().values()) {
-                        if ((cloudPlayer.getLoginTimeStamp().getTime() + 10000L) < System.currentTimeMillis()) {
-                            networkManager.getWaitingPlayers().remove(cloudPlayer.getUniqueId());
-                        }
+            scheduler.runTaskRepeatSync(() -> {
+                for (final CloudPlayer cloudPlayer : networkManager.getWaitingPlayers().values()) {
+                    if ((cloudPlayer.getLoginTimeStamp().getTime() + 10000L) < System.currentTimeMillis()) {
+                        networkManager.getWaitingPlayers().remove(cloudPlayer.getUniqueId());
                     }
                 }
             }, 0, 100);

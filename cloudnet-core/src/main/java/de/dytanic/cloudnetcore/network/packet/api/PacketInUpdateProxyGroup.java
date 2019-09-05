@@ -15,8 +15,6 @@ import de.dytanic.cloudnet.lib.utility.document.Document;
 import de.dytanic.cloudnetcore.CloudNet;
 import de.dytanic.cloudnetcore.network.components.Wrapper;
 
-import java.util.function.Consumer;
-
 /**
  * Created by Tareko on 21.08.2017.
  */
@@ -57,12 +55,7 @@ public class PacketInUpdateProxyGroup extends PacketInHandler {
 
         CloudNet.getInstance().getNetworkManager().reload();
         CloudNet.getInstance().getNetworkManager().updateAll0();
-        CloudNet.getInstance().getWrappers().values().forEach(new Consumer<Wrapper>() {
-            @Override
-            public void accept(final Wrapper wrapper) {
-                wrapper.updateWrapper();
-            }
-        });
+        CloudNet.getInstance().getWrappers().values().forEach(Wrapper::updateWrapper);
 
     }
 }

@@ -18,7 +18,6 @@ import de.dytanic.cloudnet.lib.server.ServerGroup;
 import de.dytanic.cloudnet.lib.user.SimpledUser;
 import de.dytanic.cloudnet.lib.utility.threading.Scheduler;
 import de.dytanic.cloudnet.logging.CloudLogger;
-import de.dytanic.cloudnet.logging.handler.ICloudLoggerHandler;
 import de.dytanic.cloudnet.setup.spigot.PaperBuilder;
 import de.dytanic.cloudnet.setup.spigot.SetupSpigotVersion;
 import de.dytanic.cloudnet.setup.spigot.SpigotBuilder;
@@ -82,14 +81,11 @@ public final class CloudNetWrapper implements Executable, ShutdownOnCentral {
         this.wrapperConfig = cloudNetWrapperConfig;
         this.cloudNetLogging = cloudNetLogging;
         this.networkConnection = new NetworkConnection(new ConnectableAddress(cloudNetWrapperConfig.getCloudnetHost(),
-                                                                              cloudNetWrapperConfig.getCloudnetPort()), new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    onShutdownCentral();
-                } catch (final Exception e) {
-                    e.printStackTrace();
-                }
+            cloudNetWrapperConfig.getCloudnetPort()), () -> {
+            try {
+                onShutdownCentral();
+            } catch (final Exception e) {
+                e.printStackTrace();
             }
         });
 
@@ -184,7 +180,7 @@ public final class CloudNetWrapper implements Executable, ShutdownOnCentral {
         processQueueThread.start();
 
         commandManager.registerCommand(new CommandHelp()).registerCommand(new CommandClear()).registerCommand(new CommandVersion())
-                      .registerCommand(new CommandClearCache()).registerCommand(new CommandStop()).registerCommand(new CommandReload());
+            .registerCommand(new CommandClearCache()).registerCommand(new CommandStop()).registerCommand(new CommandReload());
 
         networkConnection.getPacketManager().registerHandler(PacketRC.CN_CORE, PacketInWrapperInfo.class);
         networkConnection.getPacketManager().registerHandler(PacketRC.CN_CORE + 1, PacketInStartProxy.class);
@@ -232,20 +228,12 @@ public final class CloudNetWrapper implements Executable, ShutdownOnCentral {
             scheduler.runTaskRepeatSync(iWrapperHandler.toExecutor(), 0, iWrapperHandler.getTicks());
             scheduler.runTaskRepeatSync(readConsoleLogWrapperHandler.toExecutor(), 0, readConsoleLogWrapperHandler.getTicks());
 
-            scheduler.runTaskRepeatAsync(new Runnable() {
-                @Override
-                public void run() {
-                    networkConnection.sendPacket(new PacketOutUpdateCPUUsage(getCpuUsage()));
-                }
-            }, 0, 200);
+            scheduler.runTaskRepeatAsync(() -> networkConnection.sendPacket(new PacketOutUpdateCPUUsage(getCpuUsage())), 0, 200);
         }
 
-        cloudNetLogging.getHandler().add(new ICloudLoggerHandler() {
-            @Override
-            public void handleConsole(final String input) {
-                if (networkConnection.isConnected()) {
-                    networkConnection.sendPacket(new PacketOutWrapperScreen(input));
-                }
+        cloudNetLogging.getHandler().add(input -> {
+            if (networkConnection.isConnected()) {
+                networkConnection.sendPacket(new PacketOutWrapperScreen(input));
             }
         });
 

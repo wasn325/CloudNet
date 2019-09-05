@@ -28,7 +28,6 @@ import de.dytanic.cloudnetwrapper.server.process.ServerDispatcher;
 import de.dytanic.cloudnetwrapper.util.FileUtility;
 
 import java.io.File;
-import java.io.FileFilter;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -98,7 +97,7 @@ public class BungeeCord extends AbstractScreenService implements ServerDispatche
                 try {
                     final URLConnection urlConnection = new java.net.URL(url.getUrl()).openConnection();
                     urlConnection.setRequestProperty("User-Agent",
-                                                     "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.95 Safari/537.11");
+                        "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.95 Safari/537.11");
                     Files.copy(urlConnection.getInputStream(), Paths.get("local/cache/web_plugins/" + url.getName() + ".jar"));
                 } catch (final Exception ex) {
                     ex.printStackTrace();
@@ -114,7 +113,7 @@ public class BungeeCord extends AbstractScreenService implements ServerDispatche
                         try {
                             final URLConnection urlConnection = new java.net.URL(url.getUrl()).openConnection();
                             urlConnection.setRequestProperty("User-Agent",
-                                                             "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.95 Safari/537.11");
+                                "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.95 Safari/537.11");
                             Files.copy(urlConnection.getInputStream(), Paths.get("local/cache/web_plugins/" + url.getName() + ".jar"));
                         } catch (final Exception ex) {
                             ex.printStackTrace();
@@ -127,18 +126,18 @@ public class BungeeCord extends AbstractScreenService implements ServerDispatche
                         CloudNetWrapper.getInstance().getSimpledUser() != null) {
                         try {
                             final URLConnection urlConnection = new java.net.URL(new StringBuilder(CloudNetWrapper.getInstance()
-                                                                                                                  .getOptionSet().has("ssl")
+                                                                                                       .getOptionSet().has("ssl")
                                                                                                    ? "https://" : "http://").append(
                                 CloudNetWrapper.getInstance().getWrapperConfig().getCloudnetHost()).append(':').append(CloudNetWrapper
-                                                                                                                           .getInstance()
-                                                                                                                           .getWrapperConfig()
-                                                                                                                           .getWebPort())
-                                                                                                                            .append(
-                                                                                                                                "/cloudnet/api/v1/download")
-                                                                                                                            .substring(0))
+                                .getInstance()
+                                .getWrapperConfig()
+                                .getWebPort())
+                                .append(
+                                    "/cloudnet/api/v1/download")
+                                .substring(0))
                                 .openConnection();
                             urlConnection.setRequestProperty("User-Agent",
-                                                             "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.95 Safari/537.11");
+                                "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.95 Safari/537.11");
 
                             final SimpledUser simpledUser = CloudNetWrapper.getInstance().getSimpledUser();
                             urlConnection.setRequestProperty("-Xcloudnet-user", simpledUser.getUserName());
@@ -167,7 +166,7 @@ public class BungeeCord extends AbstractScreenService implements ServerDispatche
                     Files.createDirectory(Paths.get(path + "/plugins"));
                     for (final ServerInstallablePlugin plugin : proxyProcessMeta.getDownloadablePlugins()) {
                         FileUtility.copyFileToDirectory(new File("local/cache/web_plugins/" + plugin.getName() + ".jar"),
-                                                        new File(path + "/plugins"));
+                            new File(path + "/plugins"));
                     }
 
                     final TemplateLoader templateLoader = new TemplateLoader(proxyProcessMeta.getUrl(), path + "/template.zip");
@@ -179,12 +178,12 @@ public class BungeeCord extends AbstractScreenService implements ServerDispatche
                     Files.createDirectory(Paths.get(path + "/plugins"));
                     for (final ServerInstallablePlugin plugin : proxyProcessMeta.getDownloadablePlugins()) {
                         FileUtility.copyFileToDirectory(new File("local/cache/web_plugins/" + plugin.getName() + ".jar"),
-                                                        new File(path + "/plugins"));
+                            new File(path + "/plugins"));
                     }
 
                     for (final ServerInstallablePlugin plugin : proxyGroup.getTemplate().getInstallablePlugins()) {
                         FileUtility.copyFileToDirectory(new File("local/cache/web_plugins/" + plugin.getName() + ".jar"),
-                                                        new File(path + "/plugins"));
+                            new File(path + "/plugins"));
                     }
 
                     final Template template = proxyGroup.getTemplate();
@@ -205,21 +204,21 @@ public class BungeeCord extends AbstractScreenService implements ServerDispatche
                                                                                                                        .getOptionSet()
                                                                                                                        .has("ssl")
                                                                                                                    ? "https://" : "http://")
-                                                                                                     .append(CloudNetWrapper.getInstance()
-                                                                                                                            .getWrapperConfig()
-                                                                                                                            .getCloudnetHost())
-                                                                                                     .append(':').append(CloudNetWrapper
-                                                                                                                             .getInstance()
-                                                                                                                             .getWrapperConfig()
-                                                                                                                             .getWebPort())
-                                                                                                     .append("/cloudnet/api/v1/download")
-                                                                                                     .substring(0),
-                                                                                                 groupTemplates + "/template.zip",
-                                                                                                 CloudNetWrapper.getInstance()
-                                                                                                                .getSimpledUser(),
-                                                                                                 template,
-                                                                                                 proxyGroup.getName(),
-                                                                                                 null);
+                                .append(CloudNetWrapper.getInstance()
+                                    .getWrapperConfig()
+                                    .getCloudnetHost())
+                                .append(':').append(CloudNetWrapper
+                                    .getInstance()
+                                    .getWrapperConfig()
+                                    .getWebPort())
+                                .append("/cloudnet/api/v1/download")
+                                .substring(0),
+                                groupTemplates + "/template.zip",
+                                CloudNetWrapper.getInstance()
+                                    .getSimpledUser(),
+                                template,
+                                proxyGroup.getName(),
+                                null);
                             System.out.println("Downloading template for " + this.proxyProcessMeta.getServiceId().getGroup());
                             templateLoader.load();
                             templateLoader.unZip(groupTemplates);
@@ -242,16 +241,16 @@ public class BungeeCord extends AbstractScreenService implements ServerDispatche
                 Files.createDirectory(Paths.get(path + "/plugins"));
                 for (final ServerInstallablePlugin plugin : proxyProcessMeta.getDownloadablePlugins()) {
                     FileUtility.copyFileToDirectory(new File("local/cache/web_plugins/" + plugin.getName() + ".jar"),
-                                                    new File(path + "/plugins"));
+                        new File(path + "/plugins"));
                 }
 
                 for (final ServerInstallablePlugin plugin : proxyGroup.getTemplate().getInstallablePlugins()) {
                     FileUtility.copyFileToDirectory(new File("local/cache/web_plugins/" + plugin.getName() + ".jar"),
-                                                    new File(path + "/plugins"));
+                        new File(path + "/plugins"));
                 }
 
                 final TemplateLoader templateLoader = new TemplateLoader(proxyProcessMeta.getUrl(),
-                                                                         "local/templates/" + proxyGroup.getName() + "/template.zip");
+                    "local/templates/" + proxyGroup.getName() + "/template.zip");
                 System.out.println("Downloading template for " + this.proxyProcessMeta.getServiceId().getServerId());
                 templateLoader.load();
                 templateLoader.unZip(path);
@@ -260,7 +259,7 @@ public class BungeeCord extends AbstractScreenService implements ServerDispatche
                 Files.createDirectory(Paths.get(path + "/plugins"));
                 for (final ServerInstallablePlugin plugin : proxyProcessMeta.getDownloadablePlugins()) {
                     FileUtility.copyFileToDirectory(new File("local/cache/web_plugins/" + plugin.getName() + ".jar"),
-                                                    new File(path + "/plugins"));
+                        new File(path + "/plugins"));
                 }
 
                 final Template template = proxyGroup.getTemplate();
@@ -277,23 +276,23 @@ public class BungeeCord extends AbstractScreenService implements ServerDispatche
                     if (!Files.exists(Paths.get(groupTemplates))) {
                         Files.createDirectories(Paths.get(groupTemplates));
                         final MasterTemplateLoader templateLoader = new MasterTemplateLoader(new StringBuilder(CloudNetWrapper.getInstance()
-                                                                                                                              .getOptionSet()
-                                                                                                                              .has("ssl")
+                                                                                                                   .getOptionSet()
+                                                                                                                   .has("ssl")
                                                                                                                ? "https://" : "http://")
-                                                                                                 .append(CloudNetWrapper.getInstance()
-                                                                                                                        .getWrapperConfig()
-                                                                                                                        .getCloudnetHost())
-                                                                                                 .append(':').append(CloudNetWrapper
-                                                                                                                         .getInstance()
-                                                                                                                         .getWrapperConfig()
-                                                                                                                         .getWebPort())
-                                                                                                 .append("/cloudnet/api/v1/download")
-                                                                                                 .substring(0),
-                                                                                             groupTemplates + "/template.zip",
-                                                                                             CloudNetWrapper.getInstance().getSimpledUser(),
-                                                                                             template,
-                                                                                             proxyGroup.getName(),
-                                                                                             null);
+                            .append(CloudNetWrapper.getInstance()
+                                .getWrapperConfig()
+                                .getCloudnetHost())
+                            .append(':').append(CloudNetWrapper
+                                .getInstance()
+                                .getWrapperConfig()
+                                .getWebPort())
+                            .append("/cloudnet/api/v1/download")
+                            .substring(0),
+                            groupTemplates + "/template.zip",
+                            CloudNetWrapper.getInstance().getSimpledUser(),
+                            template,
+                            proxyGroup.getName(),
+                            null);
                         System.out.println("Downloading template for " + this.proxyProcessMeta.getServiceId().getGroup());
                         templateLoader.load();
                         templateLoader.unZip(groupTemplates);
@@ -319,7 +318,7 @@ public class BungeeCord extends AbstractScreenService implements ServerDispatche
                 try {
                     final URLConnection urlConnection = new URL(version.getFirst()).openConnection();
                     urlConnection.setRequestProperty("User-Agent",
-                                                     "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.95 Safari/537.11");
+                        "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.95 Safari/537.11");
                     urlConnection.connect();
                     System.out.println("Downloading " + version.getSecond() + "...");
                     Files.copy(urlConnection.getInputStream(), path);
@@ -340,8 +339,8 @@ public class BungeeCord extends AbstractScreenService implements ServerDispatche
         FileUtility.insertData("files/CloudNetAPI.jar", path + "/plugins/CloudNetAPI.jar");
 
         FileUtility.rewriteFileUtils(new File(path + "/config.yml"),
-                                     '"' + CloudNetWrapper.getInstance().getWrapperConfig().getProxy_config_host() + ':' +
-                                     this.proxyProcessMeta.getPort() + '"');
+            '"' + CloudNetWrapper.getInstance().getWrapperConfig().getProxy_config_host() + ':' +
+            this.proxyProcessMeta.getPort() + '"');
 
         if (CloudNetWrapper.getInstance().getWrapperConfig().isViaVersion()) {
             if (!Files.exists(Paths.get("local/ViaVersion-Proxied.jar"))) {
@@ -350,7 +349,7 @@ public class BungeeCord extends AbstractScreenService implements ServerDispatche
                     final URLConnection url = new URL(
                         "https://ci.cloudnetservice.eu/job/ViaVersion/lastStableBuild/artifact/jar/target/ViaVersion.jar").openConnection();
                     url.setRequestProperty("User-Agent",
-                                           "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.95 Safari/537.11");
+                        "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.95 Safari/537.11");
                     url.connect();
                     Files.copy(url.getInputStream(), Paths.get("local/ViaVersion-Proxied.jar"));
                     ((HttpURLConnection) url).disconnect();
@@ -363,33 +362,33 @@ public class BungeeCord extends AbstractScreenService implements ServerDispatche
         }
 
         this.proxyInfo = new ProxyInfo(proxyProcessMeta.getServiceId(),
-                                       CloudNetWrapper.getInstance().getWrapperConfig().getInternalIP(),
-                                       proxyProcessMeta.getPort(),
-                                       false,
-                                       new LinkedList<>(),
-                                       proxyProcessMeta.getMemory(),
-                                       0);
+            CloudNetWrapper.getInstance().getWrapperConfig().getInternalIP(),
+            proxyProcessMeta.getPort(),
+            false,
+            new LinkedList<>(),
+            proxyProcessMeta.getMemory(),
+            0);
 
         if (!Files.exists(Paths.get(path + "/CLOUD"))) {
             Files.createDirectory(Paths.get(path + "/CLOUD"));
         }
 
         new Document().append("serviceId", proxyProcessMeta.getServiceId()).append("proxyProcess", proxyProcessMeta).append("host",
-                                                                                                                            CloudNetWrapper
-                                                                                                                                .getInstance()
-                                                                                                                                .getWrapperConfig()
-                                                                                                                                .getProxy_config_host() +
-                                                                                                                            ':' +
-                                                                                                                            this.proxyProcessMeta
-                                                                                                                                .getPort())
-                      .append("proxyInfo", proxyInfo).append("ssl", CloudNetWrapper.getInstance().getOptionSet().has("ssl"))
-                      .append("memory", proxyProcessMeta.getMemory()).saveAsConfig(Paths.get(path + "/CLOUD/config.json"));
+            CloudNetWrapper
+                .getInstance()
+                .getWrapperConfig()
+                .getProxy_config_host() +
+            ':' +
+            this.proxyProcessMeta
+                .getPort())
+            .append("proxyInfo", proxyInfo).append("ssl", CloudNetWrapper.getInstance().getOptionSet().has("ssl"))
+            .append("memory", proxyProcessMeta.getMemory()).saveAsConfig(Paths.get(path + "/CLOUD/config.json"));
         new Document().append("connection",
-                              new ConnectableAddress(CloudNetWrapper.getInstance().getWrapperConfig().getCloudnetHost(),
-                                                     CloudNetWrapper.getInstance().getWrapperConfig().getCloudnetPort())).saveAsConfig(Paths
-                                                                                                                                           .get(
-                                                                                                                                               path +
-                                                                                                                                               "/CLOUD/connection.json"));
+            new ConnectableAddress(CloudNetWrapper.getInstance().getWrapperConfig().getCloudnetHost(),
+                CloudNetWrapper.getInstance().getWrapperConfig().getCloudnetPort())).saveAsConfig(Paths
+            .get(
+                path +
+                "/CLOUD/connection.json"));
 
         final StringBuilder commandBuilder = new StringBuilder();
         commandBuilder.append("java ");
@@ -404,7 +403,7 @@ public class BungeeCord extends AbstractScreenService implements ServerDispatche
 
         commandBuilder.append(
             "-XX:+UseG1GC -XX:MaxGCPauseMillis=50 -XX:MaxPermSize=256M -XX:-UseAdaptiveSizePolicy -XX:CompileThreshold=100 -Dio.netty.leakDetectionLevel=DISABLED -Dfile.encoding=UTF-8 -Dio.netty.maxDirectMemory=0 -Dio.netty.recycler.maxCapacity=0 -Dio.netty.recycler.maxCapacity.default=0 -Djline.terminal=jline.UnsupportedTerminal -DIReallyKnowWhatIAmDoingISwear=true -Xmx")
-                      .append(proxyProcessMeta.getMemory()).append("M -jar BungeeCord.jar -o true -p");
+            .append(proxyProcessMeta.getMemory()).append("M -jar BungeeCord.jar -o true -p");
 
         CloudNetWrapper.getInstance().getNetworkConnection().sendPacket(new PacketOutAddProxy(proxyInfo, proxyProcessMeta));
         System.out.println("Proxy " + toString() + " started in [" + (System.currentTimeMillis() - startupTime) + " milliseconds]");
@@ -437,13 +436,11 @@ public class BungeeCord extends AbstractScreenService implements ServerDispatche
 
         if (CloudNetWrapper.getInstance().getWrapperConfig().isSavingRecords()) {
             try {
-                for (final File file : new File(path).listFiles(new FileFilter() {
-                    @Override
-                    public boolean accept(final File pathname) {
-                        return pathname.getName().contains("proxy.log");
+                final File[] files = new File(path).listFiles(pathname -> pathname.getName().contains("proxy.log"));
+                if (files != null) {
+                    for (final File file : files) {
+                        FileUtility.copyFileToDirectory(file, new File("local/records/" + proxyProcessMeta.getServiceId().toString()));
                     }
-                })) {
-                    FileUtility.copyFileToDirectory(file, new File("local/records/" + proxyProcessMeta.getServiceId().toString()));
                 }
 
                 new Document("meta", proxyProcessMeta).saveAsConfig(Paths.get("local/records/metadata.json"));
