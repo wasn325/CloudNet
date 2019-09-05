@@ -20,8 +20,8 @@ public class PermissionPool {
 
     public PermissionEntity getNewPermissionEntity(final PlayerConnection playerWhereAmI) {
         return new PermissionEntity(playerWhereAmI.getUniqueId(),
-                                    new HashMap<>(),
-                                    null, null, Collections.singletonList(new GroupEntityData(getDefaultGroup().getName(), 0L)));
+            new HashMap<>(),
+            null, null, Collections.singletonList(new GroupEntityData(getDefaultGroup().getName(), 0L)));
     }
 
     public PermissionGroup getDefaultGroup() {
@@ -35,8 +35,8 @@ public class PermissionPool {
 
     public PermissionEntity getNewPermissionEntity(final OfflinePlayer playerWhereAmI) {
         return new PermissionEntity(playerWhereAmI.getUniqueId(),
-                                    new HashMap<>(),
-                                    null, null, Collections.singletonList(new GroupEntityData(getDefaultGroup().getName(), 0L)));
+            new HashMap<>(),
+            null, null, Collections.singletonList(new GroupEntityData(getDefaultGroup().getName(), 0L)));
     }
 
     public Map<String, PermissionGroup> getGroups() {

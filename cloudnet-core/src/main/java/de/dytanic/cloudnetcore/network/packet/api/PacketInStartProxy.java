@@ -22,19 +22,19 @@ public class PacketInStartProxy extends PacketInHandler {
     public void handleInput(final Document data, final PacketSender packetSender) {
         if (!data.contains("wrapper")) {
             CloudNet.getInstance().startProxy(CloudNet.getInstance().getProxyGroups().get(data.getString("group")),
-                                              data.getInt("memory"),
-                                              data.getObject("processParameters", new TypeToken<String[]>() {}.getType()),
-                                              data.getString("url"),
-                                              data.getObject("plugins", new TypeToken<Collection<ServerInstallablePlugin>>() {}.getType()),
-                                              data.getDocument("properties"));
+                data.getInt("memory"),
+                data.getObject("processParameters", new TypeToken<String[]>() {}.getType()),
+                data.getString("url"),
+                data.getObject("plugins", new TypeToken<Collection<ServerInstallablePlugin>>() {}.getType()),
+                data.getDocument("properties"));
         } else {
             CloudNet.getInstance().startProxy(CloudNet.getInstance().getWrappers().get(data.getString("wrapper")),
-                                              CloudNet.getInstance().getProxyGroups().get(data.getString("group")),
-                                              data.getInt("memory"),
-                                              data.getObject("processParameters", new TypeToken<String[]>() {}.getType()),
-                                              data.getString("url"),
-                                              data.getObject("plugins", new TypeToken<Collection<ServerInstallablePlugin>>() {}.getType()),
-                                              data.getDocument("properties"));
+                CloudNet.getInstance().getProxyGroups().get(data.getString("group")),
+                data.getInt("memory"),
+                data.getObject("processParameters", new TypeToken<String[]>() {}.getType()),
+                data.getString("url"),
+                data.getObject("plugins", new TypeToken<Collection<ServerInstallablePlugin>>() {}.getType()),
+                data.getDocument("properties"));
         }
     }
 }

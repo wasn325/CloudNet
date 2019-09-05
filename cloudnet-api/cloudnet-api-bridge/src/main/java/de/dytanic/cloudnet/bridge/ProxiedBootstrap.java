@@ -31,12 +31,12 @@ public class ProxiedBootstrap extends Plugin {
     @Override
     public void onLoad() {
         new CloudAPI(new CloudConfigLoader(Paths.get("CLOUD/connection.json"), Paths.get("CLOUD/config.json"), ConfigTypeLoader.INTERNAL),
-                     new Runnable() {
-                         @Override
-                         public void run() {
-                             getProxy().stop("CloudNet-Stop!");
-                         }
-                     });
+            new Runnable() {
+                @Override
+                public void run() {
+                    getProxy().stop("CloudNet-Stop!");
+                }
+            });
         getLogger().setLevel(Level.INFO);
         CloudAPI.getInstance().setLogger(getLogger());
     }

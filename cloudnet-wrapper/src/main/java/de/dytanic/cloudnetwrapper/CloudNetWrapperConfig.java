@@ -120,7 +120,7 @@ public class CloudNetWrapperConfig {
             configuration.set("general.percentOfCPUForANewProxy", 100D);
 
             try (final OutputStreamWriter outputStreamWriter = new OutputStreamWriter(Files.newOutputStream(path),
-                                                                                      StandardCharsets.UTF_8)) {
+                StandardCharsets.UTF_8)) {
                 ConfigurationProvider.getProvider(YamlConfiguration.class).save(configuration, outputStreamWriter);
             }
         }

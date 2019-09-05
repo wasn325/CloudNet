@@ -41,13 +41,13 @@ public class PacketInCustomSubChannelMessage extends PacketInHandler {
                 }
             } else {
                 CloudNet.getInstance().getNetworkManager().sendAll(new PacketOutCustomSubChannelMessage(channel, message, document),
-                                                                   new ChannelFilter() {
-                                                                       @Override
-                                                                       public boolean accept(final INetworkComponent networkComponent) {
-                                                                           return networkComponent instanceof MinecraftServer ||
-                                                                                  networkComponent instanceof CloudServer;
-                                                                       }
-                                                                   });
+                    new ChannelFilter() {
+                        @Override
+                        public boolean accept(final INetworkComponent networkComponent) {
+                            return networkComponent instanceof MinecraftServer ||
+                                   networkComponent instanceof CloudServer;
+                        }
+                    });
             }
         } else {
             if (data.contains("serverId")) {

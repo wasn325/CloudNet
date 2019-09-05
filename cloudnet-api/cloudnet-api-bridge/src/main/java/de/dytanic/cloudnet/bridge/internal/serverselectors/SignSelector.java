@@ -102,13 +102,13 @@ public final class SignSelector implements Listener {
             @Override
             public void run() {
                 NetworkUtils.addAll(servers,
-                                    MapWrapper
-                                        .collectionCatcherHashMap(CloudAPI.getInstance().getServers(), new Catcher<String, ServerInfo>() {
-                                            @Override
-                                            public String doCatch(final ServerInfo key) {
-                                                return key.getServiceId().getServerId();
-                                            }
-                                        }));
+                    MapWrapper
+                        .collectionCatcherHashMap(CloudAPI.getInstance().getServers(), new Catcher<String, ServerInfo>() {
+                            @Override
+                            public String doCatch(final ServerInfo key) {
+                                return key.getServiceId().getServerId();
+                            }
+                        }));
             }
         });
     }
@@ -151,10 +151,10 @@ public final class SignSelector implements Listener {
 
     public Position toPosition(final Location location) {
         return new Position(CloudAPI.getInstance().getGroup(),
-                            location.getWorld().getName(),
-                            location.getX(),
-                            location.getY(),
-                            location.getZ());
+            location.getWorld().getName(),
+            location.getX(),
+            location.getY(),
+            location.getZ());
     }
 
     public boolean containsPosition(final Position position) {
@@ -227,7 +227,7 @@ public final class SignSelector implements Listener {
             @Override
             public boolean isAccepted(final Sign value) {
                 return value.getServerInfo() != null && value.getServerInfo().getServiceId().getServerId().equals(serverInfo.getServiceId()
-                                                                                                                            .getServerId());
+                    .getServerId());
             }
         });
     }
@@ -246,7 +246,7 @@ public final class SignSelector implements Listener {
             @Override
             public boolean isAccepted(final Sign value) {
                 return value.getServerInfo() != null && value.getServerInfo().getServiceId().getServerId().equals(serverInfo.getServiceId()
-                                                                                                                            .getServerId());
+                    .getServerId());
             }
         });
     }
@@ -371,8 +371,8 @@ public final class SignSelector implements Listener {
     public String[] updateOfflineAndMaintenance(final String[] value, final Sign sign) {
         for (short i = 0; i < value.length; i++) {
             value[i] = ChatColor.translateAlternateColorCodes('&',
-                                                              value[i].replace("%group%", sign.getTargetGroup())
-                                                                      .replace("%from%", sign.getPosition().getGroup()));
+                value[i].replace("%group%", sign.getTargetGroup())
+                    .replace("%from%", sign.getPosition().getGroup()));
         }
         return value;
     }
@@ -381,30 +381,30 @@ public final class SignSelector implements Listener {
         short i = 0;
         for (final String x : value) {
             value[i] = ChatColor.translateAlternateColorCodes('&', x.replace("%server%",
-                                                                             serverInfo.getServiceId().getServerId() +
-                                                                             NetworkUtils.EMPTY_STRING).replace("%id%",
-                                                                                                                serverInfo.getServiceId()
-                                                                                                                          .getId() +
-                                                                                                                NetworkUtils.EMPTY_STRING)
-                                                                    .replace("%host%", serverInfo.getHost()).replace("%port%",
-                                                                                                                     serverInfo.getPort() +
-                                                                                                                     NetworkUtils.EMPTY_STRING)
-                                                                    .replace("%memory%", serverInfo.getMemory() + "MB").replace(
+                serverInfo.getServiceId().getServerId() +
+                NetworkUtils.EMPTY_STRING).replace("%id%",
+                serverInfo.getServiceId()
+                    .getId() +
+                NetworkUtils.EMPTY_STRING)
+                .replace("%host%", serverInfo.getHost()).replace("%port%",
+                    serverInfo.getPort() +
+                    NetworkUtils.EMPTY_STRING)
+                .replace("%memory%", serverInfo.getMemory() + "MB").replace(
                     "%online_players%",
                     serverInfo.getOnlineCount() + NetworkUtils.EMPTY_STRING).replace("%max_players%",
-                                                                                     serverInfo.getMaxPlayers() + NetworkUtils.EMPTY_STRING)
-                                                                    .replace("%motd%",
-                                                                             ChatColor
-                                                                                 .translateAlternateColorCodes('&', serverInfo.getMotd()))
-                                                                    .replace("%state%",
-                                                                             serverInfo.getServerState().name() + NetworkUtils.EMPTY_STRING)
-                                                                    .replace("%wrapper%",
-                                                                             serverInfo.getServiceId().getWrapperId() +
-                                                                             NetworkUtils.EMPTY_STRING).replace("%extra%",
-                                                                                                                serverInfo.getServerConfig()
-                                                                                                                          .getExtra())
-                                                                    .replace("%template%", serverInfo.getTemplate().getName())
-                                                                    .replace("%group%", serverInfo.getServiceId().getGroup()));
+                    serverInfo.getMaxPlayers() + NetworkUtils.EMPTY_STRING)
+                .replace("%motd%",
+                    ChatColor
+                        .translateAlternateColorCodes('&', serverInfo.getMotd()))
+                .replace("%state%",
+                    serverInfo.getServerState().name() + NetworkUtils.EMPTY_STRING)
+                .replace("%wrapper%",
+                    serverInfo.getServiceId().getWrapperId() +
+                    NetworkUtils.EMPTY_STRING).replace("%extra%",
+                    serverInfo.getServerConfig()
+                        .getExtra())
+                .replace("%template%", serverInfo.getTemplate().getName())
+                .replace("%group%", serverInfo.getServiceId().getGroup()));
             i++;
         }
     }
@@ -474,9 +474,9 @@ public final class SignSelector implements Listener {
                             if (Bukkit.getWorld(sign.getPosition().getWorld()) != null) {
                                 final Location location = SignSelector.this.toLocation(sign.getPosition());
                                 for (final Entity entity : location.getWorld().getNearbyEntities(location,
-                                                                                                 signLayoutConfig.getDistance(),
-                                                                                                 signLayoutConfig.getDistance(),
-                                                                                                 signLayoutConfig.getDistance())) {
+                                    signLayoutConfig.getDistance(),
+                                    signLayoutConfig.getDistance(),
+                                    signLayoutConfig.getDistance())) {
                                     if (entity instanceof Player && !entity.hasPermission("cloudnet.signs.knockback.bypass")) {
                                         Bukkit.getScheduler().runTask(CloudServer.getInstance().getPlugin(), new Runnable() {
                                             @Override
@@ -485,12 +485,12 @@ public final class SignSelector implements Listener {
                                                     try {
                                                         final Location entityLocation = entity.getLocation();
                                                         entity.setVelocity(new Vector(entityLocation.getX() - location.getX(),
-                                                                                      entityLocation.getY() - location.getY(),
-                                                                                      entityLocation.getZ() - location.getZ()).normalize()
-                                                                                                                              .multiply(
-                                                                                                                                  signLayoutConfig
-                                                                                                                                      .getStrength())
-                                                                                                                              .setY(0.2D));
+                                                            entityLocation.getY() - location.getY(),
+                                                            entityLocation.getZ() - location.getZ()).normalize()
+                                                            .multiply(
+                                                                signLayoutConfig
+                                                                    .getStrength())
+                                                            .setY(0.2D));
                                                     } catch (final Exception ex) {
                                                         ex.printStackTrace();
                                                     }
@@ -526,9 +526,9 @@ public final class SignSelector implements Listener {
                                 sign.setServerInfo(null);
                                 sendUpdateSynchronized(toLocation(sign.getPosition()), layout);
                                 changeBlock(toLocation(sign.getPosition()),
-                                            _signLayout.getBlockName(),
-                                            _signLayout.getBlockId(),
-                                            _signLayout.getSubId());
+                                    _signLayout.getBlockName(),
+                                    _signLayout.getBlockId(),
+                                    _signLayout.getSubId());
                                 continue;
                             }
 
@@ -545,9 +545,9 @@ public final class SignSelector implements Listener {
                                             layout = updateOfflineAndMaintenance(layout, sign);
                                             sendUpdateSynchronized(location, layout);
                                             changeBlock(location,
-                                                        searchLayer.getBlockName(),
-                                                        searchLayer.getBlockId(),
-                                                        searchLayer.getSubId());
+                                                searchLayer.getBlockName(),
+                                                searchLayer.getBlockId(),
+                                                searchLayer.getSubId());
                                             continue;
                                         }
 
@@ -592,7 +592,7 @@ public final class SignSelector implements Listener {
                                                 serverInfo.getServerConfig().isHideServer()) {
                                                 sign.setServerInfo(null);
                                                 String[] layout = updateOfflineAndMaintenance(getSearchingLayout(((ThreadImpl) worker).animationTick)
-                                                                                                  .getSignLayout().clone(), sign);
+                                                    .getSignLayout().clone(), sign);
                                                 layout = updateOfflineAndMaintenance(layout, sign);
                                                 sendUpdateSynchronized(toLocation(sign.getPosition()), layout);
                                                 return;
@@ -613,13 +613,13 @@ public final class SignSelector implements Listener {
                                             updateArray(layout, serverInfo);
                                             sendUpdateSynchronized(location, layout);
                                             changeBlock(location,
-                                                        signLayout.getBlockName(),
-                                                        signLayout.getBlockId(),
-                                                        signLayout.getSubId());
+                                                signLayout.getBlockName(),
+                                                signLayout.getBlockId(),
+                                                signLayout.getSubId());
                                         } else {
                                             sign.setServerInfo(null);
                                             final String[] layout = updateOfflineAndMaintenance(getSearchingLayout(((ThreadImpl) worker).animationTick)
-                                                                                                    .getSignLayout().clone(), sign);
+                                                .getSignLayout().clone(), sign);
                                             sendUpdateSynchronized(location, layout);
                                         }
                                     } else {
@@ -698,7 +698,7 @@ public final class SignSelector implements Listener {
                     } else {
                         sign.setServerInfo(null);
                         final String[] layout = updateOfflineAndMaintenance(getSearchingLayout(((ThreadImpl) worker).animationTick)
-                                                                                .getSignLayout().clone(), sign);
+                            .getSignLayout().clone(), sign);
                         for (final Player all : Bukkit.getOnlinePlayers()) {
                             sendUpdate(all, location, layout);
                         }
@@ -865,7 +865,7 @@ public final class SignSelector implements Listener {
                                         serverInfo.getServerConfig().isHideServer()) {
                                         sign.setServerInfo(null);
                                         final String[] layout = updateOfflineAndMaintenance(getSearchingLayout(((ThreadImpl) worker).animationTick)
-                                                                                                .getSignLayout().clone(), sign);
+                                            .getSignLayout().clone(), sign);
                                         sendUpdateSynchronized(toLocation(next.getPosition()), layout);
                                         return;
                                     }
@@ -883,7 +883,7 @@ public final class SignSelector implements Listener {
                                 } else {
                                     sign.setServerInfo(null);
                                     final String[] layout = updateOfflineAndMaintenance(getSearchingLayout(((ThreadImpl) worker).animationTick)
-                                                                                            .getSignLayout().clone(), sign);
+                                        .getSignLayout().clone(), sign);
                                     sendUpdateSynchronized(location, layout);
                                 }
                             }
@@ -903,7 +903,7 @@ public final class SignSelector implements Listener {
                                             serverInfo.getServerConfig().isHideServer()) {
                                             sign.setServerInfo(null);
                                             final String[] layout = updateOfflineAndMaintenance(getSearchingLayout(((ThreadImpl) worker).animationTick)
-                                                                                                    .getSignLayout().clone(), sign);
+                                                .getSignLayout().clone(), sign);
                                             sendUpdateSynchronized(toLocation(sign.getPosition()), layout);
                                             return;
                                         }
@@ -921,7 +921,7 @@ public final class SignSelector implements Listener {
                                     } else {
                                         sign.setServerInfo(null);
                                         final String[] layout = updateOfflineAndMaintenance(getSearchingLayout(((ThreadImpl) worker).animationTick)
-                                                                                                .getSignLayout().clone(), sign);
+                                            .getSignLayout().clone(), sign);
                                         sendUpdateSynchronized(location, layout);
                                     }
                                 }
@@ -943,7 +943,7 @@ public final class SignSelector implements Listener {
                     return;
                 }
                 final String[] layout = updateOfflineAndMaintenance(getSearchingLayout(((ThreadImpl) worker).animationTick).getSignLayout()
-                                                                                                                           .clone(), sign);
+                    .clone(), sign);
                 sendUpdateSynchronizedTask(toLocation(sign.getPosition()), layout);
             }
         }

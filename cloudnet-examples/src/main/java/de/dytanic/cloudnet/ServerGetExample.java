@@ -35,10 +35,10 @@ public class ServerGetExample implements Listener {
 
     public void start() {
         CloudAPI.getInstance().startGameServer(CloudAPI.getInstance().getServerGroupData("Lobby"),
-                                               new ServerConfig(true, "4820", new Document("myUUID", "test"), System.currentTimeMillis()));
+            new ServerConfig(true, "4820", new Document("myUUID", "test"), System.currentTimeMillis()));
         CloudAPI.getInstance().startGameServer(CloudAPI.getInstance().getServerGroupData("Lobby"),
-                                               new ServerConfig(true, "4820", new Document("myUUID", "test"), System.currentTimeMillis()),
-                                               "Lobby-1");
+            new ServerConfig(true, "4820", new Document("myUUID", "test"), System.currentTimeMillis()),
+            "Lobby-1");
     }
 
 }

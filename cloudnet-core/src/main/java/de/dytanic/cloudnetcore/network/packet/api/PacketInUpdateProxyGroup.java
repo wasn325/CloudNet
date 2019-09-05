@@ -34,24 +34,24 @@ public class PacketInUpdateProxyGroup extends PacketInHandler {
         CloudNet.getInstance().getProxyGroups().clear();
 
         NetworkUtils.addAll(CloudNet.getInstance().getServerGroups(),
-                            CloudNet.getInstance().getConfig().getServerGroups(),
-                            new Acceptable<ServerGroup>() {
-                                @Override
-                                public boolean isAccepted(final ServerGroup value) {
-                                    System.out.println("Loading server group: " + value.getName());
-                                    return true;
-                                }
-                            });
+            CloudNet.getInstance().getConfig().getServerGroups(),
+            new Acceptable<ServerGroup>() {
+                @Override
+                public boolean isAccepted(final ServerGroup value) {
+                    System.out.println("Loading server group: " + value.getName());
+                    return true;
+                }
+            });
 
         NetworkUtils.addAll(CloudNet.getInstance().getProxyGroups(),
-                            CloudNet.getInstance().getConfig().getProxyGroups(),
-                            new Acceptable<ProxyGroup>() {
-                                @Override
-                                public boolean isAccepted(final ProxyGroup value) {
-                                    System.out.println("Loading proxy group: " + value.getName());
-                                    return true;
-                                }
-                            });
+            CloudNet.getInstance().getConfig().getProxyGroups(),
+            new Acceptable<ProxyGroup>() {
+                @Override
+                public boolean isAccepted(final ProxyGroup value) {
+                    System.out.println("Loading proxy group: " + value.getName());
+                    return true;
+                }
+            });
 
         CloudNet.getInstance().getNetworkManager().reload();
         CloudNet.getInstance().getNetworkManager().updateAll0();

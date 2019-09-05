@@ -23,14 +23,14 @@ public class PacketInWrapperInfo extends PacketInHandler {
         CloudNetWrapper.getInstance().setSimpledUser(wrapperExternal.getUser());
         CloudNetWrapper.getInstance().getServerGroups().clear();
         NetworkUtils.addAll(CloudNetWrapper.getInstance().getServerGroups(),
-                            wrapperExternal.getServerGroups(),
-                            new Acceptable<ServerGroup>() {
-                                @Override
-                                public boolean isAccepted(final ServerGroup value) {
-                                    System.out.println("Importing server group [" + value.getName() + "] from CloudNet-Master");
-                                    return true;
-                                }
-                            });
+            wrapperExternal.getServerGroups(),
+            new Acceptable<ServerGroup>() {
+                @Override
+                public boolean isAccepted(final ServerGroup value) {
+                    System.out.println("Importing server group [" + value.getName() + "] from CloudNet-Master");
+                    return true;
+                }
+            });
         CloudNetWrapper.getInstance().getProxyGroups().clear();
         NetworkUtils.addAll(CloudNetWrapper.getInstance().getProxyGroups(), wrapperExternal.getProxyGroups(), new Acceptable<ProxyGroup>() {
             @Override

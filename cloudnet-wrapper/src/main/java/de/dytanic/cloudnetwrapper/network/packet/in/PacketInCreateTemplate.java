@@ -48,8 +48,8 @@ public final class PacketInCreateTemplate extends PacketInHandler {
                         "local/templates/" + serverGroup.getName() + NetworkUtils.SLASH_STRING + template.getName() +
                         "/server.properties"))) {
                         FileUtility.insertData("files/server.properties",
-                                               "local/templates/" + serverGroup.getName() + NetworkUtils.SLASH_STRING + template.getName() +
-                                               "/server.properties");
+                            "local/templates/" + serverGroup.getName() + NetworkUtils.SLASH_STRING + template.getName() +
+                            "/server.properties");
                     }
 
                     if (!Files.exists(Paths.get(
@@ -68,8 +68,8 @@ public final class PacketInCreateTemplate extends PacketInHandler {
                 if (!Files.exists(Paths.get(
                     "local/templates/" + serverGroup.getName() + NetworkUtils.SLASH_STRING + template.getName() + "/server.properties"))) {
                     FileUtility.insertData("files/server.properties",
-                                           "local/templates/" + serverGroup.getName() + NetworkUtils.SLASH_STRING + template.getName() +
-                                           "/server.properties");
+                        "local/templates/" + serverGroup.getName() + NetworkUtils.SLASH_STRING + template.getName() +
+                        "/server.properties");
                 }
 
                 if (!Files.exists(Paths.get(
@@ -95,12 +95,12 @@ public final class PacketInCreateTemplate extends PacketInHandler {
                                 "https://yivesmirror.com/files/cauldron/cauldron-1.7.10-2.1403.1.54.zip").openConnection();
                             connection.setUseCaches(false);
                             connection.setRequestProperty("User-Agent",
-                                                          "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.95 Safari/537.11");
+                                "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.95 Safari/537.11");
                             connection.connect();
                             Files.copy(connection.getInputStream(),
-                                       Paths.get(
-                                           "local/templates/" + serverGroup.getName() + NetworkUtils.SLASH_STRING + template.getName() +
-                                           "/cauldron.zip"));
+                                Paths.get(
+                                    "local/templates/" + serverGroup.getName() + NetworkUtils.SLASH_STRING + template.getName() +
+                                    "/cauldron.zip"));
                             System.out.println("Downloading Complete!");
 
                             final ZipFile zip = new ZipFile(file);
@@ -110,9 +110,9 @@ public final class PacketInCreateTemplate extends PacketInHandler {
 
                                 if (!entry.isDirectory()) {
                                     extractEntry(zip,
-                                                 entry,
-                                                 "local/templates/" + serverGroup.getName() + NetworkUtils.SLASH_STRING +
-                                                 template.getName());
+                                        entry,
+                                        "local/templates/" + serverGroup.getName() + NetworkUtils.SLASH_STRING +
+                                        template.getName());
                                 }
                             }
 
@@ -142,11 +142,11 @@ public final class PacketInCreateTemplate extends PacketInHandler {
                             .openConnection();
                         connection.setUseCaches(false);
                         connection.setRequestProperty("User-Agent",
-                                                      "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.95 Safari/537.11");
+                            "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.95 Safari/537.11");
                         connection.connect();
                         Files.copy(connection.getInputStream(),
-                                   Paths.get("local/templates/" + serverGroup.getName() + NetworkUtils.SLASH_STRING + template.getName() +
-                                             "/cauldron.zip"));
+                            Paths.get("local/templates/" + serverGroup.getName() + NetworkUtils.SLASH_STRING + template.getName() +
+                                      "/cauldron.zip"));
                         System.out.println("Download was completed successfully!");
 
                         final ZipFile zip = new ZipFile(file);
@@ -156,8 +156,8 @@ public final class PacketInCreateTemplate extends PacketInHandler {
 
                             if (!entry.isDirectory()) {
                                 extractEntry(zip,
-                                             entry,
-                                             "local/templates/" + serverGroup.getName() + NetworkUtils.SLASH_STRING + template.getName());
+                                    entry,
+                                    "local/templates/" + serverGroup.getName() + NetworkUtils.SLASH_STRING + template.getName());
                             }
                         }
 
@@ -186,7 +186,7 @@ public final class PacketInCreateTemplate extends PacketInHandler {
                                 .openConnection();
                             connection.setUseCaches(false);
                             connection.setRequestProperty("User-Agent",
-                                                          "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.95 Safari/537.11");
+                                "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.95 Safari/537.11");
                             connection.connect();
                             System.out.println("Downloading glowstone.jar...");
                             Files.copy(connection.getInputStream(), path);
@@ -206,7 +206,7 @@ public final class PacketInCreateTemplate extends PacketInHandler {
                             .openConnection();
                         connection.setUseCaches(false);
                         connection.setRequestProperty("User-Agent",
-                                                      "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.95 Safari/537.11");
+                            "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.95 Safari/537.11");
                         connection.connect();
                         System.out.println("Downloading glowstone.jar...");
                         Files.copy(connection.getInputStream(), path);

@@ -54,11 +54,11 @@ public final class CommandLog extends Command {
                 final String rndm = NetworkUtils.randomString(10);
                 CloudNet.getInstance().getServerLogManager().append(rndm, minecraftServer.getServerId());
                 final List<String> hasteServer = CloudNet.getInstance().getConfig().getHasteServer().stream().filter(this::checkUrl)
-                                                         .collect(Collectors.toList());
+                    .collect(Collectors.toList());
                 sendMinecraftServerPaste(sender, rndm, hasteServer, minecraftServer);
                 final String x = new StringBuilder("http://").append(CloudNet.getInstance().getConfig().getWebServerConfig().getAddress())
-                                                             .append(':').append(CloudNet.getInstance().getConfig().getWebServerConfig()
-                                                                                         .getPort()).append("/cloudnet/log?server=").append(
+                    .append(':').append(CloudNet.getInstance().getConfig().getWebServerConfig()
+                        .getPort()).append("/cloudnet/log?server=").append(
                         rndm).substring(0);
                 sender.sendMessage("You can see the log at: " + x);
 
@@ -68,11 +68,11 @@ public final class CommandLog extends Command {
                 final String rndm = NetworkUtils.randomString(10);
                 CloudNet.getInstance().getServerLogManager().append(rndm, proxyServer.getServerId());
                 final List<String> hasteServer = CloudNet.getInstance().getConfig().getHasteServer().stream().filter(this::checkUrl)
-                                                         .collect(Collectors.toList());
+                    .collect(Collectors.toList());
                 sendProxyServerPaste(sender, rndm, hasteServer, proxyServer);
                 final String x = new StringBuilder("http://").append(CloudNet.getInstance().getConfig().getWebServerConfig().getAddress())
-                                                             .append(':').append(CloudNet.getInstance().getConfig().getWebServerConfig()
-                                                                                         .getPort()).append("/cloudnet/log?server=").append(
+                    .append(':').append(CloudNet.getInstance().getConfig().getWebServerConfig()
+                        .getPort()).append("/cloudnet/log?server=").append(
                         rndm).substring(0);
                 sender.sendMessage("You can see the log at: " + x);
             } else {
@@ -131,12 +131,12 @@ public final class CommandLog extends Command {
             paste.append(String.format("Java Version: %s", System.getProperty("java.version"))).append('\n');
             paste.append(String.format("User: %s", System.getProperty("user.name"))).append('\n');
             paste.append(String.format("OS: %s %s (%s)",
-                                       System.getProperty("os.name"),
-                                       System.getProperty("os.arch"),
-                                       System.getProperty("os.version"))).append('\n');
+                System.getProperty("os.name"),
+                System.getProperty("os.arch"),
+                System.getProperty("os.version"))).append('\n');
             paste.append(String.format("Memory Used: %d Mb",
-                                       ((NetworkUtils.system().getTotalPhysicalMemorySize() -
-                                         NetworkUtils.system().getFreePhysicalMemorySize()) / 1024L) / 1024L)).append('\n');
+                ((NetworkUtils.system().getTotalPhysicalMemorySize() -
+                  NetworkUtils.system().getFreePhysicalMemorySize()) / 1024L) / 1024L)).append('\n');
             paste.append(String.format("Memory Free: %d Mb", (NetworkUtils.system().getFreePhysicalMemorySize() / 1024L) / 1024L)).append(
                 '\n');
             paste.append(String.format("Memory Max: %d Mb", (NetworkUtils.system().getTotalPhysicalMemorySize() / 1024L) / 1024L)).append(
@@ -145,8 +145,8 @@ public final class CommandLog extends Command {
             paste.append("-----END SYSTEM INFO-----").append('\n');
             paste.append("-----BEGIN CLOUDNET INFO-----").append('\n');
             paste.append(String.format("CloudNet Version: %s # %s",
-                                       NetworkUtils.class.getPackage().getSpecificationVersion(),
-                                       NetworkUtils.class.getPackage().getImplementationVersion())).append('\n');
+                NetworkUtils.class.getPackage().getSpecificationVersion(),
+                NetworkUtils.class.getPackage().getImplementationVersion())).append('\n');
             paste.append(String.format("Backend: %s", minecraftServer.getServerInfo().getTemplate().getBackend().name())).append('\n');
             paste.append(String.format("GroupMode: %s", minecraftServer.getGroup().getGroupMode().name())).append('\n');
             paste.append(String.format("Server: %s", minecraftServer.getServerId())).append('\n');
@@ -190,12 +190,12 @@ public final class CommandLog extends Command {
             paste.append(String.format("Java Version: %s", System.getProperty("java.version"))).append('\n');
             paste.append(String.format("User: %s", System.getProperty("user.name"))).append('\n');
             paste.append(String.format("OS: %s %s (%s)",
-                                       System.getProperty("os.name"),
-                                       System.getProperty("os.arch"),
-                                       System.getProperty("os.version"))).append('\n');
+                System.getProperty("os.name"),
+                System.getProperty("os.arch"),
+                System.getProperty("os.version"))).append('\n');
             paste.append(String.format("Memory Used: %d Mb",
-                                       ((NetworkUtils.system().getTotalPhysicalMemorySize() -
-                                         NetworkUtils.system().getFreePhysicalMemorySize()) / 1024L) / 1024L)).append('\n');
+                ((NetworkUtils.system().getTotalPhysicalMemorySize() -
+                  NetworkUtils.system().getFreePhysicalMemorySize()) / 1024L) / 1024L)).append('\n');
             paste.append(String.format("Memory Free: %d Mb", (NetworkUtils.system().getFreePhysicalMemorySize() / 1024L) / 1024L)).append(
                 '\n');
             paste.append(String.format("Memory Max: %d Mb", (NetworkUtils.system().getTotalPhysicalMemorySize() / 1024L) / 1024L)).append(
@@ -204,14 +204,14 @@ public final class CommandLog extends Command {
             paste.append("-----END SYSTEM INFO-----").append('\n');
             paste.append("-----BEGIN CLOUDNET INFO-----").append('\n');
             paste.append(String.format("CloudNet Version: %s # %s",
-                                       NetworkUtils.class.getPackage().getSpecificationVersion(),
-                                       NetworkUtils.class.getPackage().getImplementationVersion())).append('\n');
+                NetworkUtils.class.getPackage().getSpecificationVersion(),
+                NetworkUtils.class.getPackage().getImplementationVersion())).append('\n');
             paste.append(String.format("Backend: %s", CloudNet.getInstance().getProxyGroup(proxyServer.getProxyInfo().getServiceId()
-                                                                                                      .getGroup()).getTemplate()
-                                                              .getBackend().name())).append('\n');
+                .getGroup()).getTemplate()
+                .getBackend().name())).append('\n');
             paste.append(String.format("GroupMode: %s", CloudNet.getInstance().getProxyGroup(proxyServer.getProxyInfo().getServiceId()
-                                                                                                        .getGroup()).getProxyGroupMode()
-                                                                .name())).append('\n');
+                .getGroup()).getProxyGroupMode()
+                .name())).append('\n');
             paste.append(String.format("Server: %s", proxyServer.getServerId())).append('\n');
             paste.append("-----END CLOUDNET INFO-----").append('\n');
             paste.append("-----BEGIN SERVER INFO-----").append('\n');
@@ -219,7 +219,7 @@ public final class CommandLog extends Command {
             paste.append("-----END SERVER INFO-----").append('\n');
             paste.append("-----BEGIN GROUP INFO-----").append('\n');
             paste.append(g.toJson(CloudNet.getInstance().getProxyGroup(proxyServer.getProxyInfo().getServiceId().getGroup()),
-                                  TypeToken.get(ProxyGroup.class).getType())).append('\n');
+                TypeToken.get(ProxyGroup.class).getType())).append('\n');
             paste.append("-----END GROUP INFO-----").append('\n');
             paste.append("-----BEGIN LOG INFO-----").append('\n');
             CloudNet.getInstance().getServerLogManager().getScreenInfos().getS(random).forEach(screenInfo -> paste

@@ -32,8 +32,8 @@ public class DatabaseImpl implements Database {
     @Override
     public Database loadDocuments() {
         final Result result = CloudAPI.getInstance().getNetworkConnection().getPacketManager().sendQuery(new PacketDBOutGetDocument(name),
-                                                                                                         CloudAPI.getInstance()
-                                                                                                                 .getNetworkConnection());
+            CloudAPI.getInstance()
+                .getNetworkConnection());
         this.docs = result.getResult().getObject("docs", new TypeToken<Map<String, Document>>() {}.getType());
         return this;
     }
@@ -46,9 +46,9 @@ public class DatabaseImpl implements Database {
     @Override
     public Document getDocument(final String name) {
         final Result result = CloudAPI.getInstance().getNetworkConnection().getPacketManager().sendQuery(new PacketDBOutGetDocument(name,
-                                                                                                                                    this.name),
-                                                                                                         CloudAPI.getInstance()
-                                                                                                                 .getNetworkConnection());
+                this.name),
+            CloudAPI.getInstance()
+                .getNetworkConnection());
         final Document document = result.getResult().getDocument("result");
 
         this.docs.put(document.getString(Database.UNIQUE_NAME_KEY), document);
@@ -87,26 +87,26 @@ public class DatabaseImpl implements Database {
     @Override
     public boolean contains(final String name) {
         final Result result = CloudAPI.getInstance().getNetworkConnection().getPacketManager().sendQuery(new PacketDBOutExistsDocument(name,
-                                                                                                                                       this.name),
-                                                                                                         CloudAPI.getInstance()
-                                                                                                                 .getNetworkConnection());
+                this.name),
+            CloudAPI.getInstance()
+                .getNetworkConnection());
         return result.getResult().getBoolean("exists");
     }
 
     @Override
     public int size() {
         final Result result = CloudAPI.getInstance().getNetworkConnection().getPacketManager().sendQuery(new PacketDBOutGetSize(name),
-                                                                                                         CloudAPI.getInstance()
-                                                                                                                 .getNetworkConnection());
+            CloudAPI.getInstance()
+                .getNetworkConnection());
         return result.getResult().getInt("size");
     }
 
     @Override
     public boolean containsDoc(final String name) {
         final Result result = CloudAPI.getInstance().getNetworkConnection().getPacketManager().sendQuery(new PacketDBOutExistsDocument(name,
-                                                                                                                                       this.name),
-                                                                                                         CloudAPI.getInstance()
-                                                                                                                 .getNetworkConnection());
+                this.name),
+            CloudAPI.getInstance()
+                .getNetworkConnection());
         return result.getResult().getBoolean("exists");
     }
 

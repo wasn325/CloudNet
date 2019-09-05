@@ -23,23 +23,23 @@ public final class ArmorStandListener implements Listener {
     @EventHandler
     public void handle(final PlayerArmorStandManipulateEvent e) {
         final MobSelector.MobImpl mob = CollectionWrapper.filter(MobSelector.getInstance().getMobs().values(),
-                                                                 new Acceptable<MobSelector.MobImpl>() {
-                                                                     @Override
-                                                                     public boolean isAccepted(final MobSelector.MobImpl value) {
-                                                                         try {
-                                                                             return e.getRightClicked().getUniqueId().equals(value
-                                                                                                                                 .getDisplayMessage()
-                                                                                                                                 .getClass()
-                                                                                                                                 .getMethod(
-                                                                                                                                     "getUniqueId")
-                                                                                                                                 .invoke(
-                                                                                                                                     value
-                                                                                                                                         .getDisplayMessage()));
-                                                                         } catch (final IllegalAccessException | InvocationTargetException | NoSuchMethodException e1) {
-                                                                             return false;
-                                                                         }
-                                                                     }
-                                                                 });
+            new Acceptable<MobSelector.MobImpl>() {
+                @Override
+                public boolean isAccepted(final MobSelector.MobImpl value) {
+                    try {
+                        return e.getRightClicked().getUniqueId().equals(value
+                            .getDisplayMessage()
+                            .getClass()
+                            .getMethod(
+                                "getUniqueId")
+                            .invoke(
+                                value
+                                    .getDisplayMessage()));
+                    } catch (final IllegalAccessException | InvocationTargetException | NoSuchMethodException e1) {
+                        return false;
+                    }
+                }
+            });
         if (mob != null) {
             e.setCancelled(true);
         }
@@ -48,16 +48,16 @@ public final class ArmorStandListener implements Listener {
     @EventHandler
     public void handle(final ItemDespawnEvent e) {
         final MobSelector.MobImpl mob = CollectionWrapper.filter(MobSelector.getInstance().getMobs().values(),
-                                                                 new Acceptable<MobSelector.MobImpl>() {
-                                                                     @Override
-                                                                     public boolean isAccepted(final MobSelector.MobImpl value) {
-                                                                         return
-                                                                             ((Entity) value.getDisplayMessage()).getPassenger() != null &&
-                                                                             e.getEntity().getEntityId() ==
-                                                                             ((Entity) value.getDisplayMessage()).getPassenger()
-                                                                                                                 .getEntityId();
-                                                                     }
-                                                                 });
+            new Acceptable<MobSelector.MobImpl>() {
+                @Override
+                public boolean isAccepted(final MobSelector.MobImpl value) {
+                    return
+                        ((Entity) value.getDisplayMessage()).getPassenger() != null &&
+                        e.getEntity().getEntityId() ==
+                        ((Entity) value.getDisplayMessage()).getPassenger()
+                            .getEntityId();
+                }
+            });
         if (mob != null) {
             e.setCancelled(true);
         }

@@ -51,7 +51,7 @@ public class WebsiteLog extends WebHandler {
 
         final StringBuilder stringBuilder = new StringBuilder();
         try (final InputStream inputStream = WebsiteDocumentation.class.getClassLoader()
-                                                                       .getResourceAsStream("files/log.html"); final BufferedReader bufferedReader = new BufferedReader(
+            .getResourceAsStream("files/log.html"); final BufferedReader bufferedReader = new BufferedReader(
             new InputStreamReader(inputStream, StandardCharsets.UTF_8))) {
             String input;
             while ((input = bufferedReader.readLine()) != null) {
@@ -62,9 +62,9 @@ public class WebsiteLog extends WebHandler {
         String site = stringBuilder.substring(0);
         //
         site = site.replace("%server_id_name%",
-                            CloudNet.getInstance().getServerLogManager().getScreenInfos().getF(queryDecoder.getQueryParams().get("server"))
-                                    .getFirst()).replace("%input%", CloudNet.getInstance().getServerLogManager()
-                                                                            .dispatch(queryDecoder.getQueryParams().get("server")));
+            CloudNet.getInstance().getServerLogManager().getScreenInfos().getF(queryDecoder.getQueryParams().get("server"))
+                .getFirst()).replace("%input%", CloudNet.getInstance().getServerLogManager()
+            .dispatch(queryDecoder.getQueryParams().get("server")));
 
         fullHttpResponse.content().writeBytes(site.getBytes(StandardCharsets.UTF_8));
         return fullHttpResponse;

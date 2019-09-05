@@ -161,13 +161,13 @@ public final class CommandManager implements Completer {
                 final String testString = args[args.length - 1];
 
                 responses.addAll(CollectionWrapper.filterMany(((TabCompletable) command).onTab(input.length - 1, input[input.length - 1]),
-                                                              new Acceptable<String>() {
-                                                                  @Override
-                                                                  public boolean isAccepted(final String s) {
-                                                                      return s != null && (testString.isEmpty() || s.toLowerCase().contains(
-                                                                          testString.toLowerCase()));
-                                                                  }
-                                                              }));
+                    new Acceptable<String>() {
+                        @Override
+                        public boolean isAccepted(final String s) {
+                            return s != null && (testString.isEmpty() || s.toLowerCase().contains(
+                                testString.toLowerCase()));
+                        }
+                    }));
             }
         }
 

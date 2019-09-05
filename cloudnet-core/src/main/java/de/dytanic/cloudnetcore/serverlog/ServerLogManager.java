@@ -26,8 +26,8 @@ public final class ServerLogManager implements Runnable {
         for (final String key : screenInfos.keySet()) {
             if (this.screenInfos.getF(key).getFirst().equals(serverId)) {
                 screenInfos.add(rnd,
-                                new MultiValue<>(serverId, (System.currentTimeMillis() + 600000L)),
-                                new ConcurrentLinkedQueue<>(this.screenInfos.getS(key)));
+                    new MultiValue<>(serverId, (System.currentTimeMillis() + 600000L)),
+                    new ConcurrentLinkedQueue<>(this.screenInfos.getS(key)));
                 return;
             }
         }

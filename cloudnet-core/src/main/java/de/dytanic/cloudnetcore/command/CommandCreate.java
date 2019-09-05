@@ -45,13 +45,13 @@ public final class CommandCreate extends Command {
                 }
 
                 CloudNet.getInstance().getDbHandlers().getCommandDispatcherDatabase().appendCommand(args[1],
-                                                                                                    builder.substring(0, (builder.substring(
-                                                                                                        0).endsWith(" ")
-                                                                                                                          ?
-                                                                                                                          builder.length() -
-                                                                                                                          1
-                                                                                                                          : builder
-                                                                                                                              .length())));
+                    builder.substring(0, (builder.substring(
+                        0).endsWith(" ")
+                                          ?
+                                          builder.length() -
+                                          1
+                                          : builder
+                                              .length())));
                 sender.sendMessage("A dispatcher was created \"" + args[1] + "\": \"" + builder.substring(0) + '"');
                 return;
             }
@@ -132,7 +132,7 @@ public final class CommandCreate extends Command {
                         args[3])) {
                         for (short i = 0; i < Integer.parseInt(args[2]); i++) {
                             CloudNet.getInstance().startProxy(CloudNet.getInstance().getWrappers().get(args[3]),
-                                                              CloudNet.getInstance().getProxyGroups().get(args[1]));
+                                CloudNet.getInstance().getProxyGroups().get(args[1]));
                             NetworkUtils.sleepUninterruptedly(2000L);
                         }
                         sender.sendMessage("Trying to startup a proxy server...");
@@ -146,7 +146,7 @@ public final class CommandCreate extends Command {
                         args[3])) {
                         for (short i = 0; i < Integer.parseInt(args[2]); i++) {
                             CloudNet.getInstance().startGameServer(CloudNet.getInstance().getWrappers().get(args[3]),
-                                                                   CloudNet.getInstance().getServerGroups().get(args[1]));
+                                CloudNet.getInstance().getServerGroups().get(args[1]));
                             NetworkUtils.sleepUninterruptedly(2000L);
                         }
                         sender.sendMessage("Trying to startup a game server...");
@@ -169,52 +169,52 @@ public final class CommandCreate extends Command {
                         if (args[3].equalsIgnoreCase("LOCAL")) {
                             final ServerGroup serverGroup = CloudNet.getInstance().getServerGroups().get(args[2]);
                             serverGroup.getTemplates().add(new Template(args[1], TemplateResource.LOCAL, null, PROCESS_PRE_PARAMETERS,
-                                                                        Collections.emptyList()));
+                                Collections.emptyList()));
                             CloudNet.getInstance().getConfig().createGroup(serverGroup);
 
                             NetworkUtils.addAll(CloudNet.getInstance().getServerGroups(),
-                                                CloudNet.getInstance().getConfig().getServerGroups(),
-                                                new Acceptable<ServerGroup>() {
-                                                    @Override
-                                                    public boolean isAccepted(final ServerGroup value) {
-                                                        return true;
-                                                    }
-                                                });
+                                CloudNet.getInstance().getConfig().getServerGroups(),
+                                new Acceptable<ServerGroup>() {
+                                    @Override
+                                    public boolean isAccepted(final ServerGroup value) {
+                                        return true;
+                                    }
+                                });
 
                             NetworkUtils.addAll(CloudNet.getInstance().getProxyGroups(),
-                                                CloudNet.getInstance().getConfig().getProxyGroups(),
-                                                new Acceptable<ProxyGroup>() {
-                                                    @Override
-                                                    public boolean isAccepted(final ProxyGroup value) {
-                                                        return true;
-                                                    }
-                                                });
+                                CloudNet.getInstance().getConfig().getProxyGroups(),
+                                new Acceptable<ProxyGroup>() {
+                                    @Override
+                                    public boolean isAccepted(final ProxyGroup value) {
+                                        return true;
+                                    }
+                                });
                             CloudNet.getInstance().getWrappers().values().forEach(Wrapper::updateWrapper);
                             sender.sendMessage("The template was created and all wrappers were updated!");
                         }
                         if (args[3].equalsIgnoreCase("MASTER")) {
                             final ServerGroup serverGroup = CloudNet.getInstance().getServerGroups().get(args[2]);
                             serverGroup.getTemplates().add(new Template(args[1], TemplateResource.MASTER, null, PROCESS_PRE_PARAMETERS,
-                                                                        Collections.emptyList()));
+                                Collections.emptyList()));
                             CloudNet.getInstance().getConfig().createGroup(serverGroup);
 
                             NetworkUtils.addAll(CloudNet.getInstance().getServerGroups(),
-                                                CloudNet.getInstance().getConfig().getServerGroups(),
-                                                new Acceptable<ServerGroup>() {
-                                                    @Override
-                                                    public boolean isAccepted(final ServerGroup value) {
-                                                        return true;
-                                                    }
-                                                });
+                                CloudNet.getInstance().getConfig().getServerGroups(),
+                                new Acceptable<ServerGroup>() {
+                                    @Override
+                                    public boolean isAccepted(final ServerGroup value) {
+                                        return true;
+                                    }
+                                });
 
                             NetworkUtils.addAll(CloudNet.getInstance().getProxyGroups(),
-                                                CloudNet.getInstance().getConfig().getProxyGroups(),
-                                                new Acceptable<ProxyGroup>() {
-                                                    @Override
-                                                    public boolean isAccepted(final ProxyGroup value) {
-                                                        return true;
-                                                    }
-                                                });
+                                CloudNet.getInstance().getConfig().getProxyGroups(),
+                                new Acceptable<ProxyGroup>() {
+                                    @Override
+                                    public boolean isAccepted(final ProxyGroup value) {
+                                        return true;
+                                    }
+                                });
                             CloudNet.getInstance().getWrappers().values().forEach(Wrapper::updateWrapper);
                             sender.sendMessage("The template was created and all wrappers were updated!");
                         }
@@ -229,27 +229,27 @@ public final class CommandCreate extends Command {
                         if (args[3].equalsIgnoreCase("URL")) {
                             final ServerGroup serverGroup = CloudNet.getInstance().getServerGroups().get(args[2]);
                             serverGroup.getTemplates().add(new Template(args[1],
-                                                                        TemplateResource.URL,
-                                                                        args[4], new String[] {("-Dtest=true")}, Collections.emptyList()));
+                                TemplateResource.URL,
+                                args[4], new String[] {("-Dtest=true")}, Collections.emptyList()));
                             CloudNet.getInstance().getConfig().createGroup(serverGroup);
 
                             NetworkUtils.addAll(CloudNet.getInstance().getServerGroups(),
-                                                CloudNet.getInstance().getConfig().getServerGroups(),
-                                                new Acceptable<ServerGroup>() {
-                                                    @Override
-                                                    public boolean isAccepted(final ServerGroup value) {
-                                                        return true;
-                                                    }
-                                                });
+                                CloudNet.getInstance().getConfig().getServerGroups(),
+                                new Acceptable<ServerGroup>() {
+                                    @Override
+                                    public boolean isAccepted(final ServerGroup value) {
+                                        return true;
+                                    }
+                                });
 
                             NetworkUtils.addAll(CloudNet.getInstance().getProxyGroups(),
-                                                CloudNet.getInstance().getConfig().getProxyGroups(),
-                                                new Acceptable<ProxyGroup>() {
-                                                    @Override
-                                                    public boolean isAccepted(final ProxyGroup value) {
-                                                        return true;
-                                                    }
-                                                });
+                                CloudNet.getInstance().getConfig().getProxyGroups(),
+                                new Acceptable<ProxyGroup>() {
+                                    @Override
+                                    public boolean isAccepted(final ProxyGroup value) {
+                                        return true;
+                                    }
+                                });
                             CloudNet.getInstance().getWrappers().values().forEach(Wrapper::updateWrapper);
                             sender.sendMessage("The template was created and all wrappers were updated!");
                         }
@@ -260,18 +260,18 @@ public final class CommandCreate extends Command {
                 break;
             default:
                 sender.sendMessage("create PROXY <proxyGroup> <count> | Creates a proxy server of a proxy group. <count> is not mandatory",
-                                   "create PROXY <proxyGroup> <count> <wrapper> | Creates a proxy server of a proxy group. <count> is not mandatory",
-                                   "create SERVER <serverGroup> <count> | Creates a game server of a server group. <count> is not mandatory",
-                                   "create SERVER <serverGroup> <count> <wrapper> | Creates a game server of a server group. <count> is not mandatory",
-                                   "create CLOUDSERVER <name> <memory> <priorityStop>",
-                                   "create USER <name> <password> | Creates a new user with specified name and password",
-                                   "create PROXYGROUP <name> | Creates a completely new proxy group for BungeeCord with its own configurations, etc.",
-                                   "create SERVERGROUP <name> | Creates a completely new server group for Minecraft servers with its own configurations, etc.",
-                                   "create DISPATCHCOMMAND <main-command> <command> | Creates a simple command alias",
-                                   "create WRAPPER <name> | Creates and whitelists a new wrapper. The wrapper can also have the same IP of a previous wrapper",
-                                   "create TEMPLATE <name> <group> LOCAL | Creates a new locale (Wrapper locales) template for a server group",
-                                   "create TEMPLATE <name> <group> MASTER | Creates a new master backend (Master locales) template for a server group",
-                                   "create TEMPLATE <name> <group> URL <url> | Creates a new template of a server group via url");
+                    "create PROXY <proxyGroup> <count> <wrapper> | Creates a proxy server of a proxy group. <count> is not mandatory",
+                    "create SERVER <serverGroup> <count> | Creates a game server of a server group. <count> is not mandatory",
+                    "create SERVER <serverGroup> <count> <wrapper> | Creates a game server of a server group. <count> is not mandatory",
+                    "create CLOUDSERVER <name> <memory> <priorityStop>",
+                    "create USER <name> <password> | Creates a new user with specified name and password",
+                    "create PROXYGROUP <name> | Creates a completely new proxy group for BungeeCord with its own configurations, etc.",
+                    "create SERVERGROUP <name> | Creates a completely new server group for Minecraft servers with its own configurations, etc.",
+                    "create DISPATCHCOMMAND <main-command> <command> | Creates a simple command alias",
+                    "create WRAPPER <name> | Creates and whitelists a new wrapper. The wrapper can also have the same IP of a previous wrapper",
+                    "create TEMPLATE <name> <group> LOCAL | Creates a new locale (Wrapper locales) template for a server group",
+                    "create TEMPLATE <name> <group> MASTER | Creates a new master backend (Master locales) template for a server group",
+                    "create TEMPLATE <name> <group> URL <url> | Creates a new template of a server group via url");
                 break;
         }
     }

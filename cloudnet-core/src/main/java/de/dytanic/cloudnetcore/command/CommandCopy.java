@@ -56,9 +56,9 @@ public final class CommandCopy extends Command {
                         });
                         if (template == null) {
                             template = new Template(args[1],
-                                                    minecraftServer.getProcessMeta().getTemplate().getBackend(),
-                                                    minecraftServer.getProcessMeta().getTemplate().getUrl(), PROCESS_PRE_PARAMETERS,
-                                                    new HashSet<>());
+                                minecraftServer.getProcessMeta().getTemplate().getBackend(),
+                                minecraftServer.getProcessMeta().getTemplate().getUrl(), PROCESS_PRE_PARAMETERS,
+                                new HashSet<>());
                             serverGroup.getTemplates().add(template);
                             CloudNet.getInstance().getConfig().createGroup(serverGroup);
                             CloudNet.getInstance().getNetworkManager().updateAll();

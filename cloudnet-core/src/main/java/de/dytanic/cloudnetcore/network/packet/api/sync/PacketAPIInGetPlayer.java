@@ -23,7 +23,7 @@ public class PacketAPIInGetPlayer extends PacketAPIIO {
         final UUID uniqueId = data.getObject("uniqueId", new TypeToken<UUID>() {}.getType());
         if (uniqueId != null && CloudNet.getInstance().getNetworkManager().getOnlinePlayers().containsKey(uniqueId)) {
             packetSender.sendPacket(getResult(new Document("player",
-                                                           CloudNet.getInstance().getNetworkManager().getOnlinePlayers().get(uniqueId))));
+                CloudNet.getInstance().getNetworkManager().getOnlinePlayers().get(uniqueId))));
         } else {
             packetSender.sendPacket(getResult(new Document()));
         }

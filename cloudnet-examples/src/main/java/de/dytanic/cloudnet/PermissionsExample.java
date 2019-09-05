@@ -17,12 +17,12 @@ public class PermissionsExample {
 
     public void setTags() {
         CloudServer.getInstance().updateNameTags(Bukkit
-                                                     .getPlayer("Dytanic")); //Sets the NameTags for all Players for one player. Use this method, if the scoreboard is already set
+            .getPlayer("Dytanic")); //Sets the NameTags for all Players for one player. Use this method, if the scoreboard is already set
     }
 
     public void handlePermissions() {
         final PermissionPool permissionPool = CloudAPI.getInstance()
-                                                      .getPermissionPool(); //Returns the permission pool with all permissions groups etc.
+            .getPermissionPool(); //Returns the permission pool with all permissions groups etc.
         final PermissionGroup permissionGroup = CloudAPI.getInstance().getPermissionGroup("Admin"); //Options for got the permission group
         permissionGroup.getOptions(); //custom api options
         permissionGroup.getJoinPower(); //returns the joinpower

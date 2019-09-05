@@ -26,7 +26,7 @@ public class PacketInLogoutPlayer extends PacketInHandler {
             CloudNet.getInstance().getNetworkManager().handlePlayerLogout(cloudPlayer);
         } else if (packetSender instanceof ProxyServer) {
             CloudNet.getInstance().getNetworkManager().handlePlayerLogout(data.getObject("uniqueId", new TypeToken<UUID>() {}.getType()),
-                                                                          ((ProxyServer) packetSender));
+                ((ProxyServer) packetSender));
         }
     }
 }

@@ -71,8 +71,8 @@ public class CloudFlareDatabase extends DatabaseUsable {
         for (final String key : document.keys()) {
             if (!key.equalsIgnoreCase(Database.UNIQUE_NAME_KEY)) {
                 final MultiValue<PostResponse, String> value = document.getObject(key,
-                                                                                  new TypeToken<MultiValue<PostResponse, String>>() {}
-                                                                                      .getType());
+                    new TypeToken<MultiValue<PostResponse, String>>() {}
+                        .getType());
 
                 if (value != null && value.getSecond().equalsIgnoreCase(wrapper) &&
                     value.getFirst().getCloudFlareConfig().getDomainName().equalsIgnoreCase(cloudFlareConfig.getDomainName())) {
@@ -101,7 +101,7 @@ public class CloudFlareDatabase extends DatabaseUsable {
         final Document document = database.getDocument(CLOUDFLARE_CACHE_REQ);
         if (document.contains("requests")) {
             final Map<String, PostResponse> responses = document.getObject("requests",
-                                                                           new TypeToken<Map<String, PostResponse>>() {}.getType());
+                new TypeToken<Map<String, PostResponse>>() {}.getType());
             responses.put(postResponse.getId(), postResponse);
             document.append("requests", responses);
         } else {
@@ -115,7 +115,7 @@ public class CloudFlareDatabase extends DatabaseUsable {
         final Document document = database.getDocument(CLOUDFLARE_CACHE_REQ);
         if (document.contains("requests")) {
             final Map<String, PostResponse> responses = document.getObject("requests",
-                                                                           new TypeToken<Map<String, PostResponse>>() {}.getType());
+                new TypeToken<Map<String, PostResponse>>() {}.getType());
             responses.remove(postResponse.getId());
             document.append("requests", responses);
         } else {
@@ -129,8 +129,8 @@ public class CloudFlareDatabase extends DatabaseUsable {
         final Document document = database.getDocument(CLOUDFLARE_CACHE_REQ);
         if (document.contains("requests")) {
             final Map<String, MultiValue<PostResponse, String>> responses = document.getObject("requests",
-                                                                                               new TypeToken<Map<String, MultiValue<PostResponse, String>>>() {}
-                                                                                                   .getType());
+                new TypeToken<Map<String, MultiValue<PostResponse, String>>>() {}
+                    .getType());
             document.append("requests", Collections.EMPTY_MAP);
             database.insert(document);
             return responses;

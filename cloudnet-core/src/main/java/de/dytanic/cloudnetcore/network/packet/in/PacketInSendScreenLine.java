@@ -28,7 +28,7 @@ public final class PacketInSendScreenLine extends PacketInHandler {
         for (final ScreenInfo screenInfo : screenInfos) {
             if (CloudNet.getInstance().getScreenProvider().getMainServiceId() != null &&
                 screenInfo.getServiceId().getServerId().equalsIgnoreCase(CloudNet.getInstance().getScreenProvider().getMainServiceId()
-                                                                                 .getServerId())) {
+                    .getServerId())) {
                 System.out.println('[' + screenInfo.getServiceId().getServerId() + "] " + screenInfo.getLine());
             }
         }

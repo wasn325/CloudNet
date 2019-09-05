@@ -18,8 +18,8 @@ public class PacketInTestResult extends PacketInHandler {
     @Override
     public void handleInput(final Document data, final PacketSender packetSender) {
         packetSender.sendPacket(new Packet(packetUniqueId,
-                                           PacketRC.TEST,
-                                           new Document("message",
-                                                        "System.out.println(\"Hello World!\"); //Das ist perfekt für entwickler")));
+            PacketRC.TEST,
+            new Document("message",
+                "System.out.println(\"Hello World!\"); //Das ist perfekt für entwickler")));
     }
 }

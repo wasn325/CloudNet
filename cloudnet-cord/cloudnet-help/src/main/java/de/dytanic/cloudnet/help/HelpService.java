@@ -27,7 +27,7 @@ public final class HelpService {
             stringBuilder.append(key).append(':').append(Character.LINE_SEPARATOR);
             for (final ServiceDescription description : value) {
                 stringBuilder.append("Usage: ").append(description.getUsage()).append(Character.LINE_SEPARATOR).append("Description: ")
-                             .append(description.getDescription()).append(Character.LINE_SEPARATOR).append(Character.LINE_SEPARATOR);
+                    .append(description.getDescription()).append(Character.LINE_SEPARATOR).append(Character.LINE_SEPARATOR);
             }
         });
         return stringBuilder.toString();

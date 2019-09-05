@@ -47,13 +47,13 @@ public class WebClient {
         try {
             final URLConnection urlConnection = new java.net.URL(url).openConnection();
             urlConnection.setRequestProperty("User-Agent",
-                                             "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.95 Safari/537.11");
+                "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.95 Safari/537.11");
             urlConnection.setUseCaches(false);
             urlConnection.setConnectTimeout(1000);
             urlConnection.connect();
 
             try (final BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(urlConnection.getInputStream(),
-                                                                                                StandardCharsets.UTF_8))) {
+                StandardCharsets.UTF_8))) {
                 final JsonObject jsonObject = new JsonParser().parse(bufferedReader).getAsJsonObject();
                 return NetworkUtils.GSON.fromJson(jsonObject.get("result"), type);
             }
@@ -94,13 +94,13 @@ public class WebClient {
         try {
             final URLConnection urlConnection = new java.net.URL(url).openConnection();
             urlConnection.setRequestProperty("User-Agent",
-                                             "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.95 Safari/537.11");
+                "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.95 Safari/537.11");
             urlConnection.setUseCaches(false);
             urlConnection.setConnectTimeout(1000);
             urlConnection.connect();
 
             try (final BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(urlConnection.getInputStream(),
-                                                                                                StandardCharsets.UTF_8))) {
+                StandardCharsets.UTF_8))) {
                 final JsonObject jsonObject = new JsonParser().parse(bufferedReader).getAsJsonObject();
                 return jsonObject.get(key).getAsString();
             }
@@ -122,7 +122,7 @@ public class WebClient {
             final HttpURLConnection httpURLConnection = (HttpURLConnection) new URL(
                 DEFAULT_URL + "update/" + (getEnvironment() ? "CloudNet-Master.jar" : "CloudNet-Wrapper.jar")).openConnection();
             httpURLConnection.setRequestProperty("User-Agent",
-                                                 "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.95 Safari/537.11");
+                "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.95 Safari/537.11");
             httpURLConnection.setUseCaches(false);
             httpURLConnection.setConnectTimeout(1000);
             httpURLConnection.connect();
@@ -138,7 +138,7 @@ public class WebClient {
                 if (windows) {
                     System.out.println("You are using windows, please replace the file [" +
                                        Paths.get(WebClient.class.getProtectionDomain().getCodeSource().getLocation().toURI().getPath())
-                                            .getFileName() + "] with the new file [" + path + ']');
+                                           .getFileName() + "] with the new file [" + path + ']');
                 }
 
             } catch (final URISyntaxException e) {
@@ -175,7 +175,7 @@ public class WebClient {
             final HttpURLConnection httpURLConnection = (HttpURLConnection) new URL(DEFAULT_URL + "update/CloudNet-Wrapper.jar")
                 .openConnection();
             httpURLConnection.setRequestProperty("User-Agent",
-                                                 "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.95 Safari/537.11");
+                "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.95 Safari/537.11");
             httpURLConnection.setUseCaches(false);
             httpURLConnection.setConnectTimeout(1000);
             httpURLConnection.connect();

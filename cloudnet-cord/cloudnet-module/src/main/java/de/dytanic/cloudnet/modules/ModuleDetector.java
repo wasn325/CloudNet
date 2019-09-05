@@ -46,10 +46,10 @@ public class ModuleDetector {
                     final Properties properties = new Properties();
                     properties.load(reader);
                     final ModuleConfig moduleConfig = new ModuleConfig(file,
-                                                                       properties.getProperty("name"),
-                                                                       properties.getProperty("version"),
-                                                                       properties.getProperty("author"),
-                                                                       properties.getProperty("main"));
+                        properties.getProperty("name"),
+                        properties.getProperty("version"),
+                        properties.getProperty("author"),
+                        properties.getProperty("main"));
                     moduleConfigs.add(moduleConfig);
                 }
 

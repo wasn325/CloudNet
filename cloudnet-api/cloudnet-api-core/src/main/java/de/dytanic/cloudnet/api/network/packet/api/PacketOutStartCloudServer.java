@@ -29,10 +29,10 @@ public class PacketOutStartCloudServer extends Packet {
                                      final Properties properties,
                                      final ServerGroupType serverGroupType) {
         super(PacketRC.SERVER_HANDLE + 9, new Document("serverName", serverName).append("serverConfig", serverConfig).append("memory",
-                                                                                                                             memory).append(
+            memory).append(
             "priorityStop",
             priorityStop).append("processPreParameters", processPreParameters).append("plugins", plugins).append("properties", properties)
-                                                                                .append("serverGroupType", serverGroupType));
+            .append("serverGroupType", serverGroupType));
     }
 
     public PacketOutStartCloudServer(final WrapperInfo wrapperInfo,
@@ -45,11 +45,11 @@ public class PacketOutStartCloudServer extends Packet {
                                      final Properties properties,
                                      final ServerGroupType serverGroupType) {
         super(PacketRC.SERVER_HANDLE + 9, new Document("serverName", serverName).append("wrapperInfo", wrapperInfo).append("serverConfig",
-                                                                                                                           serverConfig)
-                                                                                .append("memory", memory).append("priorityStop",
-                                                                                                                 priorityStop).append(
+            serverConfig)
+            .append("memory", memory).append("priorityStop",
+                priorityStop).append(
                 "processPreParameters",
                 processPreParameters).append("plugins", plugins).append("properties", properties)
-                                                                                .append("serverGroupType", serverGroupType));
+            .append("serverGroupType", serverGroupType));
     }
 }

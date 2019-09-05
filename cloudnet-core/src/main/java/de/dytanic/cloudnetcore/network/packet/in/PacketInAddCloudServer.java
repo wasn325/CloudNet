@@ -39,8 +39,8 @@ public class PacketInAddCloudServer extends PacketInHandler {
                 final ServerGroup serverGroup = CloudNet.getInstance().getServerGroups().get(serverProcessMeta.getServiceId().getGroup());
                 if (serverGroup != null) {
                     final PriorityStopTask priorityStopTask = new PriorityStopTask(cn,
-                                                                                   minecraftServer,
-                                                                                   serverGroup.getPriorityService().getStopTimeInSeconds());
+                        minecraftServer,
+                        serverGroup.getPriorityService().getStopTimeInSeconds());
                     final ScheduledTask scheduledTask = CloudNet.getInstance().getScheduler().runTaskRepeatSync(priorityStopTask, 0, 50);
                     priorityStopTask.setScheduledTask(scheduledTask);
                 }

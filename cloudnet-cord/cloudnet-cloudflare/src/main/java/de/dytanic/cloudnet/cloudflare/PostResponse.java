@@ -49,7 +49,7 @@ public class PostResponse {
         }
         final PostResponse that = (PostResponse) o;
         return Objects.equals(cloudFlareConfig, that.cloudFlareConfig) && Objects.equals(dnsRecord, that.dnsRecord) && Objects.equals(id,
-                                                                                                                                      that.id);
+            that.id);
     }
 
     public CloudFlareConfig getCloudFlareConfig() {

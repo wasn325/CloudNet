@@ -19,7 +19,7 @@ public final class UpdateAllListener implements IEventListener<UpdateAllEvent> {
         PermissionModule.getInstance().getPermissionPool().setAvailable(PermissionModule.getInstance().getConfigPermission().isEnabled());
         PermissionModule.getInstance().getPermissionPool().getGroups().clear();
         NetworkUtils.addAll(PermissionModule.getInstance().getPermissionPool().getGroups(),
-                            PermissionModule.getInstance().getConfigPermission().loadAll());
+            PermissionModule.getInstance().getConfigPermission().loadAll());
         event.getNetworkManager().getModuleProperties().append("permissionPool", PermissionModule.getInstance().getPermissionPool());
     }
 }

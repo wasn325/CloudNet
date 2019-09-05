@@ -21,7 +21,7 @@ public class ProxyRemoveListener implements IEventListener<ProxyRemoveEvent> {
             @Override
             public void run() {
                 CloudFlareService.getInstance().removeProxy(event.getProxyServer().getProcessMeta(),
-                                                            CloudFlareModule.getInstance().getCloudFlareDatabase());
+                    CloudFlareModule.getInstance().getCloudFlareDatabase());
                 NetworkUtils.sleepUninterruptedly(500);
             }
         });

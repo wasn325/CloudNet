@@ -18,12 +18,12 @@ public class ChannelMessagingExample implements Listener {
 
     public void sendCustomMessage() {
         CloudAPI.getInstance().getNetworkConnection().sendPacket(new PacketOutCustomChannelMessage("some-sub-channel-for-proxy",
-                                                                                                   "handle",
-                                                                                                   new Document("foo",
-                                                                                                                "bar"))); //send a custom channel message to all
+            "handle",
+            new Document("foo",
+                "bar"))); //send a custom channel message to all
         CloudAPI.getInstance().sendCustomSubProxyMessage("some-sub-channel-for-proxy",
-                                                         "handle",
-                                                         new Document("foo", "bar")); //send a custom channel message to all proxys
+            "handle",
+            new Document("foo", "bar")); //send a custom channel message to all proxys
     }
 
     @EventHandler

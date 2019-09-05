@@ -42,7 +42,7 @@ public final class CommandPermissions extends Command {
                 if (args.length == 1) {
                     sender.sendMessage(NetworkUtils.SPACE_STRING, "Permission groups:");
                     final ArrayList<PermissionGroup> permissionGroups = new ArrayList<>(PermissionModule.getInstance().getPermissionPool()
-                                                                                                        .getGroups().values());
+                        .getGroups().values());
                     permissionGroups.sort(Comparator.comparingInt(PermissionGroup::getTagId));
                     for (final PermissionGroup permissionGroup : permissionGroups) {
                         sender.sendMessage(permissionGroup.getName() + " [" + permissionGroup.getJoinPower() + "] implements " +
@@ -280,12 +280,12 @@ public final class CommandPermissions extends Command {
                             }
 
                             sender.sendMessage(NetworkUtils.SPACE_STRING,
-                                               "Player " + offlinePlayer.getName() + ": " + offlinePlayer.getUniqueId(),
-                                               "Groups: " + stringBuilder.substring(0),
-                                               NetworkUtils.SPACE_STRING);
+                                "Player " + offlinePlayer.getName() + ": " + offlinePlayer.getUniqueId(),
+                                "Groups: " + stringBuilder.substring(0),
+                                NetworkUtils.SPACE_STRING);
 
                             for (final Map.Entry<String, Boolean> booleanEntry : offlinePlayer.getPermissionEntity().getPermissions()
-                                                                                              .entrySet()) {
+                                .entrySet()) {
                                 sender.sendMessage("- " + booleanEntry.getKey() + " [" + booleanEntry.getValue() + ']');
                             }
 
@@ -322,8 +322,8 @@ public final class CommandPermissions extends Command {
 
                                         if (offlinePlayer.getPermissionEntity().getGroups().isEmpty()) {
                                             offlinePlayer.getPermissionEntity().getGroups().add(new GroupEntityData(permissionPool
-                                                                                                                        .getDefaultGroup()
-                                                                                                                        .getName(), 0));
+                                                .getDefaultGroup()
+                                                .getName(), 0));
                                         }
                                         updatePlayer(offlinePlayer);
                                         sender.sendMessage(
@@ -335,7 +335,7 @@ public final class CommandPermissions extends Command {
                             if (args[2].equalsIgnoreCase("ADD")) {
                                 if (args[3].equalsIgnoreCase("PERMISSION")) {
                                     offlinePlayer.getPermissionEntity().getPermissions().put(args[4].replaceFirst("-", ""),
-                                                                                             !args[4].startsWith("-"));
+                                        !args[4].startsWith("-"));
                                     updatePlayer(offlinePlayer);
                                     sender.sendMessage("The player \"" + offlinePlayer.getName() + "\" now has the permission " + args[4]);
                                 }
@@ -368,15 +368,15 @@ public final class CommandPermissions extends Command {
                                     if (permissionPool.getGroups().containsKey(args[4])) {
                                         offlinePlayer.getPermissionEntity().getGroups().clear();
                                         offlinePlayer.getPermissionEntity().getGroups().add(new GroupEntityData(args[4],
-                                                                                                                (args[5].equalsIgnoreCase(
-                                                                                                                    "lifetime")
-                                                                                                                 ? 0L
-                                                                                                                 : NetworkUtils
-                                                                                                                       .checkIsNumber(args[5])
-                                                                                                                   ? calcDays(Integer
-                                                                                                                                  .parseInt(
-                                                                                                                                      args[5]))
-                                                                                                                   : 0L)));
+                                            (args[5].equalsIgnoreCase(
+                                                "lifetime")
+                                             ? 0L
+                                             : NetworkUtils
+                                                   .checkIsNumber(args[5])
+                                               ? calcDays(Integer
+                                                 .parseInt(
+                                                     args[5]))
+                                               : 0L)));
                                         updatePlayer(offlinePlayer);
                                         sender.sendMessage("The central group of " + offlinePlayer.getName() + " is now " + args[4]);
                                     } else {
@@ -387,15 +387,15 @@ public final class CommandPermissions extends Command {
                                 if (args[3].equalsIgnoreCase("ADD")) {
                                     if (permissionPool.getGroups().containsKey(args[4])) {
                                         offlinePlayer.getPermissionEntity().getGroups().add(new GroupEntityData(args[4],
-                                                                                                                (args[5].equalsIgnoreCase(
-                                                                                                                    "lifetime")
-                                                                                                                 ? 0L
-                                                                                                                 : NetworkUtils
-                                                                                                                       .checkIsNumber(args[4])
-                                                                                                                   ? calcDays(Integer
-                                                                                                                                  .parseInt(
-                                                                                                                                      args[4]))
-                                                                                                                   : 0L)));
+                                            (args[5].equalsIgnoreCase(
+                                                "lifetime")
+                                             ? 0L
+                                             : NetworkUtils
+                                                   .checkIsNumber(args[4])
+                                               ? calcDays(Integer
+                                                 .parseInt(
+                                                     args[4]))
+                                               : 0L)));
                                         updatePlayer(offlinePlayer);
                                         sender.sendMessage(
                                             "The player " + offlinePlayer.getName() + " is now also a member of the group " + args[4]);
@@ -432,28 +432,28 @@ public final class CommandPermissions extends Command {
             }
         } else {
             sender.sendMessage("CloudNet-Permissions: [\"_\" = \" \"]",
-                               NetworkUtils.SPACE_STRING,
-                               "perms CREATE <groupName>",
-                               "perms GROUP",
-                               "perms GROUP <name>",
-                               "perms GROUP <name> add permission <permission>",
-                               "perms GROUP <name> remove permission <permission>",
-                               "perms GROUP <name> add permission <permission> <group>",
-                               "perms GROUP <name> remove permission <permission> <group>",
-                               "perms GROUP <name> setDisplay <display>",
-                               "perms GROUP <name> setJoinPower <joinPower>",
-                               "perms GROUP <name> setSuffix <joinPower>",
-                               "perms GROUP <name> setPrefix <prefix>",
-                               "perms GROUP <name> setTagId <tagId>",
-                               "perms GROUP <name> setDefault <true : false>",
-                               "perms GROUP <name> setJoinPower <joinPower>",
-                               "perms GROUP <name> setColor <colorCode>",
-                               "perms USER <user>",
-                               "perms USER <user> GROUP SET <name> <lifetime | time in days>",
-                               "perms USER <user> GROUP ADD <name> <lifetime | time in days>",
-                               "perms USER <user> GROUP REMOVE <name>",
-                               "perms USER <user> ADD PERMISSION <permission>",
-                               "perms USER <user> REMOVE PERMISSION <permission>");
+                NetworkUtils.SPACE_STRING,
+                "perms CREATE <groupName>",
+                "perms GROUP",
+                "perms GROUP <name>",
+                "perms GROUP <name> add permission <permission>",
+                "perms GROUP <name> remove permission <permission>",
+                "perms GROUP <name> add permission <permission> <group>",
+                "perms GROUP <name> remove permission <permission> <group>",
+                "perms GROUP <name> setDisplay <display>",
+                "perms GROUP <name> setJoinPower <joinPower>",
+                "perms GROUP <name> setSuffix <joinPower>",
+                "perms GROUP <name> setPrefix <prefix>",
+                "perms GROUP <name> setTagId <tagId>",
+                "perms GROUP <name> setDefault <true : false>",
+                "perms GROUP <name> setJoinPower <joinPower>",
+                "perms GROUP <name> setColor <colorCode>",
+                "perms USER <user>",
+                "perms USER <user> GROUP SET <name> <lifetime | time in days>",
+                "perms USER <user> GROUP ADD <name> <lifetime | time in days>",
+                "perms USER <user> GROUP REMOVE <name>",
+                "perms USER <user> ADD PERMISSION <permission>",
+                "perms USER <user> REMOVE PERMISSION <permission>");
         }
     }
 
@@ -468,9 +468,9 @@ public final class CommandPermissions extends Command {
         CloudNet.getInstance().getDbHandlers().getPlayerDatabase().updatePlayer(offlinePlayer);
         if (CloudNet.getInstance().getNetworkManager().getOnlinePlayers().containsKey(offlinePlayer.getUniqueId())) {
             CloudNet.getInstance().getNetworkManager().getOnlinePlayers().get(offlinePlayer.getUniqueId()).setPermissionEntity(offlinePlayer
-                                                                                                                                   .getPermissionEntity());
+                .getPermissionEntity());
             CloudNet.getInstance().getNetworkManager().handlePlayerUpdate(CloudNet.getInstance().getNetworkManager().getOnlinePlayers()
-                                                                                  .get(offlinePlayer.getUniqueId()));
+                .get(offlinePlayer.getUniqueId()));
         }
         CloudNet.getInstance().getNetworkManager().sendAllUpdate(new PacketOutUpdateOfflinePlayer(offlinePlayer));
     }

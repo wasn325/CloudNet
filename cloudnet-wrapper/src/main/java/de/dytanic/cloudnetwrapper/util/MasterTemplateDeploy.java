@@ -111,7 +111,7 @@ public class MasterTemplateDeploy {
 
         try (final InputStream inputStream = urlConnection
             .getInputStream(); final BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream,
-                                                                                                              StandardCharsets.UTF_8))) {
+            StandardCharsets.UTF_8))) {
             String input;
             while ((input = bufferedReader.readLine()) != null) {
             }

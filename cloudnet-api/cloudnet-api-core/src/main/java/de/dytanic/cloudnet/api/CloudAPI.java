@@ -115,9 +115,9 @@ public final class CloudAPI implements MetaObj {
     @Deprecated
     public void bootstrap() {
         this.networkConnection.tryConnect(config.getBoolean("ssl"),
-                                          new NetDispatcher(networkConnection, false),
-                                          new Auth(serviceId),
-                                          shutdownTask);
+            new NetDispatcher(networkConnection, false),
+            new Auth(serviceId),
+            shutdownTask);
         NetworkUtils.header();
     }
 
@@ -423,9 +423,9 @@ public final class CloudAPI implements MetaObj {
      */
     public void updatePermissionGroup(final PermissionGroup permissionGroup) {
         this.logger.logp(Level.FINEST,
-                         this.getClass().getSimpleName(),
-                         "updatePermissionGroup",
-                         String.format("Updating permission group: %s", permissionGroup));
+            this.getClass().getSimpleName(),
+            "updatePermissionGroup",
+            String.format("Updating permission group: %s", permissionGroup));
         networkConnection.sendPacket(new PacketOutUpdatePermissionGroup(permissionGroup));
     }
 
@@ -436,9 +436,9 @@ public final class CloudAPI implements MetaObj {
      */
     public void updateProxyGroup(final ProxyGroup proxyGroup) {
         this.logger.logp(Level.FINEST,
-                         this.getClass().getSimpleName(),
-                         "updateProxyGroup",
-                         String.format("Updating proxy group: %s", proxyGroup));
+            this.getClass().getSimpleName(),
+            "updateProxyGroup",
+            String.format("Updating proxy group: %s", proxyGroup));
         networkConnection.sendPacket(new PacketOutUpdateProxyGroup(proxyGroup));
     }
 
@@ -447,9 +447,9 @@ public final class CloudAPI implements MetaObj {
      */
     public void sendCloudCommand(final String commandLine) {
         this.logger.logp(Level.FINEST,
-                         this.getClass().getSimpleName(),
-                         "sendCloudCommand",
-                         String.format("Sending cloud command: %s", commandLine));
+            this.getClass().getSimpleName(),
+            "sendCloudCommand",
+            String.format("Sending cloud command: %s", commandLine));
         networkConnection.sendPacket(new PacketOutExecuteCommand(commandLine));
     }
 
@@ -460,9 +460,9 @@ public final class CloudAPI implements MetaObj {
      */
     public void dispatchConsoleMessage(final String output) {
         this.logger.logp(Level.FINEST,
-                         this.getClass().getSimpleName(),
-                         "dispatchConsoleMessage",
-                         String.format("Dispatching console message: %s", output));
+            this.getClass().getSimpleName(),
+            "dispatchConsoleMessage",
+            String.format("Dispatching console message: %s", output));
         networkConnection.sendPacket(new PacketOutDispatchConsoleMessage(output));
     }
 
@@ -475,9 +475,9 @@ public final class CloudAPI implements MetaObj {
      */
     public void sendConsoleMessage(final DefaultType defaultType, final String serverId, final String commandLine) {
         this.logger.logp(Level.FINEST,
-                         this.getClass().getSimpleName(),
-                         "sendConsoleMessage",
-                         String.format("Sending console message: %s %s %s", defaultType, serverId, commandLine));
+            this.getClass().getSimpleName(),
+            "sendConsoleMessage",
+            String.format("Sending console message: %s %s %s", defaultType, serverId, commandLine));
         networkConnection.sendPacket(new PacketOutServerDispatchCommand(defaultType, serverId, commandLine));
     }
 
@@ -514,14 +514,14 @@ public final class CloudAPI implements MetaObj {
      */
     public String createServerLogUrl(final String serverId) {
         this.logger.logp(Level.FINEST,
-                         this.getClass().getSimpleName(),
-                         "createServerLogUrl",
-                         String.format("Creating server log url: %s", serverId));
+            this.getClass().getSimpleName(),
+            "createServerLogUrl",
+            String.format("Creating server log url: %s", serverId));
         final String rnd = NetworkUtils.randomString(10);
         networkConnection.sendPacket(new PacketOutCreateServerLog(rnd, serverId));
         final ConnectableAddress connectableAddress = cloudConfigLoader.loadConnnection();
         return new StringBuilder(config.getBoolean("ssl") ? "https://" : "http://").append(connectableAddress.getHostName()).append(':')
-                                                                                   .append(cloudNetwork.getWebPort()).append(
+            .append(cloudNetwork.getWebPort()).append(
                 "/cloudnet/log?server=").append(rnd).substring(0);
     }
 
@@ -555,15 +555,15 @@ public final class CloudAPI implements MetaObj {
                            final Collection<ServerInstallablePlugin> plugins,
                            final Document properties) {
         this.logger.logp(Level.FINEST,
-                         this.getClass().getSimpleName(),
-                         "startProxy",
-                         String.format("Starting proxy: %s, %d, %s, %s, %s, %s",
-                                       proxyGroup,
-                                       memory,
-                                       Arrays.toString(processParameters),
-                                       url,
-                                       plugins,
-                                       properties));
+            this.getClass().getSimpleName(),
+            "startProxy",
+            String.format("Starting proxy: %s, %d, %s, %s, %s, %s",
+                proxyGroup,
+                memory,
+                Arrays.toString(processParameters),
+                url,
+                plugins,
+                properties));
         networkConnection.sendPacket(new PacketOutStartProxy(proxyGroup, memory, processParameters, url, plugins, properties));
     }
 
@@ -609,23 +609,23 @@ public final class CloudAPI implements MetaObj {
                            final Collection<ServerInstallablePlugin> plugins,
                            final Document properties) {
         this.logger.logp(Level.FINEST,
-                         this.getClass().getSimpleName(),
-                         "startProxy",
-                         String.format("Starting proxy: %s, %s, %d, %s, %s, %s, %s",
-                                       wrapperInfo,
-                                       proxyGroup,
-                                       memory,
-                                       Arrays.toString(processParameters),
-                                       url,
-                                       plugins,
-                                       properties));
+            this.getClass().getSimpleName(),
+            "startProxy",
+            String.format("Starting proxy: %s, %s, %d, %s, %s, %s, %s",
+                wrapperInfo,
+                proxyGroup,
+                memory,
+                Arrays.toString(processParameters),
+                url,
+                plugins,
+                properties));
         networkConnection.sendPacket(new PacketOutStartProxy(wrapperInfo.getServerId(),
-                                                             proxyGroup,
-                                                             memory,
-                                                             processParameters,
-                                                             url,
-                                                             plugins,
-                                                             properties));
+            proxyGroup,
+            memory,
+            processParameters,
+            url,
+            plugins,
+            properties));
     }
 
     /**
@@ -691,13 +691,13 @@ public final class CloudAPI implements MetaObj {
                                 final boolean priorityStop,
                                 final Properties properties) {
         startGameServer(simpleServerGroup, serverConfig, memory, PROCESS_PARAMETERS,
-                        null,
-                        null,
-                        false,
-                        priorityStop,
-                        properties,
-                        null,
-                        new ArrayList<>());
+            null,
+            null,
+            false,
+            priorityStop,
+            properties,
+            null,
+            new ArrayList<>());
     }
 
     /**
@@ -726,31 +726,31 @@ public final class CloudAPI implements MetaObj {
                                 final String url,
                                 final Collection<ServerInstallablePlugin> plugins) {
         this.logger.logp(Level.FINEST,
-                         this.getClass().getSimpleName(),
-                         "startGameServer",
-                         String.format("Starting game server: %s, %s, %d, %s, %s, %s, %s, %s, %s, %s, %s",
-                                       simpleServerGroup,
-                                       serverConfig,
-                                       memory,
-                                       Arrays.toString(processParameters),
-                                       template,
-                                       customServerName,
-                                       onlineMode,
-                                       priorityStop,
-                                       properties,
-                                       url,
-                                       plugins));
+            this.getClass().getSimpleName(),
+            "startGameServer",
+            String.format("Starting game server: %s, %s, %d, %s, %s, %s, %s, %s, %s, %s, %s",
+                simpleServerGroup,
+                serverConfig,
+                memory,
+                Arrays.toString(processParameters),
+                template,
+                customServerName,
+                onlineMode,
+                priorityStop,
+                properties,
+                url,
+                plugins));
         networkConnection.sendPacket(new PacketOutStartServer(simpleServerGroup.getName(),
-                                                              memory,
-                                                              serverConfig,
-                                                              properties,
-                                                              priorityStop,
-                                                              processParameters,
-                                                              template,
-                                                              customServerName,
-                                                              onlineMode,
-                                                              plugins,
-                                                              url));
+            memory,
+            serverConfig,
+            properties,
+            priorityStop,
+            processParameters,
+            template,
+            customServerName,
+            onlineMode,
+            plugins,
+            url));
     }
 
     /**
@@ -808,14 +808,14 @@ public final class CloudAPI implements MetaObj {
                                 final Properties properties,
                                 final String serverId) {
         startGameServer(simpleServerGroup, serverConfig, memory, PROCESS_PARAMETERS,
-                        null,
-                        null,
-                        false,
-                        priorityStop,
-                        properties,
-                        null,
-                        new ArrayList<>(),
-                        serverId);
+            null,
+            null,
+            false,
+            priorityStop,
+            properties,
+            null,
+            new ArrayList<>(),
+            serverId);
     }
 
     /*==================================================================*/
@@ -847,32 +847,32 @@ public final class CloudAPI implements MetaObj {
                                 final Collection<ServerInstallablePlugin> plugins,
                                 final String serverId) {
         this.logger.logp(Level.FINEST,
-                         this.getClass().getSimpleName(),
-                         "startGameServer",
-                         String.format("Starting game server: %s, %s, %d, %s, %s, %s, %s, %s, %s, %s, %s",
-                                       simpleServerGroup,
-                                       serverConfig,
-                                       memory,
-                                       Arrays.toString(processParameters),
-                                       template,
-                                       customServerName,
-                                       onlineMode,
-                                       priorityStop,
-                                       properties,
-                                       url,
-                                       plugins,
-                                       serverId));
+            this.getClass().getSimpleName(),
+            "startGameServer",
+            String.format("Starting game server: %s, %s, %d, %s, %s, %s, %s, %s, %s, %s, %s",
+                simpleServerGroup,
+                serverConfig,
+                memory,
+                Arrays.toString(processParameters),
+                template,
+                customServerName,
+                onlineMode,
+                priorityStop,
+                properties,
+                url,
+                plugins,
+                serverId));
         networkConnection.sendPacket(new PacketOutStartServer(simpleServerGroup.getName(),
-                                                              memory,
-                                                              serverConfig,
-                                                              properties,
-                                                              priorityStop,
-                                                              processParameters,
-                                                              template,
-                                                              customServerName,
-                                                              onlineMode,
-                                                              plugins,
-                                                              url));
+            memory,
+            serverConfig,
+            properties,
+            priorityStop,
+            processParameters,
+            template,
+            customServerName,
+            onlineMode,
+            plugins,
+            url));
     }
 
     /**
@@ -930,13 +930,13 @@ public final class CloudAPI implements MetaObj {
                                 final Properties properties,
                                 final Template template) {
         startGameServer(simpleServerGroup, serverConfig, memory, PROCESS_PARAMETERS,
-                        template,
-                        null,
-                        false,
-                        priorityStop,
-                        properties,
-                        null,
-                        new ArrayList<>());
+            template,
+            null,
+            false,
+            priorityStop,
+            properties,
+            null,
+            new ArrayList<>());
     }
 
     /**
@@ -993,14 +993,14 @@ public final class CloudAPI implements MetaObj {
                                 final Template template,
                                 final String serverId) {
         startGameServer(simpleServerGroup, serverConfig, memory, PROCESS_PARAMETERS,
-                        template,
-                        null,
-                        false,
-                        priorityStop,
-                        properties,
-                        null,
-                        new ArrayList<>(),
-                        serverId);
+            template,
+            null,
+            false,
+            priorityStop,
+            properties,
+            null,
+            new ArrayList<>(),
+            serverId);
     }
 
     /**
@@ -1058,14 +1058,14 @@ public final class CloudAPI implements MetaObj {
                                 final boolean priorityStop,
                                 final Properties properties) {
         startGameServer(wrapperInfo,
-                        simpleServerGroup, serverConfig, memory, PROCESS_PARAMETERS,
-                        null,
-                        null,
-                        false,
-                        priorityStop,
-                        properties,
-                        null,
-                        new ArrayList<>());
+            simpleServerGroup, serverConfig, memory, PROCESS_PARAMETERS,
+            null,
+            null,
+            false,
+            priorityStop,
+            properties,
+            null,
+            new ArrayList<>());
     }
 
     /**
@@ -1095,33 +1095,33 @@ public final class CloudAPI implements MetaObj {
                                 final String url,
                                 final Collection<ServerInstallablePlugin> plugins) {
         this.logger.logp(Level.FINEST,
-                         this.getClass().getSimpleName(),
-                         "startGameServer",
-                         String.format("Starting game server: %s, %s, %s, %d, %s, %s, %s, %s, %s, %s, %s, %s",
-                                       wrapperInfo,
-                                       simpleServerGroup,
-                                       serverConfig,
-                                       memory,
-                                       Arrays.toString(processParameters),
-                                       template,
-                                       customServerName,
-                                       onlineMode,
-                                       priorityStop,
-                                       properties,
-                                       url,
-                                       plugins));
+            this.getClass().getSimpleName(),
+            "startGameServer",
+            String.format("Starting game server: %s, %s, %s, %d, %s, %s, %s, %s, %s, %s, %s, %s",
+                wrapperInfo,
+                simpleServerGroup,
+                serverConfig,
+                memory,
+                Arrays.toString(processParameters),
+                template,
+                customServerName,
+                onlineMode,
+                priorityStop,
+                properties,
+                url,
+                plugins));
         networkConnection.sendPacket(new PacketOutStartServer(wrapperInfo,
-                                                              simpleServerGroup.getName(),
-                                                              memory,
-                                                              serverConfig,
-                                                              properties,
-                                                              priorityStop,
-                                                              processParameters,
-                                                              template,
-                                                              customServerName,
-                                                              onlineMode,
-                                                              plugins,
-                                                              url));
+            simpleServerGroup.getName(),
+            memory,
+            serverConfig,
+            properties,
+            priorityStop,
+            processParameters,
+            template,
+            customServerName,
+            onlineMode,
+            plugins,
+            url));
     }
 
     /**
@@ -1137,14 +1137,14 @@ public final class CloudAPI implements MetaObj {
                                 final Properties properties,
                                 final Template template) {
         startGameServer(wrapperInfo,
-                        simpleServerGroup, serverConfig, memory, PROCESS_PARAMETERS,
-                        template,
-                        null,
-                        false,
-                        priorityStop,
-                        properties,
-                        null,
-                        new ArrayList<>());
+            simpleServerGroup, serverConfig, memory, PROCESS_PARAMETERS,
+            template,
+            null,
+            false,
+            priorityStop,
+            properties,
+            null,
+            new ArrayList<>());
     }
 
     /**
@@ -1175,35 +1175,35 @@ public final class CloudAPI implements MetaObj {
                                 final String url,
                                 final Collection<ServerInstallablePlugin> plugins) {
         this.logger.logp(Level.FINEST,
-                         this.getClass().getSimpleName(),
-                         "startGameServer",
-                         String.format("Starting game server: %s, %s, %s, %s, %d, %s, %s, %s, %s, %s, %s, %s, %s",
-                                       wrapperInfo,
-                                       simpleServerGroup,
-                                       serverId,
-                                       serverConfig,
-                                       memory,
-                                       Arrays.toString(processParameters),
-                                       template,
-                                       customServerName,
-                                       onlineMode,
-                                       priorityStop,
-                                       properties,
-                                       url,
-                                       plugins));
+            this.getClass().getSimpleName(),
+            "startGameServer",
+            String.format("Starting game server: %s, %s, %s, %s, %d, %s, %s, %s, %s, %s, %s, %s, %s",
+                wrapperInfo,
+                simpleServerGroup,
+                serverId,
+                serverConfig,
+                memory,
+                Arrays.toString(processParameters),
+                template,
+                customServerName,
+                onlineMode,
+                priorityStop,
+                properties,
+                url,
+                plugins));
         networkConnection.sendPacket(new PacketOutStartServer(wrapperInfo,
-                                                              simpleServerGroup.getName(),
-                                                              serverId,
-                                                              memory,
-                                                              serverConfig,
-                                                              properties,
-                                                              priorityStop,
-                                                              processParameters,
-                                                              template,
-                                                              customServerName,
-                                                              onlineMode,
-                                                              plugins,
-                                                              url));
+            simpleServerGroup.getName(),
+            serverId,
+            memory,
+            serverConfig,
+            properties,
+            priorityStop,
+            processParameters,
+            template,
+            customServerName,
+            onlineMode,
+            plugins,
+            url));
     }
 
     /**
@@ -1222,11 +1222,11 @@ public final class CloudAPI implements MetaObj {
                                  final int memory,
                                  final boolean priorityStop) {
         startCloudServer(wrapperInfo,
-                         serverName,
-                         serverConfig, memory, priorityStop, PROCESS_PRE_PARAMETERS,
-                         new ArrayList<>(),
-                         new Properties(),
-                         ServerGroupType.BUKKIT);
+            serverName,
+            serverConfig, memory, priorityStop, PROCESS_PRE_PARAMETERS,
+            new ArrayList<>(),
+            new Properties(),
+            ServerGroupType.BUKKIT);
     }
 
     /**
@@ -1242,27 +1242,27 @@ public final class CloudAPI implements MetaObj {
                                  final Properties properties,
                                  final ServerGroupType serverGroupType) {
         this.logger.logp(Level.FINEST,
-                         this.getClass().getSimpleName(),
-                         "startCloudServer",
-                         String.format("Starting cloud server: %s, %s, %s, %d, %s, %s, %s, %s, %s",
-                                       wrapperInfo,
-                                       serverName,
-                                       serverConfig,
-                                       memory,
-                                       priorityStop,
-                                       Arrays.toString(processPreParameters),
-                                       plugins,
-                                       properties,
-                                       serverGroupType));
+            this.getClass().getSimpleName(),
+            "startCloudServer",
+            String.format("Starting cloud server: %s, %s, %s, %d, %s, %s, %s, %s, %s",
+                wrapperInfo,
+                serverName,
+                serverConfig,
+                memory,
+                priorityStop,
+                Arrays.toString(processPreParameters),
+                plugins,
+                properties,
+                serverGroupType));
         networkConnection.sendPacket(new PacketOutStartCloudServer(wrapperInfo,
-                                                                   serverName,
-                                                                   serverConfig,
-                                                                   memory,
-                                                                   priorityStop,
-                                                                   processPreParameters,
-                                                                   plugins,
-                                                                   properties,
-                                                                   serverGroupType));
+            serverName,
+            serverConfig,
+            memory,
+            priorityStop,
+            processPreParameters,
+            plugins,
+            properties,
+            serverGroupType));
     }
 
     /**
@@ -1277,10 +1277,10 @@ public final class CloudAPI implements MetaObj {
      */
     public void startCloudServer(final String serverName, final ServerConfig serverConfig, final int memory, final boolean priorityStop) {
         startCloudServer(serverName,
-                         serverConfig, memory, priorityStop, PROCESS_PRE_PARAMETERS,
-                         new ArrayList<>(),
-                         new Properties(),
-                         ServerGroupType.BUKKIT);
+            serverConfig, memory, priorityStop, PROCESS_PRE_PARAMETERS,
+            new ArrayList<>(),
+            new Properties(),
+            ServerGroupType.BUKKIT);
     }
 
     /*==========================================================================*/
@@ -1297,25 +1297,25 @@ public final class CloudAPI implements MetaObj {
                                  final Properties properties,
                                  final ServerGroupType serverGroupType) {
         this.logger.logp(Level.FINEST,
-                         this.getClass().getSimpleName(),
-                         "startCloudServer",
-                         String.format("Starting cloud server: %s, %s, %d, %s, %s, %s, %s, %s",
-                                       serverName,
-                                       serverConfig,
-                                       memory,
-                                       priorityStop,
-                                       Arrays.toString(processPreParameters),
-                                       plugins,
-                                       properties,
-                                       serverGroupType));
+            this.getClass().getSimpleName(),
+            "startCloudServer",
+            String.format("Starting cloud server: %s, %s, %d, %s, %s, %s, %s, %s",
+                serverName,
+                serverConfig,
+                memory,
+                priorityStop,
+                Arrays.toString(processPreParameters),
+                plugins,
+                properties,
+                serverGroupType));
         networkConnection.sendPacket(new PacketOutStartCloudServer(serverName,
-                                                                   serverConfig,
-                                                                   memory,
-                                                                   priorityStop,
-                                                                   processPreParameters,
-                                                                   plugins,
-                                                                   properties,
-                                                                   serverGroupType));
+            serverConfig,
+            memory,
+            priorityStop,
+            processPreParameters,
+            plugins,
+            properties,
+            serverGroupType));
     }
 
     /**
@@ -1325,7 +1325,7 @@ public final class CloudAPI implements MetaObj {
      */
     public void updatePlayer(final CloudPlayer cloudPlayer) {
         this.logger.logp(Level.FINEST,
-                         this.getClass().getSimpleName(), "updatePlayer", String.format("Updating cloud player: %s", cloudPlayer));
+            this.getClass().getSimpleName(), "updatePlayer", String.format("Updating cloud player: %s", cloudPlayer));
         networkConnection.sendPacket(new PacketOutUpdatePlayer(CloudPlayer.newOfflinePlayer(cloudPlayer)));
     }
 
@@ -1336,9 +1336,9 @@ public final class CloudAPI implements MetaObj {
      */
     public void updatePlayer(final OfflinePlayer offlinePlayer) {
         this.logger.logp(Level.FINEST,
-                         this.getClass().getSimpleName(),
-                         "updatePlayer",
-                         String.format("Updating offline player: %s", offlinePlayer));
+            this.getClass().getSimpleName(),
+            "updatePlayer",
+            String.format("Updating offline player: %s", offlinePlayer));
         networkConnection.sendPacket(new PacketOutUpdatePlayer(offlinePlayer));
     }
 
@@ -1395,7 +1395,7 @@ public final class CloudAPI implements MetaObj {
     public Collection<CloudPlayer> getOnlinePlayers() {
         final Result result = networkConnection.getPacketManager().sendQuery(new PacketAPIOutGetPlayers(), networkConnection);
         final Collection<CloudPlayer> cloudPlayers = result.getResult().getObject("players",
-                                                                                  new TypeToken<Collection<CloudPlayer>>() {}.getType());
+            new TypeToken<Collection<CloudPlayer>>() {}.getType());
 
         if (cloudPlayers == null) {
             return new ArrayList<>();

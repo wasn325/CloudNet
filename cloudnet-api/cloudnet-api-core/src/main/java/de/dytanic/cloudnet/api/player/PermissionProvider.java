@@ -53,9 +53,9 @@ public final class PermissionProvider {
      */
     public static String getDisplay(final UUID uuid) {
         return CloudAPI.getInstance().getOfflinePlayer(uuid).getPermissionEntity().getHighestPermissionGroup(CloudAPI.
-                                                                                                                         getInstance()
-                                                                                                                     .getPermissionPool())
-                       .getDisplay();
+            getInstance()
+            .getPermissionPool())
+            .getDisplay();
     }
 
     /**
@@ -85,9 +85,9 @@ public final class PermissionProvider {
      */
     public static String getSuffix(final UUID uuid) {
         return CloudAPI.getInstance().getOfflinePlayer(uuid).getPermissionEntity().getHighestPermissionGroup(CloudAPI.
-                                                                                                                         getInstance()
-                                                                                                                     .getPermissionPool())
-                       .getSuffix();
+            getInstance()
+            .getPermissionPool())
+            .getSuffix();
     }
 
     /**
@@ -117,9 +117,9 @@ public final class PermissionProvider {
      */
     public static String getPrefix(final UUID uuid) {
         return CloudAPI.getInstance().getOfflinePlayer(uuid).getPermissionEntity().getHighestPermissionGroup(CloudAPI.
-                                                                                                                         getInstance()
-                                                                                                                     .getPermissionPool())
-                       .getPrefix();
+            getInstance()
+            .getPermissionPool())
+            .getPrefix();
     }
 
     /**
@@ -136,9 +136,9 @@ public final class PermissionProvider {
      */
     public static String getGroupName(final UUID uuid) {
         return CloudAPI.getInstance().getOfflinePlayer(uuid).getPermissionEntity().getHighestPermissionGroup(CloudAPI.
-                                                                                                                         getInstance()
-                                                                                                                     .getPermissionPool())
-                       .getName();
+            getInstance()
+            .getPermissionPool())
+            .getName();
     }
 
     /**
@@ -244,8 +244,8 @@ public final class PermissionProvider {
     public static int getJoinPower(final OfflinePlayer player) {
         final PermissionPool permissionPool = CloudAPI.getInstance().getPermissionPool();
         return player.getPermissionEntity().getGroups().stream().mapToInt(groupEntityData -> permissionPool.getGroups()
-                                                                                                           .get(groupEntityData.getGroup())
-                                                                                                           .getJoinPower()).max().orElse(0);
+            .get(groupEntityData.getGroup())
+            .getJoinPower()).max().orElse(0);
     }
 
     /**
@@ -291,7 +291,7 @@ public final class PermissionProvider {
      */
     public static long getPlayerGroupRemainingTime(final OfflinePlayer offlinePlayer) {
         return offlinePlayer.getPermissionEntity().getGroups().stream().filter(e -> e.getGroup().equals(getGroupName(offlinePlayer)))
-                            .findFirst().map(GroupEntityData::getTimeout).orElse(-1L);
+            .findFirst().map(GroupEntityData::getTimeout).orElse(-1L);
     }
 
     /**

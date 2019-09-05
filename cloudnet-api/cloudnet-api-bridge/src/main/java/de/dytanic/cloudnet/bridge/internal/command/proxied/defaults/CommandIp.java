@@ -20,7 +20,7 @@ public class CommandIp extends Command {
     public void execute(final CommandSender commandSender, final String[] args) {
         if (args.length < 1) {
             commandSender.sendMessage(new TextComponent(TextComponent
-                                                            .fromLegacyText(ChatColor.RED + "Please follow this command by a user name")));
+                .fromLegacyText(ChatColor.RED + "Please follow this command by a user name")));
             return;
         }
 

@@ -37,7 +37,7 @@ public class TemplateLoader {
         try {
             final URLConnection urlConnection = new URL(url).openConnection();
             urlConnection.setRequestProperty("User-Agent",
-                                             "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.95 Safari/537.11");
+                "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.95 Safari/537.11");
             urlConnection.setUseCaches(false);
             urlConnection.connect();
             Files.copy(urlConnection.getInputStream(), Paths.get(dest));

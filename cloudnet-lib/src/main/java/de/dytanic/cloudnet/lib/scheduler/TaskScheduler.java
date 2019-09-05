@@ -217,15 +217,15 @@ public class TaskScheduler {
         return this.workers.size();
     }
 
-    public int getMaxThreads() {
-        return maxThreads;
-    }
-
     protected void newWorker() {
         final Worker worker = new Worker();
         workers.add(worker);
 
         worker.start();
+    }
+
+    public int getMaxThreads() {
+        return maxThreads;
     }
 
     public TaskEntryFuture<Void> schedule(final Runnable runnable, final Date timeout) {

@@ -30,7 +30,7 @@ public class HeaderFunction {
         if (file.exists()) {
             executed = true;
             try (final InputStreamReader inputStreamReader = new InputStreamReader(new FileInputStream(file),
-                                                                                   StandardCharsets.UTF_8); final BufferedReader bufferedReader = new BufferedReader(
+                StandardCharsets.UTF_8); final BufferedReader bufferedReader = new BufferedReader(
                 inputStreamReader)) {
                 bufferedReader.lines().forEach(System.out::println);
                 NetworkUtils.headerOut();

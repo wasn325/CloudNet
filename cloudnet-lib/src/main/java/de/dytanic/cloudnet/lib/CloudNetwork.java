@@ -44,7 +44,7 @@ public class CloudNetwork {
         final CloudNetwork that = (CloudNetwork) o;
         return registeredPlayerCount == that.registeredPlayerCount && onlineCount == that.onlineCount && webPort == that.webPort &&
                Objects.equals(serverGroups, that.serverGroups) && Objects.equals(proxyGroups, that.proxyGroups) && Objects.equals(wrappers,
-                                                                                                                                  that.wrappers) &&
+            that.wrappers) &&
                Objects.equals(messages, that.messages) && Objects.equals(modules, that.modules);
     }
 

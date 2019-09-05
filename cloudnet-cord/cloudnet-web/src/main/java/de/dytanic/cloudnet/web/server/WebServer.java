@@ -93,18 +93,18 @@ public class WebServer {
         serverBootstrap = new ServerBootstrap().group(acceptorGroup, workerGroup).childOption(ChannelOption.IP_TOS, 24).childOption(
             ChannelOption.TCP_NODELAY,
             true).childOption(ChannelOption.AUTO_READ, true).channel(NetworkUtils.serverSocketChannel())
-                                               .childHandler(new ChannelInitializer<Channel>() {
-                                                   @Override
-                                                   protected void initChannel(final Channel channel) {
-                                                       if (sslContext != null) {
-                                                           channel.pipeline().addLast(sslContext.newHandler(channel.alloc()));
-                                                       }
+            .childHandler(new ChannelInitializer<Channel>() {
+                @Override
+                protected void initChannel(final Channel channel) {
+                    if (sslContext != null) {
+                        channel.pipeline().addLast(sslContext.newHandler(channel.alloc()));
+                    }
 
-                                                       channel.pipeline().addLast(new HttpServerCodec(),
-                                                                                  new HttpObjectAggregator(Integer.MAX_VALUE),
-                                                                                  new WebServerHandler(WebServer.this));
-                                                   }
-                                               });
+                    channel.pipeline().addLast(new HttpServerCodec(),
+                        new HttpObjectAggregator(Integer.MAX_VALUE),
+                        new WebServerHandler(WebServer.this));
+                }
+            });
     }
 
     public EventLoopGroup getAcceptorGroup() {

@@ -37,7 +37,7 @@ public final class PacketInUpdateWrapperInfo extends PacketInHandler {
                 " and " + wrapperInfo.getMemory() + "MB");
 
             if (wrapperInfo.getVersion() != null && !wrapperInfo.getVersion().equals(NetworkUtils.class.getPackage()
-                                                                                                       .getImplementationVersion())) {
+                .getImplementationVersion())) {
                 System.err.println("Wrapper [" + ((Wrapper) packetSender).getServerId() +
                                    "] does not use the same version as this CloudNet Master [Master:" +
                                    NetworkUtils.class.getPackage().getImplementationVersion() + "/Wrapper:" + wrapperInfo.getVersion() +

@@ -112,7 +112,7 @@ public class LocalCloudWrapper implements Runnabled<OptionSet> {
                 System.out.println("Downloading wrapper...");
                 final URLConnection urlConnection = new URL(WRAPPER_URL).openConnection();
                 urlConnection.setRequestProperty("User-Agent",
-                                                 "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.95 Safari/537.11");
+                    "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.95 Safari/537.11");
                 urlConnection.connect();
                 Files.copy(urlConnection.getInputStream(), path);
                 System.out.println("Download completed!");
@@ -138,8 +138,8 @@ public class LocalCloudWrapper implements Runnabled<OptionSet> {
 
             final User finalUser = user;
             final WrapperMeta wrapperMeta = CloudNet.getInstance().getConfig().getWrappers().stream().filter(meta -> meta.getId()
-                                                                                                                         .equals("Wrapper-1"))
-                                                    .findFirst().orElseGet(() -> {
+                .equals("Wrapper-1"))
+                .findFirst().orElseGet(() -> {
                     final WrapperMeta newMeta = new WrapperMeta("Wrapper-1", address.getHostName(), finalUser.getName());
                     CloudNet.getInstance().getConfig().createWrapper(newMeta);
                     return newMeta;
@@ -170,7 +170,7 @@ public class LocalCloudWrapper implements Runnabled<OptionSet> {
             configuration.set("general.percentOfCPUForANewProxy", 100D);
 
             try (final OutputStreamWriter outputStreamWriter = new OutputStreamWriter(Files.newOutputStream(path),
-                                                                                      StandardCharsets.UTF_8)) {
+                StandardCharsets.UTF_8)) {
                 ConfigurationProvider.getProvider(YamlConfiguration.class).save(configuration, outputStreamWriter);
             } catch (final IOException e) {
                 e.printStackTrace();
@@ -220,11 +220,11 @@ public class LocalCloudWrapper implements Runnabled<OptionSet> {
     private void startProcess() throws IOException {
         System.out.println("Starting wrapper process...");
         this.process = new ProcessBuilder("java",
-                                          "-Xmx256M",
-                                          "-Djline.terminal=jline.UnsupportedTerminal",
-                                          "-Dcloudnet.logging.prompt.disabled=true",
-                                          "-jar",
-                                          "CloudNet-Wrapper.jar").directory(new File("wrapper")).start();
+            "-Xmx256M",
+            "-Djline.terminal=jline.UnsupportedTerminal",
+            "-Dcloudnet.logging.prompt.disabled=true",
+            "-jar",
+            "CloudNet-Wrapper.jar").directory(new File("wrapper")).start();
         System.out.println("Successfully started the wrapper process!");
     }
 

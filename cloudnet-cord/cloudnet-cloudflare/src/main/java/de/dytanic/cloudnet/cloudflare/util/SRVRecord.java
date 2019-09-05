@@ -35,8 +35,8 @@ public class SRVRecord extends DNSRecord {
                      final int port,
                      final String target) {
         super(DNSType.SRV.name(), name, content, 1, false, new Document().append("service", service).append("proto", proto).append("name",
-                                                                                                                                   name_)
-                                                                         .append("priority", priority).append("weight", weight).append(
+            name_)
+            .append("priority", priority).append("weight", weight).append(
                 "port",
                 port).append("target", target).obj());
     }

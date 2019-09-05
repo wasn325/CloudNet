@@ -21,8 +21,8 @@ public class BungeeCordChannel implements Listener {
 
     public void kickPlayer(final UUID uuid) {
         CloudAPI.getInstance().sendCustomSubProxyMessage("ban-system",
-                                                         "kick",
-                                                         new Document("uuid", uuid).append("reason", "Du wurdest gekickt!"));
+            "kick",
+            new Document("uuid", uuid).append("reason", "Du wurdest gekickt!"));
     }
 
     @EventHandler

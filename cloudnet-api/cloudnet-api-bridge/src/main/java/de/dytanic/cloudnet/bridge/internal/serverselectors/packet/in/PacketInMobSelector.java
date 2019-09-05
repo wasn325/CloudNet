@@ -69,17 +69,17 @@ public class PacketInMobSelector extends PacketInHandlerDefault {
                         public MobSelector.MobImpl doCatch(final ServerMob key) {
                             MobSelector.getInstance().toLocation(key.getPosition()).getChunk().load();
                             final Entity entity = MobSelector.getInstance().toLocation(key.getPosition()).getWorld().spawnEntity(MobSelector
-                                                                                                                                     .getInstance()
-                                                                                                                                     .toLocation(
-                                                                                                                                         key.getPosition()),
-                                                                                                                                 EntityType
-                                                                                                                                     .valueOf(
-                                                                                                                                         key.getType()));
+                                    .getInstance()
+                                    .toLocation(
+                                        key.getPosition()),
+                                EntityType
+                                    .valueOf(
+                                        key.getType()));
                             entity.setFireTicks(0);
                             final Object armorStand = ReflectionUtil.armorstandCreation(MobSelector.getInstance()
-                                                                                                   .toLocation(key.getPosition()),
-                                                                                        entity,
-                                                                                        key);
+                                    .toLocation(key.getPosition()),
+                                entity,
+                                key);
 
                             if (armorStand != null) {
                                 MobSelector.getInstance().updateCustom(key, armorStand);
@@ -89,7 +89,7 @@ public class PacketInMobSelector extends PacketInHandlerDefault {
                                     final Material material = ItemStackBuilder.getMaterialIgnoreVersion(key.getItemName(), key.getItemId());
                                     if (material != null) {
                                         final Item item = Bukkit.getWorld(key.getPosition().getWorld()).dropItem(armor.getLocation(),
-                                                                                                                 new ItemStack(material));
+                                            new ItemStack(material));
                                         item.setTicksLived(Integer.MAX_VALUE);
                                         item.setPickupDelay(Integer.MAX_VALUE);
                                         armor.setPassenger(item);
@@ -105,11 +105,11 @@ public class PacketInMobSelector extends PacketInHandlerDefault {
                             entity.setCustomNameVisible(true);
                             entity.setCustomName(ChatColor.translateAlternateColorCodes('&', key.getDisplay()));
                             final MobSelector.MobImpl mob = new MobSelector.MobImpl(key.getUniqueId(),
-                                                                                    key,
-                                                                                    entity,
-                                                                                    MobSelector.getInstance().create(mobConfig, key),
-                                                                                    new HashMap<>(),
-                                                                                    armorStand);
+                                key,
+                                entity,
+                                MobSelector.getInstance().create(mobConfig, key),
+                                new HashMap<>(),
+                                armorStand);
                             Bukkit.getPluginManager().callEvent(new BukkitMobInitEvent(mob));
                             return mob;
                         }
@@ -141,16 +141,16 @@ public class PacketInMobSelector extends PacketInHandlerDefault {
                         public MobSelector.MobImpl doCatch(final ServerMob key) {
                             MobSelector.getInstance().toLocation(key.getPosition()).getChunk().load();
                             final Entity entity = MobSelector.getInstance().toLocation(key.getPosition()).getWorld().spawnEntity(MobSelector
-                                                                                                                                     .getInstance()
-                                                                                                                                     .toLocation(
-                                                                                                                                         key.getPosition()),
-                                                                                                                                 EntityType
-                                                                                                                                     .valueOf(
-                                                                                                                                         key.getType()));
+                                    .getInstance()
+                                    .toLocation(
+                                        key.getPosition()),
+                                EntityType
+                                    .valueOf(
+                                        key.getType()));
                             final Object armorStand = ReflectionUtil.armorstandCreation(MobSelector.getInstance()
-                                                                                                   .toLocation(key.getPosition()),
-                                                                                        entity,
-                                                                                        key);
+                                    .toLocation(key.getPosition()),
+                                entity,
+                                key);
 
                             if (armorStand != null) {
                                 MobSelector.getInstance().updateCustom(key, armorStand);
@@ -159,7 +159,7 @@ public class PacketInMobSelector extends PacketInHandlerDefault {
                                     final Material material = ItemStackBuilder.getMaterialIgnoreVersion(key.getItemName(), key.getItemId());
                                     if (material != null) {
                                         final Item item = Bukkit.getWorld(key.getPosition().getWorld()).dropItem(armor.getLocation(),
-                                                                                                                 new ItemStack(material));
+                                            new ItemStack(material));
                                         item.setTicksLived(Integer.MAX_VALUE);
                                         item.setPickupDelay(Integer.MAX_VALUE);
                                         armor.setPassenger(item);
@@ -176,11 +176,11 @@ public class PacketInMobSelector extends PacketInHandlerDefault {
                             entity.setCustomName(ChatColor.translateAlternateColorCodes('&', key.getDisplay() + NetworkUtils.EMPTY_STRING));
 
                             final MobSelector.MobImpl mob = new MobSelector.MobImpl(key.getUniqueId(),
-                                                                                    key,
-                                                                                    entity,
-                                                                                    MobSelector.getInstance().create(mobConfig, key),
-                                                                                    new HashMap<>(),
-                                                                                    armorStand);
+                                key,
+                                entity,
+                                MobSelector.getInstance().create(mobConfig, key),
+                                new HashMap<>(),
+                                armorStand);
                             Bukkit.getPluginManager().callEvent(new BukkitMobInitEvent(mob));
                             return mob;
                         }

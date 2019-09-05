@@ -92,8 +92,8 @@ public class ServerProcessQueue implements Runnable {
                         try {
                             System.out.println("Fetching entry [" + serverProcess.getMeta().getServiceId() + ']');
                             gameServer = new GameServer(serverProcess,
-                                                        ServerStage.SETUP, CloudNetWrapper.getInstance().getServerGroups()
-                                                                                          .get(serverProcess.getMeta().getServiceId().getGroup()));
+                                ServerStage.SETUP, CloudNetWrapper.getInstance().getServerGroups()
+                                .get(serverProcess.getMeta().getServiceId().getGroup()));
                             if (!gameServer.bootstrap()) {
                                 this.servers.add(serverProcess);
                             }
@@ -128,8 +128,8 @@ public class ServerProcessQueue implements Runnable {
                     if ((memory + serverProcess.getMemory()) < CloudNetWrapper.getInstance().getMaxMemory()) {
 
                         final BungeeCord gameServer = new BungeeCord(serverProcess,
-                                                                     CloudNetWrapper.getInstance().getProxyGroups()
-                                                                                    .get(serverProcess.getServiceId().getGroup()));
+                            CloudNetWrapper.getInstance().getProxyGroups()
+                                .get(serverProcess.getServiceId().getGroup()));
 
                         try {
                             System.out.println("Fetching entry [" + gameServer.getServiceId() + ']');
@@ -154,8 +154,8 @@ public class ServerProcessQueue implements Runnable {
             return;
         }
         final GameServer gameServer = new GameServer(new ServerProcess(process, ServerStage.SETUP),
-                                                     ServerStage.SETUP, CloudNetWrapper.getInstance().getServerGroups()
-                                                                                       .get(process.getServiceId().getGroup()));
+            ServerStage.SETUP, CloudNetWrapper.getInstance().getServerGroups()
+            .get(process.getServiceId().getGroup()));
         TaskScheduler.runtimeScheduler().schedule(new Runnable() {
             @Override
             public void run() {
@@ -184,8 +184,8 @@ public class ServerProcessQueue implements Runnable {
 
     public void patchAsync(final ProxyProcessMeta proxyProcessMeta) {
         final BungeeCord bungeeCord = new BungeeCord(proxyProcessMeta,
-                                                     CloudNetWrapper.getInstance().getProxyGroups()
-                                                                    .get(proxyProcessMeta.getServiceId().getGroup()));
+            CloudNetWrapper.getInstance().getProxyGroups()
+                .get(proxyProcessMeta.getServiceId().getGroup()));
 
         if (!CloudNetWrapper.getInstance().getProxyGroups().containsKey(proxyProcessMeta.getServiceId().getGroup())) {
             this.proxys.add(proxyProcessMeta);

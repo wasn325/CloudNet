@@ -55,26 +55,26 @@ public class CloudBootstrap {
         if (optionSet.has("help") || optionSet.has("?")) {
             final HelpService helpService = new HelpService();
             helpService.getDescriptions().put("help",
-                                              new ServiceDescription[] {new ServiceDescription("--help | --?",
-                                                                                               "This is the main argument to get all information about other parameters")});
+                new ServiceDescription[] {new ServiceDescription("--help | --?",
+                    "This is the main argument to get all information about other parameters")});
             helpService.getDescriptions().put("ssl",
-                                              new ServiceDescription[] {new ServiceDescription("--ssl",
-                                                                                               "Allows SSL encryption via a system-contained certificate or an open SSL certificate")});
+                new ServiceDescription[] {new ServiceDescription("--ssl",
+                    "Allows SSL encryption via a system-contained certificate or an open SSL certificate")});
             helpService.getDescriptions().put("noconsole",
-                                              new ServiceDescription[] {new ServiceDescription("--noconsole",
-                                                                                               "Disables the console, for the rest of the service run time")});
+                new ServiceDescription[] {new ServiceDescription("--noconsole",
+                    "Disables the console, for the rest of the service run time")});
             helpService.getDescriptions().put("disable-autoupdate",
-                                              new ServiceDescription[] {new ServiceDescription("--disable-autoupdate",
-                                                                                               "Disabled the autoupdate function of cloudnet 2")});
+                new ServiceDescription[] {new ServiceDescription("--disable-autoupdate",
+                    "Disabled the autoupdate function of cloudnet 2")});
             helpService.getDescriptions().put("version",
-                                              new ServiceDescription[] {new ServiceDescription("--version | --v",
-                                                                                               "Displays the current version of CloudNet used")});
+                new ServiceDescription[] {new ServiceDescription("--version | --v",
+                    "Displays the current version of CloudNet used")});
             helpService.getDescriptions().put("systemTimer",
-                                              new ServiceDescription[] {new ServiceDescription("--systemTimer",
-                                                                                               "Time all informations of this instance into a custom log file")});
+                new ServiceDescription[] {new ServiceDescription("--systemTimer",
+                    "Time all informations of this instance into a custom log file")});
             helpService.getDescriptions().put("requestTerminationSignal",
-                                              new ServiceDescription[] {new ServiceDescription("--requestTerminationSignal",
-                                                                                               "Enables the request if you use STRG+C")});
+                new ServiceDescription[] {new ServiceDescription("--requestTerminationSignal",
+                    "Enables the request if you use STRG+C")});
             System.out.println(helpService.toString());
             return;
         }

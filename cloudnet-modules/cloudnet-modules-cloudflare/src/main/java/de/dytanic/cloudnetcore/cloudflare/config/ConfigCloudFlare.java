@@ -23,14 +23,14 @@ public class ConfigCloudFlare extends ConfigAbstract implements ILoader<Collecti
 
     public ConfigCloudFlare() {
         super(new Document("configurations",
-                           Collections.singletonList(new CloudFlareConfig(false,
-                                                                          "example@gmail.com",
-                                                                          "token",
-                                                                          "example.com",
-                                                                          "zone",
-                                                                          Collections.singletonList(new CloudFlareProxyGroup("Bungee",
-                                                                                                                             "server"))))),
-              Paths.get("local/cloudflare_cfg.json"));
+                Collections.singletonList(new CloudFlareConfig(false,
+                    "example@gmail.com",
+                    "token",
+                    "example.com",
+                    "zone",
+                    Collections.singletonList(new CloudFlareProxyGroup("Bungee",
+                        "server"))))),
+            Paths.get("local/cloudflare_cfg.json"));
     }
 
     @Override
@@ -39,7 +39,7 @@ public class ConfigCloudFlare extends ConfigAbstract implements ILoader<Collecti
 
         if (old.exists()) {
             final CloudFlareConfig cloudFlareConfig = Document.loadDocument(old).getObject("cloudflare",
-                                                                                           new TypeToken<CloudFlareConfig>() {}.getType());
+                new TypeToken<CloudFlareConfig>() {}.getType());
 
             new Document().append("configurations", new CloudFlareConfig[] {cloudFlareConfig}).saveAsConfig(path);
             old.delete();

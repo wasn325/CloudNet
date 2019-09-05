@@ -27,7 +27,7 @@ public class PacketInUpdateProxyInfo extends PacketInHandler {
             ((ProxyServer) packetSender).setLastProxyInfo(((ProxyServer) packetSender).getProxyInfo());
             ((ProxyServer) packetSender).setProxyInfo(data.getObject("proxyInfo", type));
             CloudNet.getInstance().getNetworkManager().handleProxyInfoUpdate(((ProxyServer) packetSender),
-                                                                             data.getObject("proxyInfo", type));
+                data.getObject("proxyInfo", type));
         }
     }
 }

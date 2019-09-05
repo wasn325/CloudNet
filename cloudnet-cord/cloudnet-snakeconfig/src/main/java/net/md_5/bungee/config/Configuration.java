@@ -113,9 +113,9 @@ public final class Configuration {
     public Configuration getSection(final String path) {
         final Object def = getDefault(path);
         return (Configuration) get(path,
-                                   (def instanceof Configuration)
-                                   ? def
-                                   : new Configuration((defaults == null) ? null : defaults.getSection(path)));
+            (def instanceof Configuration)
+            ? def
+            : new Configuration((defaults == null) ? null : defaults.getSection(path)));
     }
 
     /**

@@ -42,7 +42,7 @@ public final class CommandList extends Command {
                 sender.sendMessage("Proxy [" + proxyServer.getServerId() + "] @" + proxyServer.getNetworkInfo().getHostName() + " | " +
                                    proxyServer.getProxyInfo().getOnlineCount() + NetworkUtils.SLASH_STRING +
                                    CloudNet.getInstance().getProxyGroups().get(proxyServer.getProxyInfo().getServiceId().getGroup())
-                                           .getProxyConfig().getMaxPlayers() + " | State: " +
+                                       .getProxyConfig().getMaxPlayers() + " | State: " +
                                    (proxyServer.getChannel() != null ? "connected" : "not connected"));
             }
             sender.sendMessage(" ", "Servers:");

@@ -69,32 +69,32 @@ public class SetupServerGroup {
                 }
 
                 final ServerGroup serverGroup = new ServerGroup(name,
-                                                                wrappers,
-                                                                serverGroupMode == ServerGroupMode.LOBBY,
-                                                                data.getInt("memory"),
-                                                                data.getInt("memory"),
-                                                                0,
-                                                                true,
-                                                                data.getInt("startup"),
-                                                                data.getInt("onlineGlobal"),
-                                                                data.getInt("onlineGroup"),
-                                                                180,
-                                                                100,
-                                                                100,
-                                                                data.getInt("percent"),
-                                                                serverGroupType,
-                                                                serverGroupMode,
-                                                                Collections.singletonList(new Template("default",
-                                                                                                       TemplateResource
-                                                                                                           .valueOf(data.getString(
-                                                                                                               "template")),
-                                                                                                       null,
-                                                                                                       PROCESS_PRE_PARAMETERS,
-                                                                                                       new ArrayList<>())),
-                                                                new AdvancedServerConfig(false,
-                                                                                         false,
-                                                                                         false,
-                                                                                         serverGroupMode != ServerGroupMode.STATIC));
+                    wrappers,
+                    serverGroupMode == ServerGroupMode.LOBBY,
+                    data.getInt("memory"),
+                    data.getInt("memory"),
+                    0,
+                    true,
+                    data.getInt("startup"),
+                    data.getInt("onlineGlobal"),
+                    data.getInt("onlineGroup"),
+                    180,
+                    100,
+                    100,
+                    data.getInt("percent"),
+                    serverGroupType,
+                    serverGroupMode,
+                    Collections.singletonList(new Template("default",
+                        TemplateResource
+                            .valueOf(data.getString(
+                                "template")),
+                        null,
+                        PROCESS_PRE_PARAMETERS,
+                        new ArrayList<>())),
+                    new AdvancedServerConfig(false,
+                        false,
+                        false,
+                        serverGroupMode != ServerGroupMode.STATIC));
                 CloudNet.getInstance().getConfig().createGroup(serverGroup);
                 CloudNet.getInstance().getServerGroups().put(serverGroup.getName(), serverGroup);
                 CloudNet.getInstance().setupGroup(serverGroup);
@@ -104,107 +104,107 @@ public class SetupServerGroup {
                 commandSender.sendMessage("The server group " + serverGroup.getName() + " is now created!");
             }
         }).request(new SetupRequest("memory",
-                                    "How many MB RAM should the server group have?",
-                                    "Specified Memory is invalid",
-                                    SetupResponseType.NUMBER,
-                                    new Catcher<Boolean, String>() {
-                                        @Override
-                                        public Boolean doCatch(final String key) {
-                                            return NetworkUtils.checkIsNumber(key) && Integer.parseInt(key) > 64;
-                                        }
-                                    })).request(new SetupRequest("startup",
-                                                                 "How many servers should always be online?",
-                                                                 "Specified startup count is invalid",
-                                                                 SetupResponseType.NUMBER,
-                                                                 new Catcher<Boolean, String>() {
-                                                                     @Override
-                                                                     public Boolean doCatch(final String key) {
-                                                                         return true;
-                                                                     }
-                                                                 })).request(new SetupRequest("percent",
-                                                                                              "How full does the server have to be until a new server is started? (In Percent)?",
-                                                                                              "Specified percent count is invalid",
-                                                                                              SetupResponseType.NUMBER,
-                                                                                              new Catcher<Boolean, String>() {
-                                                                                                  @Override
-                                                                                                  public Boolean doCatch(final String key) {
-                                                                                                      return
-                                                                                                          NetworkUtils.checkIsNumber(key) &&
-                                                                                                          Integer.parseInt(key) <= 100;
-                                                                                                  }
-                                                                                              })).request(new SetupRequest("mode",
-                                                                                                                           "Which server group mode should be used? [STATIC, STATIC_LOBBY, LOBBY, DYNAMIC]",
-                                                                                                                           "Specified server group mode is invalid",
-                                                                                                                           SetupResponseType.STRING,
-                                                                                                                           new Catcher<Boolean, String>() {
-                                                                                                                               @Override
-                                                                                                                               public Boolean doCatch(
-                                                                                                                                   final String key) {
-                                                                                                                                   return
-                                                                                                                                       key.equalsIgnoreCase(
-                                                                                                                                           "STATIC") ||
-                                                                                                                                       key.equalsIgnoreCase(
-                                                                                                                                           "STATIC_LOBBY") ||
-                                                                                                                                       key.equalsIgnoreCase(
-                                                                                                                                           "LOBBY") ||
-                                                                                                                                       key.equalsIgnoreCase(
-                                                                                                                                           "DYNAMIC");
-                                                                                                                               }
-                                                                                                                           }))
-                                       .request(new SetupRequest("type",
-                                                                 "Which servergroup type should be used? [BUKKIT, CAULDRON, GLOWSTONE]",
-                                                                 "Specified group type is invalid",
-                                                                 SetupResponseType.STRING,
-                                                                 new Catcher<Boolean, String>() {
-                                                                     @Override
-                                                                     public Boolean doCatch(final String key) {
-                                                                         return key.equals("BUKKIT") || key.equals("GLOWSTONE") ||
-                                                                                key.equals("CAULDRON");
-                                                                     }
-                                                                 })).request(new SetupRequest("template",
-                                                                                              "What is the backend of the group default template? [\"LOCAL\" for the wrapper local | \"MASTER\" for the master backend]",
-                                                                                              "Specified string is invalid",
-                                                                                              SetupResponseType.STRING,
-                                                                                              new Catcher<Boolean, String>() {
-                                                                                                  @Override
-                                                                                                  public Boolean doCatch(final String key) {
-                                                                                                      return key.equals("MASTER") ||
-                                                                                                             key.equals("LOCAL");
-                                                                                                  }
-                                                                                              })).request(new SetupRequest("onlineGroup",
-                                                                                                                           "How many servers should be online if 100 players are online in the group?",
-                                                                                                                           "Specified string is invalid",
-                                                                                                                           SetupResponseType.NUMBER,
-                                                                                                                           null)).request(
+            "How many MB RAM should the server group have?",
+            "Specified Memory is invalid",
+            SetupResponseType.NUMBER,
+            new Catcher<Boolean, String>() {
+                @Override
+                public Boolean doCatch(final String key) {
+                    return NetworkUtils.checkIsNumber(key) && Integer.parseInt(key) > 64;
+                }
+            })).request(new SetupRequest("startup",
+            "How many servers should always be online?",
+            "Specified startup count is invalid",
+            SetupResponseType.NUMBER,
+            new Catcher<Boolean, String>() {
+                @Override
+                public Boolean doCatch(final String key) {
+                    return true;
+                }
+            })).request(new SetupRequest("percent",
+            "How full does the server have to be until a new server is started? (In Percent)?",
+            "Specified percent count is invalid",
+            SetupResponseType.NUMBER,
+            new Catcher<Boolean, String>() {
+                @Override
+                public Boolean doCatch(final String key) {
+                    return
+                        NetworkUtils.checkIsNumber(key) &&
+                        Integer.parseInt(key) <= 100;
+                }
+            })).request(new SetupRequest("mode",
+            "Which server group mode should be used? [STATIC, STATIC_LOBBY, LOBBY, DYNAMIC]",
+            "Specified server group mode is invalid",
+            SetupResponseType.STRING,
+            new Catcher<Boolean, String>() {
+                @Override
+                public Boolean doCatch(
+                    final String key) {
+                    return
+                        key.equalsIgnoreCase(
+                            "STATIC") ||
+                        key.equalsIgnoreCase(
+                            "STATIC_LOBBY") ||
+                        key.equalsIgnoreCase(
+                            "LOBBY") ||
+                        key.equalsIgnoreCase(
+                            "DYNAMIC");
+                }
+            }))
+            .request(new SetupRequest("type",
+                "Which servergroup type should be used? [BUKKIT, CAULDRON, GLOWSTONE]",
+                "Specified group type is invalid",
+                SetupResponseType.STRING,
+                new Catcher<Boolean, String>() {
+                    @Override
+                    public Boolean doCatch(final String key) {
+                        return key.equals("BUKKIT") || key.equals("GLOWSTONE") ||
+                               key.equals("CAULDRON");
+                    }
+                })).request(new SetupRequest("template",
+                "What is the backend of the group default template? [\"LOCAL\" for the wrapper local | \"MASTER\" for the master backend]",
+                "Specified string is invalid",
+                SetupResponseType.STRING,
+                new Catcher<Boolean, String>() {
+                    @Override
+                    public Boolean doCatch(final String key) {
+                        return key.equals("MASTER") ||
+                               key.equals("LOCAL");
+                    }
+                })).request(new SetupRequest("onlineGroup",
+                "How many servers should be online if 100 players are online in the group?",
+                "Specified string is invalid",
+                SetupResponseType.NUMBER,
+                null)).request(
                 new SetupRequest("onlineGlobal",
-                                 "How many servers should be online if 100 global players are online?",
-                                 "Specified string is invalid",
-                                 SetupResponseType.NUMBER,
-                                 null))
+                    "How many servers should be online if 100 global players are online?",
+                    "Specified string is invalid",
+                    SetupResponseType.NUMBER,
+                    null))
 
-                                       .request(new SetupRequest("wrapper",
-                                                                 "Which wrappers should be used for this group?",
-                                                                 "Specified string is invalid",
-                                                                 SetupResponseType.STRING,
-                                                                 new Catcher<Boolean, String>() {
-                                                                     @Override
-                                                                     public Boolean doCatch(final String key) {
-                                                                         final java.util.List<String> wrappers = (List<String>) CollectionWrapper
-                                                                             .toCollection(key, ",");
-                                                                         if (wrappers.isEmpty()) {
-                                                                             return false;
-                                                                         }
-                                                                         for (short i = 0; i < wrappers.size(); i++) {
-                                                                             if (!CloudNet.getInstance().getWrappers().containsKey(wrappers
-                                                                                                                                       .get(
-                                                                                                                                           i))) {
-                                                                                 wrappers.remove(wrappers.get(i));
-                                                                             }
-                                                                         }
+            .request(new SetupRequest("wrapper",
+                "Which wrappers should be used for this group?",
+                "Specified string is invalid",
+                SetupResponseType.STRING,
+                new Catcher<Boolean, String>() {
+                    @Override
+                    public Boolean doCatch(final String key) {
+                        final java.util.List<String> wrappers = (List<String>) CollectionWrapper
+                            .toCollection(key, ",");
+                        if (wrappers.isEmpty()) {
+                            return false;
+                        }
+                        for (short i = 0; i < wrappers.size(); i++) {
+                            if (!CloudNet.getInstance().getWrappers().containsKey(wrappers
+                                .get(
+                                    i))) {
+                                wrappers.remove(wrappers.get(i));
+                            }
+                        }
 
-                                                                         return !wrappers.isEmpty();
-                                                                     }
-                                                                 }));
+                        return !wrappers.isEmpty();
+                    }
+                }));
         setup.start(CloudNet.getLogger().getReader());
     }
 

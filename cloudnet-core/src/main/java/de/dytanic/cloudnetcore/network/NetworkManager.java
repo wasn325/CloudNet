@@ -217,11 +217,11 @@ public final class NetworkManager {
         CloudNet.getLogger().debug(
             "player login request " + cloudPlayerConnection.getName() + '#' + uniqueId + " NameToUUIDDatabase append");
         CloudNet.getInstance().getDbHandlers().getNameToUUIDDatabase().append(new MultiValue<>(cloudPlayerConnection.getName(),
-                                                                                               cloudPlayerConnection.getUniqueId()));
+            cloudPlayerConnection.getUniqueId()));
         CloudNet.getLogger().debug(
             "player login request " + cloudPlayerConnection.getName() + '#' + uniqueId + " NameToUUIDDatabase replace");
         CloudNet.getInstance().getDbHandlers().getNameToUUIDDatabase().replace(new MultiValue<>(cloudPlayerConnection.getUniqueId(),
-                                                                                                cloudPlayerConnection.getName()));
+            cloudPlayerConnection.getName()));
 
         CloudNet.getLogger().debug("player login request " + cloudPlayerConnection.getName() + '#' + uniqueId + " setName");
         cloudPlayer.setName(cloudPlayerConnection.getName());
@@ -266,7 +266,7 @@ public final class NetworkManager {
                     }
 
                     final ServerGroup serverGroup = CloudNet.getInstance().getServerGroups().get(((MinecraftServer) networkComponent)
-                                                                                                     .getServiceId().getGroup());
+                        .getServiceId().getGroup());
                     if (serverGroup != null) {
                         if (serverGroup.getAdvancedServerConfig().isNotifyProxyUpdates() &&
                             (packet instanceof PacketOutUpdateProxyInfo || packet instanceof PacketOutProxyAdd ||

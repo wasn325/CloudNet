@@ -32,7 +32,7 @@ public class WebServerExample
                                 final PathProvider pathProvider,
                                 final HttpRequest httpRequest) throws Exception {
         return newResponse(httpRequest.getProtocolVersion(),
-                           Unpooled.wrappedBuffer(pathProvider.getPathParameters().getString("myCustomPattern")
-                                                              .getBytes(StandardCharsets.UTF_8)));
+            Unpooled.wrappedBuffer(pathProvider.getPathParameters().getString("myCustomPattern")
+                .getBytes(StandardCharsets.UTF_8)));
     }
 }

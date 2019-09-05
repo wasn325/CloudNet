@@ -49,26 +49,26 @@ public final class CommandReload extends Command {
                 CloudNet.getInstance().getUsers().addAll(CloudNet.getInstance().getConfig().getUsers());
 
                 NetworkUtils.addAll(CloudNet.getInstance().getServerGroups(),
-                                    CloudNet.getInstance().getConfig().getServerGroups(),
-                                    new Acceptable<ServerGroup>() {
-                                        @Override
-                                        public boolean isAccepted(final ServerGroup value) {
-                                            System.out.println("Loading ServerGroup: " + value.getName());
-                                            CloudNet.getInstance().setupGroup(value);
-                                            return true;
-                                        }
-                                    });
+                    CloudNet.getInstance().getConfig().getServerGroups(),
+                    new Acceptable<ServerGroup>() {
+                        @Override
+                        public boolean isAccepted(final ServerGroup value) {
+                            System.out.println("Loading ServerGroup: " + value.getName());
+                            CloudNet.getInstance().setupGroup(value);
+                            return true;
+                        }
+                    });
 
                 NetworkUtils.addAll(CloudNet.getInstance().getProxyGroups(),
-                                    CloudNet.getInstance().getConfig().getProxyGroups(),
-                                    new Acceptable<ProxyGroup>() {
+                    CloudNet.getInstance().getConfig().getProxyGroups(),
+                    new Acceptable<ProxyGroup>() {
 
-                                        public boolean isAccepted(final ProxyGroup value) {
-                                            System.out.println("Loading ProxyGroup: " + value.getName());
-                                            CloudNet.getInstance().setupProxy(value);
-                                            return true;
-                                        }
-                                    });
+                        public boolean isAccepted(final ProxyGroup value) {
+                            System.out.println("Loading ProxyGroup: " + value.getName());
+                            CloudNet.getInstance().setupProxy(value);
+                            return true;
+                        }
+                    });
 
                 CloudNet.getInstance().getNetworkManager().reload();
                 CloudNet.getInstance().getNetworkManager().updateAll();
@@ -84,8 +84,8 @@ public final class CommandReload extends Command {
             }
         } else {
             sender.sendMessage("reload ALL | Loads all groups as well as modules, permissions, etc.",
-                               "reload CONFIG | Reload the configuration file, and its server groups etc.",
-                               "reload WRAPPER | Dispatched on all wrappers the command \"reload\"");
+                "reload CONFIG | Reload the configuration file, and its server groups etc.",
+                "reload WRAPPER | Dispatched on all wrappers the command \"reload\"");
         }
     }
 }

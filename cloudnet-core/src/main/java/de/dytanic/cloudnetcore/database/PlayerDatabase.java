@@ -31,16 +31,16 @@ public class PlayerDatabase extends DatabaseUsable {
 
     public OfflinePlayer registerPlayer(final PlayerConnection playerConnection) {
         final OfflinePlayer offlinePlayer = new OfflinePlayer(playerConnection.getUniqueId(),
-                                                              playerConnection.getName(),
-                                                              new Document(),
-                                                              System.currentTimeMillis(),
-                                                              System.currentTimeMillis(),
-                                                              playerConnection,
-                                                              new PermissionEntity(playerConnection.getUniqueId(),
-                                                                                   new HashMap<>(),
-                                                                                   null,
-                                                                                   null,
-                                                                                   new LinkedList<>()));
+            playerConnection.getName(),
+            new Document(),
+            System.currentTimeMillis(),
+            System.currentTimeMillis(),
+            playerConnection,
+            new PermissionEntity(playerConnection.getUniqueId(),
+                new HashMap<>(),
+                null,
+                null,
+                new LinkedList<>()));
         database.insert(new DatabaseDocument(playerConnection.getUniqueId().toString()).append("offlinePlayer", offlinePlayer));
         return offlinePlayer;
     }

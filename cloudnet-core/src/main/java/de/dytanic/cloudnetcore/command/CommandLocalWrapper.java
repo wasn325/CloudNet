@@ -38,9 +38,9 @@ public class CommandLocalWrapper extends Command {
             }
 
             sender.sendMessage("Local wrapper " + wrapper.getName() + ':',
-                               "Info: CPU Usage: " + NetworkUtils.DECIMAL_FORMAT.format(wrapper.getCpuUsage()) + "/100% | Memory: " +
-                               wrapper.getUsedMemory() + NetworkUtils.SLASH_STRING + wrapper.getMaxMemory() + "MB",
-                               " ");
+                "Info: CPU Usage: " + NetworkUtils.DECIMAL_FORMAT.format(wrapper.getCpuUsage()) + "/100% | Memory: " +
+                wrapper.getUsedMemory() + NetworkUtils.SLASH_STRING + wrapper.getMaxMemory() + "MB",
+                " ");
 
             final Configuration configuration = CloudNet.getInstance().getLocalCloudWrapper().loadWrapperConfiguration();
             try (final StringWriter writer = new StringWriter()) {

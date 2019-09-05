@@ -28,8 +28,8 @@ public final class CommandInstallPlugin extends Command {
             final MinecraftServer minecraftServer = CloudNet.getInstance().getServer(args[0]);
             if (minecraftServer != null && minecraftServer.getChannel() != null) {
                 minecraftServer.sendCustomMessage("cloudnet_internal",
-                                                  "install_plugin",
-                                                  new Document("name", args[1]).append("url", args[2]));
+                    "install_plugin",
+                    new Document("name", args[1]).append("url", args[2]));
                 sender.sendMessage("Plugin will install on " + args[0] + "...");
             } else {
                 sender.sendMessage("Server doesn't exist");

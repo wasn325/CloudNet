@@ -18,7 +18,7 @@ public class PacketAPIInGetPlayers extends PacketAPIIO {
     @Override
     public void handleInput(final Document data, final PacketSender packetSender) {
         final Packet packet = getResult(new Document()
-                                            .append("players", CloudNet.getInstance().getNetworkManager().getOnlinePlayers().values()));
+            .append("players", CloudNet.getInstance().getNetworkManager().getOnlinePlayers().values()));
         packetSender.sendPacket(packet);
     }
 

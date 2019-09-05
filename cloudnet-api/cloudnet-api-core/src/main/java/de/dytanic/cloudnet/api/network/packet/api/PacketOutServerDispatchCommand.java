@@ -16,6 +16,6 @@ public class PacketOutServerDispatchCommand extends Packet {
 
     public PacketOutServerDispatchCommand(final DefaultType defaultType, final String serverId, final String commandLine) {
         super(PacketRC.CN_CORE + 5, new Document("defaultType", defaultType).append("serverId", serverId)
-                                                                            .append("commandLine", commandLine));
+            .append("commandLine", commandLine));
     }
 }

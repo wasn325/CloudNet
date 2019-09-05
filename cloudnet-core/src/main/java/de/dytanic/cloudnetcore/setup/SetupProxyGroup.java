@@ -67,19 +67,19 @@ public class SetupProxyGroup {
                 }
 
                 final ProxyGroup proxyGroup = new ProxyGroup(name,
-                                                             wrappers,
-                                                             new Template("default",
-                                                                          TemplateResource.valueOf(data.getString("template")),
-                                                                          null,
-                                                                          PROCESS_PRE_PARAMETERS,
-                                                                          new ArrayList<>()),
-                                                             ProxyVersion.BUNGEECORD,
-                                                             data.getInt("startport"),
-                                                             data.getInt("startup"),
-                                                             data.getInt("memory"),
-                                                             new BasicProxyConfig(),
-                                                             proxyGroupMode,
-                                                             new WrappedMap());
+                    wrappers,
+                    new Template("default",
+                        TemplateResource.valueOf(data.getString("template")),
+                        null,
+                        PROCESS_PRE_PARAMETERS,
+                        new ArrayList<>()),
+                    ProxyVersion.BUNGEECORD,
+                    data.getInt("startport"),
+                    data.getInt("startup"),
+                    data.getInt("memory"),
+                    new BasicProxyConfig(),
+                    proxyGroupMode,
+                    new WrappedMap());
 
                 CloudNet.getInstance().getConfig().createGroup(proxyGroup);
                 CloudNet.getInstance().getProxyGroups().put(proxyGroup.getName(), proxyGroup);
@@ -90,74 +90,74 @@ public class SetupProxyGroup {
                 }
             }
         }).request(new SetupRequest("memory",
-                                    "How many MB of RAM should the proxy group have?",
-                                    "Specified memory is invalid",
-                                    SetupResponseType.NUMBER,
-                                    new Catcher<Boolean, String>() {
-                                        @Override
-                                        public Boolean doCatch(final String key) {
-                                            return NetworkUtils.checkIsNumber(key) && Integer.parseInt(key) > 64;
-                                        }
-                                    })).request(new SetupRequest("startport",
-                                                                 "What's the starting port of the proxygroup?",
-                                                                 "Specified starting port is invalid",
-                                                                 SetupResponseType.NUMBER,
-                                                                 new Catcher<Boolean, String>() {
-                                                                     @Override
-                                                                     public Boolean doCatch(final String key) {
-                                                                         return NetworkUtils.checkIsNumber(key) &&
-                                                                                Integer.parseInt(key) > 128 &&
-                                                                                Integer.parseInt(key) < 70000;
-                                                                     }
-                                                                 })).request(new SetupRequest("startup",
-                                                                                              "How many proxys should always be online?",
-                                                                                              "Specified startup count is invalid",
-                                                                                              SetupResponseType.NUMBER,
-                                                                                              null)).request(new SetupRequest("mode",
-                                                                                                                              "Should the group be STATIC or DYNAMIC?",
-                                                                                                                              "Group mode is invalid",
-                                                                                                                              SetupResponseType.STRING,
-                                                                                                                              new Catcher<Boolean, String>() {
-                                                                                                                                  @Override
-                                                                                                                                  public Boolean doCatch(
-                                                                                                                                      final String key) {
-                                                                                                                                      return
-                                                                                                                                          key.equalsIgnoreCase(
-                                                                                                                                              "STATIC") ||
-                                                                                                                                          key.equalsIgnoreCase(
-                                                                                                                                              "DYNAMIC");
-                                                                                                                                  }
-                                                                                                                              })).request(
+            "How many MB of RAM should the proxy group have?",
+            "Specified memory is invalid",
+            SetupResponseType.NUMBER,
+            new Catcher<Boolean, String>() {
+                @Override
+                public Boolean doCatch(final String key) {
+                    return NetworkUtils.checkIsNumber(key) && Integer.parseInt(key) > 64;
+                }
+            })).request(new SetupRequest("startport",
+            "What's the starting port of the proxygroup?",
+            "Specified starting port is invalid",
+            SetupResponseType.NUMBER,
+            new Catcher<Boolean, String>() {
+                @Override
+                public Boolean doCatch(final String key) {
+                    return NetworkUtils.checkIsNumber(key) &&
+                           Integer.parseInt(key) > 128 &&
+                           Integer.parseInt(key) < 70000;
+                }
+            })).request(new SetupRequest("startup",
+            "How many proxys should always be online?",
+            "Specified startup count is invalid",
+            SetupResponseType.NUMBER,
+            null)).request(new SetupRequest("mode",
+            "Should the group be STATIC or DYNAMIC?",
+            "Group mode is invalid",
+            SetupResponseType.STRING,
+            new Catcher<Boolean, String>() {
+                @Override
+                public Boolean doCatch(
+                    final String key) {
+                    return
+                        key.equalsIgnoreCase(
+                            "STATIC") ||
+                        key.equalsIgnoreCase(
+                            "DYNAMIC");
+                }
+            })).request(
             new SetupRequest("template",
-                             "What is the backend of the group default template? [\"LOCAL\" for the wrapper local | \"MASTER\" for the master backend]",
-                             "String is invalid",
-                             SetupResponseType.STRING,
-                             new Catcher<Boolean, String>() {
-                                 @Override
-                                 public Boolean doCatch(final String key) {
-                                     return key.equals("MASTER") || key.equals("LOCAL");
-                                 }
-                             })).request(new SetupRequest("wrapper",
-                                                          "Which wrappers should be used for this group?",
-                                                          "String is invalid",
-                                                          SetupResponseType.STRING,
-                                                          new Catcher<Boolean, String>() {
-                                                              @Override
-                                                              public Boolean doCatch(final String key) {
-                                                                  final java.util.List<String> wrappers = (List<String>) CollectionWrapper
-                                                                      .toCollection(key, ",");
-                                                                  if (wrappers.isEmpty()) {
-                                                                      return false;
-                                                                  }
-                                                                  for (short i = 0; i < wrappers.size(); i++) {
-                                                                      if (!CloudNet.getInstance().getWrappers().containsKey(wrappers
-                                                                                                                                .get(i))) {
-                                                                          wrappers.remove(wrappers.get(i));
-                                                                      }
-                                                                  }
-                                                                  return !wrappers.isEmpty();
-                                                              }
-                                                          }));
+                "What is the backend of the group default template? [\"LOCAL\" for the wrapper local | \"MASTER\" for the master backend]",
+                "String is invalid",
+                SetupResponseType.STRING,
+                new Catcher<Boolean, String>() {
+                    @Override
+                    public Boolean doCatch(final String key) {
+                        return key.equals("MASTER") || key.equals("LOCAL");
+                    }
+                })).request(new SetupRequest("wrapper",
+            "Which wrappers should be used for this group?",
+            "String is invalid",
+            SetupResponseType.STRING,
+            new Catcher<Boolean, String>() {
+                @Override
+                public Boolean doCatch(final String key) {
+                    final java.util.List<String> wrappers = (List<String>) CollectionWrapper
+                        .toCollection(key, ",");
+                    if (wrappers.isEmpty()) {
+                        return false;
+                    }
+                    for (short i = 0; i < wrappers.size(); i++) {
+                        if (!CloudNet.getInstance().getWrappers().containsKey(wrappers
+                            .get(i))) {
+                            wrappers.remove(wrappers.get(i));
+                        }
+                    }
+                    return !wrappers.isEmpty();
+                }
+            }));
         setup.start(CloudNet.getLogger().getReader());
     }
 

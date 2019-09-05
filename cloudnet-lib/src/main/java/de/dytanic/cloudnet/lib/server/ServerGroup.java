@@ -82,14 +82,14 @@ public class ServerGroup implements Nameable {
         this.percentForNewServerAutomatically = percentForNewServerAutomatically;
 
         this.priorityService = new PriorityService(priorityStopTime,
-                                                   new PriorityConfig(priority, onlineCountForPriority),
-                                                   new PriorityConfig(groupPriority, priorityForGroupOnlineCount));
+            new PriorityConfig(priority, onlineCountForPriority),
+            new PriorityConfig(groupPriority, priorityForGroupOnlineCount));
 
         this.templates = new ArrayList<>(Collections.singletonList(new Template("default",
-                                                                                TemplateResource.LOCAL,
-                                                                                null,
-                                                                                PROCESS_PRE_PARAMETERS,
-                                                                                new ArrayList<>())));
+            TemplateResource.LOCAL,
+            null,
+            PROCESS_PRE_PARAMETERS,
+            new ArrayList<>())));
     }
 
     public int getMemory() {
@@ -231,13 +231,13 @@ public class ServerGroup implements Nameable {
 
     public SimpleServerGroup toSimple() {
         return new SimpleServerGroup(name,
-                                     kickedForceFallback,
-                                     joinPower,
-                                     memory,
-                                     groupMode,
-                                     maintenance,
-                                     percentForNewServerAutomatically,
-                                     settings,
-                                     advancedServerConfig);
+            kickedForceFallback,
+            joinPower,
+            memory,
+            groupMode,
+            maintenance,
+            percentForNewServerAutomatically,
+            settings,
+            advancedServerConfig);
     }
 }

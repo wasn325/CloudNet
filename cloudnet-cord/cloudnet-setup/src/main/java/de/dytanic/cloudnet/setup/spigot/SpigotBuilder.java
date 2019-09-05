@@ -100,9 +100,9 @@ public final class SpigotBuilder {
                 System.out.println("Copying spigot.jar");
                 try {
                     Files.copy(new FileInputStream(Objects.requireNonNull(buildFolder.listFiles(pathname -> pathname.getName()
-                                                                                                                    .startsWith("spigot-")))[0]),
-                               Paths.get("local/spigot.jar"),
-                               StandardCopyOption.REPLACE_EXISTING);
+                            .startsWith("spigot-")))[0]),
+                        Paths.get("local/spigot.jar"),
+                        StandardCopyOption.REPLACE_EXISTING);
                 } catch (final IOException e) {
                     e.printStackTrace();
                 }
@@ -127,7 +127,7 @@ public final class SpigotBuilder {
             System.out.println("Downloading BuildTools.jar...");
             final URLConnection connection = new URL(buildToolsUrl).openConnection();
             connection.setRequestProperty("User-Agent",
-                                          "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.95 Safari/537.11");
+                "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.95 Safari/537.11");
             connection.connect();
             try (final InputStream inputStream = connection.getInputStream()) {
                 Files.copy(inputStream, Paths.get(buildTools.toURI()), StandardCopyOption.REPLACE_EXISTING);
@@ -138,9 +138,9 @@ public final class SpigotBuilder {
             PaperBuilder.printProcessOutputToConsole(exec);
             if (Objects.requireNonNull(buildFolder.listFiles(pathname -> pathname.getName().startsWith("spigot-"))).length > 0) {
                 Files.copy(new FileInputStream(Objects.requireNonNull(buildFolder.listFiles(pathname -> pathname.getName()
-                                                                                                                .startsWith("spigot-")))[0]),
-                           Paths.get("local/spigot.jar"),
-                           StandardCopyOption.REPLACE_EXISTING);
+                        .startsWith("spigot-")))[0]),
+                    Paths.get("local/spigot.jar"),
+                    StandardCopyOption.REPLACE_EXISTING);
                 final long endTime = System.currentTimeMillis();
                 final long minutes = ((endTime - startTime) / 1000) / 60;
                 final long seconds = ((endTime - startTime) / 1000) % 60;

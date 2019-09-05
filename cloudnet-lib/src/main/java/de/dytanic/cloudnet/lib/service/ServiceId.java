@@ -56,7 +56,7 @@ public final class ServiceId {
         final ServiceId serviceId = (ServiceId) o;
         return id == serviceId.id && Objects.equals(group, serviceId.group) && Objects.equals(uniqueId, serviceId.uniqueId) &&
                Objects.equals(wrapperId, serviceId.wrapperId) && Objects.equals(serverId, serviceId.serverId) && Objects.equals(gameId,
-                                                                                                                                serviceId.gameId);
+            serviceId.gameId);
     }
 
     @Override

@@ -23,7 +23,8 @@ public class PlayerExample {
 
     public void examplePlayer() {
         final CloudPlayer cloudPlayer = CloudAPI.getInstance()
-                                                .getOnlinePlayer(UUID.fromString("e71d69dd-058f-4319-9ae9-8c8f0a7a61f5")); //Returns the CloudPlayer if the play is online or null if isn't online
+            .getOnlinePlayer(UUID
+                .fromString("e71d69dd-058f-4319-9ae9-8c8f0a7a61f5")); //Returns the CloudPlayer if the play is online or null if isn't online
 
         {
             final PlayerConnection playerConnection = cloudPlayer.getPlayerConnection(); //Returns the online player connection metadata
@@ -58,8 +59,8 @@ public class PlayerExample {
             final PermissionEntity permissionEntity = offlinePlayer
                 .getPermissionEntity(); //Returns the permissionentity for manage some permission systems
             permissionEntity.getGroups().add(new GroupEntityData("VIP",
-                                                                 System.currentTimeMillis() + TimeUnit.DAYS
-                                                                     .toMillis(30))); //add a permission group with the delay of 30 days
+                System.currentTimeMillis() + TimeUnit.DAYS
+                    .toMillis(30))); //add a permission group with the delay of 30 days
             permissionEntity.getPermissions().put("minecraft.command.tp", true); //add a permission for this player
 
             if (permissionEntity.isInGroup("VIP")) {

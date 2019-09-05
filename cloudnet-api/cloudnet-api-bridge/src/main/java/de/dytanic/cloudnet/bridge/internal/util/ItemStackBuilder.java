@@ -81,12 +81,12 @@ public class ItemStackBuilder {
                 return Material.getMaterial(id);
             } catch (final ExceptionInInitializerError | NoSuchMethodError exception) {
                 CloudAPI.getInstance().getLogger().logp(Level.WARNING,
-                                                        ItemStackBuilder.class.getSimpleName(),
-                                                        "getMaterialIgnoreVersion",
-                                                        String.format(
-                                                            "Can't get material by id %d! Beginning with MC 1.13 you HAVE to use material names!",
-                                                            id),
-                                                        exception);
+                    ItemStackBuilder.class.getSimpleName(),
+                    "getMaterialIgnoreVersion",
+                    String.format(
+                        "Can't get material by id %d! Beginning with MC 1.13 you HAVE to use material names!",
+                        id),
+                    exception);
                 return null;
             }
         }

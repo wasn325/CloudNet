@@ -30,21 +30,21 @@ public class MobDatabase extends DatabaseUsable {
 
     public void append(final ServerMob serverMob) {
         final Document document = database.getDocument("server_selector_mobs").getDocument("mobs").append(serverMob.getUniqueId()
-                                                                                                                   .toString(), serverMob);
+            .toString(), serverMob);
         database.insert(document);
     }
 
     public void remove(final ServerMob serverMob) {
         final Document document = database.getDocument("server_selector_mobs").getDocument("mobs").remove(serverMob.getUniqueId()
-                                                                                                                   .toString());
+            .toString());
         database.insert(document);
     }
 
     public Map<UUID, ServerMob> loadAll() {
         boolean injectable = false;
         final Map<UUID, ServerMob> mobMap = database.getDocument("server_selector_mobs").getObject("mobs",
-                                                                                                   new TypeToken<Map<UUID, ServerMob>>() {}
-                                                                                                       .getType());
+            new TypeToken<Map<UUID, ServerMob>>() {}
+                .getType());
 
         for (final ServerMob serverMob : mobMap.values()) {
             if (serverMob.getItemId() == null) {

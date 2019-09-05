@@ -21,9 +21,9 @@ public final class VaultInvoker {
 
         servicesManager.register(Permission.class, permission, BukkitBootstrap.getPlugin(BukkitBootstrap.class), ServicePriority.Highest);
         servicesManager.register(Chat.class,
-                                 new VaultChatImpl(permission),
-                                 BukkitBootstrap.getPlugin(BukkitBootstrap.class),
-                                 ServicePriority.Highest);
+            new VaultChatImpl(permission),
+            BukkitBootstrap.getPlugin(BukkitBootstrap.class),
+            ServicePriority.Highest);
     }
 
 }

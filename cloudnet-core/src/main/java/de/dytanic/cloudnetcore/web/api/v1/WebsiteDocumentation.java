@@ -40,7 +40,7 @@ public class WebsiteDocumentation extends MethodWebHandlerAdapter {
         final StringBuilder stringBuilder = new StringBuilder();
 
         try (final InputStream inputStream = WebsiteDocumentation.class.getClassLoader()
-                                                                       .getResourceAsStream("files/api-doc.txt"); final BufferedReader bufferedReader = new BufferedReader(
+            .getResourceAsStream("files/api-doc.txt"); final BufferedReader bufferedReader = new BufferedReader(
             new InputStreamReader(inputStream, StandardCharsets.UTF_8))) {
             String input;
             while ((input = bufferedReader.readLine()) != null) {
@@ -51,8 +51,8 @@ public class WebsiteDocumentation extends MethodWebHandlerAdapter {
         final String output = stringBuilder.substring(0);
         final ByteBuf byteBuf = Unpooled.wrappedBuffer(output.getBytes(StandardCharsets.UTF_8));
         final FullHttpResponse fullHttpResponse = new DefaultFullHttpResponse(httpRequest.getProtocolVersion(),
-                                                                              HttpResponseStatus.OK,
-                                                                              byteBuf);
+            HttpResponseStatus.OK,
+            byteBuf);
         fullHttpResponse.headers().set("Content-Type", "text/plain");
         return fullHttpResponse;
     }

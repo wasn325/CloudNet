@@ -43,7 +43,7 @@ public class WebsiteDownloadService extends MethodWebHandlerAdapter {
         CloudNet.getLogger().debug("HTTP Request from " + channelHandlerContext.channel().remoteAddress());
 
         final FullHttpResponse fullHttpResponse = new DefaultFullHttpResponse(httpRequest.getProtocolVersion(),
-                                                                              HttpResponseStatus.UNAUTHORIZED);
+            HttpResponseStatus.UNAUTHORIZED);
         fullHttpResponse.headers().set("Content-Type", "application/json");
 
         final Document dataDocument = new Document("success", false).append("reason", new ArrayList<>()).append("response", new Document());
@@ -57,9 +57,9 @@ public class WebsiteDownloadService extends MethodWebHandlerAdapter {
 
         if (httpRequest.headers().contains("-Xcloudnet-token")
             ? !CloudNet.getInstance().authorization(httpRequest.headers().get("-Xcloudnet-user"),
-                                                    httpRequest.headers().get("-Xcloudnet-token"))
+            httpRequest.headers().get("-Xcloudnet-token"))
             : !CloudNet.getInstance().authorizationPassword(httpRequest.headers().get("-Xcloudnet-user"),
-                                                            httpRequest.headers().get("-Xcloudnet-password"))) {
+                httpRequest.headers().get("-Xcloudnet-password"))) {
             dataDocument.append("reason", Collections.singletonList("failed authorization!"));
             fullHttpResponse.content().writeBytes(dataDocument.toBytesAsUTF_8());
             return fullHttpResponse;
@@ -74,12 +74,12 @@ public class WebsiteDownloadService extends MethodWebHandlerAdapter {
                 if (Files.exists(path1)) {
                     final byte[] value = Files.readAllBytes(path1);
                     fullHttpResponse.headers().set("content-disposition",
-                                                   "attachment; filename = " + httpRequest.headers().get("-Xvalue") + ".jar");
+                        "attachment; filename = " + httpRequest.headers().get("-Xvalue") + ".jar");
                     fullHttpResponse.content().writeBytes(value);
                 } else {
                     fullHttpResponse.headers().set("Content-Type", "application/json");
                     dataDocument.append("reason",
-                                        Collections.singletonList("cannot find file \"" + httpRequest.headers().get("-Xvalue") + '"'));
+                        Collections.singletonList("cannot find file \"" + httpRequest.headers().get("-Xvalue") + '"'));
                     fullHttpResponse.content().writeBytes(dataDocument.toBytesAsUTF_8());
                 }
             }
@@ -106,12 +106,12 @@ public class WebsiteDownloadService extends MethodWebHandlerAdapter {
 
                     final byte[] value = ZipConverter.convert(new Path[] {Paths.get(x)});
                     fullHttpResponse.headers().set("content-disposition",
-                                                   "attachment; filename = " + document.getString("template") + ".zip");
+                        "attachment; filename = " + document.getString("template") + ".zip");
                     fullHttpResponse.content().writeBytes(value);
                 } else {
                     fullHttpResponse.headers().set("Content-Type", "application/json");
                     dataDocument.append("reason",
-                                        Collections.singletonList("cannot find file \"" + httpRequest.headers().get("-Xvalue") + '"'));
+                        Collections.singletonList("cannot find file \"" + httpRequest.headers().get("-Xvalue") + '"'));
                     fullHttpResponse.content().writeBytes(dataDocument.toBytesAsUTF_8());
                 }
             }

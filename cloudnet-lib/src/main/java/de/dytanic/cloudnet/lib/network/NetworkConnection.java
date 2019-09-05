@@ -93,23 +93,23 @@ public final class NetworkConnection implements PacketSender {
             }
 
             final Bootstrap bootstrap = new Bootstrap().option(ChannelOption.AUTO_READ, true).group(eventLoopGroup)
-                                                       .handler(new ChannelInitializer<Channel>() {
+                .handler(new ChannelInitializer<Channel>() {
 
-                                                           @Override
-                                                           protected void initChannel(final Channel channel) throws Exception {
+                    @Override
+                    protected void initChannel(final Channel channel) throws Exception {
 
-                                                               if (sslContext != null) {
-                                                                   channel.pipeline().addLast(sslContext.newHandler(channel.alloc(),
-                                                                                                                    connectableAddress
-                                                                                                                        .getHostName(),
-                                                                                                                    connectableAddress
-                                                                                                                        .getPort()));
-                                                               }
+                        if (sslContext != null) {
+                            channel.pipeline().addLast(sslContext.newHandler(channel.alloc(),
+                                connectableAddress
+                                    .getHostName(),
+                                connectableAddress
+                                    .getPort()));
+                        }
 
-                                                               NetworkUtils.initChannel(channel).pipeline().addLast(default_handler);
+                        NetworkUtils.initChannel(channel).pipeline().addLast(default_handler);
 
-                                                           }
-                                                       }).channel(NetworkUtils.socketChannel());
+                    }
+                }).channel(NetworkUtils.socketChannel());
             this.channel = bootstrap.connect(connectableAddress.getHostName(), connectableAddress.getPort()).sync().channel().writeAndFlush(
                 new PacketOutAuth(auth)).syncUninterruptibly().channel();
 

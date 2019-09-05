@@ -34,7 +34,7 @@ public class PacketOutStartServer extends Packet {
         super(PacketRC.SERVER_HANDLE + 4, new Document("group", group).append("memory", memory).append("priorityStop", priorityStop).append(
             "serverConfig",
             serverConfig).append("properties", properties).append("processParameters", processParameters).append("customServer",
-                                                                                                                 customServr).append(
+            customServr).append(
             "onlineMode",
             onlineMode).append("plugins", plugins).append("url", urlTemplate));
         if (template != null) {
@@ -57,7 +57,7 @@ public class PacketOutStartServer extends Packet {
         super(PacketRC.SERVER_HANDLE + 4, new Document("group", group).append("memory", memory).append("priorityStop", priorityStop).append(
             "serverConfig",
             serverConfig).append("properties", properties).append("processParameters", processParameters).append("customServer",
-                                                                                                                 customServr).append(
+            customServr).append(
             "onlineMode",
             onlineMode).append("plugins", plugins).append("url", urlTemplate).append("serviceId", serverId));
         if (template != null) {
@@ -78,12 +78,12 @@ public class PacketOutStartServer extends Packet {
                                 final Collection<ServerInstallablePlugin> plugins,
                                 final String urlTemplate) {
         super(PacketRC.SERVER_HANDLE + 4, new Document("group", group).append("wrapper", wrapper.getServerId()).append("memory", memory)
-                                                                      .append("priorityStop", priorityStop).append("serverConfig",
-                                                                                                                   serverConfig).append(
+            .append("priorityStop", priorityStop).append("serverConfig",
+                serverConfig).append(
                 "properties",
                 properties).append("processParameters", processParameters).append("customServer", customServr).append("onlineMode",
-                                                                                                                      onlineMode)
-                                                                      .append("plugins", plugins).append("url", urlTemplate));
+                onlineMode)
+            .append("plugins", plugins).append("url", urlTemplate));
         if (template != null) {
             data.append("template", template);
         }
@@ -103,11 +103,11 @@ public class PacketOutStartServer extends Packet {
                                 final Collection<ServerInstallablePlugin> plugins,
                                 final String urlTemplate) {
         super(PacketRC.SERVER_HANDLE + 4, new Document("group", group).append("wrapper", wrapperInfo.getServerId()).append("priorityStop",
-                                                                                                                           priorityStop)
-                                                                      .append("serviceId", serviceId).append("memory", memory).append(
+            priorityStop)
+            .append("serviceId", serviceId).append("memory", memory).append(
                 "serverConfig",
                 serverConfig).append("properties", properties).append("processParameters", processParameters).append("customServer",
-                                                                                                                     customServr).append(
+                customServr).append(
                 "onlineMode",
                 onlineMode).append("plugins", plugins).append("url", urlTemplate));
         if (template != null) {

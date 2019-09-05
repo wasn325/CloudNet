@@ -22,7 +22,7 @@ public final class PlayerInitListener implements IEventListener<PlayerInitEvent>
 
         if (event.getCloudPlayer().getPermissionEntity() == null) {
             event.getCloudPlayer().setPermissionEntity(PermissionModule.getInstance().getPermissionPool()
-                                                                       .getNewPermissionEntity(event.getCloudPlayer()));
+                .getNewPermissionEntity(event.getCloudPlayer()));
         }
 
         final Collection<GroupEntityData> groupEntiys = new LinkedList<>();
@@ -40,9 +40,9 @@ public final class PlayerInitListener implements IEventListener<PlayerInitEvent>
 
         if (event.getCloudPlayer().getPermissionEntity().getGroups().isEmpty()) {
             event.getCloudPlayer().getPermissionEntity().getGroups().add(new GroupEntityData(PermissionModule.getInstance()
-                                                                                                             .getPermissionPool()
-                                                                                                             .getDefaultGroup().getName(),
-                                                                                             0L));
+                .getPermissionPool()
+                .getDefaultGroup().getName(),
+                0L));
         }
     }
 }

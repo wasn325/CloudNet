@@ -20,14 +20,14 @@ public class BungeeGroup extends ProxyGroup {
 
     public BungeeGroup() {
         super("Bungee",
-              Collections.singletonList("Wrapper-1"),
-              new Template("default", TemplateResource.LOCAL, null, PROCESS_PRE_PARAMETERS, new ArrayList<>()),
-              ProxyVersion.BUNGEECORD,
-              25565,
-              1,
-              128,
-              new BasicProxyConfig(),
-              ProxyGroupMode.DYNAMIC,
-              new WrappedMap());
+            Collections.singletonList("Wrapper-1"),
+            new Template("default", TemplateResource.LOCAL, null, PROCESS_PRE_PARAMETERS, new ArrayList<>()),
+            ProxyVersion.BUNGEECORD,
+            25565,
+            1,
+            128,
+            new BasicProxyConfig(),
+            ProxyGroupMode.DYNAMIC,
+            new WrappedMap());
     }
 }

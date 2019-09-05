@@ -31,10 +31,10 @@ public class PacketInAddServer extends PacketInHandler {
         final ServerInfo nullServerInfo = data.getObject("serverInfo", new TypeToken<ServerInfo>() {}.getType());
         final ServerProcessMeta serverProcessMeta = data.getObject("serverProcess", new TypeToken<ServerProcessMeta>() {}.getType());
         final MinecraftServer minecraftServer = new MinecraftServer(serverProcessMeta,
-                                                                    cn,
-                                                                    CloudNet.getInstance().getServerGroups()
-                                                                            .get(nullServerInfo.getServiceId().getGroup()),
-                                                                    nullServerInfo);
+            cn,
+            CloudNet.getInstance().getServerGroups()
+                .get(nullServerInfo.getServiceId().getGroup()),
+            nullServerInfo);
         cn.getServers().put(nullServerInfo.getServiceId().getServerId(), minecraftServer);
         cn.getWaitingServices().remove(minecraftServer.getServerId());
 
@@ -43,8 +43,8 @@ public class PacketInAddServer extends PacketInHandler {
                 final ServerGroup serverGroup = CloudNet.getInstance().getServerGroups().get(serverProcessMeta.getServiceId().getGroup());
                 if (serverGroup != null) {
                     final PriorityStopTask priorityStopTask = new PriorityStopTask(cn,
-                                                                                   minecraftServer,
-                                                                                   serverGroup.getPriorityService().getStopTimeInSeconds());
+                        minecraftServer,
+                        serverGroup.getPriorityService().getStopTimeInSeconds());
                     final ScheduledTask scheduledTask = CloudNet.getInstance().getScheduler().runTaskRepeatSync(priorityStopTask, 0, 50);
                     priorityStopTask.setScheduledTask(scheduledTask);
                 }

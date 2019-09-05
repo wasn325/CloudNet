@@ -36,7 +36,7 @@ public class WebsiteAuthorization extends MethodWebHandlerAdapter {
         CloudNet.getLogger().debug("HTTP Request from " + channelHandlerContext.channel().remoteAddress());
 
         final FullHttpResponse fullHttpResponse = new DefaultFullHttpResponse(httpRequest.getProtocolVersion(),
-                                                                              HttpResponseStatus.UNAUTHORIZED);
+            HttpResponseStatus.UNAUTHORIZED);
         fullHttpResponse.headers().set("Content-Type", "application/json");
         fullHttpResponse.headers().set("Access-Control-Allow-Origin", "*");
 
@@ -50,9 +50,9 @@ public class WebsiteAuthorization extends MethodWebHandlerAdapter {
 
         if (httpRequest.headers().contains("-Xcloudnet-token")
             ? !CloudNet.getInstance().authorization(httpRequest.headers().get("-Xcloudnet-user"),
-                                                    httpRequest.headers().get("-Xcloudnet-token"))
+            httpRequest.headers().get("-Xcloudnet-token"))
             : !CloudNet.getInstance().authorizationPassword(httpRequest.headers().get("-Xcloudnet-user"),
-                                                            httpRequest.headers().get("-Xcloudnet-password"))) {
+                httpRequest.headers().get("-Xcloudnet-password"))) {
             dataDocument.append("reason", Collections.singletonList("failed authorization!"));
             fullHttpResponse.content().writeBytes(dataDocument.convertToJsonString().getBytes(StandardCharsets.UTF_8));
             return fullHttpResponse;

@@ -63,37 +63,37 @@ final class WebServerHandler extends ChannelInboundHandlerAdapter {
             for (final WebHandler webHandler : webHandlers) {
                 if (path.isEmpty() || path.equals(NetworkUtils.SLASH_STRING)) {
                     fullHttpResponse = webHandler.handleRequest(ctx,
-                                                                new QueryDecoder(uri.getQuery()),
-                                                                new PathProvider(path, new WrappedMap()),
-                                                                httpRequest);
+                        new QueryDecoder(uri.getQuery()),
+                        new PathProvider(path, new WrappedMap()),
+                        httpRequest);
                 } else {
                     final String[] array = path.replaceFirst(NetworkUtils.SLASH_STRING, NetworkUtils.EMPTY_STRING)
-                                               .split(NetworkUtils.SLASH_STRING);
+                        .split(NetworkUtils.SLASH_STRING);
                     final String[] pathArray = webHandler.getPath().replaceFirst(NetworkUtils.SLASH_STRING, NetworkUtils.EMPTY_STRING)
-                                                         .split(NetworkUtils.SLASH_STRING);
+                        .split(NetworkUtils.SLASH_STRING);
                     final WrappedMap wrappedMap = new WrappedMap();
                     for (short i = 0; i < array.length; i++) {
                         if (pathArray[i].startsWith("{") && pathArray[i].endsWith("}")) {
                             wrappedMap.append(pathArray[i].replace("{", NetworkUtils.EMPTY_STRING).replace("}", NetworkUtils.EMPTY_STRING),
-                                              array[i]);
+                                array[i]);
                         }
                     }
                     fullHttpResponse = webHandler.handleRequest(ctx,
-                                                                new QueryDecoder(uri.getQuery()),
-                                                                new PathProvider(path, wrappedMap),
-                                                                httpRequest);
+                        new QueryDecoder(uri.getQuery()),
+                        new PathProvider(path, wrappedMap),
+                        httpRequest);
                 }
             }
             if (fullHttpResponse == null) {
                 fullHttpResponse = new DefaultFullHttpResponse(httpRequest.protocolVersion(),
-                                                               HttpResponseStatus.NOT_FOUND,
-                                                               Unpooled.wrappedBuffer("Error 404 page not found!".getBytes()));
+                    HttpResponseStatus.NOT_FOUND,
+                    Unpooled.wrappedBuffer("Error 404 page not found!".getBytes()));
             }
             fullHttpResponse.headers().set("Access-Control-Allow-Origin", "*");
             ctx.writeAndFlush(fullHttpResponse).addListener(ChannelFutureListener.CLOSE);
         } else {
             final FullHttpResponse fullHttpResponse = new DefaultFullHttpResponse(httpRequest.protocolVersion(),
-                                                                                  HttpResponseStatus.NOT_FOUND);
+                HttpResponseStatus.NOT_FOUND);
             fullHttpResponse.headers().set("Access-Control-Allow-Origin", "*");
             ctx.writeAndFlush(fullHttpResponse).addListener(ChannelFutureListener.CLOSE);
         }

@@ -58,8 +58,8 @@ public final class CommandDelete extends Command {
                     if (CloudNet.getInstance().getWrappers().containsKey(args[1])) {
                         final Wrapper wrapper = CloudNet.getInstance().getWrappers().get(args[1]);
                         CloudNet.getInstance().getConfig().getWrappers().stream().filter(wrapperMeta -> wrapperMeta.getId().equals(wrapper
-                                                                                                                                       .getName()))
-                                .findFirst().ifPresent(CloudNet.getInstance().getConfig()::deleteWrapper);
+                            .getName()))
+                            .findFirst().ifPresent(CloudNet.getInstance().getConfig()::deleteWrapper);
                         sender.sendMessage("The wrapper was successfully deleted");
                     } else {
                         sender.sendMessage("The wrapper doesn't exist");
@@ -89,9 +89,9 @@ public final class CommandDelete extends Command {
                 break;
             default:
                 sender.sendMessage("delete serverGroup <name>",
-                                   "delete proxyGroup <name>",
-                                   "delete wrapper <name>",
-                                   "delete template serverGroup <group> <template>");
+                    "delete proxyGroup <name>",
+                    "delete wrapper <name>",
+                    "delete template serverGroup <group> <template>");
                 break;
         }
     }

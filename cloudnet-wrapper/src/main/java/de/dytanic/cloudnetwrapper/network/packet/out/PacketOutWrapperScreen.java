@@ -17,6 +17,6 @@ public class PacketOutWrapperScreen extends Packet {
 
     public PacketOutWrapperScreen(final String line) {
         super(PacketRC.CN_WRAPPER + 12,
-              new Document("screen", new WrapperScreen(CloudNetWrapper.getInstance().getWrapperConfig().getWrapperId(), line)));
+            new Document("screen", new WrapperScreen(CloudNetWrapper.getInstance().getWrapperConfig().getWrapperId(), line)));
     }
 }

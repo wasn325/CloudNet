@@ -109,7 +109,7 @@ public final class NetworkUtils {
     public static EventLoopGroup eventLoopGroup(final int threads, final ThreadFactory threadFactory) {
         return EPOLL ? new EpollEventLoopGroup(threads, threadFactory) : KQueue.isAvailable()
                                                                          ? new KQueueEventLoopGroup(threads,
-                                                                                                    threadFactory)
+            threadFactory)
                                                                          : new NioEventLoopGroup(threads, threadFactory);
     }
 
@@ -149,9 +149,9 @@ public final class NetworkUtils {
 
     public static Channel initChannel(final Channel channel) {
         channel.pipeline().addLast(new ProtocolLengthDeserializer(),
-                                   new ProtocolInDecoder(),
-                                   new ProtocolLengthSerializer(),
-                                   new ProtocolOutEncoder());
+            new ProtocolInDecoder(),
+            new ProtocolLengthSerializer(),
+            new ProtocolOutEncoder());
         return channel;
     }
 
@@ -190,7 +190,7 @@ public final class NetworkUtils {
             try {
                 Files.createFile(path);
                 try (final OutputStreamWriter outputStreamWriter = new OutputStreamWriter(Files.newOutputStream(path),
-                                                                                          StandardCharsets.UTF_8)) {
+                    StandardCharsets.UTF_8)) {
                     outputStreamWriter.write(stringBuilder.substring(0) + '\n');
                     outputStreamWriter.flush();
                 }

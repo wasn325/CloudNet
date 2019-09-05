@@ -18,10 +18,10 @@ import java.util.UUID;
 public class ConsoleCommandSender implements CommandSender {
 
     private final PermissionEntity permissionEntity = new PermissionEntity(UUID.randomUUID(),
-                                                                           new HashMap<>(),
-                                                                           "§cCloud §7| ",
-                                                                           "§f",
-                                                                           new LinkedList<>());
+        new HashMap<>(),
+        "§cCloud §7| ",
+        "§f",
+        new LinkedList<>());
 
     @Override
     public String getName() {

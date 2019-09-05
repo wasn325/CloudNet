@@ -20,21 +20,21 @@ public final class LobbyGroup extends ServerGroup {
 
     public LobbyGroup() {
         super("Lobby", Collections.singletonList("Wrapper-1"),
-              true,
-              356,
-              512,
-              0,
-              false,
-              0,
-              1,
-              0,
-              300,
-              100,
-              100,
-              50,
-              ServerGroupType.BUKKIT,
-              ServerGroupMode.LOBBY,
-              Collections.singletonList(new Template("default", TemplateResource.LOCAL, null, PROCESS_PRE_PARAMETERS, new ArrayList<>())),
-              new AdvancedServerConfig(true, true, true, true));
+            true,
+            356,
+            512,
+            0,
+            false,
+            0,
+            1,
+            0,
+            300,
+            100,
+            100,
+            50,
+            ServerGroupType.BUKKIT,
+            ServerGroupMode.LOBBY,
+            Collections.singletonList(new Template("default", TemplateResource.LOCAL, null, PROCESS_PRE_PARAMETERS, new ArrayList<>())),
+            new AdvancedServerConfig(true, true, true, true));
     }
 }

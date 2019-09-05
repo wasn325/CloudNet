@@ -34,7 +34,7 @@ public final class PaperBuilder {
             System.out.println("Fetch Versions");
             final URLConnection connection = new URL(apiProjectUrl).openConnection();
             connection.setRequestProperty("User-Agent",
-                                          "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.95 Safari/537.11");
+                "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.95 Safari/537.11");
             connection.connect();
             final PaperMCProject paperMCProject = gson.fromJson(new InputStreamReader(connection.getInputStream()), PaperMCProject.class);
             System.out.println("Available Paper Versions:");
@@ -76,15 +76,15 @@ public final class PaperBuilder {
         System.out.println(String.format("Fetching build %s", version));
         URLConnection connection = new URL(String.format(API_PROJECT_VERSION_URL, version)).openConnection();
         connection.setRequestProperty("User-Agent",
-                                      "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.95 Safari/537.11");
+            "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.95 Safari/537.11");
         connection.connect();
         final PaperMCProjectVersion paperMCProjectVersion = gson.fromJson(new InputStreamReader(connection.getInputStream()),
-                                                                          PaperMCProjectVersion.class);
+            PaperMCProjectVersion.class);
 
         connection = new URL(String.format(apiProjectVersionDownload, version, paperMCProjectVersion.getBuilds().getLatest()))
             .openConnection();
         connection.setRequestProperty("User-Agent",
-                                      "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.95 Safari/537.11");
+            "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.95 Safari/537.11");
         connection.connect();
         final File builder = new File("local/builder/papermc");
         final File buildFolder = new File(builder, version);
@@ -99,8 +99,8 @@ public final class PaperBuilder {
                 System.out.println("Copying spigot.jar");
                 try {
                     Files.copy(new FileInputStream(Objects.requireNonNull(paperclips)[0]),
-                               Paths.get("local/spigot.jar"),
-                               StandardCopyOption.REPLACE_EXISTING);
+                        Paths.get("local/spigot.jar"),
+                        StandardCopyOption.REPLACE_EXISTING);
                 } catch (final IOException e) {
                     e.printStackTrace();
                 }
@@ -131,9 +131,9 @@ public final class PaperBuilder {
         printProcessOutputToConsole(exec);
 
         Files.copy(new FileInputStream(Objects.requireNonNull(buildFolder
-                                                                  .listFiles(pathname -> pathname.getName().startsWith("paperclip")))[0]),
-                   Paths.get("local/spigot.jar"),
-                   StandardCopyOption.REPLACE_EXISTING);
+                .listFiles(pathname -> pathname.getName().startsWith("paperclip")))[0]),
+            Paths.get("local/spigot.jar"),
+            StandardCopyOption.REPLACE_EXISTING);
     }
 
     /**

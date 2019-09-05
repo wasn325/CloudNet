@@ -28,13 +28,13 @@ public class PacketInUpdateServerInfo extends PacketInHandler {
             ((MinecraftServer) packetSender).setLastServerInfo(((MinecraftServer) packetSender).getServerInfo());
             ((MinecraftServer) packetSender).setServerInfo(data.getObject("serverInfo", type));
             CloudNet.getInstance().getNetworkManager().handleServerInfoUpdate(((MinecraftServer) packetSender),
-                                                                              data.getObject("serverInfo", type));
+                data.getObject("serverInfo", type));
         }
         if (packetSender instanceof CloudServer) {
             ((CloudServer) packetSender).setLastServerInfo(((CloudServer) packetSender).getServerInfo());
             ((CloudServer) packetSender).setServerInfo(data.getObject("serverInfo", type));
             CloudNet.getInstance().getNetworkManager().handleServerInfoUpdate(((CloudServer) packetSender),
-                                                                              data.getObject("serverInfo", type));
+                data.getObject("serverInfo", type));
         }
     }
 }

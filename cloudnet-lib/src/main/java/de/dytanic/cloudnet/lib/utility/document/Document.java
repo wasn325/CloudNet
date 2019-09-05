@@ -247,7 +247,7 @@ public class Document implements DocumentAbstract<Document> {
     public static Document loadDocument(final Path backend) {
 
         try (final InputStreamReader reader = new InputStreamReader(Files.newInputStream(backend),
-                                                                    StandardCharsets.UTF_8); final BufferedReader bufferedReader = new BufferedReader(
+            StandardCharsets.UTF_8); final BufferedReader bufferedReader = new BufferedReader(
             reader)) {
             final JsonObject object = PARSER.parse(bufferedReader).getAsJsonObject();
             return new Document(object);
