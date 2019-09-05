@@ -153,7 +153,7 @@ public class CloudProxy implements ICloudService, PlayerChatExecutor {
 
     public List<String> getServers(final String group) {
         final List<String> x = new ArrayList<>();
-        for (final ServerInfo server : this.getCachedServers().values()) {
+        for (final ServerInfo server : this.cachedServers.values()) {
             if (server.getServiceId().getGroup().equalsIgnoreCase(group)) {
                 x.add(server.getServiceId().getServerId());
             }
@@ -325,7 +325,7 @@ public class CloudProxy implements ICloudService, PlayerChatExecutor {
 
     @Override
     public Map<String, ServerInfo> getServers() {
-        return this.getCachedServers();
+        return this.cachedServers;
     }
 
     private class NetworkHandlerImpl implements NetworkHandler {

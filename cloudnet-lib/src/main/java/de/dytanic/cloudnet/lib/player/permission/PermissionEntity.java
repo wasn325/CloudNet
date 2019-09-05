@@ -107,7 +107,7 @@ public class PermissionEntity {
     }
 
     private boolean hasWildcardPermission(final String permission) {
-        for (final Map.Entry<String, Boolean> entry : getPermissions().entrySet()) {
+        for (final Map.Entry<String, Boolean> entry : permissions.entrySet()) {
             if (entry.getKey().endsWith("*") && entry.getKey().length() > 1 && permission.startsWith(entry.getKey().substring(0,
                                                                                                                               entry.getKey()
                                                                                                                                    .length() -
@@ -173,7 +173,7 @@ public class PermissionEntity {
     }
 
     public PermissionGroup getHighestPermissionGroup(final PermissionPool permissionPool) {
-        return this.getGroups().stream().map(groupEntityData -> permissionPool.getGroups().get(groupEntityData.getGroup())).min(Comparator
+        return this.groups.stream().map(groupEntityData -> permissionPool.getGroups().get(groupEntityData.getGroup())).min(Comparator
                                                                                                                                     .comparingInt(
                                                                                                                                         PermissionGroup::getTagId))
                    .orElse(null);

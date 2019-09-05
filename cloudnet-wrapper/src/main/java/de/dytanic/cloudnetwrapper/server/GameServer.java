@@ -390,7 +390,7 @@ public class GameServer extends AbstractScreenService implements ServerDispatche
         }
         this.serverInfo = new ServerInfo(serverProcess.getMeta().getServiceId(),
                                          CloudNetWrapper.getInstance().getWrapperConfig().getInternalIP(),
-                                         this.getServerProcess().getMeta().getPort(),
+            this.serverProcess.getMeta().getPort(),
                                          false,
                                          new ArrayList<>(),
                                          serverProcess.getMeta().getMemory(),

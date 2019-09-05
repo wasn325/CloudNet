@@ -124,7 +124,7 @@ public final class CloudNet implements Executable, Runnable, Reloadable {
     }
 
     public static CloudLogger getLogger() {
-        return getInstance().logger;
+        return instance.logger;
     }
 
     public static CloudNet getInstance() {
@@ -641,7 +641,7 @@ public final class CloudNet implements Executable, Runnable, Reloadable {
 
     public int getGlobalUsedMemoryAndWaitings() {
         final AtomicInteger atomicInteger = new AtomicInteger(0);
-        CollectionWrapper.iterator(CloudNet.getInstance().getWrappers().values(), new Runnabled<Wrapper>() {
+        CollectionWrapper.iterator(CloudNet.getInstance().wrappers.values(), new Runnabled<Wrapper>() {
             @Override
             public void run(final Wrapper obj) {
                 atomicInteger.addAndGet(obj.getUsedMemory());
@@ -800,7 +800,7 @@ public final class CloudNet implements Executable, Runnable, Reloadable {
 
     public long globalMaxMemory() {
         final AtomicInteger atomicInteger = new AtomicInteger();
-        CollectionWrapper.iterator(getWrappers().values(), new Runnabled<Wrapper>() {
+        CollectionWrapper.iterator(wrappers.values(), new Runnabled<Wrapper>() {
             @Override
             public void run(final Wrapper obj) {
                 atomicInteger.addAndGet(obj.getMaxMemory());

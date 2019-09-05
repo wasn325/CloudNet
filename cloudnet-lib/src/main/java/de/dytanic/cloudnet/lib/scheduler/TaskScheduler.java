@@ -198,7 +198,7 @@ public class TaskScheduler {
     private void checkEnougthThreads() {
         final Worker worker = hasFreeWorker();
         if (getCurrentThreadSize() < maxThreads || (dynamicWorkerCount && maxThreads > 1 && taskEntries.size() > getCurrentThreadSize() &&
-                                                    taskEntries.size() <= (getMaxThreads() * 2)) && worker == null) {
+                                                    taskEntries.size() <= (maxThreads * 2)) && worker == null) {
             newWorker();
         }
     }

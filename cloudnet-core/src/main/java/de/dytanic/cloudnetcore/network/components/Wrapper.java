@@ -185,7 +185,7 @@ public final class Wrapper implements INetworkComponent {
 
     public Wrapper updateWrapper() {
 
-        if (getChannel() == null) {
+        if (channel == null) {
             return this;
         }
 

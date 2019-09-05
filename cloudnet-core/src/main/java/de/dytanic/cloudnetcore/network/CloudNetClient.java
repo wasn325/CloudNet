@@ -138,7 +138,7 @@ public class CloudNetClient extends SimpleChannelInboundHandler {
         final Packet packet = (Packet) obj;
         CloudNet.getLogger().debug("Receiving Packet (id=" + CloudNet.getInstance().getPacketManager().packetId(packet) + ";dataLength=" +
                                    CloudNet.getInstance().getPacketManager().packetData(packet).size() + ") by " +
-                                   getNetworkComponent().getServerId());
+                                   networkComponent.getServerId());
         CloudNet.getInstance().getPacketManager().dispatchPacket(packet, networkComponent);
     }
 
