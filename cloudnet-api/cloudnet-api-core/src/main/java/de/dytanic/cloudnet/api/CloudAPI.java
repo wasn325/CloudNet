@@ -1325,9 +1325,7 @@ public final class CloudAPI implements MetaObj {
      */
     public void updatePlayer(final CloudPlayer cloudPlayer) {
         this.logger.logp(Level.FINEST,
-                         this.getClass().getSimpleName(),
-                         "updatePlayer",
-                         String.format(String.format("Updating cloud player: %s", cloudPlayer)));
+                         this.getClass().getSimpleName(), "updatePlayer", String.format("Updating cloud player: %s", cloudPlayer));
         networkConnection.sendPacket(new PacketOutUpdatePlayer(CloudPlayer.newOfflinePlayer(cloudPlayer)));
     }
 

@@ -35,10 +35,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.DecimalFormat;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.ThreadLocalRandom;
@@ -125,8 +122,8 @@ public final class NetworkUtils {
     }
 
     public static <T, V> void addAll(final java.util.Map<T, V> key, final java.util.Map<T, V> value) {
-        for (final T key_ : value.keySet()) {
-            key.put(key_, value.get(key_));
+        for (final Map.Entry<T, V> entry : value.entrySet()) {
+            key.put(entry.getKey(), entry.getValue());
         }
     }
 
@@ -143,9 +140,9 @@ public final class NetworkUtils {
     }
 
     public static <T, V> void addAll(final java.util.Map<T, V> key, final java.util.Map<T, V> value, final Acceptable<V> handle) {
-        for (final T key_ : value.keySet()) {
-            if (handle.isAccepted(value.get(key_))) {
-                key.put(key_, value.get(key_));
+        for (final Map.Entry<T, V> entry : value.entrySet()) {
+            if (handle.isAccepted(entry.getValue())) {
+                key.put(entry.getKey(), entry.getValue());
             }
         }
     }

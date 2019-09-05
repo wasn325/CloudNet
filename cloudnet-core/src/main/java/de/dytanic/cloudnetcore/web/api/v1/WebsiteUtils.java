@@ -39,7 +39,7 @@ public class WebsiteUtils extends MethodWebHandlerAdapter {
                                 final PathProvider path,
                                 final HttpRequest httpRequest) throws Exception {
         final FullHttpResponse fullHttpResponse = new DefaultFullHttpResponse(httpRequest.getProtocolVersion(),
-                                                                              HttpResponseStatus.UNAUTHORIZED);
+            HttpResponseStatus.UNAUTHORIZED);
         fullHttpResponse.headers().set("Content-Type", "application/json");
 
         final Document dataDocument = new Document("success", false).append("reason", new ArrayList<>()).append("response", new Document());
@@ -51,11 +51,10 @@ public class WebsiteUtils extends MethodWebHandlerAdapter {
             return fullHttpResponse;
         }
 
-        if (httpRequest.headers().contains("-Xcloudnet-token")
-            ? !CloudNet.getInstance().authorization(httpRequest.headers().get("-Xcloudnet-user"),
-                                                    httpRequest.headers().get("-Xcloudnet-token"))
-            : !CloudNet.getInstance().authorizationPassword(httpRequest.headers().get("-Xcloudnet-user"),
-                                                            httpRequest.headers().get("-Xcloudnet-password"))) {
+        if (httpRequest.headers().contains("-Xcloudnet-token") ? !CloudNet.getInstance().authorization(httpRequest.headers()
+            .get("-Xcloudnet-user"), httpRequest.headers().get("-Xcloudnet-token")) : !CloudNet.getInstance().authorizationPassword(
+            httpRequest.headers().get("-Xcloudnet-user"),
+            httpRequest.headers().get("-Xcloudnet-password"))) {
             dataDocument.append("reason", Collections.singletonList("failed authorization!"));
             fullHttpResponse.content().writeBytes(dataDocument.convertToJsonString().getBytes(StandardCharsets.UTF_8));
             return fullHttpResponse;
